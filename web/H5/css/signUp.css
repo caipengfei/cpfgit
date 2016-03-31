@@ -1,0 +1,34 @@
+.container{
+    background: url(../img/header3.png); background-size: 100% 100%; overflow: hidden;
+}
+header{
+    padding: 3rem 2rem; text-align: center;
+}
+header img{
+    width:6rem; height:6rem; border-radius: 3rem;
+}
+header h2{
+    color:#fff; font-size: 1.3rem; margin-top:1rem; font-weight: bold;
+}
+form{
+    position: relative;
+}
+.form-group{
+    width:100%; height:3.2rem; padding:0 1rem; margin-bottom:.6rem; position: relative; line-height: 3.2rem;
+}
+.form-group input{
+    width:100%; height:100%; outline: none; border:none; padding-left:1rem; font-size: 1.2rem; border-radius: .5rem; color:#333;
+}
+.form-group input[type=text]:focus{
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+}
+.form-group #getValidcode{
+    position: absolute; top:0; right:1rem; height:100%; padding:0 .6rem; padding-left:2.1rem; font-size: 1.1rem;
+    border-bottom-right-radius: .5rem; border-top-right-radius: .5rem; background:#ddd url(../img/icon/refresh.png) no-repeat .5rem 50%; background-size: 1.5rem 1.5rem;
+}
+.form-group input#submit{
+    background-color: #337ab7; color:#fff; font-size: 1.5rem;
+}
+.help{
+    position: absolute; top:-2rem; left:1.5rem; line-height: 2rem; width:100%; color:#f00; font-size: 1.2rem;
+}

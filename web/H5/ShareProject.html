@@ -1,0 +1,260 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>项目分享</title>
+    <link rel="stylesheet" href="css/public.css?v=e2a08fa8c189318bcaee1075c8bed785">
+
+    <link rel="stylesheet" href="css/page1.css?v=27d324f20be88d4dabf50bfd5f9b3b92">
+</head>
+<body>
+    <table class="downloadbox" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>
+                <div class="image">
+                    <img src="img/logo.png"></div>
+            </td>
+            <td>
+                <h2>青创汇 / 为创业者而生</h2>
+                <p>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <strong onclick="godown()"></strong>
+                </p>
+            </td>
+            <td><a onclick="godown()">立即下载</a></td>
+        </tr>
+    </table>
+    <style>
+        .downloadbox {
+            width: 100%;
+            height: 3.5rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: rgb(236,236,236);
+            padding: 0 .8rem 0 1.2rem;
+        }
+
+            .downloadbox td:nth-child(1) {
+                width: 4rem;
+            }
+
+            .downloadbox td:nth-child(3) {
+                text-align: right;
+            }
+
+            .downloadbox .image {
+                width: 3rem;
+                height: 3rem;
+                background: #fff;
+                border-radius: .6rem;
+            }
+
+                .downloadbox .image img {
+                    width: 100%;
+                    height: 100%;
+                }
+
+            .downloadbox a {
+                padding: .5rem .7rem;
+                background: #353535;
+                border-radius: .6rem;
+                color: #fff;
+            }
+
+            .downloadbox h2 {
+                font-size: .9rem;
+                color: #353535;
+                margin-bottom: .3rem;
+            }
+
+            .downloadbox p{
+                line-height: 1.2rem;
+            }
+            .downloadbox p i{
+                color:rgb(232,145,2); display: block; width:1.1rem; height:1.1rem; background: url(img/icon/xing.png) no-repeat 50% 50%;
+                background-size: 100% 100%; float: left; 
+            }
+            .downloadbox p strong{
+                color:rgb(118,118,118); font-size:.8rem; font-weight: normal;
+            }
+    </style>
+    <div class="container">
+
+        <header>
+            <div class="head-nav">
+                <!-- <a class="left"><i class="fa fa-angle-left"></i></a>
+                <a class="right">...</a>-->
+            </div>
+            <div class="box" id="dviTop">
+                <img src="img/photo3.jpg?v=8ee13fcc1f5652b80ca87e4fa116751d">
+                <h2>叫个外卖</h2>
+                <h3>一站式O2O餐饮服务</h3>
+            </div>
+        </header>
+        <div class="lists">
+            <ul>
+                <li>
+                    <label>所在城市</label><span id="spCityName">郑州市</span></li>
+            </ul>
+            <ul>
+                <li>
+                    <label>项目领域</label><span id="spArea">餐饮</span></li>
+                <li>
+                    <label>项目阶段</label><span id="spStage">已盈利</span></li>
+            </ul>
+            <ul>
+                <li>
+                    <label>融资状态</label><span id="spStage1">仅投资人可见</span></li>
+                <li>
+                    <label>融资金额</label><span id="spStage2">仅投资人可见</span></li>
+                <li>
+                    <label>资金用途</label><span id="spStage3">仅投资人可见</span></li>
+            </ul>
+        </div>
+        <div class="aboutbox">
+            <h2>项目简介</h2>
+            <p id="pInfo">
+                项目片区交通极为发达，与北通道无缝对接，实现红灯直达室内各区。片区内更是拥有11个公园，
+保护郊野公园，生态公园，市政公园形态丰富，几乎可实现每步行10分钟可进入一个公园，清林
+静水库提供23平方公里还好的积水面积，其周边打造的农家乐，垂钓等休闲活动也成为片区一大度假场所。
+            </p>
+        </div>
+        <div class="demand">
+            <h2>合作人需求</h2>
+            <div id="divNeed">
+                <a href="javascript:">技术</a>
+            </div>
+        </div>
+        <footer>
+            <nav>
+                <a class="talk" onclick="godown()"><i class="fa fa-commenting"></i>约谈</a>
+                <a class="follow" onclick="godown()"><i class="fa fa-user-plus"></i>关注</a>
+            </nav>
+        </footer>
+
+    </div>
+    <script src="js/zepto.min.js?v=1abd55c514bd00abc726cca455f6b4c9"></script>
+    <script type="text/javascript">
+        //获取Url中的参数
+        function getQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]); return null;
+        }
+        function godown() {
+            location.href = 'http://www.cn-qch.com/app';
+        }
+        //根据类型Id获取类型名称
+        function getStyle(Ids, tid) {
+            var id = Ids;
+            $.post("../QCH_Style/Ajax_Style.ashx", { Action: "StyleDataByIds", IDs: id }, function (data) {
+                if (data) {
+                    $("#" + tid).text(data.text);
+                }
+            }, "json")
+
+        }
+        var projectGuid = getQueryString('Guid');
+        if (!projectGuid || projectGuid == "") { projectGuid = '1ca35368-c5ed-4e7b-8210-7e459d0e27d1'; }
+        //获取项目信息
+        $.ajax({
+            type: 'post',
+            cache: false,
+            dataType: 'json',
+            url: '../QCH_Project/Ajax_Project.ashx',
+            data: [
+                { name: 'Action', value: 'getModel' },
+                { name: 'Guid', value: projectGuid }
+            ],
+            success: function (data) {
+                if (data) {
+                    var img = 'img/avator.png';
+                    if (data.t_Project_ConverPic && data.t_Project_ConverPic != "") {
+                        img = imgUrl + data.t_Project_ConverPic;
+                    }
+                    var topinfo = '<div class="box" id="dviTop"><img src="' + img + '"><h2>' + data.t_Project_Name + '</h2><h3>' + data.t_Project_OneWord + '</h3></div>'
+                    $("#dviTop").replaceWith(topinfo);
+                    $("#spCityName").text(data.t_Project_CityName);
+                    //$("#spArea").text(data.t_Project_Field);
+                    //$("#spStage").text(data.t_Project_Phase);
+                    //$("#spStage1").text(data.t_Project_FinancePhase);
+                    $("#spStage2").text(data.t_Project_Finance);
+                    $("#spStage3").text(data.t_Project_FinanceUse);
+                    $("#pInfo").html(data.t_Project_Instruction);
+                    getStyle(data.t_Project_Field, "spArea");
+                    getStyle(data.t_Project_Phase, "spStage");
+                    getStyle(data.t_Project_FinancePhase, "spStage1");
+                    if (data.t_Project_ParterWant) {
+                        getStyles(data.t_Project_ParterWant, "divNeed");
+                    }
+                }
+            }
+        })
+        //根据类型Id获取类型名称
+        function getStyles(Ids, tid) {
+            var xy = '';
+            if (Ids && Ids != "") {
+                if (Ids.split(";").length > 1) {
+                    var id = Ids.split(";");
+                    if (id.length > 0) {
+                        for (var i = 0; i < id.length; i++) {
+                            xy += id[i] + ',';
+                        }
+                    }
+                    xy = xy.substring(0, xy.length - 1);
+                    $.ajax({
+                        type: 'post',
+                        cache: false,
+                        dataType: 'json',
+                        url: '../QCH_Style/Ajax_Style.ashx',
+                        data: [
+                            { name: 'Action', value: 'StyleDataByIds' },
+                            { name: 'IDs', value: xy }
+                        ],
+                        success: function (data) {
+                            if (data) {
+                                var model = data;
+                                var list = '<div id="' + tid + '">';
+                                for (var item in model) {
+
+                                    list += '<a>' + model[item].text + '</a>';
+                                }
+                                list += '</div>';
+                                $("#" + tid).replaceWith(list);
+                            }
+                        }
+                    })
+                } else {
+                    $.ajax({
+                        type: 'post',
+                        cache: false,
+                        dataType: 'json',
+                        url: '../QCH_Style/Ajax_Style.ashx',
+                        data: [
+                            { name: 'Action', value: 'StyleDataByIds' },
+                            { name: 'IDs', value: Ids }
+                        ],
+                        success: function (data) {
+                            if (data) {
+                                var model = data;
+                                var list = '<div id="' + tid + '">';
+                                list += '<a>' + model.text + '</a>';
+                                list += '</div>';
+                                $("#" + tid).replaceWith(list);
+                            }
+                        }
+                    })
+                }
+            }
+        }
+    </script>
+</body>
+</html>

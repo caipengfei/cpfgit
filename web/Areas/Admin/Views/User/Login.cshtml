@@ -1,0 +1,91 @@
+﻿@{
+    Layout = null;
+}
+@model qch.Models.UserLoginModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>青创汇-- 登录与注册</title>
+    <link rel="stylesheet" href="/content/css/public.css?v=a61cbc23e959ad5b825a8da84e7904f5">
+
+    <link rel="stylesheet" href="/content/css/admin_login.css?v=4fa944f2ffa504b062a4ab6254f7d81b">
+</head>
+<body>
+    <div class="container" id="container">
+
+        <div class="subcontainer hide">
+            <h1 id="logo"></h1>
+            @using (Ajax.BeginForm("Login", "User", new AjaxOptions { UpdateTargetId = "msg", OnSuccess = "onSuccess" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <ul id="formbox">
+                    <li class="item1">
+                        <h2>管理员登录</h2>
+                        <div class="clear">
+                            <div class="col1">
+                                <div class="form-control">
+                                    @Html.TextBoxFor(o => o.LoginName, new { @class = "username", placeholder = "请输入用户名" })
+                                    <span class="help hide"></span>
+                                </div>
+                                <div class="form-control">
+                                    @Html.PasswordFor(o => o.LoginPwd, new { name = "Password", @class = "password", placeholder = "请输入登录密码" })
+                                    <span class="help hide"></span>
+                                </div>
+                                @*<div>
+                                    <p>
+                                        @Html.TextBoxFor(o => o.SafeCode, new { @class = "Memb3", placeholder = "请输入验证码", MaxLength = "5" })
+
+                                        <a href="javascript:" class="sdfrw">
+                                            <img  id="valiCode" width="99" height="35" alt="点击更换验证码" style="cursor: pointer;margin:5px 10px" src="/home/GetValidateCode" />
+                                        </a>
+                                    </p>
+                                </div>*@
+                                <input type="submit" class="login-btn" data-url="/login" value="登 录">
+                                <label>
+                                    <input type="checkbox" class="remember">&nbsp;记住密码</label>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            }
+        </div>
+
+    </div>
+
+    <!--<div class="footer"></div>-->
+ 
+
+    <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <!--[if lte IE 9]>
+<script src="/static/js/placeholder.js?v=59a2b735ade54c86939e8f54859e04df"></script>
+<![endif]-->
+    <script src="/content/js/admin_login.js?v=ae6bb570af799e0cc67580c556ccf77f"></script>
+    <script type="text/javascript">
+        function onSuccess(msg) {
+            if (msg.type == "success") {
+                location.href = msg.ReturnUrl;
+            }
+            if (msg.type == "error") {
+                alert(msg.Data);
+            }
+        }
+        //safecode
+        $(function () {
+            $("#valiCode").bind("click", function () {
+                this.src = "/home/GetValidateCode?time=" + (new Date()).getTime();
+            });
+            $("#change").bind("click", function () {
+                $("#valiCode").attr("src", "/home/GetValidateCode?time=" + (new Date()).getTime());
+            });
+        });
+    </script>
+</body>
+</html>

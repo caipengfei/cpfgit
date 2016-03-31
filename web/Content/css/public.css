@@ -1,0 +1,28 @@
+/************************** 全局 ************************* */
+*{
+    margin: 0; padding:0; box-sizing: border-box;
+}
+a{
+    display: inline-block; text-decoration: none; cursor: pointer;
+}
+[type=button]{
+    cursor: pointer;
+}
+h1,h2,h3,h4,h5,h6{
+    font-weight: normal;
+}
+span{
+    display: inline-block;
+}
+li{
+    list-style: none;
+}
+.clear:after{
+    display: block; content:''; clear: both;
+}
+.hide{
+    display: none;
+}
+body{
+    font-size: 12px; font-family: 'Microsoft YaHei';
+}

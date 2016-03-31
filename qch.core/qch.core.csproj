@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7B39AF3F-32B0-4AE3-A791-CE2855DED364}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>qch.core</RootNamespace>
+    <AssemblyName>qch.core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\packages\cpf\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Maticsoft.Common">
+      <HintPath>..\packages\qch\Maticsoft.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.6\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Senparc.Weixin.MP">
+      <HintPath>..\packages\cpf\Senparc.Weixin.MP.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActivityApply\ActivityApplyModel.cs" />
+    <Compile Include="ActivityApply\ActivityApplyService.cs" />
+    <Compile Include="ActivityApply\Repositories\ActivityApplyRepository.cs" />
+    <Compile Include="ActivityApply\Repositories\T_Activity_Apply.cs" />
+    <Compile Include="Activity\Repositories\T_Activity.cs" />
+    <Compile Include="AES.cs" />
+    <Compile Include="Area\AreaModel.cs" />
+    <Compile Include="Area\AreaService.cs" />
+    <Compile Include="Area\IAreaService.cs" />
+    <Compile Include="Area\Repositories\CityRepository.cs" />
+    <Compile Include="Area\Repositories\DistrictRepository.cs" />
+    <Compile Include="Area\Repositories\ProvinceRepository.cs" />
+    <Compile Include="cvt.cs" />
+    <Compile Include="DEncrypt\DEncrypt.cs" />
+    <Compile Include="DEncrypt\DESEncrypt.cs" />
+    <Compile Include="DEncrypt\HashEncode.cs" />
+    <Compile Include="DEncrypt\RSACryption.cs" />
+    <Compile Include="IDependency.cs" />
+    <Compile Include="SMS.cs" />
+    <Compile Include="wxJsApi\IJsapiService.cs" />
+    <Compile Include="wxJsApi\JsapiModel.cs" />
+    <Compile Include="wxJsApi\JsapiService.cs" />
+    <Compile Include="wxJsApi\Repository\JsapiRepository.cs" />
+    <Compile Include="wxJsApi\SignModel.cs" />
+    <Compile Include="Msg.cs" />
+    <Compile Include="Project\ProjectModel.cs" />
+    <Compile Include="Project\ProjectService.cs" />
+    <Compile Include="Project\Repositories\ProjectRepository.cs" />
+    <Compile Include="Project\Repositories\T_Project.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Style\Repositories\StyleRepository.cs" />
+    <Compile Include="Style\Repositories\T_Style.cs" />
+    <Compile Include="Style\StyleModel.cs" />
+    <Compile Include="Style\StyleService.cs" />
+    <Compile Include="Topic\Repositoryies\TopicRepository.cs" />
+    <Compile Include="Topic\Repositoryies\T_Topic.cs" />
+    <Compile Include="Topic\Repositoryies\T_Topic_Report.cs" />
+    <Compile Include="Topic\TopicModel.cs" />
+    <Compile Include="Topic\TopicReportModel.cs" />
+    <Compile Include="Topic\TopicService.cs" />
+    <Compile Include="News\NewsModel.cs" />
+    <Compile Include="News\NewsService.cs" />
+    <Compile Include="News\Repositories\NewsRepository.cs" />
+    <Compile Include="News\Repositories\T_News.cs" />
+    <Compile Include="UserRole\Repositories\UserRoleRepository.cs" />
+    <Compile Include="UserRole\Repositories\T_User_Role.cs" />
+    <Compile Include="UserRole\UserRoleModel.cs" />
+    <Compile Include="UserRole\UserRoleService.cs" />
+    <Compile Include="UserTalk\IUserTalkService.cs" />
+    <Compile Include="UserTalk\Repositories\T_User_Talk.cs" />
+    <Compile Include="UserTalk\Repositories\UserTalkRepository.cs" />
+    <Compile Include="UserTalk\UserTalkModel.cs" />
+    <Compile Include="UserTalk\UserTalkService.cs" />
+    <Compile Include="User\Repositories\T_Users.cs" />
+    <Compile Include="User\Repositories\UserRepository.cs" />
+    <Compile Include="User\UserLoginModel.cs" />
+    <Compile Include="User\UserModel.cs" />
+    <Compile Include="User\UserService.cs" />
+    <Compile Include="wxUser\Repositories\T_User_Weixin.cs" />
+    <Compile Include="wxUser\Repositories\WXUserRepository.cs" />
+    <Compile Include="wxUser\WXUserModel.cs" />
+    <Compile Include="wxUser\WXUserService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\qch.Infrastructure\qch.Infrastructure.csproj">
+      <Project>{aa92a157-0056-4e23-a0b5-f3b25d2b94f8}</Project>
+      <Name>qch.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DEncrypt\vssver2.scc" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
