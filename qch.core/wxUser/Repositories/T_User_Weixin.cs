@@ -59,5 +59,37 @@ namespace qch.Repositories
         /// </summary>
         [Column]
         public DateTime MediaDate { get; set; }
+        /// <summary>
+        /// 开放平台openid
+        /// </summary>
+        [Column]
+        public string KFOpenId { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Column]
+        public string UnionId { get; set; }
+        /// <summary>
+        /// 开放平台授权时间
+        /// </summary>
+        [Column]
+        public DateTime? KFDate { get; set; }
+        /// <summary>
+        /// 1：公众平台；
+        /// 2：扫码登录（开放平台）；
+        /// 3：app
+        /// </summary>
+        [Column]
+        public int UserType { get; set; }
+        /// <summary>
+        /// 微信昵称
+        /// </summary>
+        [Column]
+        public string Name { get; set; }
+        /// <summary>
+        /// 微信头像
+        /// </summary>
+        [Column]
+        public string Avator { get; set; }
     }
 }

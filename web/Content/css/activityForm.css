@@ -1,0 +1,545 @@
+/* 活动表单 */
+
+#ac_form {
+    width: 940px;
+    margin: 0 auto;
+    margin-top: 90px;
+    font-size: 14px;
+}
+
+#ac_form dt,
+#ac_form dd {
+    line-height: 36px;
+    margin: 15px 0;
+}
+
+#ac_form dt {
+    float: left;
+    clear: both;
+    width: 10%;
+    text-align: right;
+    padding-right: 30px;
+}
+
+#ac_form dd {
+    float: left;
+    width: 90%;
+}
+
+#ac_form dd>div {
+    border: 1px solid #d9d9d9;
+}
+
+#ac_form dd input[type=text] {
+    font-size: 14px;
+    padding: 0 15px;
+    height: 36px;
+    outline: none;
+    color: #444;
+}
+
+
+/* 活动主题 */
+
+#hd_title input {
+    width: 100%;
+}
+
+
+/* 活动时间 */
+
+.post_date,
+.post_time,
+#hd_date .joinline {
+    float: left;
+    margin-right: 8px;
+}
+
+.post_date,
+.post_time {
+    height: 36px;
+}
+
+#hd_date .joinline {
+    width: 28px;
+    height: 18px;
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.post_date {
+    width: 240px;
+    margin-right: 15px;
+    position: relative;
+    z-index:9996;
+}
+
+.post_time {
+    width: 100px;
+    background: url(/content/image/jiao.png) no-repeat right 50%;
+    background-origin: content-box;
+    padding-right: 3px;
+    position: relative;
+    z-index:9996;
+}
+
+.post_date input,
+.post_time input {
+    width: 100%;
+    padding-left: 32px !important;
+}
+
+.post_date input {
+    background: url(/content/image/date_icon.png) no-repeat 8px 50%;
+}
+
+.post_time input {
+    background: url(/content/image/time_icon3.png) no-repeat 8px 50%;
+}
+
+.post_time .time_list {
+    height: 300px;
+    overflow: auto;
+    position: absolute;
+    left: -1px;
+    top: 36px;
+    width: 100px;
+    background: #fff;
+    text-align: center;
+    border: 1px solid #d9d9d9;
+    color: #444;
+    font-size: 12px;
+}
+
+.post_time .time_list li:hover {
+    background-color: #eee;
+    cursor: pointer;
+}
+
+.post_date .qk {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: url(/content/image/share_qr_close3_15.png) no-repeat;
+    z-index: 2;
+    right: 3px;
+    top: 10px;
+}
+
+.post_date .qk:hover {
+    background: url(/content/image/share_qr_close3_15.png) no-repeat 0 -15px;
+}
+
+
+/* 活动地点 */
+
+#hd_site>div {
+    float: left;
+}
+
+#area {
+    margin-right: 15px;
+    width: 200px;
+    position: relative;
+    z-index:9995;
+}
+
+#address {
+    width: 626px;
+}
+
+#area input,
+#address input {
+    width: 100%;
+}
+
+#area input {
+    background: url(/content/image/jiao.png) no-repeat right 50%;
+    background-origin: content-box;
+    padding-right: 5px !important;
+}
+
+#area .area_list {
+    position: absolute;
+    top: 48px;
+    left: 0;
+    width: 700px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 2px 8px #ccc;
+}
+
+#area .area_list ul {
+    border-top: 1px solid #d9d9d9;
+    padding: 10px 15px;
+}
+
+#area .area_list li {
+    display: inline-block;
+    margin-right: 30px;
+    cursor: pointer;
+    color: #8e8e8e;
+}
+
+#area .area_list li:hover,
+#area .area_list li.active {
+    color: #0099e9;
+}
+
+#area .area_list .close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: url(/content/image/share_qr_close3_20.png) no-repeat 0 0;
+    width: 20px;
+    height: 20px;
+}
+
+#area .area_list .close:hover {
+    background-position: 0 -20px;
+}
+
+#area .qk {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: #fff url(/content/image/share_qr_close3_15.png) no-repeat;
+    z-index: 2;
+    right: 3px;
+    top: 10px;
+}
+
+#area .qk:hover {
+    background: #fff url(/content/image/share_qr_close3_15.png) no-repeat 0 -15px;
+}
+
+
+/* 活动详情 */
+
+#hd_detail textarea {
+    width: 100%;
+    resize: vertical;
+    border: 1px solid #d9d9d9;
+    height: 260px;
+    padding: 8px;
+    outline: none;
+    font-size: 14px;
+}
+
+
+/* 活动主办方和资讯电话 */
+
+#hd_organizers input,
+#hd_phone input {
+    width: 100%;
+}
+
+
+/* 活动费用 */
+
+#hd_fee {
+    border: none !important;
+}
+
+#hd_fee label {
+    margin-right: 15px;
+    color: #444;
+    float: left;
+}
+
+#hd_fee label [type=radio] {
+    position: relative;
+    top: 2px;
+}
+
+#hd_fee [type=text] {
+    width: 100%;
+    height: 100% !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#hd_fee div {
+    height: 36px;
+    width: 120px;
+    float: left;
+    position: relative;
+    border: 1px solid #d9d9d9;
+}
+
+
+/* 人数上限 */
+
+#hd_limit div {
+    width: 100%;
+    height: 36px;
+    position: relative;
+}
+
+#hd_limit div p,
+#hd_fee div p {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-left: 15px;
+    background: #fff;
+    color: #444;
+}
+
+#hd_limit input {
+    width: 100%;
+    height: 100% !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+
+/* 封面图片 */
+
+#hd_cover>div {
+    border: none !important;
+    width: 90px;
+    height: 90px;
+    position: relative;
+}
+
+#hd_cover a {
+    width: 100%;
+    height: 100%;
+    background: url(/content/image/upload.png) no-repeat 50% 50%;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+}
+
+
+/* 发布活动 */
+
+#hd_publish {
+    text-align: center;
+    border-top: 1px solid #d9d9d9;
+    width: 940px;
+    margin: 0 auto;
+    padding-top: 15px;
+}
+
+#hd_publish .btn-fb {
+    width: 213px;
+    height: 45px;
+    line-height: 45px;
+    text-align: center;
+    font-size: 18px;
+    color: #FFF;
+    background-color: #0099e9;
+}
+
+#hd_publish .btn-fb:hover {
+    background-color: #0082c6;
+}
+
+#hd_publish p {
+    margin-bottom: 10px;
+}
+
+#hd_publish p a {
+    margin-left: 5px;
+    font-size: 14px;
+    color: #0099e9;
+    height: 20px;
+    line-height: 20px;
+}
+
+#hd_publish p a:hover {
+    color: #0082c6;
+    text-decoration: underline;
+}
+
+#hd_publish p span {
+    background: url(/content/image/check_yes.png) no-repeat 0 50%;
+    padding-left: 20px;
+}
+
+
+/* 发布 加载中 */
+
+#cover {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #000;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    z-index: 99;
+    display: none;
+}
+
+#post_loading {
+    width: 128px;
+    padding-top: 138px;
+    text-align: center;
+    position: fixed;
+    top: 100px;
+    left: 100px;
+    z-index: 100;
+    background: url(../image/loading2.gif) no-repeat 50% 0;
+    display: none;
+}
+
+
+/*时间选择控件*/
+
+.date_selector,
+.date_selector * {
+    width: auto;
+    height: auto;
+    border: none;
+    background: none;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    text-decoration: none;
+}
+
+.date_selector {
+    background: #fbfbfb;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: -1px;
+    position: absolute;
+    z-index: 2001;
+    display: none;
+    box-shadow: 0 2px 2px #ccc;
+    width: 240px;
+}
+
+.date_selector_ieframe {
+    position: absolute;
+    z-index: 2000;
+    display: none;
+}
+
+.date_selector .nav {
+    width: 223px;
+}
+
+.date_selector .nav p {
+    clear: none;
+}
+
+.date_selector .month_nav,
+.date_selector .year_nav {
+    margin: 0 0 3px 0;
+    padding: 0;
+    display: block;
+    position: relative;
+    text-align: center;
+}
+
+.date_selector .month_nav {
+    float: left;
+    width: 100px;
+}
+
+.date_selector .year_nav {
+    float: right;
+    width: 100px;
+    margin-right: 0;
+}
+
+.date_selector .month_name,
+.date_selector .year_name {
+    line-height: 20px;
+    font-size: 12px;
+}
+
+.date_selector .button {
+    display: block;
+    position: absolute;
+    top: 0;
+    width: 18px;
+    height: 18px;
+    line-height: 16px;
+    font-weight: bold;
+    color: #5985c7;
+    text-align: center;
+    font-size: 12px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+}
+
+.date_selector .button:hover,
+.date_selector .button.hover {
+    background: #5985c7;
+    color: #fff;
+    cursor: pointer;
+    border-color: #3a930d;
+}
+
+.date_selector .prev {
+    left: 0;
+}
+
+.date_selector .next {
+    right: 0;
+}
+
+.date_selector table {
+    border-spacing: 0;
+    border-collapse: collapse;
+    clear: both;
+    margin: 0;
+    width: 220px;
+}
+
+.date_selector th,
+.date_selector td {
+    width: 2.5em;
+    height: 30px;
+    padding: 0!important;
+    text-align: center!important;
+    color: #666;
+    font-weight: normal;
+}
+
+.date_selector th {
+    font-size: 12px;
+}
+
+.date_selector td {
+    border: 1px solid #f1f1f1;
+    line-height: 30px;
+    text-align: center;
+    white-space: nowrap;
+    color: #5985c7;
+    background: #fff;
+    font-size: 12px;
+}
+
+.date_selector td.today {
+    background: #eee;
+}
+
+.date_selector td.unselected_month {
+    color: #ccc;
+}
+
+.date_selector td.selectable_day {
+    cursor: pointer;
+}
+
+.date_selector td.selected {
+    background: #0099e9;
+    color: #fff;
+    font-weight: bold;
+}
+
+.date_selector td.selectable_day:hover,
+.date_selector td.selectable_day.hover {
+    background: #0082c6;
+    color: #fff;
+}

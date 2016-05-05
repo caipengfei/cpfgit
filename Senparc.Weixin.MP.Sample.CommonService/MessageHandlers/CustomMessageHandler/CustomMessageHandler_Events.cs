@@ -375,7 +375,7 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
                         }
 
                     }
-                    break;
+                    //break;
 
                 /***********************************************************/
                 case "bangding"://绑定
@@ -841,7 +841,7 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
                         return this.CreateResponseMessage<ResponseMessageTransfer_Customer_Service>();
 
                     }
-                    break;
+                    //break;
 
                 default:
                     {

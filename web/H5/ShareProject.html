@@ -6,11 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
     <meta name="renderer" content="webkit" />
     <title>项目分享</title>
-    <link rel="stylesheet" href="css/public.css?v=e2a08fa8c189318bcaee1075c8bed785">
-
-    <link rel="stylesheet" href="css/page1.css?v=27d324f20be88d4dabf50bfd5f9b3b92">
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/page1.css">
 </head>
 <body>
+    <div class="shade-div"></div>
     <table class="downloadbox" cellpadding="0" cellspacing="0">
         <tr>
             <td>
@@ -25,76 +25,21 @@
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
-                    <strong onclick="godown()"></strong>
+                    <strong onclick="godown()">10万人下载</strong>
                 </p>
             </td>
             <td><a onclick="godown()">立即下载</a></td>
         </tr>
     </table>
-    <style>
-        .downloadbox {
-            width: 100%;
-            height: 3.5rem;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background: rgb(236,236,236);
-            padding: 0 .8rem 0 1.2rem;
-        }
-
-            .downloadbox td:nth-child(1) {
-                width: 4rem;
-            }
-
-            .downloadbox td:nth-child(3) {
-                text-align: right;
-            }
-
-            .downloadbox .image {
-                width: 3rem;
-                height: 3rem;
-                background: #fff;
-                border-radius: .6rem;
-            }
-
-                .downloadbox .image img {
-                    width: 100%;
-                    height: 100%;
-                }
-
-            .downloadbox a {
-                padding: .5rem .7rem;
-                background: #353535;
-                border-radius: .6rem;
-                color: #fff;
-            }
-
-            .downloadbox h2 {
-                font-size: .9rem;
-                color: #353535;
-                margin-bottom: .3rem;
-            }
-
-            .downloadbox p{
-                line-height: 1.2rem;
-            }
-            .downloadbox p i{
-                color:rgb(232,145,2); display: block; width:1.1rem; height:1.1rem; background: url(img/icon/xing.png) no-repeat 50% 50%;
-                background-size: 100% 100%; float: left; 
-            }
-            .downloadbox p strong{
-                color:rgb(118,118,118); font-size:.8rem; font-weight: normal;
-            }
-    </style>
-    <div class="container">
-
+   
+    <div class="container loading">
         <header>
             <div class="head-nav">
                 <!-- <a class="left"><i class="fa fa-angle-left"></i></a>
                 <a class="right">...</a>-->
             </div>
             <div class="box" id="dviTop">
-                <img src="img/photo3.jpg?v=8ee13fcc1f5652b80ca87e4fa116751d">
+                <img>
                 <h2>叫个外卖</h2>
                 <h3>一站式O2O餐饮服务</h3>
             </div>
@@ -135,13 +80,13 @@
         </div>
         <footer>
             <nav>
-                <a class="talk" onclick="godown()"><i class="fa fa-commenting"></i>约谈</a>
-                <a class="follow" onclick="godown()"><i class="fa fa-user-plus"></i>关注</a>
+                <a class="talk" onclick="godown()"><i class="fa fa-commenting"></i> 约谈</a>
+                <a class="follow" onclick="godown()"><i class="fa fa-user-plus"></i> 关注</a>
             </nav>
         </footer>
-
     </div>
-    <script src="js/zepto.min.js?v=1abd55c514bd00abc726cca455f6b4c9"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/loader.js"></script>
     <script type="text/javascript">
         //获取Url中的参数
         function getQueryString(name) {
@@ -160,7 +105,6 @@
                     $("#" + tid).text(data.text);
                 }
             }, "json")
-
         }
         var projectGuid = getQueryString('Guid');
         if (!projectGuid || projectGuid == "") { projectGuid = '1ca35368-c5ed-4e7b-8210-7e459d0e27d1'; }
@@ -255,6 +199,11 @@
                 }
             }
         }
+        $(function () {
+            $(document).ajaxStop(function () {
+                imageLoader(removeShade);
+            })
+        })
     </script>
 </body>
 </html>

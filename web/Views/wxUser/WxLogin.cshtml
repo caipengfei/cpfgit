@@ -1,0 +1,88 @@
+﻿@{
+    Layout = null;
+}
+
+
+<!doctype html>
+<html>
+
+<head>
+    <title>青创汇-微信登陆</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <link rel="shortcut icon" type="image/x-icon" href="" />
+    <link rel="stylesheet" href="/content/css/public.css">
+    <link rel="stylesheet" href="/content/css/wxlogin.css">
+    <script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+    <script src="/content/js/lib/jquery-1.12.2.min.js"></script>
+</head>
+
+<body class="gray" id="wxlogin">
+    @Html.Action("Top", "Home")
+    <div class="outSide">
+        <ul class="wxDlbtn">
+            <li class="ma2Dl">扫二维码用登录微信</li>
+        </ul>
+        <div class="dlQiehuanQuyu">
+            <div class="wx_Dl" id="wx_Dl">
+                <p class="miaoShu2m">请用微信"扫一扫"下列二维码，并根据提示操作</p>
+                <div class="Quyu2ma" id="lm_qr_pic">
+                   @* <img id="lm_qr_pic" src="" class="pic2ma" />*@
+                </div>
+                <div class="greenBtn2"><a href="javascript:void(0);">我已完成扫描并授权登录</a></div>
+            </div>
+        </div>
+    </div>
+    @Html.Action("Footer", "Home")
+
+    @Html.Action("DownLoad", "Home")
+    <div id="cover2"></div>
+    <script type="text/javascript">
+        var obj = new WxLogin({
+            id: "lm_qr_pic",
+            appid: "wx05d5bfafbbc45e6c",
+            scope: "snsapi_login",
+            redirect_uri: "@ViewBag.ReturnUrl",
+            state: "@ViewBag.Nonce",
+            style: "",
+            href: ""
+        });
+    </script>
+    <script>
+        $(function () {
+            // 视口改变大小
+            $(window).resize(function () {
+                $('#indexTc').length && $('#indexTc').css('display') != 'none' && appDownBoxPos();
+            }).resize();
+            // 下载app
+            $('.appDown').click(function () {
+                appDownBoxPos();
+                $('#cover2').show();
+                $('#indexTc').show();
+                $('#indexTc .qieHover li').eq(0).click();
+            })
+            // 关闭下载盒子
+            $('.guanbiQu', '#indexTc').click(function () {
+                $(this).parents('#indexTc').hide();
+                $('#cover2').hide();
+            })
+            // 切换下载和关注
+            $('.qieHover li', '#indexTc').click(function () {
+                $(this).addClass('thisOver').siblings().removeClass('thisOver');
+                $('.tcNr li').eq($(this).index()).show().siblings('li').hide();
+            })
+        })
+        // 调节下载盒子的位置
+        function appDownBoxPos() {
+            var boxHeight = $('#indexTc').height();
+            var boxWidth = $('#indexTc').width();
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            $('#indexTc').css({
+                top: boxHeight > winHeight ? 0 : (winHeight - boxHeight) / 2,
+                left: boxWidth > winWidth ? 0 : (winWidth - boxWidth) / 2
+            });
+        }
+    </script>
+</body>
+</html>

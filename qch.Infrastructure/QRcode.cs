@@ -11,6 +11,27 @@ namespace qch.Infrastructure
 {
     public class QRcode
     {
+
+        //生成二维码
+        public static string CreateCode_Simple(string nr,string url)
+        {
+            QRCodeEncoder qrCodeEncoder = new QRCodeEncoder();
+            qrCodeEncoder.QRCodeEncodeMode = QRCodeEncoder.ENCODE_MODE.BYTE;
+            qrCodeEncoder.QRCodeScale = 4;
+            qrCodeEncoder.QRCodeVersion = 8;
+            qrCodeEncoder.QRCodeErrorCorrect = QRCodeEncoder.ERROR_CORRECTION.M;
+            //System.Drawing.Image image = qrCodeEncoder.Encode("4408810820 深圳－广州 小江");
+            System.Drawing.Image image = qrCodeEncoder.Encode(nr);
+            string filename = DateTime.Now.ToString("yyyymmddhhmmssfff").ToString() + ".jpg";
+            string filepath = url + filename;
+            System.IO.FileStream fs = new System.IO.FileStream(filepath, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write);
+            image.Save(fs, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+            fs.Close();
+            image.Dispose();
+            return filename;
+        }
+
         /// <summary>
         /// 生成二维码图片
         /// </summary>

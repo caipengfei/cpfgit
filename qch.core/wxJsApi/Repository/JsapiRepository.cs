@@ -54,10 +54,16 @@ namespace qch.Repositories
         /// </summary>
         [Column]
         public string PageName { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Column]
+        public DateTime? CreateDate { get; set; }
     }
     #endregion
     public class JsapiRepository : Repository<T_Weixin_JsApi>
     {
+        readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         Repository<JsapiModel> rp = new Repository<JsapiModel>();
         /// <summary>
         /// 写入缓存记录
@@ -70,9 +76,9 @@ namespace qch.Repositories
             {
                 return (int)rp.Insert(model) > 0 ? true : false;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                log.Error(ex.Message);
                 return false;
             }
         }
@@ -82,9 +88,9 @@ namespace qch.Repositories
             {
                 return (int)rp.Delete(model) > 0 ? true : false;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                log.Error(ex.Message);
                 return false;
             }
         }
@@ -99,9 +105,9 @@ namespace qch.Repositories
             {
                 return (int)rp.Update(model) > 0 ? true : false;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                log.Error(ex.Message);
                 return false;
             }
         }
@@ -114,12 +120,12 @@ namespace qch.Repositories
         {
             try
             {
-                string sql = "select top 1 *  from xft_weixin_jsapi where id=@0 order by id desc";
+                string sql = "select top 1 *  from T_Weixin_JsApi where id=@0 order by id desc";
                 return rp.Get(sql, new object[] { id });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                log.Error(ex.Message);
                 return null;
             }
         }
@@ -131,12 +137,13 @@ namespace qch.Repositories
         {
             try
             {
-                string sql = "select top 1 *  from xft_weixin_jsapi where PageName=@0 order by id desc";
+                log.Info("资源层Get方法，PageName=" + PageName);
+                string sql = "select top 1 *  from T_Weixin_JsApi where PageName=@0 order by id desc";
                 return rp.Get(sql, new object[] { PageName });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                log.Error(ex.Message);
                 return null;
             }
         }

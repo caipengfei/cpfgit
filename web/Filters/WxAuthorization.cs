@@ -13,7 +13,9 @@ using xftwl.Infrastructure;
 
 namespace Senparc.Weixin.MP.Sample.Filters
 {
-
+    /// <summary>
+    /// 微信授权（扫码登录）
+    /// </summary>
     public class WxAuthorization : ActionFilterAttribute
     {
         readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -41,7 +43,6 @@ namespace Senparc.Weixin.MP.Sample.Filters
                         log.Error(ex.Message);
                         return null;
                     }
-
                 }
                 return _loginUser;
             }
@@ -49,7 +50,6 @@ namespace Senparc.Weixin.MP.Sample.Filters
             {
                 this._loginUser = value;
             }
-
         }
         public static readonly string WeixinUrl = System.Configuration.ConfigurationManager.AppSettings["WeixinUrl"];
         /// <summary>
@@ -72,11 +72,9 @@ namespace Senparc.Weixin.MP.Sample.Filters
 
             try
             {
-
                 if (LoginUser == null)
                 {
                     string url = filterContext.HttpContext.Request.Url.ToString();
-
                     HttpContext.Current.Session["ReturnUrl"] = url;
                     log.Info("授权请求url=" + url);
                     string openid = CookieHelper.GetCookieValue("OpenId");

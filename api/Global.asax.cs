@@ -11,6 +11,8 @@ using System.Web.Routing;
 using Autofac.Core;
 using Autofac.Integration.WebApi;
 using cpf.core;
+using Senparc.Weixin.MP.TenPayLib;
+using Senparc.Weixin.MP.TenPayLibV3;
 namespace api
 {
     public class WebApiApplication : System.Web.HttpApplication
@@ -27,6 +29,8 @@ namespace api
 
             GlobalConfiguration.Configuration.MessageHandlers.Add(new CorsHandler());
             GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
+ 
+
             System.IO.FileInfo fileinfo = new System.IO.FileInfo(Server.MapPath("~/log4net.config"));
 
             log4net.Config.XmlConfigurator.Configure(fileinfo);

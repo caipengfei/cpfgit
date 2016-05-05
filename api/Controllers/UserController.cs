@@ -14,6 +14,44 @@ namespace api.Controllers
     {
         readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         Maticsoft.BLL.T_Users bll = new Maticsoft.BLL.T_Users();
+        UserService userService = new UserService();
+        FoucsService foucsService = new FoucsService();
+
+        /// <summary>
+        /// 获取用户信息
+        /// </summary>
+        /// <param name="Guid"></param>
+        /// <returns></returns>
+        public object GetUser(string Guid)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(Guid))
+                    return null;
+                var model = userService.GetById(Guid);
+                if (model == null)
+                    return null;
+                var target = new
+                {
+                    username = model.t_User_RealName,
+                    userAvatar = model.t_User_Pic,
+                    job = model.t_User_Position,
+                    company = model.t_User_Commpany,
+                    city = model.t_User_City,
+                    numFollow = 0,
+                    fans = 0,
+                    dynamicThumbnail = "",
+                    dynamicDate = model.t_User_Date,
+                    description = model.t_User_Remark
+                };
+                return target;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
         /// <summary>
         /// 
         /// </summary>

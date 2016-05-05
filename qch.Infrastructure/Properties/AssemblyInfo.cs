@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过以下
 // 特性集控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("xftwl.Infrastructure")]
+[assembly: AssemblyTitle("qch.Infrastructure")]
 [assembly: AssemblyDescription("基础类库")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("郑州消费通网络有限公司")]
-[assembly: AssemblyProduct("xftwl.Infrastructure")]
-[assembly: AssemblyCopyright("Copyright © 奎宇工作室 2014")]
+[assembly: AssemblyCompany("qch")]
+[assembly: AssemblyProduct("qch.Infrastructure")]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

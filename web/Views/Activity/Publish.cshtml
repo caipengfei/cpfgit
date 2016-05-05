@@ -1,0 +1,188 @@
+﻿@{
+    Layout = null;
+}
+@model IEnumerable<qch.Repositories.inf_province>
+
+<!doctype html>
+<html>
+
+<head>
+    <title>青创汇-活动表单</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <link rel="stylesheet" href="/content/css/public.css">
+    <link rel="stylesheet" href="/content/css/activityForm.css">
+    <link href="@Url.Content("/Content/ueditor_mini/themes/default/css/umeditor.min.css")" rel="stylesheet" type="text/css" />
+    <style>
+        .table_m li input[type="text"] {
+        }
+
+        .goods-can {
+            width: 100px;
+            margin-right: 7px;
+        }
+
+        .goods-canshu-span {
+            width: 60px;
+            height: 17px;
+            line-height: 17px;
+            vertical-align: middle;
+            display: inline-block;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="headbox">
+            <div class="logo">
+                <a href="/"></a>
+            </div>
+            <div class="userface">
+                <img alt="userface" title="avator" src="@ViewBag.UserLogo">
+            </div>
+            <ul class="mainnav">
+                <li><a href="/">首页</a></li>
+                <li><a href="javascript:">+ 活动</a></li>
+                <li><a class="appDown">下载APP</a></li>
+            </ul>
+        </div>
+    </div>
+    <dl id="ac_form" class="clear">
+        <dt>活动主题</dt>
+        <dd id="hd_title">
+            <div>
+                <input type="text" placeholder="请输入活动主题" maxlength="35">
+            </div>
+        </dd>
+        <dt>活动时间</dt>
+        <dd id="hd_date">
+            <div id="start_date" class="post_date">
+                <input type="text" placeholder="开始时间" readonly="true">
+                <a class="qk hide" title="清空"></a>
+            </div>
+            <div id="start_time" class="post_time">
+                <input type="text" readonly="true">
+                <ul class="time_list hide"></ul>
+            </div>
+            <span class="joinline"></span>
+            <div id="end_date" class="post_date">
+                <input type="text" placeholder="结束时间" readonly="true">
+                <a class="qk hide" title="清空"></a>
+            </div>
+            <div id="end_time" class="post_time">
+                <input type="text" readonly="true">
+                <ul class="time_list hide"></ul>
+            </div>
+        </dd>
+        <dt>活动地点</dt>
+        <dd id="hd_site">
+            <div id="area">
+                <input class="sel_area" type="text" placeholder="选择地区" readonly="true">
+                <input type="hidden" id="provId" />
+                <input type="hidden" id="cityId" />
+                <input type="hidden" id="quId" />
+                <a class="qk hide" title="清空"></a>
+                <div class="area_list hide">
+                    <ul class="area_prov">
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model.ToList())
+                            {
+                            <li id="@item.ProvinceID">@item.ProvinceName</li>
+                            }
+                        }
+                    </ul>
+                    <ul class="area_city hide">
+                    </ul>
+                    <ul class="area_qu hide">
+                    </ul>
+                    <a class="close"></a>
+                </div>
+            </div>
+            <div id="address">
+                <input type="text" placeholder="详细地址">
+            </div>
+        </dd>
+        <dt>活动详情</dt>
+        <dd id="hd_detail">
+            <textarea placeholder="请输入活动详情" id="myEditor"></textarea>
+        </dd>
+        <dt>举办方</dt>
+        <dd id="hd_organizers">
+            <div>
+                <input type="text" placeholder="请输入活动举办方">
+            </div>
+        </dd>
+        <dt>咨询电话</dt>
+        <dd id="hd_phone">
+            <div>
+                <input type="text" placeholder="请输入活动资讯电话">
+            </div>
+        </dd>
+        <dt>活动费用</dt>
+        <dd>
+            <div id="hd_fee">
+                <label class="">
+                    <input type="radio" name="fee" checked value="0">
+                    免费</label>
+                <label class="">
+                    <input type="radio" name="fee" value="1">
+                    收费</label>
+                <div class="hide">
+                    <input type="text" placeholder="请输入金额"><p class="hide"></p>
+                </div>
+            </div>
+        </dd>
+        <dt>人数上限</dt>
+        <dd id="hd_limit">
+            <div>
+                <input type="text" placeholder="报名人数上限"><p class="hide"></p>
+            </div>
+        </dd>
+        <dt>封面图片</dt>
+        <dd id="hd_cover">
+            <div>
+                <input type="file" class="hide" accept="image/*">
+                <a class="btn-upload"></a>
+            </div>
+        </dd>
+    </dl>
+    <div id="hd_publish">
+        <p><span>同意</span><a target="_blank">《青创汇服务协议》</a></p>
+        <a class="btn-fb">发布活动</a>
+    </div>
+    @Html.Action("Footer", "Home")
+
+    @Html.Action("DownLoad", "Home")
+    <div id="cover"></div>
+    <div id="cover2"></div>
+    <div id="post_loading">
+        提交中，请稍后...
+    </div>
+
+    <script src="/content/js/lib/jquery-1.12.2.min.js"></script>
+    <script src="/content/js/lib/jquery_date.js"></script>
+    <script src="/Content/ueditor_mini/umeditor.config.js"></script>
+    <script src="/Content/ueditor_mini/umeditor.min.js"></script>
+    <script src="/content/js/acForm.js"></script>
+    <script type="text/javascript">
+        window.UMEDITOR_CONFIG.UMEDITOR_HOME_URL = "/Content/ueditor_mini/";
+        // world编辑器
+        var um1 = UM.getEditor('myEditor', {
+            initialFrameWidth: '100%',
+            initialFrameHeight: 260,
+            toolbar: [
+            ' undo redo | bold italic underline strikethrough | superscript subscript | forecolor backcolor | removeformat |',
+            'insertorderedlist insertunorderedlist | selectall cleardoc paragraph | fontfamily fontsize',
+            '| justifyleft justifycenter justifyright justifyjustify |',
+            'link unlink | emotion image | map',
+            '| horizontal preview fullscreen', 'drafts', 'formula'
+            ]
+        });
+        
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,159 @@
+.container {
+    margin-top: 3.5rem;
+    margin-bottom: 0 !important;
+}
+
+.downloadbox {
+    z-index: 2;
+}
+
+.clear:before,
+.clear:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+
+/* 导师简介 */
+
+header .tutor_bg {
+    width: 100%;
+    height: 15rem;
+    background: url(../img/tutor_bg.jpg);
+    background-size: 100% 100%;
+}
+
+header .aboutbox {
+    padding: 0 1.4rem;
+    text-align: center;
+    position: relative;
+    top: -4rem;
+    margin-bottom: -2rem;
+}
+
+header .aboutbox img {
+    width: 8rem;
+    height: 8rem;
+    border-radius: 4rem;
+    border: .3rem solid #fff;
+    box-shadow: #999 0 0 1px;
+}
+
+header .aboutbox h2 {
+    font-size: 1.3rem;
+    margin: .6em 0;
+    font-weight: bold;
+}
+
+header .aboutbox b {
+    font-size: 1rem;
+}
+
+header .aboutbox h3 {
+    font-size: 1.1rem;
+    color: rgb(153, 153, 153);
+    margin: 1.2em 0;
+    line-height: 1.6em;
+}
+
+header .aboutbox p {
+    font-size: 1rem;
+    line-height: 1.6em;
+    color: rgb(153, 153, 153);
+}
+
+
+/* 导师展示 */
+
+.showbox>h2,
+.recommendbox>h2 {
+    line-height: 3.5rem;
+    background: rgb(242, 242, 242);
+    padding: 0 1.4rem;
+    font-size: 1.3rem;
+}
+
+.banner {
+    width: 100%;
+    height: 15rem;
+    padding: 1.4rem;
+    position: relative;
+}
+
+.banner .frame {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: url(../img/avator.png);
+    background-size: 100% 100%;
+    overflow: hidden;
+}
+
+.banner .frame .box {
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translate3d(0, 0, 0);
+}
+
+.banner .frame .box.trans {
+    transition: left .2s;
+}
+
+.banner .frame .box img {
+    height: 100%;
+    float: left;
+}
+
+.banner .tag {
+    position: absolute;
+    bottom: 2.4rem;
+    left: 0;
+    width: 100%;
+    height: .6rem;
+    text-align: center;
+    z-index: 1;
+}
+
+.banner .tag span {
+    width: .6rem;
+    height: 100%;
+    background: #fff;
+    border-radius: .3rem;
+    margin: 0 .1rem;
+}
+
+.banner .tag span.current {
+    background: rgb(161, 201, 240);
+}
+
+
+/* 相关课程 */
+
+.recommendbox li {
+    padding: 1.2rem 1.4rem;
+    border-top: 1px solid rgb(242, 242, 242);
+}
+
+.recommendbox li>img {
+    width: 25%;
+    float: left;
+    margin-right: 1rem;
+}
+
+.recommendbox li>div h3 {
+    font-size: 1.1rem;
+    line-height: 1.6em;
+    margin-bottom: .6rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.recommendbox li>div p {
+    line-height: 1.6em;
+    font-size: 1.1rem;
+    color: rgb(153, 153, 153);
+}

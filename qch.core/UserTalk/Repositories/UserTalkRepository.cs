@@ -15,8 +15,26 @@ namespace qch.Repositories
     {
         readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         Repository<UserTalkModel> rp = new Repository<UserTalkModel>();
+        Repository<SelectTalkModel> rp1 = new Repository<SelectTalkModel>();
 
-
+        /// <summary>
+        /// 分页获取某个对象的所有评论
+        /// </summary>
+        /// <param name="Guid"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<SelectTalkModel> GetAll(int page, int pagesize, string Guid)
+        {
+            try
+            {
+                string sql = "select a.*,b.t_User_RealName as UserName,b.t_User_Pic as UserAvator from t_user_talk as a left join t_users as b on a.t_Talk_FromUserGuid=b.Guid where a.t_Associate_Guid=@0 and a.t_DelState=0 order by t_Talk_FromDate desc";
+                return rp1.GetPageData(page, pagesize, sql, new object[] { Guid });
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
         /// <summary>
         /// 获取某个对象的所有评论
         /// </summary>
@@ -26,7 +44,7 @@ namespace qch.Repositories
         {
             try
             {
-                string sql = "select * from t_user_talk where t_Associate_Guid=@0 and t_DelState=0";
+                string sql = "select a.*,b.t_User_RealName as UserName,b.t_User_Pic as UserAvator from t_user_talk as a left join t_users as b on a.t_Talk_FromUserGuid=b.Guid where a.t_Associate_Guid=@0 and a.t_DelState=0";
                 return rp.GetAll(sql, new object[] { Guid });
             }
             catch (Exception ex)
@@ -44,7 +62,7 @@ namespace qch.Repositories
         {
             try
             {
-                string sql = "select * from t_user_talk where Guid=@0";
+                string sql = "select a.*,b.t_User_RealName as UserName,b.t_User_Pic as UserAvator from t_user_talk as a left join t_users as b on a.t_Talk_FromUserGuid=b.Guid where a.Guid=@0";
                 return rp.Get(sql, new object[] { Guid });
             }
             catch (Exception ex)

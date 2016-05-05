@@ -52,10 +52,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Account\AccountModel.cs" />
+    <Compile Include="Account\AccountService.cs" />
+    <Compile Include="Account\Repositories\AccountRepository.cs" />
+    <Compile Include="Account\Repositories\T_User_Account.cs" />
     <Compile Include="ActivityApply\ActivityApplyModel.cs" />
     <Compile Include="ActivityApply\ActivityApplyService.cs" />
+    <Compile Include="ActivityApply\ApplyModel.cs" />
+    <Compile Include="ActivityApply\ProofModel.cs" />
     <Compile Include="ActivityApply\Repositories\ActivityApplyRepository.cs" />
     <Compile Include="ActivityApply\Repositories\T_Activity_Apply.cs" />
+    <Compile Include="Activity\ActivityModel.cs" />
+    <Compile Include="Activity\ActivityService.cs" />
+    <Compile Include="Activity\Repositories\ActivityRepository.cs" />
     <Compile Include="Activity\Repositories\T_Activity.cs" />
     <Compile Include="AES.cs" />
     <Compile Include="Area\AreaModel.cs" />
@@ -64,13 +73,47 @@
     <Compile Include="Area\Repositories\CityRepository.cs" />
     <Compile Include="Area\Repositories\DistrictRepository.cs" />
     <Compile Include="Area\Repositories\ProvinceRepository.cs" />
+    <Compile Include="Course\CourseModel.cs" />
+    <Compile Include="Course\CourseService.cs" />
+    <Compile Include="Course\Repositories\CourseRepository.cs" />
+    <Compile Include="Course\Repositories\T_Course.cs" />
+    <Compile Include="Course\SelectCourse.cs" />
     <Compile Include="cvt.cs" />
     <Compile Include="DEncrypt\DEncrypt.cs" />
     <Compile Include="DEncrypt\DESEncrypt.cs" />
     <Compile Include="DEncrypt\HashEncode.cs" />
     <Compile Include="DEncrypt\RSACryption.cs" />
+    <Compile Include="Foucs\FoucsModel.cs" />
+    <Compile Include="Foucs\FoucsService.cs" />
+    <Compile Include="Foucs\FoucsUser.cs" />
+    <Compile Include="Foucs\Repositories\FoucsRepository.cs" />
+    <Compile Include="Foucs\Repositories\T_User_Foucs.cs" />
+    <Compile Include="FundCourse\FundCourseModel.cs" />
+    <Compile Include="FundCourse\FundCourseService.cs" />
+    <Compile Include="FundCourse\Repositories\FundCourseRepository.cs" />
+    <Compile Include="FundCourse\Repositories\T_FundCourse.cs" />
+    <Compile Include="FundCourse\SelectFundCourse.cs" />
     <Compile Include="IDependency.cs" />
+    <Compile Include="Lecturer\LecturerModel.cs" />
+    <Compile Include="Lecturer\LecturerService.cs" />
+    <Compile Include="Lecturer\Repositories\LecturerRepository.cs" />
+    <Compile Include="Lecturer\Repositories\T_Lecturer.cs" />
+    <Compile Include="Order\OrderModel.cs" />
+    <Compile Include="Order\OrderService.cs" />
+    <Compile Include="Order\Repositories\OrderRepository.cs" />
+    <Compile Include="Order\Repositories\T_User_Order.cs" />
+    <Compile Include="Pic\PicModel.cs" />
+    <Compile Include="Pic\PicService.cs" />
+    <Compile Include="Pic\Repositories\PicRepository.cs" />
+    <Compile Include="Pic\Repositories\T_Associate_Pic.cs" />
     <Compile Include="SMS.cs" />
+    <Compile Include="str.cs" />
+    <Compile Include="UserTalk\SelectModel.cs" />
+    <Compile Include="UserTalk\SelectTalkModel.cs" />
+    <Compile Include="wxJS-SDK\Repositories\T_Weixin_OAuth.cs" />
+    <Compile Include="wxJS-SDK\Repositories\WXAuthRepository.cs" />
+    <Compile Include="wxJS-SDK\WXAuthModel.cs" />
+    <Compile Include="wxJS-SDK\WXAuthService.cs" />
     <Compile Include="wxJsApi\IJsapiService.cs" />
     <Compile Include="wxJsApi\JsapiModel.cs" />
     <Compile Include="wxJsApi\JsapiService.cs" />
@@ -110,6 +153,8 @@
     <Compile Include="User\UserLoginModel.cs" />
     <Compile Include="User\UserModel.cs" />
     <Compile Include="User\UserService.cs" />
+    <Compile Include="wxUser\KFSignModel.cs" />
+    <Compile Include="wxUser\KFUserModel.cs" />
     <Compile Include="wxUser\Repositories\T_User_Weixin.cs" />
     <Compile Include="wxUser\Repositories\WXUserRepository.cs" />
     <Compile Include="wxUser\WXUserModel.cs" />
@@ -124,6 +169,7 @@
   <ItemGroup>
     <None Include="DEncrypt\vssver2.scc" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

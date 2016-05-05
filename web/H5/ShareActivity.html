@@ -6,10 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
     <meta name="renderer" content="webkit" />
     <title>活动详情</title>
-    <link rel="stylesheet" href="css/public.css?v=e2a08fa8c189318bcaee1075c8bed785">
-
-    <link rel="stylesheet" href="css/page4.css?v=f1fcfec9cc06ee3b7d7d2ce694b99017">
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/page4.css">
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
 </head>
+
 <body>
     <table class="downloadbox" cellpadding="0" cellspacing="0">
         <tr>
@@ -18,7 +19,7 @@
                     <img src="img/logo.png"></div>
             </td>
             <td>
-                <h2>青创汇 / 提供一站式创业服务</h2>
+                <h2>青创汇 / 为创业者而生</h2>
                 <p>
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
@@ -31,262 +32,236 @@
             <td><a onclick="godown()">立即下载</a></td>
         </tr>
     </table>
-    <style>
-        .downloadbox {
-            width: 100%;
-            height: 3.5rem;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background: rgb(236,236,236);
-            padding: 0 .8rem 0 1.2rem;
-        }
-
-            .downloadbox td:nth-child(1) {
-                width: 4rem;
-            }
-
-            .downloadbox td:nth-child(3) {
-                text-align: right;
-            }
-
-            .downloadbox .image {
-                width: 3rem;
-                height: 3rem;
-                background: #fff;
-                border-radius: .6rem;
-            }
-
-                .downloadbox .image img {
-                    width: 100%;
-                    height: 100%;
-                }
-
-            .downloadbox a {
-                padding: .5rem .7rem;
-                background: #353535;
-                border-radius: .6rem;
-                color: #fff;
-            }
-
-            .downloadbox h2 {
-                font-size: .9rem;
-                color: #353535;
-                margin-bottom: .3rem;
-            }
-
-            .downloadbox p{
-                line-height: 1.2rem;
-            }
-            .downloadbox p i{
-                color:rgb(232,145,2); display: block; width:1.1rem; height:1.1rem; background: url(img/icon/xing.png) no-repeat 50% 50%;
-                background-size: 100% 100%; float: left; 
-            }
-            .downloadbox p strong{
-                color:rgb(118,118,118); font-size:.8rem; font-weight: normal;
-            }
-
-    </style>
-    <div class="container">
-
-        <header>
-            <!--<a class="left"><i class="fa fa-angle-left"></i></a>
-            <a class="right"><i class="fa fa-share-square-o"></i></a>
-            <a class="right"><i class="fa fa-heart-o"></i></a>
-            <h2>活动详情</h2>-->
-        </header>
+    <!-- 加载遮罩层 -->
+    <div class="shade-div"></div>
+    <!-- 主内容 通过模板渲染 -->
+    <div class="container loading"></div>
+    <!-- 表单遮罩层 -->
+    <div class="shade-blur hide"></div>
+    <!-- 评论表单 -->
+    <div class="commentForm">
+        <div class="form-header">
+            <a class="cancel">取消</a>
+            <a class="send">发送</a>
+            <h2>请输入你的评论</h2>
+        </div>
+        <textarea class="comment-content"></textarea>
+    </div>
+    <!-- 主内容模板 -->
+    <script type="text/html" id="contentTemplate">
+    <%var imgUrl='http://www.cn-qch.com:8002/attach/images/'%>
+    <%var avatorUrl='http://www.cn-qch.com:8002/attach/user/'%>
+    <%var defaultAvatorUrl='img/avator.png'%>
+        <header></header>
         <div class="content">
-            <div class="image" id="divTitleImg">
+            <div class="image">
+                <img src="<%=imgUrl + data.activityImg%>">
             </div>
             <div class="details">
-                <h2 id="hTitle">NIKE跑了就懂 - just do it</h2>
+                <h2><%=data.activityTitle%></h2>
                 <ul>
-                    <li>
-                        <label>主 办 方:</label><b id="zhubanfang"></b></li>
-                    <li>
-                        <label>活动费用:</label><span id="feiyong"></span></li>
-                    <li>
-                        <label>咨询电话:</label><strong id="dianhua">0371-68688868</strong></li>
-                    <li>
-                        <label>活动时间:</label><span id="shijian"></span></li>
-                    <li>
-                        <label>活动地点:</label><span id="spAddress">郑州市航海东路与机场高速交汇处中原福塔</span></li>
+                    <li><label>主 办 方:</label><b><%=data.sponsor%></b></li>
+                    <li><label>活动费用:</label><span><%=data.activityCost>0?data.activityCost.toFixed(2):'免费'%></span></li>
+                    <li><label>咨询电话:</label><a href="<%='tel://' + data.telephone%>"><%=data.telephone%></a></li>
+                    <li><label>活动时间:</label><span><%=data.activityTime%></span></li>
+                    <li><label>活动地点:</label><span><%=data.activityAddress%></span></li>
                 </ul>
             </div>
             <div class="signed">
-                <h2 id="baoming">已报名<strong> 258/2000 </strong>人</h2>
+                <h2 id="baoming">已报名<strong> <%=data.numSigns+ '/' + data.numTotal %> </strong>人</h2>
                 <div class="box" id="members">
+                    <%data.avatar.forEach(function(item,index){%>
+                        <a <%if(index%8==0){%>class="first"<%}%>><img class="lazy" data-src="<%=item.userAvator?avatorUrl +item.userAvator:defaultAvatorUrl%>"></a>
+                    <%})%>
                 </div>
             </div>
         </div>
-        <div class="commentbox">
-             <h2>活动介绍</h2>
-        <div class="text1" id="text1" name="text1" style="padding-left:30px;">
+        <div class="detailsbox">
+            <h2>活动介绍</h2>
+            <div class="text1"><%==data.activityDetails.replace(/===/g,'<br>')%></div>
         </div>
-            </div>
         <div class="commentbox">
             <h2>最新评论</h2>
             <ul class="commentlist" id="ulComment">
-
-                <!--<li>
-                    <a>
-                        <img src="img/photo3.jpg?v=8ee13fcc1f5652b80ca87e4fa116751d"></a>
-                    <div>
-                        <h3>欧阳博远<span>刚刚</span><a class="remove">删除</a></h3>
-                        <p>
-                            <strong>回复愣文青:</strong>
-                            你可以多多号召你的朋友们来参加，说不定还能促成几段好姻缘~
-                        </p>
-                    </div>
-                </li>-->
-
-
-
+                <%if(data.comments.items.length==0){%><li>暂无</li><%}%>
+                <%data.comments.items.forEach(function(item,index){%>
+                    <%var name=item.userName||''%>
+                    <%name=name.length>2?name.slice(0,2)+'**':name%>
+                    <li>
+                        <a><img class="lazy" data-src="<%=item.userAvator?avatorUrl +item.userAvator:defaultAvatorUrl%>"></a>
+                        <div>
+                            <h3><%=name%><span><%=item.t_Talk_FromDate%></span></h3>
+                            <p><%=item.t_Talk_FromContent%></p>
+                        </div>
+                    </li>
+                <%})%>
             </ul>
         </div>
         <div class="more">
             <a onclick="godown()">查看更多评论</a>
         </div>
-        <!--<div class="controlbox">
-            <span><i class="fa fa-angle-up"></i></span>
-            继续拖动查看更多活动详情
-        </div>-->
         <footer>
             <nav>
-                <a class="btn-comment" onclick="godown()">我要评论</a>
-                <span style="background-color:#fff; color:#353535" onclick="apply()">我要报名</span>
+                <a class="btn-comment">我要评论</a>
+                <a onclick="apply()">我要报名</a>
             </nav>
         </footer>
+    </script>
 
-    </div>
     <script src="js/jquery.min.js"></script>
-    <script src="js/zepto.min.js?v=1abd55c514bd00abc726cca455f6b4c9"></script>
-    <script src="../js/common.js"></script>
+    <script src="js/artTemplate.js"></script>
+    <script charset="gb2312" src="js/loader.js"></script>
     <script>
-        window.onscroll = function () {
-            $('img').addClass('radius');
-        }
         function godown() {
             location.href = 'http://www.cn-qch.com/app';
         }
-        
-        var guid = GetUrlParam("Guid");
-        if (!guid || guid == "") { guid = '023d76fa-8f9e-4413-a33d-060049dc199e'; }
         function apply() {
-            location.href = '/wxuser/userinfo?guid=' + guid;
+            location.href = 'http://test.cn-qch.com/wxuser/userinfo?guid=' + guid;
         }
-        //获取活动详情
+        function GetUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]); return null;
+        }
+        var guid = GetUrlParam("Guid") || '406c0819-b33d-4a7a-92b7-199781eb7440';
+            //获取活动详情
         $.ajax({
-            type: 'post',
+            type: 'get',
             cache: false,
             dataType: 'json',
-            url: '../QCH_Activity/Ajax_Activity.ashx',
-            data: [
-                { name: 'Action', value: 'GetActivityView' },
-                { name: 'Guid', value: guid }
-            ],
-            success: function (data) {
-                var avator = 'img/avator.png';
+            url: 'http://120.25.106.244:9001/api/activity/ApplyInfo',
+            data: {guid:guid},
+            success: function(data) {
                 if (data) {
-                    $("#divTitleImg").append('<img src=' + imgUrl + data.t_Activity_CoverPic + ' />');
-                    $("#hTitle").text(data.t_Activity_Title);
-                    $("#zhubanfang").text(data.t_Activity_Holder);
-                    var money = '免费';
-                    if (data.t_Activity_Fee > 0) {
-                        money = data.t_Activity_Fee;
-                    }
-                    $("#feiyong").text(money);
-                    $("#dianhua").text(data.t_Activity_Tel);
-                    $("#shijian").text(data.t_Activity_sDate);
-                    $("#spAddress").text(data.t_Activity_Street);
-                    $("#baoming").replaceWith('<h2 id="baoming">已报名<strong> ' + data.ApplyCount + '/' + data.t_Activity_LimitPerson + ' </strong>人</h2>')
-                    //报名人员
-                    var list = '';
-                    if (data.ApplyCount > 0) {
-                        var model = data.ApplyUsers;
-                        for (var item in model) {
-                            var avator = 'img/avator.png';
-                            if (model[item].ApplyUserPic && model[item].ApplyUserPic != "") {
-                                avator = avatorUrl + model[item].ApplyUserPic;
-                            }
-                            list += '<a><img src="' + avator + '"></a>';
-                        }
-                        $("#members").append(list);
-                        winResize($('#members img'));
-                    }                    
+                    $('.container').html(template('contentTemplate', { data: data }));
+                    $('.detailsbox .text1 img').each(function () {
+                        var index = $(this).attr('src').indexOf('http://');
+                        (index == -1 || index != 0) && (this.src = 'http://cn-qch.com:8002' + $(this).attr('src'));
+                    })
+                    loadPic('.content .image img');
+                    winResize($('#members img,.commentbox img'));
+                    
+                    wxShare({
+                        title: $('.details>h2').text(),
+                        desc: $(".detailsbox .text1").text().slice(0, 40) + '...',
+                        imgUrl: $('.content .image img').attr('src')
+                    });
                 }
             }
         })
-        ///绑定数据
-        $(function () {
-            if (guid != null) {
-                $.ajax({
-                    type: "POST",
-                    url: "../QCH_Activity/Ajax_Activity.ashx",
-                    data: { Action: "getModel", Guid: guid },
-                    dataType: "json",
-                    async: false,
-                    beforeSend: function () {
-
-                    },
-                    success: function (data) {
-                        $("#text1").html(data.t_Activity_Instruction);
-                    },
-                    complete: function (XMLHttpRequest, textStatus) {
-
-                    }
-                });
-            }
-        })
-        //获取评论信息
-        $.ajax({
-            type: 'post',
-            cache: false,
-            dataType: 'json',
-            url: '../QCH_User/Ajax_User.ashx',
-            data: [
-                { name: 'Action', value: 'GetTalk' },
-                { name: 'Guid', value: guid }
-            ],
-            success: function (data) {
-                if (data && data[0].result != '暂无数据') {                    
-                    var list = '';
-                    for (var item in data) {
-                        var avator = 'img/avator.png';
-                        if (data[item].t_User_Pic && data[item].t_User_Pic != "") {
-                            avator = avatorUrl + data[item].t_User_Pic;
-                        }
-                        var name = data[item].t_User_RealName;
-                        if (!name || name == "") {
-                            name = data[item].t_User_LoginId;
-                            if (name || name.length > 3) {
-                                name = name.substring(0, 3) + '****' + name.substring(name.length - 2, name.length - 1);
-                            }
-                        }
-                        list += '<li><a><img src="' + avator + '"></a><div><h3>' + name + '<span>' + data[item].t_Talk_FromDate + '</span></h3><p>' + data[item].t_Talk_FromContent + '</p></div></li>'
-                    }
-                    $("#ulComment").append(list);
-                    winResize($('#ulComment img'));
-                } else {
-                    $("#ulComment").append('<li><a>暂无</a></li>');
-                }               
-            }
-        })
-
         function winResize($e) {
             $e.css({
                 height: $e.width(),
                 borderRadius: $e.width() / 2
             })
         }
-        $(function () {
-            $(window).resize(function () {
-                winResize($('.signed img'));
-                winResize($('.commentbox .commentlist>li>a>img'));
-            }).resize();
-            $('.signed .box a').filter(function (i) { return !(i % 8); }).addClass('first');
-        })
-    </script>
+        // 首图预加载
+        function loadPic(selector) {
+            var image = new Image();
+            image.onload = function () {
+                $('img.lazy').each(function () {
+                    $(this).attr('src', $(this).data('src')).removeClass('lazy');
+                    this.removeAttribute('data-src');
+                })
+            }
+            image.src = $(selector).get(0).src;
+        }
+        // 图片懒加载 对有lazy类的图片进行懒加载
+        $(window).bind('scroll', lazy_img);
+        function lazy_img() {
+            var len = $('img.lazy').length;
+            !len && $(window).unbind('scroll', lazy_img);
+            $('img.lazy').each(function () {
+                var oTop = this.offsetTop || this.offsetParent.offsetTop;
+                var sTop = $(document).scrollTop();
+                var winH = $(window).height();
+                if (sTop + winH >= oTop) {
+                    $(this).attr('src', $(this).data('src')).removeClass('lazy');
+                    this.removeAttribute('data-src');
+                }
+            })
+        }
 
+        $(document).ajaxStop(function () {
+            $('.container').removeClass('loading');
+            $('.shade-div').remove();
+            initCommentForm();
+        });
+        function initCommentForm(){
+            // 阻止滚动屏幕
+            $('.commentForm')[0].addEventListener('touchstart', preventScroll, false);
+            // 打开评论盒子
+            $('.btn-comment').click( function() {
+                    godown();
+                    // $('.shade-blur').removeClass('hide').get(0).addEventListener('touchstart', cancelComment, false);
+                    // $('.commentForm').fadeIn(200, function () {
+                    //     $('footer').fadeOut(200);
+                    // }).find('textarea').val('').focus();
+                })
+                // 关闭评论盒子
+            $('.commentForm .cancel')[0].addEventListener('touchend', cancelComment, false);
+            // 发送评论内容
+            $('.commentForm .send')[0].addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                    var $textarea = $('.commentForm textarea');
+                    $textarea.blur();
+                    if (!$textarea.val().trim()) {
+                        tipInfo('评论不能为空！');
+                        $textarea.val('');
+                        return false;
+                    }
+                }, false)
+                // 让文本域得到焦点
+            $('.commentForm textarea')[0].addEventListener('touchend', function(e) {
+                e.preventDefault();
+                $(this).focus();
+            }, false);
+        }
+        // 阻止滚动屏幕
+        function preventScroll(e) {
+            e.preventDefault();
+        }
+        // 关闭评论盒子
+        function cancelComment(e) {
+            e.preventDefault();
+            $('.commentForm textarea').blur();
+            $('.commentForm').fadeOut(200, function() {
+                $('footer').fadeIn(200);
+            });
+            $('.shade-blur').addClass('hide').get(0).removeEventListener('touchstart', cancelComment, false);
+        }
+        // 提示信息
+        function tipInfo(t) {
+            $('p.tipinfo').remove();
+            if (window.tid) {
+                clearTimeout(window.tid);
+                window.tid = 0;
+            }
+            var winWidth = $(window).width();
+            var $tipinfo = $('<p class="tipinfo">').text(t).css({
+                position: 'fixed',
+                textAlign: 'center',
+                fontSize: '1rem',
+                color: '#fff',
+                borderRadius: '.5rem',
+                background: 'rgba(0,0,0,.8)',
+                padding: '.6rem 1rem',
+                transform: 'translate3d(0,0,0)',
+                top: '1rem'
+            }).appendTo('body').css({
+                left: (winWidth - $('p.tipinfo')[0].offsetWidth) / 2
+            });
+            window.tid = setTimeout(function() {
+                $tipinfo.css({
+                    top: '3rem',
+                    opacity: 0,
+                    transition: 'top .6s,opacity .6s'
+                });
+                setTimeout(function() {
+                    $tipinfo.remove();
+                }, 600);
+            }, 800)
+        }
+    </script>
 </body>
 </html>

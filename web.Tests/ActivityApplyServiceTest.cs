@@ -64,23 +64,23 @@ namespace web.Tests
         #endregion
 
 
-        /// <summary>
-        ///Apply 的测试
-        ///</summary>
-        [TestMethod()]
-        public void ApplyTest()
-        {
-            ActivityApplyService target = new ActivityApplyService(); // TODO: 初始化为适当的值
-            string guid = "023d76fa-8f9e-4413-a33d-060049dc199e"; // TODO: 初始化为适当的值
-            string phone = "123456789"; // TODO: 初始化为适当的值
-            string avator = "adsf"; // TODO: 初始化为适当的值
-            string name = "yy"; // TODO: 初始化为适当的值
-            string sex = "nv"; // TODO: 初始化为适当的值
-            Msg expected = null; // TODO: 初始化为适当的值
-            Msg actual;
-            actual = target.Apply(guid, phone, avator, name, sex);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("验证此测试方法的正确性。");
-        }
+        ///// <summary>
+        /////Apply 的测试
+        /////</summary>
+        //[TestMethod()]
+        //public void ApplyTest()
+        //{
+        //    ActivityApplyService target = new ActivityApplyService(); // TODO: 初始化为适当的值
+        //    string guid = "023d76fa-8f9e-4413-a33d-060049dc199e"; // TODO: 初始化为适当的值
+        //    string phone = "123456789"; // TODO: 初始化为适当的值
+        //    string avator = "adsf"; // TODO: 初始化为适当的值
+        //    string name = "yy"; // TODO: 初始化为适当的值
+        //    string sex = "nv"; // TODO: 初始化为适当的值
+        //    Msg expected = null; // TODO: 初始化为适当的值
+        //    Msg actual;
+        //    actual = target.Apply(guid, phone, avator, name, sex);
+        //    Assert.AreEqual(expected, actual);
+        //    Assert.Inconclusive("验证此测试方法的正确性。");
+        //}
     }
 }

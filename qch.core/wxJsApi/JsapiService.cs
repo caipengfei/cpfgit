@@ -38,7 +38,7 @@ namespace qch.core
         }
 
         //发起一个http请球，返回值  
-        private string httpGet(string url)
+        public string httpGet(string url)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace qch.core
             }
             catch (WebException webEx)
             {
-                Console.WriteLine(webEx.Message.ToString());
+                log.Error(webEx.Message.ToString());
                 return null;
             }
         }
@@ -65,15 +65,20 @@ namespace qch.core
         {
             try
             {
+                log.Info("GetSign方法-----------------------------");
                 string timestamp = qch.Infrastructure.TimeHelper.ConvertDateTime(DateTime.Now);
                 string noncestr = createNonceStr();
+                log.Info("timestamp=" + timestamp);
+                log.Info("noncestr=" + noncestr);
                 var model = jsapiRp.Get(PageName);
                 if (model == null)
                 {
 
                     var access_token = AccessTokenContainer.GetToken(appId);
+                    log.Info("access_token=" + access_token);
                     string url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=" + access_token + "";
                     string jsapi_ticket = httpGet(url);
+                    log.Info("jsapi_ticket=" + jsapi_ticket);
                     SignModel sign = new SignModel();
                     sign = (SignModel)JsonConvert.DeserializeObject(jsapi_ticket, typeof(SignModel));
                     JsapiModel jsmodel = new JsapiModel();
@@ -94,10 +99,12 @@ namespace qch.core
                     //如果当前时间在 写入缓存时间+110分钟之内
                     if (addTime.AddMinutes(110) > DateTime.Now)
                     {
+                        log.Info("未到期");
                         return model;
                     }
                     else
                     {
+                        log.Info("到期，重新生成");
                         //if (!AccessTokenContainer.CheckRegistered(appId))
                         //{
                         //    AccessTokenContainer.Register(appId, appSecret);
@@ -121,13 +128,11 @@ namespace qch.core
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                log.Error(ex.Message);
                 return null;
             }
         }
-
-        
-
     }
 }

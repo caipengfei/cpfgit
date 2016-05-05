@@ -17,13 +17,13 @@
     <link href="/h5/css/signUp.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="container">
+    <div class="container hide">
         <header>
             <img src="@ViewBag.UserLogo" />
             <h2>@ViewBag.Name</h2>
         </header>
         <form>
-            <span class="help"></span>
+            @*<span class="help"></span>*@
             <div class="form-group">
                 <input type="text" class="phone" placeholder="请输入您的手机号" />
             </div>
@@ -32,21 +32,70 @@
                 <a id="getValidcode" class="enabled">获取验证码</a>
             </div>
             <div class="form-group">
-                <input type="button" id="submit" data-url="" value="我要报名" />
+                <a id="submit">我要报名</a>
             </div>
         </form>
     </div>
-
-    <script src="/h5/js/zepto.min.js"></script>
+    <div id="clipBox" class="hide">
+        <div class="shade"></div>
+        <div class="myClip">
+            @*<a class="close">&times;</a>*@
+            <img src="/h5/img/icon_joinOk1.png" />
+            <h2><span id="spcode">报名成功</span></h2>
+            <p onclick="goproof()" id="pContent">点此领取报名凭证</p>
+        </div>
+    </div>
+    <input style="display:none" value="@ViewBag.CodeMessage" id="txtCodemsg" />
+    <input style="display:none" value="@ViewBag.ApplyGuid" id="txtApplyGuid" />
+    <script src="~/H5/js/jquery.min.js"></script>
     <script>
+        var applyguid = $("#txtApplyGuid").val();
+        var codemsg = $("#txtCodemsg").val();
+        if (codemsg == "0002") {
+            showSucess();
+        } else if (codemsg == "0001") {
+            $("#pContent").text("点此查看报名凭证");
+            $("#spcode").text("已报名");
+            showSucess();
+        } else {
+            $(".container").removeClass("hide");
+        }
+        //if (codemsg == "0003") {
+        //    $(".container").removeClass("hide");
+        //}
+        function goproof() {
+            window.location.href = '/wxuser/ApplyProof?guid=' + applyguid;
+        }
+        function showSucess() {
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            $('#clipBox').removeClass('hide');
+
+            $('.myClip').css({
+                top: (winHeight - $('.myClip')[0].offsetHeight) / 2,
+                left: (winWidth - $('.myClip')[0].offsetWidth) / 2
+            }).css({
+                opacity: 1
+            });
+        }
+
+        //$(function () {
+
+        //    $('.shade')[0].addEventListener('touchend', closeClip, false);
+        //    $('#clipBox .close')[0].addEventListener('touchend', closeClip, false);
+        //})
+        function closeClip(e) {
+            e.preventDefault();
+            $(this).parents('#clipBox').addClass('hide');
+        }
         //发送验证码
         function sendsms(phone) {
             if (phone == "") {
-                alert("手机号不能为空");
+                tipInfo("手机号不能为空");
                 return false;
             }
             $.post('/home/SendSMS', { phone: phone }, function (msg) {
-                alert(msg.Data);
+                tipInfo(msg.Data);
             })
         }
         //function jiance() {
@@ -64,92 +113,132 @@
         //        alert(msg.Data);
         //    })
         //}
-        var waitTime;
+        var regPhone = /^([1]((3|5|7|8)[0-9]{1})[0-9]{8})$/;
+        var waitTime, winWidth, winHeight;
         $(function () {
+            winWidth = $(window).width();
+            winHeight = $(window).height();
             $(window).resize(function () {
-                isMaxthon()
-                var winWidth = $(window).width(),
-                    conHeight = isMaxthon() ? $(window).height() : screen.height;
                 $('.container').css({
-                    height: conHeight
+                    height: winHeight
+                })
+                $('#clipBox').css({
+                    height: winHeight,
+                    width: winWidth
                 })
             }).resize();
-            $('.phone').blur(function () {
-                var reg = /^([1]([3][0-9]{1}|59|58|70|86|87|88|89)[0-9]{8})$/;
-                validField($(this), reg, '手机号不能为空！', '手机号格式不正确！');
-            })
-            $('.validcode').blur(function () {
-                validField($(this), null, '验证码不能为空！')
-            })
+
+            //$('.phone').blur(function () {
+
+            //    validField($(this), regPhone, '手机号不能为空！', '手机号格式不正确！');
+            //})
+            //$('.validcode').blur(function () {
+            //    validField($(this), null, '验证码不能为空！')
+            //})
             $('#submit')[0].addEventListener('touchend', function (e) {
                 e.preventDefault();
                 signUpHandler(this);
             }, false);
-            // 获取验证码
+            // 获取验证码按钮事件
             $('#getValidcode.enabled')[0].addEventListener('touchend', function (e) {
                 e.preventDefault();
+                $('[type=text]').blur();
                 if (window.td) return;
-                var reg = /^([1]([3][0-9]{1}|59|58|70|86|87|88|89)[0-9]{8})$/;
-                if (!validField($('.phone'), reg, '手机号不能为空！', '手机号格式不正确！')) return;
-                //发送验证码
-                sendsms($('.phone').val());
-                $('#getValidcode').removeClass('enabled');
-                waitTime = 60;
-                window.td = setInterval(function () {
-                    waitTime--;
-                    if (waitTime == 0) {
-                        clearInterval(window.td);
-                        window.td = 0;
-                        $('#getValidcode').addClass('enabled').text('获取验证码');
-                        return;
+                if (!validField($('.phone'), regPhone, '手机号不能为空！', '手机号格式不正确！')) return;
+                $(this).siblings('[type=text]').focus();
+                //检查输入的手机号是否重复参与该活动
+                $.post('/wxuser/checkapply', { phone: $('.phone').val() }, function (msg) {
+                    if (msg.type == "success") {
+                        //发送验证码
+                        sendsms($('.phone').val());
+                        $('#getValidcode').removeClass('enabled');
+                        waitTime = 60;
+                        window.td = setInterval(function () {
+                            waitTime--;
+                            if (waitTime == 0) {
+                                clearInterval(window.td);
+                                window.td = 0;
+                                $('#getValidcode').addClass('enabled').text('获取验证码');
+                                return;
+                            }
+                            $('#getValidcode').text(waitTime + 's后重新获取');
+                        }, 1000)
+                    } else {
+                        tipInfo(msg.Data);
                     }
-                    $('#getValidcode').text(waitTime + 's后重新获取');
-                }, 1000)
-            }, false);
+                }, false);
+
+            })
         })
-        function isMaxthon() {
-            var userAgent = navigator.userAgent.toLowerCase();
-            if (userAgent.indexOf('mxbrowser') != -1) {
-                return true;
-            }
-            return false;
-        }
+        //function isMaxthon() {
+        //    var userAgent = navigator.userAgent.toLowerCase();
+        //    if (userAgent.indexOf('mxbrowser') != -1) {
+        //        return true;
+        //    }
+        //    return false;
+        //}
 
         // 验证文本框
         function validField($input, reg, helpText1, helpText2) {
-            var value = $.trim($input.val());
-            var $help = $('.help');
+            var value = $.trim($input[0].value);
             if (!value) {
-                $help.html(helpText1).removeClass('hide');
+                tipInfo(helpText1);
                 return false;
             } else {
                 if (reg && !reg.test(value)) {
-                    $help.html(helpText2).removeClass('hide');
+                    tipInfo(helpText2);
                     return false;
                 }
             }
-            $help.html('').addClass('hide');
             return true;
         }
+
         // 报名提交
         function signUpHandler(el) {
+            $('[type=text]').blur();
             var $phone = $('.phone');
             var $validcode = $('.validcode');
-            var regPhone = /^([1]([3][0-9]{1}|59|58|70|86|87|88|89)[0-9]{8})$/;
             if (validField($phone, regPhone, '手机号不能为空！', '手机号格式不正确！') && validField($validcode, null, '验证码不能为空！')) {
                 var data = {
                     phone: $phone.val(),
                     code: $validcode.val()
                 };
-                var postUrl = $(el).data('url');
-                $.post('/wxuser/ActivityApply', data, function (res) {
-                    alert(res.Data);
-                    if (res.type == 'error') {
-                        $('.help').html(res.message).removeClass('hide');
+                $.post('/wxuser/ActivityApply', data, function (msg) {
+                    if (msg.type == "success") {
+                        applyguid = msg.Remark;
+                        showSucess();
+                    } else {
+                        tipInfo(msg.Data);
                     }
                 })
             }
         }
+        function tipInfo(t) {
+            $('p.tipinfo').remove();
+            if (window.tid) {
+                clearTimeout(window.tid);
+                window.tid = 0;
+            }
+            var winWidth = $(window).width();
+            var $tipinfo = $('<p class="tipinfo">').text(t).css({
+                position: 'fixed',
+                textAlign: 'center',
+                fontSize: '1rem',
+                color: '#fff',
+                borderRadius: '.5rem',
+                background: 'rgba(0,0,0,.8)',
+                padding: '.6rem 1rem',
+                transform: 'translate3d(0,0,0)'
+            }).appendTo('body').css({
+                left: (winWidth - $('p.tipinfo')[0].offsetWidth) / 2,
+                top: '1rem'
+            });
+            window.tid = setTimeout(function () {
+                $tipinfo.css({ top: '3rem', opacity: 0, transition: 'top .6s,opacity .6s' });
+                setTimeout(function () { $tipinfo.remove(); }, 600);
+            }, 800)
+        }
+
 
     </script>
 </body>

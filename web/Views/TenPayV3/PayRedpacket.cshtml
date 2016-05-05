@@ -1,0 +1,405 @@
+﻿@{
+    Layout = null;
+    ViewBag.Title = "支付福袋";
+}
+@model LuckRedPacket.RedPacketOrder
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta content="telephone=no" name="format-detection"/>
+<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+<title>@ViewBag.Title</title>
+<link rel="stylesheet" type="text/css" href="/Content/css/lucky_home.css" />
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+</head>
+
+<body class="create_bg">
+<div class="lucky_create_bg">
+  <!--装入额度大于福袋大小开始-->
+ <div class="zh_hb_alert" style="display: none;">当前装入额度不能大于福袋设定大小!</div>
+ <!--装入额度大于福袋大小结束-->
+ <img src="/Content/images/create_redpaper.jpg">
+ <div class="lucky_finger"><img src="/Content/images/lucky_goods-default.jpg"></div>
+ <p class="send_name send_pos">好友<span style="color:#fdf453">@Model.NickName</span>发来的福袋</p>
+ <p class="redpapaer_max send_pos">￥<span id="red_max_num" class="red_bold_max">@Model.CreateAmount</span></p>
+</div>
+<div class="lucky_con_mar">
+<p class="creater">该福袋由<span>@Model.NickName</span><span>@Model.CreateDate.ToString("yyyy年MM月dd日HH:mm")</span>创建</p>
+<div class="progress_content">
+  <div class="progress_container"><div class="progress_bar tip" title="@Model.Rate%"></div></div>
+</div>
+<p class="red_progress">福袋开启进度</p>
+<ul class="create_content">
+  <li  class="label_li2"> <em>设置装入额度</em><em class="float_r line_h">元</em>
+    <input type="number" class="float_r line_h text_r" id="sample_num" maxlength="5" placeholder="填写额度"  >
+    <p>不低于1元</p>
+  </li>
+</ul>
+<div class="lucky_money_pay">￥<span class="sample_num_pay">1.00</span></div>
+<div class="lucky_button_bg" style="background:#ccc;">
+  <input type="submit" class="pay_button" id="submit_btn" disabled="disabled" value="支付" onclick="callpay()" >
+</div>
+</div>
+<!--支付界面-->
+<div class="pay-cont" style="display: none;">
+  <div class="newlist-con pay-pos" style="height: auto">
+    <div class="pay-user"><span class="pay-user-pic">请输入支付密码</span><span class="pay-user-close"><img src="/Content/images/lucky_pay_close.jpg" alt=""></span></div>
+    <div class="pay-num">
+      <p class="pay-num-i">好运气福袋</p>
+      <p class="pay-num-n">￥<span>1.00</span></p>
+    </div>
+    <div class ="pay-choice"><span class="pay-choice-pic"><i><img class="pay-logo" src="/Content/images/xftlogo.png" alt=""></i><span class="pay-txt">消费通会员卡</span></span><span class="pay-choice-close"><img src="/Content/images/ic_global_arrow_right.png" alt=""></span></div>
+    <ul class="mm_box">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+    <a href="javascript:void(0);">
+    <p class="res_pay_pwd" style="bottom:10px;">重设支付密码</p>
+    </a> </div>
+  <div class="numb_box">
+    <div class="xiaq_tb"> <img src="/Content/images/jftc_14.jpg" height="10"> </div>
+    <ul class="nub_ggg">
+      <li><a href="javascript:void(0);">1</a></li>
+      <li><a href="javascript:void(0);" class="zj_x">2</a></li>
+      <li><a href="javascript:void(0);">3</a></li>
+      <li><a href="javascript:void(0);">4</a></li>
+      <li><a href="javascript:void(0);" class="zj_x">5</a></li>
+      <li><a href="javascript:void(0);">6</a></li>
+      <li><a href="javascript:void(0);">7</a></li>
+      <li><a href="javascript:void(0);" class="zj_x">8</a></li>
+      <li><a href="javascript:void(0);">9</a></li>
+      <li><span></span></li>
+      <li><a href="javascript:void(0);" class="zj_x">0</a></li>
+      <li><span  class="del" > <img src="/Content/images/jftc_18.jpg" ></span></li>
+    </ul>
+  </div>
+  <div class="hbbj"></div>
+</div>
+ 
+<!--支付界面--> 
+<!--支付方式弹窗开始-->
+<div class="p-choice-main" style="display: none;">
+  <div class="newlist-con p-choice-area pay-pos " style="height: auto;">
+    <h3>更换支付方式</h3>
+    <span class="pay-user-close style_pre"><img src="/Content/images/ic_global_arrow_left.jpg" alt=""></span>
+    <div class="p-choice-list">
+      <label>
+      <span class="p-c-list-pic"><img src="/Content/images/xftlogo.png" alt=""></span>
+      <div class="p-c-list-name">消费通会员卡</div>
+      <span class="pay-choice-close"><img src="/Content/images/ic_global_arrow_right.png" alt=""></span>
+      </label>
+    </div>
+    <div class="p-choice-list">
+      <label>
+      <span class="p-c-list-pic"><img src="/Content/images/pic.png" alt=""></span>
+      <div class="p-c-list-name">微信支付</div>
+      <span class="pay-choice-close"><img src="/Content/images/ic_global_arrow_right.png" alt=""></span>
+      </label>
+    </div>
+  </div>
+</div>
+<!--支付方式弹窗开始-->
+<!--密码错误弹出开始-->
+<div class="zhezhao"></div>
+<div class="grade-cate cate-bottom">
+  <div class="newlist-con">
+    <p class="catetitle">密码错误，请重试</p>
+    <p class="bot-button"><span class="cancel">重试</span> <a href="javascript:void(0);"><span class="check">忘记密码</span></a></p>
+  </div>	
+</div>
+<!--密码错误弹出结束-->
+
+
+    <input type="text" value="@Model.OrderNo" id="OrderNo" style="display:none" />
+     <input type="text" value="@ViewBag.openid" id="OpenId" style="display:none" />
+     <input type="text" value="@ViewBag.headimgurl" id="Avator" style="display:none" />
+     <input type="text" value="@ViewBag.nickname" id="NickName" style="display:none" />
+    
+</body>
+<script src="/Content/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Content/js/jquery.tips.js"></script>
+<script>
+    wx.config({
+        debug: false,
+        appId: '@ViewBag.appid',
+        timestamp: '@ViewBag.timestamp',
+           nonceStr: '@ViewBag.nonce',
+           signature: '@ViewBag.signature',
+           jsApiList: [
+             'checkJsApi',
+             'onMenuShareTimeline',
+             'onMenuShareAppMessage'
+           ]
+       });
+
+       wx.ready(function () {
+           wx.onMenuShareAppMessage(
+                   {
+                       title: '抢红包不如发福袋，比在朋友圈发模糊照片更赚钱的“红包”！',
+                       desc: '福袋接龙,财运亨通！发出去能赚钱的“红包”！',
+                       link: '@ViewBag.ShareUrl',
+                    imgUrl: '@ViewBag.ShareImg',
+
+                    trigger: function (res) {
+                        //alert('用户点击发送给朋友');
+                    },
+                    success: function (res) {
+                        alert('已分享');
+                    },
+                    cancel: function (res) {
+                        alert('已取消');
+                    },
+                    fail: function (res) {
+                        //alert(JSON.stringify(res));
+                    }
+                }
+                );
+        wx.onMenuShareTimeline(
+            {
+                title: '抢红包不如发福袋，比在朋友圈发模糊照片更赚钱的“红包”！',
+                desc: '福袋接龙,财运亨通！发出去能赚钱的“红包”！',
+                link: '@ViewBag.ShareUrl',
+                    imgUrl: '@ViewBag.ShareImg',
+
+                    trigger: function (res) {
+                        // alert('用户点击分享到朋友圈');
+                    },
+                    success: function (res) {
+                        alert('已分享');
+                    },
+                    cancel: function (res) {
+                        alert('已取消');
+                    },
+                    fail: function (res) {
+                        //  alert(JSON.stringify(res));
+                    }
+                }
+                );
+    });
+
+        wx.error(function (res) {
+            //alert(res.errMsg);
+        });
+
+
+
+    
+
+    function wxPay() {
+        //流程：
+        //      1请求支付红包订单
+        //      3发起微信支付
+
+        
+        var payAmount = $("#sample_num").val();//支付额度sample_num  
+        if (payAmount < 1) {
+            alert("装入额度太少");
+            return;
+        }
+
+        var orderno = "@Model.OrderNo";
+        var avator = $("#Avator").val();
+        var openid = $("#OpenId").val();
+        var nickname = $("#NickName").val();
+
+        if (orderno == "")
+        {
+            alert("订单无效");
+            return; 
+        } 
+               
+               //1请求支付红包订单
+                var payOrderNo = "";
+                $.post("/hb/createPayOrder",
+                    {
+                        OrderNo:'@Model.OrderNo',
+                        OpenId: openid,
+                        Avator: avator,
+                        NickName: nickname,
+                        PayAmount: payAmount
+                    }
+                    , function (result) {
+                        if (result.code == "00000") {
+                            payOrderNo = result.msg;
+                            //3请求微信支付参数签名
+                            //请求支付参数
+                            $.get("/TenPayV3/payParam", {
+                                PayOrderNo: result.msg,
+                                PayAmount: payAmount,
+                                OpenId: openid
+                            }, function (r) {
+
+
+
+                                WeixinJSBridge.invoke('getBrandWCPayRequest', {
+                                    "appId": r.AppId, //公众号名称，由商户传入
+                                    "timeStamp": r.TimeStamp, //时间戳
+                                    "nonceStr": r.NonceStr, //随机串
+                                    "package": r.Package,//扩展包
+                                    "signType": "MD5", //微信签名方式:1.sha1
+                                    "paySign": r.PaySign //微信签名
+                                }, function (res) {
+
+                                    //WeixinJSBridge.log(res.err_msg);
+                                    // alert(res.err_code + res.err_desc + res.err_msg);
+
+                                    if (res.err_msg == "get_brand_wcpay_request:ok") {
+                                        //alert("微信支付成功!");
+                                        window.location.href = "/hb/query";
+                                    } else if (res.err_msg == "get_brand_wcpay_request:cancel") {
+                                        alert("用户取消支付!");
+                                    } else {
+                                        alert("支付失败,原因：" + res.err_msg);
+                                    }
+                                    // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+                                    //因此微信团队建议，当收到ok返回时，向商户后台询问是否收到交易成功的通知，若收到通知，前端展示交易成功的界面；若此时未收到通知，商户后台主动调用查询订单接口，查询订单的当前状态，并反馈给前端展示相应的界面。
+                                });
+
+                            }
+                            ); 
+
+                        } else {
+                            alert(result.msg); return;
+                        }
+                    });
+             
+
+    }
+
+
+
+    function callpay() {
+        if (typeof WeixinJSBridge == "undefined") {
+            if (document.addEventListener) {
+                document.addEventListener('WeixinJSBridgeReady', wxPay, false);
+            }
+            else if (document.attachEvent) {
+                document.attachEvent('WeixinJSBridgeReady', wxPay);
+                document.attachEvent('onWeixinJSBridgeReady', wxPay);
+            }
+        }
+        else {
+            wxPay();
+        }
+    }
+     
+
+
+
+    $(document).ready(function () {
+        var percent = $('.progress_bar').attr('title');
+        $(".progress_bar").animate({ width: percent }, 1000);
+        $(".tip").tipsy({ gravity: 's', fade: true });
+    });
+
+    //监听input2变化
+    $('#sample_num').bind('input propertychange', function () {
+        var max_num = Number($("#red_max_num").text());
+        var val = Number($(this).val());
+        if (val < 1) {
+            $(".zh_hb_alert").hide();
+            $(".lucky_button_bg").css("background", "#ccc");
+            $(".label_li2 em").css("color", "#d4373e");
+            $(".label_li2 .text_r").css("color", "#d4373e");
+            $(".label_li2 p").css("color", "#d4373e");
+        }
+        else if (val <= max_num) {
+            $("#submit_btn").removeAttr("disabled");
+            $(".zh_hb_alert").hide();
+            $(".lucky_button_bg").css("background", "#e43d37");
+            $(".label_li2 em").css("color", "#1a1a1a");
+            $(".label_li2 .text_r").css("color", "#1a1a1a");
+            $(".label_li2 p").css("color", "#C1A088");
+        }
+        else {
+            $(".zh_hb_alert").show();
+            $(".lucky_button_bg").css("background", "#ccc");
+            $(".label_li2 em").css("color", "#d4373e");
+            $(".label_li2 .text_r").css("color", "#d4373e");
+            $(".label_li2 p").css("color", "#C1A088");
+            $("#submit_btn").attr("disabled", "disabled");
+
+        }
+        $(".sample_num_pay").text(val)
+    });
+
+    $(function () {
+        /*转账弹出层*/
+        //$(".pay_button").click(function () {
+        //    $(".pay-cont").fadeIn();
+        //});
+        $(".pay-user-close").click(function () {
+            $(".pay-cont").fadeOut();
+        });
+        $(".style_pre").click(function () {
+            $(".p-choice-main").fadeOut();
+            $(".pay-cont").fadeIn();
+
+        });
+
+        //数字显示隐藏
+        $(".xiaq_tb").click(function () {
+            $(".numb_box").slideUp(500);
+        });
+        $(".mm_box").click(function () {
+            $(".numb_box").slideDown(500);
+        });
+        //----
+        var i = 0;
+        $(".nub_ggg li a").click(function () {
+            i++
+            if (i < 6) {
+                $(".mm_box li").eq(i - 1).addClass("mmdd");
+                /*支付失败弹窗*/
+                $(".grade-cate").slideDown();
+                $(".zhezhao").addClass("zhezhao-show").show();
+                $(".bot-button .cancel").click(function () {
+                    $(".grade-cate").slideUp();
+                    $(".zhezhao").removeClass("zhezhao-show");
+                });
+                $(".bot-button .check").click(function () {
+                    $(".grade-cate").slideUp();
+                    $(".zhezhao").removeClass("zhezhao-show");
+                });
+                /*支付失败弹窗*/
+            } else {
+                $(".mm_box li").eq(i - 1).addClass("mmdd");
+                setTimeout(function () {
+                    location.href = "lucky_pay_suc.html";
+                }, 500);
+                //window.document.location="cg.html"
+            }
+        });
+
+        $(".nub_ggg li .del").click(function () {
+
+            if (i > 0) {
+                i--
+                $(".mm_box li").eq(i).removeClass("mmdd");
+                i == 0;
+            }
+            //alert(i);	 
+        });
+        $(".pay-choice").click(function () {
+            $(".p-choice-main").fadeIn();
+            $(".pay-cont").fadeOut();
+        })
+
+        /*选择支付方式*/
+        $(".p-c-list-name").click(function () {
+            var value = $(this).text();
+            var img = $(this).prev().find("img").attr("src");
+            $(".pay-txt").text(value);
+            $(".pay-logo").attr("src", img);
+            $(".p-choice-main").fadeOut();
+            $(".pay-cont").fadeIn();
+        })
+    });
+
+</script>
+</html>

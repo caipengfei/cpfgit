@@ -24,6 +24,16 @@ namespace qch.core
             Msg msg = new Msg();
             msg.type = "error";
             msg.Data = "短信发送失败";
+            if (string.IsNullOrWhiteSpace(userMobile))
+            {
+                msg.Data = "手机号码有误";
+                return msg;
+            }
+            //System.Web.HttpCookie cookie = System.Web.HttpContext.Current.Request.Cookies[userMobile];
+            //if (cookie != null)
+            //{
+            //    log.Info("cookie:" + cookie.Expires);
+            //}
             string ret = null;
             CCPRestSDK api = new CCPRestSDK();
             //ip格式如下，不带https://
@@ -47,7 +57,7 @@ namespace qch.core
                     {
                         msg.type = "success";
                         msg.Data = "发送成功";
-                        qch.Infrastructure.CookieHelper.SetCookie(userMobile, str);
+                        qch.Infrastructure.CookieHelper.SetCookie(userMobile, str, DateTime.Now.AddMinutes(3));
                     }
                     return msg;
                 }

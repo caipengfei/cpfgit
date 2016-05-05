@@ -16,7 +16,7 @@ namespace qch.Repositories
 
 
         /// <summary>
-        /// 分页获取所有项目
+        /// 分页获取所有
         /// </summary>
         /// <param name="page"></param>
         /// <param name="pagesize"></param>
@@ -36,7 +36,7 @@ namespace qch.Repositories
             }
         }
         /// <summary>
-        /// 分页获取所有项目
+        /// 分页获取所有
         /// </summary>
         /// <param name="page"></param>
         /// <param name="pagesize"></param>

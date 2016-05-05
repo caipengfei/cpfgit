@@ -23,5 +23,9 @@ namespace qch.core
         /// 返回url
         /// </summary>
         public string ReturnUrl { get; set; }
+        /// <summary>
+        /// 其它信息
+        /// </summary>
+        public string Remark { get; set; }
     }
 }

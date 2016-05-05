@@ -54,7 +54,7 @@ namespace Maticsoft.Common
                 byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
                 return Convert.ToBase64String(resultArray, 0, resultArray.Length);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return "";
             }
@@ -80,7 +80,7 @@ namespace Maticsoft.Common
                 byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
                 return UTF8Encoding.UTF8.GetString(resultArray);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return "";
             }

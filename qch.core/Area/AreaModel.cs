@@ -20,7 +20,7 @@ namespace qch.Models
         public string Province { get; set; }
 
         /// <summary>
-        /// 省包含的区列表
+        /// 省包含的市列表
         /// </summary>
         public List<City> CityList { get; set; }
     }

@@ -18,6 +18,23 @@ namespace qch.core
 
 
         /// <summary>
+        /// 分页获取某个对象的所有评论
+        /// </summary>
+        /// <param name="Guid"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<SelectTalkModel> GetAll(int page, int pagesize, string Guid)
+        {
+            try
+            {
+                return rp.GetAll(page, pagesize, Guid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
         /// 获取某个对象的所有评论
         /// </summary>
         /// <param name="Guid"></param>

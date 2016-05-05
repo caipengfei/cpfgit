@@ -1,5 +1,5 @@
 <%@ WebHandler Language="C#" Class="imageUp" %>
-<%@ Assembly Src="Uploader.cs" %>
+
 
 using System;
 using System.Web;
@@ -12,6 +12,7 @@ public class imageUp : IHttpHandler
 
     public void ProcessRequest(HttpContext context)
     {
+         
         context.Response.ContentEncoding = System.Text.Encoding.UTF8;
         //上传配置
         string pathbase = "upload/";                                                          //保存路径
@@ -23,7 +24,7 @@ public class imageUp : IHttpHandler
 
         //上传图片
         Hashtable info;
-        Uploader up = new Uploader();
+        qch.web.UpImgHelper up = new qch.web.UpImgHelper();
         info = up.upFile(context, pathbase, filetype, size); //获取上传状态
         string json = BuildJson(info);
 

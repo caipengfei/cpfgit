@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>众筹分享</title>
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/shareCourse.css">
+</head>
+
+<body>
+    <table class="downloadbox" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>
+                <div class="image">
+                    <img src="img/logo.png"></div>
+            </td>
+            <td>
+                <h2>青创汇 / 为创业者而生</h2>
+                <p>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <strong onclick="godown()">10万人下载</strong>
+                </p>
+            </td>
+            <td><a onclick="godown()">立即下载</a></td>
+        </tr>
+    </table>
+    <div class="shade-div"></div>
+    <!-- 主内容区 模板渲染 -->
+    <div class="container loading"></div>
+    
+    <!-- 主内容区模板 -->
+    <script type="text/html" id="contentTemplate">
+    <%var default_banner='img/crowdfunding_banner.jpg'%>
+    <%var default_avator='img/avator.png'%>
+    <%var crowdfunding_progress=(data.nowMoney/data.t_FundCourse_Money*100).toFixed(2)+'%'%>
+        <header>
+            <div class="videobox">
+                <img src="<%=data.t_FundCourse_Pic||default_banner%>">
+            </div>
+            <h2 class="clear">
+                <b class="playcount"><%=data.t_FundCourse_Count%></b>
+                <span><%=data.t_FundCourse_Title%></span>
+            </h2>
+            <div class="progressbox">
+                <p class="clear"><span style="width:<%=crowdfunding_progress%>"></span></p>
+                <table>
+                    <tr>
+                        <td>
+                            <strong>￥<%=data.nowMoney%></strong><br>已筹款
+                        </td>
+                        <td>
+                            <b><%=data.t_FundCourse_Good%></b><br>支持数
+                        </td>
+                        <td>
+                            <span><%=crowdfunding_progress%></span><br>筹款进度
+                        </td>
+                    </tr>
+                </table>
+                <div class="clear">
+                    <strong>￥<%=data.t_PayMoney_Online%></strong>
+                    <a onclick="gopay()">立即支持</a>
+                </div>
+            </div>
+
+            <div class="menunav clear">
+                <a class="active" data-tar=".detailsbox">详情</a>
+                <a data-tar=".tutorbox">讲师</a>
+                <a data-tar=".recommendbox">推荐</a>
+                <a data-tar=".commentbox">评论</a>
+            </div>
+        </header>
+        <div class="contentbox">
+            <div class="detailsbox clear">
+                <%var instruction=data.t_FundCourse_Info.replace(/===/g,'<br>')%>
+                <%var show_limit=90%>
+                <h2>详情</h2>
+                <p>
+                    <%==instruction.slice(0,show_limit)%> 
+                    <%if(instruction.length>=show_limit){%><span class="hide"><%==instruction.slice(show_limit)%></span><%}%>
+                </p>
+                <%if(instruction.length>=show_limit){%>
+                <a class="slideup">展开</a>
+                <%}%>
+            </div>
+            <div class="tutorbox">
+                <h2>讲师</h2>
+                <ul>
+                    <li class="clear" data-guid="<%=data.t_LecturerGuid%>">
+                        <img src="<%=data.lecturerAvator||default_avator%>">
+                        <div>
+                            <h2><%=data.lecturerName%></h2>
+                            <p><%=data.t_FundCourse_OneWord%></p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- 推荐 模板渲染 -->
+            <div class="recommendbox"></div>
+            
+            <div class="commentbox">
+                <h2>评论</h2>
+                <ul>
+                    <%if(data.talk.length==0){%><li>暂无评论</li><%}%>
+                    <%data.talk.forEach(function(item,index){%>
+                    <li class="clear">
+                        <img class="lazy" data-src="<%=item.userAvator||default_avator%>">
+                        <div>
+                            <h2><%=item.userName%><span><%=item.t_Talk_FromDate%></span></h3>
+                            <p><%=item.t_Talk_FromContent%></p>
+                        </div>
+                    </li>
+                    <%})%>
+                </ul>
+            </div>
+        </div>
+        <footer>
+            <a class="btn-comment" onclick="godown();">我要评论</a>
+        </footer>
+    </script>
+    
+    <!-- 推荐模板 -->
+    <script type="text/html" id="recommendTemplate">
+        <h2>推荐</h2>
+        <ul>
+        <%data.items.forEach(function(item,index){%>
+            <li class="clear" data-guid="<%=item.guid%>">
+                <img class="lazy" data-src="<%=item.t_Course_Pic%>">
+                <div>
+                    <h3><%=item.t_Course_Title%></h3>
+                    <p><%=item.t_Course_OneWord%></p>
+                </div>
+            </li>
+        <%})%>
+        </ul>
+    </script>
+    
+    <script src="js/jquery.min.js"></script>
+    <script src="js/artTemplate.js"></script>
+    <script src="js/shareCourse.js"></script>
+    <script>
+        var guid = GetUrlParam("guid") || 'c797f6ac-282e-4e50-9e51-1bd56dae2068';
+        function gopay() {
+            location.href = 'http://test.cn-qch.com/wxuser/Pay?Guid=' + guid;
+        }
+        $.ajax({
+            type: 'get',
+            cache: false,
+            dataType: 'json',
+            url: 'http://120.25.106.244:9001/api/FundCourse/getbyid',
+            data: {
+                guid: guid
+            },
+            success: function(res) {
+                if(!res) return;
+                $('.container').html(template('contentTemplate', {
+                    data: res
+                }));
+                $.get('http://120.25.106.244:9001/api/course/GetRecommendCourse', {
+                    page: 1,
+                    pagesize: 5
+                }, function(res) {
+                    $('.recommendbox').html(template('recommendTemplate', {
+                        data: res
+                    }));
+                    initpage();
+                })
+            }
+        })
+    </script>
+</body>
+</html>

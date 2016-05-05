@@ -1,0 +1,29 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Test2</title>
+    <script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+</head>
+<body>
+    <div id="login_container">
+        
+    </div>
+    <script type="text/javascript">
+        var obj = new WxLogin({
+            id: "login_container",
+            appid: "wx08db5da08164b73a",
+            scope: "snsapi_login",
+            redirect_uri: "@ViewBag.ReturnUrl",
+            state: "@ViewBag.Nonce",
+            style: "",
+            href: ""
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>导师分享</title>
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/shareTutor.css">
+</head>
+
+<body>
+    <table class="downloadbox" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>
+                <div class="image">
+                    <img src="img/logo.png"></div>
+            </td>
+            <td>
+                <h2>青创汇 / 为创业者而生</h2>
+                <p>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <strong onclick="godown()">10万人下载</strong>
+                </p>
+            </td>
+            <td><a onclick="godown()">立即下载</a></td>
+        </tr>
+    </table>
+    <div class="shade-div"></div>
+    <!-- 主内容 模板渲染 -->
+    <div class="container loading"></div>
+    <!-- 主内容模板 -->
+    <script type="text/html" id="contentTemplate">
+        <%var avator = 'img/avator.png'%>
+        <%var imgBaseUrl = 'http://120.25.106.244:8002/Attach/Images/'%>
+        <%var picLen = data.pics.length%>
+        <header>
+            <div class="tutor_bg"></div>
+            <div class="aboutbox">
+                <img src="<%=data.t_Lecturer_Pic%>">
+                <h2><%=data.t_Lecturer_Name%></h2>
+                <b><%==data.t_Lecturer_Position.replace(/===/g,'<br>')%></b>
+                <h3>
+                    教授方向：<%=data.t_Lecturer_Subject%> 
+                    <!--课程：<%=data.T_Lecturer_Count||0%>-->
+                </h3>
+                <p><%==data.t_Lecturer_Intor.replace(/===/g,'<br>')%></p>
+            </div>
+        </header>
+        <div class="showbox">
+            <h2>导师展示</h2>
+            <div class="banner">
+                <div class="frame">
+                    <div class="box">
+                        <%data.pics.forEach(function(item,index){%>
+                        <img class="lazy" data-src="<%=imgBaseUrl+item.t_Pic_Url%>">
+                        <%})%>
+                    </div>
+                </div>
+                <div class="tag">
+                    <%for(var i=0;i<picLen;i++){%>
+                    <span <%if(i==0){%>class="current"<%}%>></span>
+                    <%}%>
+                </div>
+            </div>
+        </div>
+        <!-- 推荐 模板渲染 -->
+        <div class="recommendbox"></div>
+    </script>
+    <!-- 推荐模板 -->
+    <script type="text/html" id="recommendTemplate">
+        <%var default_avator='img/avator.png'%>
+        <h2>相关推荐</h2>
+        <ul>
+        <%data.items.forEach(function(item,index){%>
+            <li class="clear" data-guid="<%=item.guid%>">
+                <img class="lazy" data-src="<%=item.t_Course_Pic||default_avator%>">
+                <div>
+                    <h3><%=item.t_Course_Title%></h3>
+                    <p><%=item.t_Course_OneWord%></p>
+                </div>
+            </li>
+        <%})%>
+        </ul>
+    </script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/artTemplate.js"></script>
+    <script src="js/shareTutor.js"></script>
+    <script>
+        var guid = GetUrlParam("guid") || '38fdf6e8-47bb-47d4-81b9-903c4871d931';
+        $.ajax({
+            type: 'get',
+            cache: false,
+            dataType: 'json',
+            url: 'http://120.25.106.244:9001/api/Lecturer/GetById',
+            data: {
+                guid: guid
+            },
+            success: function(res) {
+                $('.container').html(template('contentTemplate', {
+                    data: res
+                }));
+                $.get('http://120.25.106.244:9001/api/course/GetRecommendCourse', {
+                    page: 1,
+                    pagesize: 5
+                }, function(res) {
+                    $('.container .recommendbox').html(template('recommendTemplate', {
+                        data: res
+                    }));
+                    initpage();
+                })
+            }
+        })
+        $(document).ajaxStop(function(){
+            $('.container').removeClass('loading');
+            $('.shade-div').remove();
+        });
+    </script>
+</body>
+</html>

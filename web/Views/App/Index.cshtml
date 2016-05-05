@@ -1,0 +1,132 @@
+﻿@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" AppDown="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/AppDown/css/mui.css" />
+    <link rel="stylesheet" href="/AppDown/css/jquery.fullPage.css">
+    <link rel="stylesheet" href="/AppDown/css/comment.css" />
+    <script src="/AppDown/js/mui.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        mui.init();
+    </script>
+    <script src="/AppDown/js/jquery-1.8.3.min.js"></script>
+    <script src="/AppDown/js/jquery.fullPage.min.js"></script>
+    <script src="http://cdn.staticfile.org/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script>
+        $(function () {
+            $('#dowebok').fullpage({
+                sectionsColor: ['#ff8e8c', '#ff8e8c', '#7BAABE', '#f90', '#aaccff', '#ec883f'],
+                afterLoad: function (anchorLink, index) {
+                    if (index == 2) {
+                        $('.section2').find('img').delay(500).animate({
+                            left: '0'
+                        }, 1500, 'easeOutExpo');
+                    }
+                    if (index == 3) {
+                        $('.section3').find('img').delay(500).animate({
+                            right: '-20%'
+                        }, 1500, 'easeOutExpo');
+                    }
+                    if (index == 4) {
+                        $('.section4').find('img').delay(500).animate({
+                            left: '20%'
+                        }, 1500, 'easeOutExpo');
+                    }
+                    if (index == 5) {
+                        $('.section5').find('img').delay(500).animate({
+                            right: '-20%'
+                        }, 1500, 'easeOutExpo');
+                    }
+                    if (index == 6) {
+                        $('.section6').find('img').delay(500).animate({
+                            left: '20%'
+                        }, 1500, 'easeOutExpo');
+                    }
+                },
+                onLeave: function (index, direction) {
+                    if (index == '2') {
+                        $('.section2').find('img').delay(500).animate({
+                            left: '0'
+                        }, 1500, 'easeOutExpo');
+                    }
+                    if (index == '3') {
+                        $('.section3').find('img').delay(500).animate({
+                            right: '-120%'
+                        }, 1500, 'easeOutExpo');
+                    }
+                    if (index == '4') {
+                        $('.section4').find('img').delay(500).animate({
+                            left: '-120%'
+                        }, 1500, 'easeOutExpo');
+                    }
+                    if (index == '5') {
+                        $('.section5').find('img').delay(500).animate({
+                            right: '-120%'
+                        }, 1500, 'easeOutExpo');
+                    }
+                    if (index == '6') {
+                        $('.section6').find('img').delay(500).animate({
+                            left: '-120%'
+                        }, 1500, 'easeOutExpo');
+                    }
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div id="dowebok">
+        <div class="section section2" style="background-image: url(../images/beijing.png);" id="two">
+            <!-- <div style="background-image: url(images/beijing.png);" >-->
+            <img src="/AppDown/images/taitou.png" class="img-top">
+            <img src="/AppDown/images/shhouji.png" class="img-phone">
+            <div class="one">
+                <div class="button-box">
+                    <a class="io">
+                        <img src="/AppDown/images/iPhone1.png" class="a3"><img src="/AppDown/images/iPhone.png" style="display: none;" class="a4">IOS下载</a>
+                    <a class="an">
+                        <img src="/AppDown/images/Android1.png" class="a2"><img src="/AppDown/images/Android.png" style="display: none;" class="a1">Andorid下载</a>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(".an").mouseover(function () {
+                $(".a1").css({ display: "block" })
+                $(this).css({ color: "#fff" })
+                $(".a2").css({ display: "none" })
+                window.location = "http://a.app.qq.com/o/simple.jsp?pkgname=com.qingchuang.app"
+
+            })
+            $(".an").mouseout(function () {
+                $(".a1").css({ display: "none" })
+                $(".a2").css({ display: "block" })
+                $(this).css({ color: "#ffc6c4" })
+
+            })
+            $(".io").mouseover(function () {
+                $(".a4").css({ display: "block" })
+                $(this).css({ color: "#fff" })
+                $(".a3").css({ display: "none" })
+                window.location = "http://a.app.qq.com/o/simple.jsp?pkgname=com.qingchuang.app"
+            })
+            $(".io").mouseout(function () {
+                $(".a4").css({ display: "none" })
+                $(".a3").css({ display: "block" })
+                $(this).css({ color: "#ffc6c4" })
+
+            })
+        </script>
+    </div>
+</body>
+
+</html>

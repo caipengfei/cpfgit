@@ -1,0 +1,184 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>投资机构</title>
+    <link rel="stylesheet" href="css/public.css?v=e2a08fa8c189318bcaee1075c8bed785">
+
+    <link rel="stylesheet" href="css/page2.css?v=42e481b8cd12b7fcdf7746925280dcc0">
+</head>
+<body>
+    <table class="downloadbox" cellpadding="0" cellspacing="0">
+            <tr>
+                <td><div class="image"><img src="img/logo.png"></div></td>
+                <td>
+                    <h2>青创汇 / 提供一站式创业服务</h2>
+                    <p>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <strong onclick="godown()">10万人下载</strong>
+                    </p>
+                </td>
+                <td><a onclick="godown()">立即下载</a></td>
+            </tr>
+        </table>
+        <style>
+            .downloadbox{
+                width:100%; height:3.5rem; position: fixed; top:0; left:0; background: rgb(236,236,236); padding:0 .8rem 0 1.2rem;
+            }
+            .downloadbox td:nth-child(1){
+                width:4rem;
+            }
+            .downloadbox td:nth-child(3){
+                text-align: right;
+            }
+            .downloadbox .image{
+                width:3rem; height:3rem; background: #fff; border-radius:.6rem; 
+            }
+            .downloadbox .image img{
+                width:100%; height:100%;
+            }
+            .downloadbox a{
+                padding:.5rem .7rem; background: #353535; border-radius:.6rem; color:#fff;
+            }
+            .downloadbox h2{
+                font-size:.9rem; color:#353535; margin-bottom:.3rem;
+            }
+           .downloadbox p{
+                line-height: 1.2rem;
+            }
+            .downloadbox p i{
+                color:rgb(232,145,2); display: block; width:1.1rem; height:1.1rem; background: url(img/icon/xing.png) no-repeat 50% 50%;
+                background-size: 100% 100%; float: left; 
+            }
+            .downloadbox p strong{
+                color:rgb(118,118,118); font-size:.8rem; font-weight: normal;
+            }
+        </style>
+    <div class="container">
+
+        <header>
+            <div class="head-nav">
+                <!--<a class="left"><i class="fa fa-angle-left"></i></a>
+                <a class="right"><i class="fa fa-share-square-o"></i></a>-->
+            </div>
+            <div class="box" id="divTop">
+                <img src="img/photo3.jpg?v=8ee13fcc1f5652b80ca87e4fa116751d">
+                <h2 id="hName"></h2>
+            </div>
+        </header>
+        <ul class="table">
+            <li><span id="spCases">50</span><b>接收项目</b></li>
+            <li><span id="spEnter">100</span><b>入驻成员</b></li>
+        </ul>
+        <div class="aboutbox">
+            <h2>详细介绍</h2>
+            <p id="pInfo">
+                免费入驻：只针对大学生创业，需提交项目计划书，毕业证，身份证，公司营业执照副本。
+提交审核通过后，可免费入驻半年。免费入驻：只针对大学生创业，需提交项目计划书，
+毕业证，身份证，公司营业执照副本。提交审核通过后，可免费入驻半年。
+            </p>
+            <a class="more" onclick="godown()">更多 <i class="fa fa-angle-down"></i></a>
+        </div>
+        <div class="case">
+            <h2>孵化案例</h2>
+            <ul class="listbox" id="ulCase">
+            </ul>
+        </div>
+        <div class="member">
+            <h2>入驻成员</h2>
+            <table id="members">
+            </table>
+        </div>
+        <footer>
+            <a onclick="godown()">提交项目</a>
+        </footer>
+
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/zepto.min.js?v=1abd55c514bd00abc726cca455f6b4c9"></script>
+    <script src="../js/common.js"></script>
+    <script type="text/javascript">
+        function godown() {
+            location.href = 'http://www.cn-qch.com/app';
+        }
+        var guid = GetUrlParam("Guid");
+        if (!guid || guid == "") { guid = '8119af13-0086-4931-8707-69c4f9dc1ba4'; }
+        //获取投资机构详情
+
+        $.ajax({
+            type: 'post',
+            cache: false,
+            dataType: 'json',
+            url: '../QCH_InvestPlace/Ajax_InvestPlace.ashx',
+            data: [
+            { name: 'Action', value: 'GetInvestPlaceView' },
+            { name: 'Guid', value: guid }
+            ],
+            success: function (data) {
+
+                if (data) {
+                    var avator = 'img/avator.png';
+
+                    if (data.t_InvestPlace_ConverPic && data.t_InvestPlace_ConverPic != "") {
+                        avator = imgUrl + data.t_InvestPlace_ConverPic;
+                    }
+                    var topinfo = '<div class="box" id="divTop"><img src="' + avator + '"><h2 id="hName">' + data.t_InvestPlace_Title + '</h2></div>';
+                    $("#divTop").replaceWith(topinfo);
+                    //接收项目
+                    $("#spCases").text(data.CaseCount);
+                    //入驻成员
+                    $("#spEnter").text(data.MemberCount);
+                    //详细介绍
+                    $("#").text(data.t_InvestPlace_Instruction);
+                    $("pInfo").text();
+                    //孵化案例
+                    var cases = '';
+                    if (data.Cases.length > 0) {
+                        var model = data.Cases;
+                        for (var item in model) {
+                            cases += '<li><a><img src="' + imgUrl + model[item].CasePic + '">' + model[item].CaseName + '</a></li>';
+                        }
+                        cases += '<li><a><img src="img/photo3.jpg?v=8ee13fcc1f5652b80ca87e4fa116751d">查看更多</a></li>'
+                        $("#ulCase").append(cases);
+                        winResize($('#ulCase img'));
+                    }
+                    //入驻成员
+                    
+                    var member = '';
+                    if (data.Members.length > 0) {
+                        var model = data.Members;
+                        if (model[item].UserPic && model[item].UserPic != "") {
+                            avator = avatorUrl + model[item].UserPic;
+                        }
+                        for (var item in model) {
+                            member += '<tr><td><a><img src="' + avator + '"></a></td><td><h3>' + model[item].UserName + '</h3><p>' + model[item].OneWord + '</p></td></tr>';
+                        }
+                        $("#members").append(member);
+                        winResize($('#members img'));
+                    }
+                }
+            }
+        })
+        function winResize($e) {
+            $e.css({
+                height: $e.width(),
+                borderRadius: $e.width() / 2
+            })
+        }
+        $(function () {
+            $(window).resize(function () {
+                winResize($('.case img'));
+                winResize($('.member img'))
+            }).resize();
+        })
+    </script>
+
+</body>
+</html>

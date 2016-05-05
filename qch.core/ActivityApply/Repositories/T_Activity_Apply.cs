@@ -46,6 +46,18 @@ namespace qch.Repositories
         [Column]
         public string t_ActivityApply_Remark { get; set; }
         /// <summary>
+        /// 报名凭证数字码
+        /// </summary>
+        /// 
+        [Column]
+        public string t_ProofCode { get; set; }
+        /// <summary>
+        /// 报名凭证二维码
+        /// </summary>
+        /// 
+        [Column]
+        public string t_QrCode { get; set; }
+        /// <summary>
         /// 添加日期
         /// </summary>
         [Column]

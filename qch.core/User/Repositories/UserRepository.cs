@@ -56,7 +56,7 @@ namespace qch.Repositories
         {
             try
             {
-                string sql = "select * from T_Users where t_User_LoginId=@0 or Guid=@1 or t_User_Mobile=@2";
+                string sql = "select * from T_Users where (t_User_LoginId=@0 or Guid=@1) and t_User_LoginId is not null and t_User_LoginId != ''";
                 return rp.Get(sql, new object[] { LoginName, LoginName, LoginName });
             }
             catch (Exception ex)

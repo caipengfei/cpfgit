@@ -60,8 +60,26 @@ namespace qch.Repositories
         {
             try
             {
-                string sql = "select * from T_User_Weixin where OpenId=@0";
-                return rp.Get(sql, new object[] { OpenId });
+                string sql = "select * from T_User_Weixin where OpenId=@0 or UnionId=@1 or kfopenid=@2";
+                return rp.Get(sql, new object[] { OpenId, OpenId, OpenId });
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
+        /// GetByUnionId
+        /// </summary>
+        /// <param name="Guid"></param>
+        /// <returns></returns>
+        public WXUserModel GetByUnionId(string UnionId)
+        {
+            try
+            {
+                string sql = "select * from T_User_Weixin where UnionId=@0";
+                return rp.Get(sql, new object[] { UnionId });
             }
             catch (Exception ex)
             {

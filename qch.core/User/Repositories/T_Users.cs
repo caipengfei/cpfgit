@@ -63,7 +63,8 @@ namespace qch.Repositories
         /// 用户类型
         /// 1：创客；
         /// 2：投资人；
-        /// 3：合伙人
+        /// 3：合伙人；
+        /// 8：微信用户
         /// </summary>
         [Column]
         public int t_User_Style { get; set; }
@@ -158,5 +159,10 @@ namespace qch.Repositories
         /// </summary>
         [Column]
         public int t_DelState { get; set; }
+        /// <summary>
+        /// 是否推荐
+        /// </summary>
+        [Column]
+        public int t_Recommend { get; set; }
     }
 }

@@ -151,6 +151,31 @@ namespace Senparc.Weixin.MP.Sample.CommonService
             System.IO.File.Delete(System.Web.HttpContext.Current.Server.MapPath("~/content" + img));
             return "small_" + NewFileName;
         }
+        public static string DownloadFile(double width, double height, string fileNameFullPath, string NewFileName)
+        {
+            //得到要下载的文件文件名  
+            string fileName = fileNameFullPath.Substring(fileNameFullPath.LastIndexOf("\\") + 1);
+            //新文件名由年月日时分秒及毫秒组成  
+            //string NewFileName = DateTime.Now.ToString("yyyyMMddhhmmss") + DateTime.Now.Millisecond.ToString()
+            //    + fileNameFullPath.Substring(fileNameFullPath.LastIndexOf("."));
+            //string NewFileName = Guid.NewGuid().ToString() + ".jpg";
+            // 创建WebClient实例  
+            WebClient myWebClient = new WebClient();
+            //string path = System.Web.HttpContext.Current.Server.MapPath("~/content" + ImageUrl);
+            string path = System.Web.HttpContext.Current.Server.MapPath("~/content/wxavator/");
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            myWebClient.DownloadFile(fileNameFullPath, path + NewFileName);
+            string img = "/wxavator/" + NewFileName;
+            string img2 = "/wxavator/" + "small_" + NewFileName;
+            //生成原图的缩略图
+            souImg(width, height, System.Web.HttpContext.Current.Server.MapPath("~/content" + img), System.Web.HttpContext.Current.Server.MapPath("~/content" + img2));
+            //删除原图
+            System.IO.File.Delete(System.Web.HttpContext.Current.Server.MapPath("~/content" + img));
+            return "small_" + NewFileName;
+        }
         /// <summary>
         /// 缩略图
         /// </summary>

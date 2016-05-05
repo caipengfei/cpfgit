@@ -1,0 +1,44 @@
+﻿@{
+    Layout = null;
+}
+
+@model IEnumerable<qch.Models.ProofModel>
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>报名凭证列表页面</title>
+    <link rel="stylesheet" href="/h5/css/signUpList.css">
+</head>
+
+<body>
+    <ul id="signList">
+        @if (Model != null && Model.Count() > 0)
+        {
+            foreach (var item in Model.ToList())
+            {
+            <li onclick="goinfo('@item.ApplyGuid')">
+                <div class="boxleft">
+                    <div class="subbox">
+                        <div>@item.Fee</div>
+                    </div>
+                </div>
+                <div class="boxright">
+                    <h2>@item.ActivityName</h2>
+                    <p>主办方：@item.Holder</p>
+                    <p>活动时间：@item.ActivityDate.ToShortDateString()</p>
+                    <p>活动地点：@item.Addr</p>
+                </div>
+            </li>
+            }
+        }
+    </ul>
+    <script>
+        function goinfo(guid) {
+            location.href = '/wxuser/ApplyProof?guid=' + guid;
+        }
+    </script>
+</body>
+</html>
+

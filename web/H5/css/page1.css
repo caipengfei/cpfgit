@@ -1,110 +1,160 @@
 body {
-  background: #f4f4f4; }
+    background: #f4f4f4;
+}
 
 header {
-  background: url(../img/header1.png);
-  background-size: 100% 100%; 
-  padding-bottom: 1.2rem;
-  color: #fff; }
-  header .head-nav {
+    background: url(../img/header1.jpg);
+    background-size: 100% 100%;
+    padding-bottom: 1.2rem;
+    color: #fff;
+}
+
+header .head-nav {
     height: 4rem;
-    line-height: 4rem; }
-    header .head-nav a {
-      color: #fff;
-      font-size: 2.2rem;
-      min-width: 4rem;
-      height: 100%;
-      text-align: center; }
-      header .head-nav a.left {
-        float: left; }
-      header .head-nav a.right {
-        float: right;
-        line-height: 3rem; }
-  header .box {
-    text-align: center; }
-    header .box img {
-      width: 6rem;
-      height: 6rem;
-      border-radius: 3rem;
-      margin-bottom: .8rem; }
-    header .box h2 {
-      font-size: 1.3rem;
-      margin-bottom: 1rem; }
-    header .box h3 {
-      font-size: 1.2rem; }
-.lists{
-    font-size:1.3rem;
-}
-.lists ul{
-    margin-bottom:.5rem;
-}
-.lists ul li{
     line-height: 4rem;
-    border-top:1px solid #e2e2e2;
+}
+
+header .head-nav a {
+    color: #fff;
+    font-size: 2.2rem;
+    min-width: 4rem;
+    height: 100%;
+    text-align: center;
+}
+
+header .head-nav a.left {
+    float: left;
+}
+
+header .head-nav a.right {
+    float: right;
+    line-height: 3rem;
+}
+
+header .box {
+    text-align: center;
+    padding: 0 2rem;
+}
+
+header .box img {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 3rem;
+    margin-bottom: .8rem;
+}
+
+header .box h2 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+header .box h3 {
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+}
+
+.lists {
+    font-size: 1.3rem;
+}
+
+.lists ul {
+    margin-bottom: .5rem;
+}
+
+.lists ul li {
+    line-height: 4rem;
+    border-top: 1px solid #e2e2e2;
     background: #fff;
-    padding-left: 1.5rem; 
+    padding-left: 1.5rem;
 }
-.lists ul li label{
+
+.lists ul li label {
     color: #bcbcbc;
-    margin-right:3rem;
+    margin-right: 2rem;
 }
-.lists ul li span{
-    color:#1a1a1a;
+
+.lists ul li span {
+    color: #1a1a1a;
 }
-.lists ul li:nth-child(1){
-    border-top:none;
+
+.lists ul li:nth-child(1) {
+    border-top: none;
 }
-.lists ul:nth-child(3) span{
+
+.lists ul:nth-child(3) span {
     color: #4a90e2;
 }
 
 .aboutbox {
-  background: #fff;
-  color: #515151;
-  padding: 1rem 0 2rem 0;
-  margin-bottom: .5rem; }
-  .aboutbox h2 {
+    background: #fff;
+    color: #515151;
+    padding: 1rem 0 2rem 0;
+    margin-bottom: .5rem;
+}
+
+.aboutbox h2 {
     font-size: 1.3rem;
     padding-left: 1.5rem;
-    margin-bottom: .5em; }
-  .aboutbox p {
+    margin-bottom: .5em;
+}
+
+.aboutbox p {
     font-size: 1.2rem;
     padding: 0 2em;
-    line-height: 1.6em; }
+    line-height: 1.6em;
+}
 
 .demand {
-  background: #fff;
-  color: #515151;
-  padding: 1rem 0 4rem 0; }
-  .demand h2 {
+    background: #fff;
+    color: #515151;
+    padding: 1rem 0 2rem 0;
+}
+
+.demand:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.demand h2 {
     font-size: 1.3rem;
     padding-left: 1.5rem;
-    margin-bottom: 1em; }
-  .demand div {
+    margin-bottom: 1em;
+}
+
+.demand div {
     padding: 0 5%;
     height: 3rem;
-    line-height: 3rem; }
-    .demand div a {
-      width: 27.33%;
-      margin: 0 3%;
-      height: 100%;
-      float: left;
-      text-align: center;
-      font-size: 1.2rem;
-      color: #1a1a1a;
-      border: 1px solid #000;
-      border-radius: 1.7rem; }
+    line-height: 3rem;
+}
+
+.demand div a {
+    width: 27.33%;
+    margin: 0 3%;
+    height: 100%;
+    float: left;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #1a1a1a;
+    border: 1px solid #000;
+    border-radius: 1.7rem;
+}
 
 footer {
-  height: 4rem;
-  line-height: 4rem;
-  background: #a1c9f0; }
-  footer a {
+    height: 4rem;
+    line-height: 4rem;
+    background: #4a90e2;
+}
+
+footer a {
     width: 50%;
     float: left;
     text-align: center;
     color: #fff;
-    font-size: 1.3rem; }
-    footer a:nth-child(1) {
-      background: url(../img/line_white.png) no-repeat right 50%;
-      background-size: 1px 70%; }
+    font-size: 1.3rem;
+}
+
+footer a:nth-child(1) {
+    background: url(../img/line_white.png) no-repeat right 50%;
+    background-size: 1px 70%;
+}

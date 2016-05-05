@@ -115,7 +115,7 @@ namespace qch.Repositories
         {
             try
             {
-                long i = 0;
+                //long i = 0;
                 using (PetaPoco.Database db = new PetaPoco.Database(ConnStr))
                 {
                     //return db.ExecuteScalar<long>(sql);
@@ -136,7 +136,7 @@ namespace qch.Repositories
         {
             try
             {
-                long i = 0;
+                //long i = 0;
                 using (PetaPoco.Database db = new PetaPoco.Database(ConnStr))
                 {
                     return db.ExecuteScalar<object>(sql, obj);

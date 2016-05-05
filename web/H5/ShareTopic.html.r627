@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>动态详情</title>
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/page5.css">
+</head>
+
+<body>
+    <div class="shade-div"></div>
+    <table class="downloadbox" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>
+                <div class="image"><img src="img/logo.png"></div>
+            </td>
+            <td>
+                <h2>青创汇 / 为创业者而生</h2>
+                <p>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <strong>10万人下载</strong>
+                </p>
+            </td>
+            <td><a onclick="godown()">立即下载</a></td>
+        </tr>
+    </table>
+    <!-- 主内容 通过模板渲染 -->
+    <div class="container loading"></div>
+    <!-- 主内容模板 -->
+    <script type="text/html" id="contentTemplate">
+    <%var imgUrl='../attach/images/'%>
+    <%var avatorUrl='../attach/user/'%>
+    <%var defaultAvatorUrl='img/avator.png'%>
+        <header></header>
+        <div class="dynamic">
+            <table class="title">
+                <tr>
+                    <td>
+                        <img src="<%=data.t_User_Pic?avatorUrl+data.t_User_Pic:defaultAvatorUrl%>"></td>
+                    <td>
+                        <h2><%=data.t_User_RealName%></h2>
+                        <h3><%=data.PositionName + ' ' + data.t_User_Commpany%></h3>
+                    </td>
+                </tr>
+            </table>
+            <p class="black"><%==data.t_Topic_Contents.replace(/===/g,'<br>')%></p>
+            <div class="imgbox">
+                <%var len=data.Pic.length%>
+                <%var width=(len==1)?'100%':(len==2)?'49%':'32%'%>
+                <%data.Pic.forEach(function(item,index){%>
+                    <img <%if(index%3==0){%>class="first"<%}%> src="<%=imgUrl+item.t_Pic_Url%>" style="width:<%=width%>">
+                <%})%>
+            </div>
+            <p class="position">
+                <i class="fa fa-map-marker"></i><span><%=data.t_Topic_Address%></span>
+            </p>
+            <div class="tools">
+                <a class="left" onclick="godown()"><i class="fa fa-share"></i></a>
+                <a class="right msg" onclick="godown()"><i class="fa fa-comment"></i></a>
+                <a class="right like" onclick="godown()"><i class="fa fa-heart"></i></a>
+            </div>
+            <p class="date"><%=data.t_Date%></p>
+        </div>
+        <div class="visitor">
+            <div class="box">
+                <%if(data.PraiseUsers.length==0){%>
+                    <p>暂无点赞信息</p>
+                <%}%>
+                <%data.PraiseUsers.forEach(function(item,index){%>
+                    <a><img <%if(index%8==0){%>class="first"<%}%> src="<%=item.PraiseUserPic?avatorUrl+item.PraiseUserPic:defaultAvatorUrl%>"></a>
+                <%})%>
+            </div>
+        </div>
+        <!-- 评论列表 通过模板渲染 -->
+        <div class="commentbox"></div>
+    </script>
+    <!-- 评论列表模板 -->
+    <script type="text/html" id="commentTemplate">
+    <%var avatorUrl='../attach/user/'%>
+    <%var defaultAvatorUrl='img/avator.png'%>
+        <h2>最新评论</h2>
+        <ul class="commentlist">
+            <%if(!data || data[0].state == 'false'){%><li>暂无</li><%}%>
+            <%if(data[0].state != 'false'){%>
+                <%data.forEach(function(item,index){%>
+                    <%var name=item.t_User_RealName%>
+                    <%name=name.length>3?name.substring(0, 3) + '****' + name.substring(name.length - 2, name.length - 1):name%>
+                    <li>
+                        <a><img src="<%=item.t_User_Pic?avatorUrl+item.t_User_Pic:defaultAvatorUrl%>"></a>
+                        <div>
+                            <h3><%=name%><span><%=item.t_Talk_FromDate%></span></h3>
+                            <p><%=item.t_Talk_FromContent%></p>
+                        </div>
+                    </li>
+                <%})%>
+            <%}%>
+        </ul>
+    </script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/artTemplate.js"></script>
+    <script>
+        var guid = GetUrlParam("Guid") || '4480b706-1d7b-4a6b-a761-efc935f9a4e6';
+        $.ajax({
+            type: 'post',
+            cache: false,
+            dataType: 'json',
+            url: '../QCH_Topic/Ajax_Topic.ashx',
+            data: [{
+                name: 'Action',
+                value: 'GetTopicView'
+            }, {
+                name: 'Guid',
+                value: guid
+            }],
+            success: function(data) {
+                $('.container').html(template('contentTemplate',{data:data}));
+                $('.dynamic .imgbox img').css({
+                    height:$('.dynamic .imgbox img').width(),
+                    marginBottom: $('.imgbox img').eq(1).css('margin-left')
+                });
+                winResize($('.visitor img'));
+                $.ajax({
+                    type: 'post',
+                    cache: false,
+                    dataType: 'json',
+                    url: '../QCH_User/Ajax_User.ashx',
+                    data: [{
+                        name: 'Action',
+                        value: 'GetTalk'
+                    }, {
+                        name: 'Guid',
+                        value: guid
+                    }],
+                    success: function(data) {
+                        $('.commentbox').html(template('commentTemplate',{data:data}));
+                        winResize($('.commentlist img'));
+                    }
+                })
+            }
+        })
+        function godown() {
+            location.href = 'http://www.cn-qch.com/app';
+        }
+        function winResize($e) {
+            $e.css({
+                height: $e.width(),
+                borderRadius: $e.width() / 2
+            })
+        }
+        function GetUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]);
+            return null;
+        }
+        $(function() {
+            $(document).ajaxStop(function() {
+                $('.container').removeClass('loading');
+                $('.shade-div').remove();
+            })
+        })
+    </script>
+</body>
+</html>
