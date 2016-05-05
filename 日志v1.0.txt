@@ -1,3 +1,5 @@
+1
+
 修改人：蔡鹏飞 2016-04-13
 数据库表T_Activity_Apply活动报名表增加字段：t_ProofCode报名凭证数字码varchar(20)、t_QrCode报名凭证二维码varchar(50)
 增加表 t_user_order 用户订单表
