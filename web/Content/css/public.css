@@ -58,7 +58,7 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 9997;
+    z-index: 9;
 }
 
 .header .headbox {
@@ -147,7 +147,7 @@ body {
 
 .footer .topbox .item2 {
     float: left;
-    margin-right: 50px;
+    margin-right: 150px;
     letter-spacing: 1px;
 }
 
@@ -171,22 +171,19 @@ body {
 
 .footer .topbox .item3 h2 {
     font-size: 15px;
-    margin-bottom: 15px;
+    line-height: 1em;
 }
 
 .footer .topbox .item3 div {
-    padding-left: 3em;
     width: 590px;
 }
 
 .footer .topbox .item3 div a {
-    padding-left: 38px;
-    height: 32px;
-    line-height: 32px;
+    padding-right: 38px;
     background-position: 0 50%;
     background-repeat: no-repeat;
-    margin-bottom: 1.2em;
-    color: #222;
+    margin-top: 1em;
+    color: #999;
 }
 
 .footer .bottombox {
@@ -254,6 +251,8 @@ body {
     color: #b5b5b5;
     font-size: 22px;
     cursor: pointer;
+    position: relative;
+    top:3px;
 }
 
 .indexTc .top li.thisOver {
@@ -272,14 +271,10 @@ body {
 }
 
 .tcNr .tc_Ma2 {
-    margin-top: 85px;
+    margin-top: 45px;
     width: 100%;
     height: 274px;
-}
-
-.tcNr .tc_Ma2 img {
-    float: left;
-    margin-left: 175px;
+    text-align: center;
 }
 
 .tcNr .tc_Ma2 a img {
@@ -355,10 +350,6 @@ body {
 .tcNr li p.tc_img img{
     width:203px;
     height:203px;
-}
-.tcNr .tc_Ma2 img {
-    float: left;
-    margin-left: 175px;
 }
 .tcNr .tc_Ma2>img{
     width:177px;

@@ -1,0 +1,246 @@
+
+
+
+
+## ����Visual Studio��ʱ�ļ�,����������ļ����ɵ��ܻ�ӭ��Visual Studio���
+# *.sln��(Visual Studio.Solution) ͨ��Ϊ�����ṩ����Ŀ����Ŀ��ͽ���������ڴ�����λ�õ�����,�ɽ�������֯����������С�
+# ����������Debugģʽ,����Releaseģʽ,��ͨ��CPU����ר�õĵ�
+
+# *.suo: (solution user opertion) ��������û�ѡ���¼���н�������������������ѡ�
+# �Ա���ÿ�δ�ʱ�������������������Զ������á�
+ 
+# �û�ָ�����ļ�
+*.suo
+*.user
+*.sln.docstates
+ 
+# ������
+ 
+[Dd]ebug/
+[Rr]elease/
+x64/
+build/
+[Bb]in/
+[Oo]bj/
+ 
+# ���� NuGet���ڵı��� "build/"
+!packages/*/build/
+ 
+# MSTest���Խ��
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+ 
+*_i.c
+*_p.c
+*.ilk
+*.meta
+*.obj
+*.pch
+*.pdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*.log
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.log
+*.scc
+ 
+# Visual C++ �����ļ�
+ipch/
+*.aps
+*.ncb
+*.opensdf
+*.sdf
+*.cachefile
+ 
+# Visual Studio ����
+*.psess
+*.vsp
+*.vspx
+ 
+# �Զ�������
+*.gpState
+ 
+# ReSharper is a .NET coding add-in
+_ReSharper*/
+*.[Rr]e[Ss]harper
+ 
+# TeamCity is a build add-in
+_TeamCity*
+ 
+# DotCover is a Code Coverage Tool
+*.dotCover
+ 
+# NCrunch
+*.ncrunch*
+.*crunch*.local.xml
+ 
+# Installshield output folder
+[Ee]xpress/
+ 
+# DocProject is a documentation generator add-in
+DocProject/buildhelp/
+DocProject/Help/*.HxT
+DocProject/Help/*.HxC
+DocProject/Help/*.hhc
+DocProject/Help/*.hhk
+DocProject/Help/*.hhp
+DocProject/Help/Html2
+DocProject/Help/html
+ 
+# Click-Once directory
+publish/
+ 
+# Publish Web Output
+*.Publish.xml
+*.pubxml
+ 
+# NuGet Packages Directory
+## TODO: If you have NuGet Package Restore enabled, uncomment the next line
+#packages/
+ 
+# Windows Azure Build Output
+csx
+*.build.csdef
+ 
+# Windows Store app package directory
+AppPackages/
+ 
+# Others
+sql/
+*.Cache
+ClientBin/
+[Ss]tyle[Cc]op.*
+~$*
+*~
+*.dbmdl
+*.[Pp]ublish.xml
+*.pfx
+*.publishsettings
+ 
+# RIA/Silverlight projects
+Generated_Code/
+ 
+# Backup & report files from converting an old project file to a newer
+# Visual Studio version. Backup files are not needed, because we have git ;-)
+_UpgradeReport_Files/
+Backup*/
+UpgradeLog*.XML
+UpgradeLog*.htm
+ 
+# SQL Server files
+App_Data/*.mdf
+App_Data/*.ldf
+ 
+# =========================
+# Windows detritus
+# =========================
+ 
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+ 
+# Folder config file
+Desktop.ini
+ 
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+ 
+# Mac crap
+.DS_Store
+xftwl.Card/xftwl.Card/Content/images/QRCode/67cbbb09-f9da-4958-b716-692072c0e048.jpg
+xftwl.Card/xftwl.Card/Content/images/QRCode/d359e987-f53a-4ed8-8dbb-d33023887880.jpg
+src/xftwl.Shop.UI/Images/2015/2/27/052b6db0-3b92-4e23-8c40-d4f7fcb01c34.jpg
+src/xftwl.Shop.UI/Images/2015/2/27/dda7bcf6-27f3-4e9c-ab49-4a8e68659697.jpg
+src/xftwl.Shop.UI/Images/2015/2/27/small_052b6db0-3b92-4e23-8c40-d4f7fcb01c34.jpg
+src/xftwl.Shop.UI/Images/2015/2/27/small_dda7bcf6-27f3-4e9c-ab49-4a8e68659697.jpg
+src/xftwl.Shop.UI/Content/ueditor_mini/net/upload/2015-03-02/914fe01a-e894-4f1b-a8c8-d16590da3c9e.jpg
+src/xftwl.Shop.UI/Images/2015/3/2/11b1c9ad-a5e2-4351-82b3-ba2691f9c60c.jpg
+src/xftwl.Shop.UI/Images/2015/3/2/4102c7ea-5358-44ef-82e4-86f759a4bfba.jpg
+src/xftwl.Shop.UI/Images/2015/3/2/8f01f5b1-4cee-4d55-960d-adf88db8cc47.jpg
+src/xftwl.Shop.UI/Images/2015/3/2/a868367a-97c8-44f0-a925-d28bb10a3efa.jpg
+src/xftwl.Shop.UI/Images/2015/3/2/e171d35b-1b36-4ca8-96af-1fefcad6f5b4.jpg
+src/xftwl.Shop.UI/Images/2015/3/2/e1a49749-c7e2-4238-87bd-c6d49a4ae594.jpg
+src/xftwl.Shop.UI/Images/2015/3/2/e6ecf470-ebde-45ac-b503-1a2271c5aaa4.jpg
+src/xftwl.Shop.UI/Images/2015/3/2/small_11b1c9ad-a5e2-4351-82b3-ba2691f9c60c.jpg
+src/xftwl.Shop.UI/Images/2015/3/2/small_4102c7ea-5358-44ef-82e4-86f759a4bfba.jpg
+src/xftwl.Shop.UI/Images/2015/3/2/small_8f01f5b1-4cee-4d55-960d-adf88db8cc47.jpg
+src/xftwl.Shop.UI/Images/2015/3/2/small_a868367a-97c8-44f0-a925-d28bb10a3efa.jpg
+src/xftwl.Shop.UI/Images/2015/3/2/small_e171d35b-1b36-4ca8-96af-1fefcad6f5b4.jpg
+src/xftwl.Shop.UI/Images/2015/3/2/small_e1a49749-c7e2-4238-87bd-c6d49a4ae594.jpg
+src/xftwl.Shop.UI/Images/2015/3/2/small_e6ecf470-ebde-45ac-b503-1a2271c5aaa4.jpg
+src/xftwl.Shop.UI/Images/2015/3/6/08e46ec1-6849-426c-a9ab-bf8c8651cdab.jpg
+src/xftwl.Shop.UI/Images/2015/3/6/1ac70e03-ebc4-4913-9a83-7ebaedaa168f.jpg
+src/xftwl.Shop.UI/Images/2015/3/6/small_08e46ec1-6849-426c-a9ab-bf8c8651cdab.jpg
+src/xftwl.Shop.UI/Images/2015/3/6/small_1ac70e03-ebc4-4913-9a83-7ebaedaa168f.jpg
+src/xftwl.Shop.UI/Content/ueditor_mini/net/upload/2015-03-06/1ade66c9-e245-4414-8692-7809ab705356.jpg
+src/xftwl.Shop.UI/Images/2015/3/6/2a4a29c3-ab05-465b-91dd-800eedd35b41.jpg
+src/xftwl.Shop.UI/Images/2015/3/6/a589841a-99d3-4675-8c0b-a8134d249262.jpg
+src/xftwl.Shop.UI/Images/2015/3/6/small_2a4a29c3-ab05-465b-91dd-800eedd35b41.jpg
+src/xftwl.Shop.UI/Images/2015/3/6/small_a589841a-99d3-4675-8c0b-a8134d249262.jpg
+src/xftwl.Shop.UI/Images/2015/3/11/d8de0161-5d0d-49d7-9b2d-fffeb5b4c5ea.jpg
+src/xftwl.Shop.UI/Images/2015/3/11/f3277fa1-3d5d-4479-aca3-eed194ba9b6a.jpg
+src/xftwl.Shop.UI/Images/2015/3/11/small_d8de0161-5d0d-49d7-9b2d-fffeb5b4c5ea.jpg
+src/xftwl.Shop.UI/Images/2015/3/11/small_f3277fa1-3d5d-4479-aca3-eed194ba9b6a.jpg
+src/xftwl.Shop.UI/Content/ueditor_mini/net/upload/2015-10-21/31973e15-d5df-4c09-ac62-457eb2501f66.jpg
+src/xftwl.Shop.UI/Images/2015/10/21/16365e93-8715-4523-9b5b-c7d2a9100f42.png
+src/xftwl.Shop.UI/Images/2015/10/21/332069a7-6e52-46c0-b124-fa02074ba9bc.png
+src/xftwl.Shop.UI/Images/2015/10/21/3cbb9930-c4ac-48a6-b902-3b81eb9c03c9.jpg
+src/xftwl.Shop.UI/Images/2015/10/21/41a3d132-4029-4de1-ab47-78418131bcd1.png
+src/xftwl.Shop.UI/Images/2015/10/21/4aaab2c7-3474-49e2-9b25-163c27047e20.png
+src/xftwl.Shop.UI/Images/2015/10/21/4ca6b444-eda7-4842-baff-f1e3fd04d87b.png
+src/xftwl.Shop.UI/Images/2015/10/21/67c71f4b-53ce-4111-b1b5-05151538290b.png
+src/xftwl.Shop.UI/Images/2015/10/21/78fba2b7-1219-43e7-9d40-8421bf9e3360.jpg
+src/xftwl.Shop.UI/Images/2015/10/21/7c356a1a-c3fb-4d50-b339-0f97b0ba56b9.jpg
+src/xftwl.Shop.UI/Images/2015/10/21/808497b6-fa39-45c6-8324-d5a3b0be1bf6.png
+src/xftwl.Shop.UI/Images/2015/10/21/849c54f1-ed7c-4c89-925b-d12da083c741.png
+src/xftwl.Shop.UI/Images/2015/10/21/9b804362-8e8c-4888-81c5-a917655e6a34.jpg
+src/xftwl.Shop.UI/Images/2015/10/21/9bdd680d-cfc7-4639-a9ce-c0de9fa6df62.png
+src/xftwl.Shop.UI/Images/2015/10/21/9e6197a5-6d30-4682-a34f-08fbf98d59df.jpg
+src/xftwl.Shop.UI/Images/2015/10/21/a3a5e287-7db9-4253-bde9-e1cbaf571853.png
+src/xftwl.Shop.UI/Images/2015/10/21/b2be911f-f443-4f2c-bc21-511f72fac22e.jpg
+src/xftwl.Shop.UI/Images/2015/10/21/c7b0e0f0-6d1e-43ca-b870-fa50b8f763b3.png
+src/xftwl.Shop.UI/Images/2015/10/21/d6ed802e-f7cf-4499-b5c1-849381b18a70.jpg
+src/xftwl.Shop.UI/Images/2015/10/21/e125ef53-17a1-4920-a4ed-3b64b66f8d77.jpg
+src/xftwl.Shop.UI/Images/2015/10/21/e5096104-3bd1-469f-8c9b-b083915ad264.jpg
+src/xftwl.Shop.UI/Images/2015/10/21/e718c2f3-5c32-4946-97ce-06b8c903e876.jpg
+src/xftwl.Shop.UI/Images/2015/10/21/e8012847-2855-4bc8-946f-45f0e71b9b2d.png
+src/xftwl.Shop.UI/Images/2015/10/21/eba4dcf7-ac0d-4988-ae91-1fc98f5c3101.png
+src/xftwl.Shop.UI/Images/2015/10/21/fc5bb53e-4059-4b7c-bff3-87df7be9ce02.png
+src/xftwl.Shop.UI/Images/2015/10/21/small_16365e93-8715-4523-9b5b-c7d2a9100f42.png
+src/xftwl.Shop.UI/Images/2015/10/21/small_332069a7-6e52-46c0-b124-fa02074ba9bc.png
+src/xftwl.Shop.UI/Images/2015/10/21/small_3cbb9930-c4ac-48a6-b902-3b81eb9c03c9.jpg
+src/xftwl.Shop.UI/Images/2015/10/21/small_41a3d132-4029-4de1-ab47-78418131bcd1.png
+src/xftwl.Shop.UI/Images/2015/10/21/small_4aaab2c7-3474-49e2-9b25-163c27047e20.png
+src/xftwl.Shop.UI/Images/2015/10/21/small_4ca6b444-eda7-4842-baff-f1e3fd04d87b.png
+src/xftwl.Shop.UI/Images/2015/10/21/small_67c71f4b-53ce-4111-b1b5-05151538290b.png
+src/xftwl.Shop.UI/Images/2015/10/21/small_78fba2b7-1219-43e7-9d40-8421bf9e3360.jpg
+src/xftwl.Shop.UI/Images/2015/10/21/small_7c356a1a-c3fb-4d50-b339-0f97b0ba56b9.jpg
+src/xftwl.Shop.UI/Images/2015/10/21/small_808497b6-fa39-45c6-8324-d5a3b0be1bf6.png
+src/xftwl.Shop.UI/Images/2015/10/21/small_849c54f1-ed7c-4c89-925b-d12da083c741.png
+src/xftwl.Shop.UI/Images/2015/10/21/small_9b804362-8e8c-4888-81c5-a917655e6a34.jpg
+src/xftwl.Shop.UI/Images/2015/10/21/small_9bdd680d-cfc7-4639-a9ce-c0de9fa6df62.png
+src/xftwl.Shop.UI/Images/2015/10/21/small_9e6197a5-6d30-4682-a34f-08fbf98d59df.jpg
+src/xftwl.Shop.UI/Images/2015/10/21/small_a3a5e287-7db9-4253-bde9-e1cbaf571853.png
+src/xftwl.Shop.UI/Images/2015/10/21/small_b2be911f-f443-4f2c-bc21-511f72fac22e.jpg
+src/xftwl.Shop.UI/Images/2015/10/21/small_c7b0e0f0-6d1e-43ca-b870-fa50b8f763b3.png
+src/xftwl.Shop.UI/Images/2015/10/21/small_d6ed802e-f7cf-4499-b5c1-849381b18a70.jpg
+src/xftwl.Shop.UI/Images/2015/10/21/small_e125ef53-17a1-4920-a4ed-3b64b66f8d77.jpg
+src/xftwl.Shop.UI/Images/2015/10/21/small_e5096104-3bd1-469f-8c9b-b083915ad264.jpg
+src/xftwl.Shop.UI/Images/2015/10/21/small_e718c2f3-5c32-4946-97ce-06b8c903e876.jpg
+src/xftwl.Shop.UI/Images/2015/10/21/small_e8012847-2855-4bc8-946f-45f0e71b9b2d.png
+src/xftwl.Shop.UI/Images/2015/10/21/small_eba4dcf7-ac0d-4988-ae91-1fc98f5c3101.png
+src/xftwl.Shop.UI/Images/2015/10/21/small_fc5bb53e-4059-4b7c-bff3-87df7be9ce02.png
+src/xftwl.Shop.UI/Images/2015/10/22/585b8202-0845-46c2-9ff7-5d939f18d9b1.jpg
+src/xftwl.Shop.UI/Images/2015/10/22/c32a47c7-9bf6-4d2d-b238-04415e015896.jpg
+src/xftwl.Shop.UI/Images/2015/10/22/small_585b8202-0845-46c2-9ff7-5d939f18d9b1.jpg
+src/xftwl.Shop.UI/Images/2015/10/22/small_c32a47c7-9bf6-4d2d-b238-04415e015896.jpg

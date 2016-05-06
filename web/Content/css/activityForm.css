@@ -70,7 +70,7 @@
     width: 240px;
     margin-right: 15px;
     position: relative;
-    z-index:9996;
+    z-index:3;
 }
 
 .post_time {
@@ -79,7 +79,7 @@
     background-origin: content-box;
     padding-right: 3px;
     position: relative;
-    z-index:9996;
+    z-index:3;
 }
 
 .post_date input,
@@ -140,7 +140,7 @@
     margin-right: 15px;
     width: 200px;
     position: relative;
-    z-index:9995;
+    z-index:2;
 }
 
 #address {
@@ -542,4 +542,13 @@
 .date_selector td.selectable_day.hover {
     background: #0082c6;
     color: #fff;
+}
+.edui-container {
+    z-index:7 !important;
+}
+.edui-modal-backdrop {
+    z-index:9998 !important;
+}
+.edui-modal {
+    z-index:9999 !important;
 }
