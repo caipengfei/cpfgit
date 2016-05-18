@@ -132,7 +132,7 @@ namespace Senparc.Weixin.MP.Sample.Filters
                                 log.Error("微信用户添加失败，OpenId=" + DeOpenId);
                             string appId = System.Configuration.ConfigurationManager.AppSettings["TenPayV3_AppId"].ToString();
                             log.Info("ReturnUrl=" + ReturnUrl);
-                            var weixinAuthUrl = OAuth.GetAuthorizeUrl(appId, WeixinUrl + "/wxuser/bind", Nonce, OAuthScope.snsapi_userinfo);
+                            var weixinAuthUrl = OAuth.GetAuthorizeUrl(appId, WeixinUrl + "/wxuser/reg", Nonce, OAuthScope.snsapi_userinfo);
                             #endregion
                             filterContext.Result = new RedirectResult(weixinAuthUrl);
                             log.Info("当前微信用户还没有与会员绑定，跳转到绑定页面" + weixinAuthUrl);

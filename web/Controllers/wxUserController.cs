@@ -45,6 +45,32 @@ namespace web.Controllers
         {
             return View();
         }
+        //微信用户绑定
+        public ActionResult Reg(string UserGuid)
+        {
+            if (!string.IsNullOrWhiteSpace(UserGuid))
+                qch.Infrastructure.CookieHelper.SetCookie("UserGuid_tj", UserGuid);
+            var user = userService.GetById(UserGuid);
+            if (user != null)
+            {
+                ViewBag.UserPhone = user.t_User_LoginId;
+            }
+            return View();
+        }
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult Reg(web.Models.UserRegModel model)
+        {
+            Msg msg = new Msg();
+            msg.Data = model.TjUser;
+            string tjuserguid = qch.Infrastructure.CookieHelper.GetCookieValue("UserGuid_tj");
+            UserModel um = new UserModel();
+            um.t_ReommUser = tjuserguid;
+            um.t_User_LoginId = model.Phone;
+            um.t_User_Mobile = model.Phone;
+            um.t_User_Pwd = qch.Infrastructure.DESEncrypt.Encrypt(model.Password);
+            return Json(msg);
+        }
         //生成二维码
         public string CreateCode_Simple(string nr)
         {

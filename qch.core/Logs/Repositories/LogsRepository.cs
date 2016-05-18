@@ -6,22 +6,25 @@ using System.Text;
 
 namespace qch.Repositories
 {
-    public class FundCourseRepository
+    /// <summary>
+    /// 系统日志资源层
+    /// </summary>
+    public class LogsRepository
     {
         readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        Repository<FundCourseModel> rp = new Repository<FundCourseModel>();
-        Repository<SelectFundCourse> rp1 = new Repository<SelectFundCourse>();
+        Repository<LogsModel> rp = new Repository<LogsModel>();
+
         /// <summary>
         /// 分页获取所有
         /// </summary>
         /// <param name="page"></param>
         /// <param name="pagesize"></param>
         /// <returns></returns>
-        public PetaPoco.Page<FundCourseModel> GetAll(int page, int pagesize)
+        public PetaPoco.Page<LogsModel> GetAll(int page, int pagesize)
         {
             try
             {
-                string sql = "select * from T_FundCourse where t_DelState=0 order by T_FundCourse_Recommend desc,T_FundCourse_Sort,T_AddDate desc";
+                string sql = "select * from LogsModel order by ErrorLevel desc";
                 return rp.GetPageData(page, pagesize, sql);
             }
             catch (Exception ex)
@@ -35,12 +38,12 @@ namespace qch.Repositories
         /// </summary>
         /// <param name="Guid"></param>
         /// <returns></returns>
-        public SelectFundCourse GetById(string Guid)
+        public LogsModel GetById(string Guid)
         {
             try
             {
-                string sql = "select a.*,b.T_Lecturer_Name as LecturerName,b.T_Lecturer_Pic as LecturerAvator,b.T_Lecturer_Intor as LecturerInfo from T_FundCourse as a left join T_Lecturer as b on a.T_LecturerGuid=b.Guid where a.guid=@0";
-                return rp1.Get(sql, new object[] { Guid });
+                string sql = "select * from LogsModel where guid=@0";
+                return rp.Get(sql, new object[] { Guid });
             }
             catch (Exception ex)
             {
@@ -53,7 +56,7 @@ namespace qch.Repositories
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public bool Add(FundCourseModel model)
+        public bool Add(LogsModel model)
         {
             try
             {
@@ -70,7 +73,7 @@ namespace qch.Repositories
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public bool Edit(FundCourseModel model)
+        public bool Edit(LogsModel model)
         {
             try
             {
@@ -87,7 +90,7 @@ namespace qch.Repositories
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public bool Del(FundCourseModel model)
+        public bool Del(LogsModel model)
         {
             try
             {

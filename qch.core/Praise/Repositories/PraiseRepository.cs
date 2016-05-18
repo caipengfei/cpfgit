@@ -7,92 +7,44 @@ using System.Text;
 namespace qch.Repositories
 {
     /// <summary>
-    /// 用户资源层
+    /// 动态点赞的资源层
     /// </summary>
-    public class WXUserRepository
+    public class PraiseRepository
     {
         readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        Repository<WXUserModel> rp = new Repository<WXUserModel>();
+        Repository<PraiseModels> rp = new Repository<PraiseModels>();
+        Repository<UserPraise> rp1 = new Repository<UserPraise>();
 
         /// <summary>
-        /// 分页获取所有微信用户
+        /// 获取点赞用户信息
+        /// </summary>
+        /// <param name="Guid"></param>
+        /// <returns></returns>
+        public IEnumerable<UserPraise> GetAllByTopicGuid(string Guid)
+        {
+            try
+            {
+                string sql = "select a.guid as Guid,a.t_Date,b.t_User_Pic as UserAvator,b.t_User_RealName as UserName from T_Praise as a left join t_users as b on a.t_User_Guid=b.guid where a.t_Associate_Guid=@0";
+                return rp1.GetAll(sql, new object[] { Guid });
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
+        /// 分页获取所有
         /// </summary>
         /// <param name="page"></param>
         /// <param name="pagesize"></param>
         /// <returns></returns>
-        public PetaPoco.Page<WXUserModel> GetAll(int page, int pagesize)
+        public PetaPoco.Page<PraiseModels> GetAll(int page, int pagesize)
         {
             try
             {
-                string sql = "select * from T_User_Weixin";
+                string sql = "select * from T_Praise where t_DelState=0 order by t_Date desc";
                 return rp.GetPageData(page, pagesize, sql);
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex.Message);
-                return null;
-            }
-        }
-        /// <summary>
-        /// getbyuserid
-        /// </summary>
-        /// <param name="Guid"></param>
-        /// <returns></returns>
-        public WXUserModel GetByUserId(string Guid)
-        {
-            try
-            {
-                string sql = "select * from T_User_Weixin where userguid=@0";
-                return rp.Get(sql, new object[] { Guid });
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex.Message);
-                return null;
-            }
-        }
-        /// <summary>
-        /// getbyopenid
-        /// </summary>
-        /// <param name="Guid"></param>
-        /// <returns></returns>
-        public WXUserModel GetByOpenId(string OpenId)
-        {
-            try
-            {
-                string sql = "select * from T_User_Weixin where OpenId=@0 or UnionId=@1 or kfopenid=@2";
-                return rp.Get(sql, new object[] { OpenId, OpenId, OpenId });
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex.Message);
-                return null;
-            }
-        }
-        public WXUserModel GetByOpenId(string OpenId, string UnionId)
-        {
-            try
-            {
-                string sql = "select * from T_User_Weixin where OpenId in (@0,@1) or UnionId in (@0,@1) or kfopenid=@2";
-                return rp.Get(sql, new object[] { OpenId, UnionId, OpenId });
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex.Message);
-                return null;
-            }
-        }
-        /// <summary>
-        /// GetByUnionId
-        /// </summary>
-        /// <param name="Guid"></param>
-        /// <returns></returns>
-        public WXUserModel GetByUnionId(string UnionId)
-        {
-            try
-            {
-                string sql = "select * from T_User_Weixin where UnionId=@0";
-                return rp.Get(sql, new object[] { UnionId });
             }
             catch (Exception ex)
             {
@@ -105,11 +57,11 @@ namespace qch.Repositories
         /// </summary>
         /// <param name="Guid"></param>
         /// <returns></returns>
-        public WXUserModel GetById(string Guid)
+        public PraiseModels GetById(string Guid)
         {
             try
             {
-                string sql = "select * from T_User_Weixin where guid=@0";
+                string sql = "select * from T_Praise where guid=@0";
                 return rp.Get(sql, new object[] { Guid });
             }
             catch (Exception ex)
@@ -123,7 +75,7 @@ namespace qch.Repositories
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public bool Add(WXUserModel model)
+        public bool Add(PraiseModels model)
         {
             try
             {
@@ -140,7 +92,7 @@ namespace qch.Repositories
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public bool Edit(WXUserModel model)
+        public bool Edit(PraiseModels model)
         {
             try
             {
@@ -157,7 +109,7 @@ namespace qch.Repositories
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public bool Del(WXUserModel model)
+        public bool Del(PraiseModels model)
         {
             try
             {

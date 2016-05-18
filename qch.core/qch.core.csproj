@@ -98,6 +98,10 @@
     <Compile Include="Lecturer\LecturerService.cs" />
     <Compile Include="Lecturer\Repositories\LecturerRepository.cs" />
     <Compile Include="Lecturer\Repositories\T_Lecturer.cs" />
+    <Compile Include="Logs\LogsModel.cs" />
+    <Compile Include="Logs\LogsService.cs" />
+    <Compile Include="Logs\Repositories\LogsRepository.cs" />
+    <Compile Include="Logs\Repositories\T_Logs.cs" />
     <Compile Include="Order\OrderModel.cs" />
     <Compile Include="Order\OrderService.cs" />
     <Compile Include="Order\Repositories\OrderRepository.cs" />
@@ -106,6 +110,11 @@
     <Compile Include="Pic\PicService.cs" />
     <Compile Include="Pic\Repositories\PicRepository.cs" />
     <Compile Include="Pic\Repositories\T_Associate_Pic.cs" />
+    <Compile Include="Praise\PraiseModels.cs" />
+    <Compile Include="Praise\PraiseService.cs" />
+    <Compile Include="Praise\Repositories\PraiseRepository.cs" />
+    <Compile Include="Praise\Repositories\T_Praise.cs" />
+    <Compile Include="Praise\UserPraise.cs" />
     <Compile Include="SMS.cs" />
     <Compile Include="str.cs" />
     <Compile Include="UserTalk\SelectModel.cs" />

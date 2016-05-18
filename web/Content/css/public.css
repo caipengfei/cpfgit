@@ -103,8 +103,9 @@ body {
 
 .header .mainnav li>a:hover,
 .header .mainnav li>a.active {
-    background-color: #F3A817;
-    border-color: #F3A817;
+    background-color: #FCCC37;
+    border-color: #FCCC37;
+    color: #4A4A4A;
 }
 .header .userface{
     float:right; width:70px; height:100%; padding:15px;

@@ -295,5 +295,13 @@ namespace qch.Models
         /// 导师头像
         /// </summary>
         public string LecturerAvator { get; set; }
+        /// <summary>
+        /// 导师详情
+        /// </summary>
+        public string LecturerInfo { get; set; }
+        /// <summary>
+        /// 众筹人次
+        /// </summary>
+        public int FundCourseCount { get; set; }
     }
 }

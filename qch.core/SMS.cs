@@ -82,11 +82,11 @@ namespace qch.core
             Random random = new Random();
             string str = null;
             //循环的次数     
-            int Nums = 6;
+            int Nums = 4;
             while (Nums > 0)
             {
                 int i = random.Next(1, 9);
-                if (MyArray.Count < 6)
+                if (MyArray.Count < 4)
                 {
                     MyArray.Add(i);
                 }

@@ -358,13 +358,13 @@ function postForm() {
             tipInfo("请上传封面图片");
             loadbox.hide();
             return;
-        }        
+        }
     } else {
         tipInfo('不好意思，你的浏览器不支持文件对象,建议使用IE10+,chrome,火狐任一浏览器访问本页面');
         loadbox.hide();
         return;
     }
-    
+
     var param = {
         t_Activity_Title: _title, // 活动主题
         t_Activity_sDate: _startdate, // 开始时间
@@ -389,7 +389,7 @@ function postForm() {
         cache: false,
         data: param,
         success: function (res) {
-            
+
             if (res.type == "success") {
                 //活动发布成功，上传图片到服务器
                 _coverPic = $('#hd_cover [type=file]').get(0).files[0]; // 封面图片
@@ -416,7 +416,7 @@ function postForm() {
     })
     //$.post('/activity/publish', $(param).serialize(), function (res) {
     //    //loadbox.hide();
-        
+
     //})
 }
 // 提示信息 帮助函数
@@ -485,3 +485,21 @@ function appDownBoxPos() {
         left: boxWidth > winWidth ? 0 : (winWidth - boxWidth) / 2
     });
 }
+/********************************* 调整图层 *********************************/
+$('body')
+    .on('click', '.edui-icon-image,.edui-icon-map,.edui-btn-link', function () {
+        if ($('.edui-icon-fullscreen').is('.isfullscreen')) return;
+        $('body').addClass('z-index').css({
+            height: $(window).height()
+        });
+    })
+    .on('click mouseup', '.edui-modal-backdrop,.edui-close,.edui-modal-footer>div', function (e) {
+        if ($('.edui-icon-fullscreen').is('.isfullscreen')) return;
+        $('body').removeClass('z-index').css({
+            height: 'auto'
+        });
+    })
+    .on('click', '.edui-icon-fullscreen', function () {
+        $('body').toggleClass('z-index');
+        $(this).toggleClass('isfullscreen');
+    })
