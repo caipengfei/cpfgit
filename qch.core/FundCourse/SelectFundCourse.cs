@@ -43,6 +43,7 @@ namespace qch.Models
         private int? _t_fundcourse_city;
         private int? _t_fundcourse_district;
         private string _t_fundcourse_street;
+        private int _t_fundCourse_state;
         /// <summary>
         /// guid
         /// </summary>
@@ -286,6 +287,14 @@ namespace qch.Models
             set { _t_fundcourse_street = value; }
             get { return _t_fundcourse_street; }
         }
+        /// <summary>
+        /// 状态
+        /// </summary>
+        public int T_FundCourse_State
+        {
+            set { _t_fundCourse_state = value; }
+            get { return _t_fundCourse_state; }
+        }
         #endregion Model
         /// <summary>
         /// 导师名称
@@ -295,5 +304,14 @@ namespace qch.Models
         /// 导师头像
         /// </summary>
         public string LecturerAvator { get; set; }
+        /// <summary>
+        /// 导师详情
+        /// </summary>
+        public string LecturerInfo { get; set; }
+        /// <summary>
+        /// 众筹人次
+        /// </summary>
+        public int FundCourseCount { get; set; }
+         
     }
 }

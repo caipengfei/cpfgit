@@ -36,7 +36,10 @@ namespace api.Controllers
                 var model = service.GetById(Guid);
                 if (model != null)
                 {
+                    //已筹多少钱
                     model.NowMoney = orderService.GetFundCourseMoney(model.Guid);
+                    //众筹人次
+                    model.FundCourseCount = orderService.GetFundCourseCount(model.Guid);
                     if (model.T_FundCourse_Pic != null)
                         model.T_FundCourse_Pic = ImageUrl + model.T_FundCourse_Pic;
                     model.LecturerAvator = ImageUrl + model.LecturerAvator;

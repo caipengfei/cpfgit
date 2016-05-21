@@ -170,6 +170,8 @@
     <Compile Include="Controllers\FundCourseController.cs" />
     <Compile Include="Controllers\JsApiController.cs" />
     <Compile Include="Controllers\LecturerController.cs" />
+    <Compile Include="Controllers\LogsController.cs" />
+    <Compile Include="Controllers\TopicController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserTalkController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />

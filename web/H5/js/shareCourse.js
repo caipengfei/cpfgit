@@ -110,8 +110,15 @@ $(window).bind('scroll', lazy_img);
 function lazy_img() {
     var len = $('img.lazy').length;
     !len && $(window).unbind('scroll', lazy_img);
+    function getOffsetTop(el) {
+        var y = el.offsetTop;
+        while (el = el.offsetParent) {
+            y += el.offsetTop;
+        }
+        return y;
+    }
     $('img.lazy').each(function () {
-        var oTop = this.offsetTop;
+        var oTop = getOffsetTop(this);
         var sTop = $(document).scrollTop();
         var winH = $(window).height();
         if (sTop + winH >= oTop) {

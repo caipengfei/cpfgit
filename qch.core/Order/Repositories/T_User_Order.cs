@@ -20,6 +20,11 @@ namespace qch.Repositories
         [Column]
         public string Guid { get; set; }
         /// <summary>
+        /// 关联的用户优惠券id
+        /// </summary>
+        [Column]
+        public string T_UserVoucher_Guid { get; set; }
+        /// <summary>
         /// 关联用户
         /// </summary>
         [Column]

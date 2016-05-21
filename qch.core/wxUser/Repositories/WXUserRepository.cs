@@ -69,6 +69,19 @@ namespace qch.Repositories
                 return null;
             }
         }
+        public WXUserModel GetByOpenId(string OpenId, string UnionId)
+        {
+            try
+            {
+                string sql = "select * from T_User_Weixin where OpenId in (@0,@1) or UnionId in (@0,@1) or kfopenid=@2";
+                return rp.Get(sql, new object[] { OpenId, UnionId, OpenId });
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
         /// <summary>
         /// GetByUnionId
         /// </summary>

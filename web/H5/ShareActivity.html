@@ -139,7 +139,8 @@
                         (index == -1 || index != 0) && (this.src = 'http://cn-qch.com:8002' + $(this).attr('src'));
                     })
                     loadPic('.content .image img');
-                    winResize($('#members img,.commentbox img'));
+                    winResize($('#members img'));
+                    winResize($('.commentbox img'));
                     
                     wxShare({
                         title: $('.details>h2').text(),

@@ -46,7 +46,7 @@
                 <h2><%=data.t_Lecturer_Name%></h2>
                 <b><%==data.t_Lecturer_Position.replace(/===/g,'<br>')%></b>
                 <h3>
-                    教授方向：<%=data.t_Lecturer_Subject%> 
+                    教授方向：<%==data.t_Lecturer_Subject.replace(/===/g,' ')%> 
                     <!--课程：<%=data.T_Lecturer_Count||0%>-->
                 </h3>
                 <p><%==data.t_Lecturer_Intor.replace(/===/g,'<br>')%></p>
@@ -82,7 +82,7 @@
                 <img class="lazy" data-src="<%=item.t_Course_Pic||default_avator%>">
                 <div>
                     <h3><%=item.t_Course_Title%></h3>
-                    <p><%=item.t_Course_OneWord%></p>
+                    <p><%=item.t_Course_Instruction%></p>
                 </div>
             </li>
         <%})%>

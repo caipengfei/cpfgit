@@ -26,10 +26,33 @@ namespace qch.Repositories
                 decimal money = 0;
                 using (var db = new PetaPoco.Database(DbConfig.qch))
                 {
-                    string sql = "select sum(t_Order_Money) from T_User_Order where t_Order_State=1 and t_DelState=0 and t_Associate_Guid=" + Guid;
+                    string sql = "select sum(t_Order_Money) from T_User_Order where t_Order_State=1 and t_DelState=0 and Guid in (select t_Order_Guid from T_UserOrder_Good where t_Associate_Guid='" + Guid + "')";
                     money = Convert.IsDBNull(db.ExecuteScalar<object>(sql)) ? 0 : db.ExecuteScalar<decimal>(sql);
                 }
                 return money;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return 0;
+            }
+        }
+        /// <summary>
+        /// 众筹人次
+        /// </summary>
+        /// <param name="Guid"></param>
+        /// <returns></returns>
+        public int GetFundCourseCount(string Guid)
+        {
+            try
+            {
+                int count = 0;
+                using (var db = new PetaPoco.Database(DbConfig.qch))
+                {
+                    string sql = "select count(1) from T_User_Order where t_Order_State=1 and t_DelState=0 and Guid in (select t_Order_Guid from T_UserOrder_Good where t_Associate_Guid='" + Guid + "')";
+                    count = Convert.IsDBNull(db.ExecuteScalar<object>(sql)) ? 0 : db.ExecuteScalar<int>(sql);
+                }
+                return count;
             }
             catch (Exception ex)
             {

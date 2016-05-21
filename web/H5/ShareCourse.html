@@ -125,7 +125,7 @@
                 <img class="lazy" data-src="<%=item.t_Course_Pic%>">
                 <div>
                     <h3><%=item.t_Course_Title%></h3>
-                    <p><%=item.t_Course_OneWord%></p>
+                    <p><%=item.t_Course_Instruction%></p>
                 </div>
             </li>
         <%})%>
@@ -145,6 +145,7 @@
                 guid: guid
             },
             success: function(res) {
+                if(!res) return;
                 $('.container').html(template('contentTemplate', {
                     data: res
                 }));

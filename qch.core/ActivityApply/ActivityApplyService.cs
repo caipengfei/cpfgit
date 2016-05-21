@@ -218,7 +218,7 @@ namespace qch.core
                     log.Info("验证完成，活动guid：" + guid);
                     #endregion
                     log.Info("用户phone:" + phone);
-                    var user = db.SingleOrDefault<T_Users>(" where t_User_LoginId=@0", new object[] { phone });
+                    var user = db.SingleOrDefault<T_Users>(" where t_User_LoginId=@0 and t_DelState=0", new object[] { phone });
                     log.Info("qrcode-----------------" + qrcode);
                     if (user != null)
                     {
@@ -370,7 +370,7 @@ namespace qch.core
             {
                 using (var db = new PetaPoco.Database("qch"))
                 {
-                    var user = db.SingleOrDefault<T_Users>(" where t_User_Mobile=@0", new object[] { phone });
+                    var user = db.SingleOrDefault<T_Users>(" where t_User_LoginId=@0 and t_DelState=0", new object[] { phone });
                     if (user != null)
                     {
                         var useractivity = db.SingleOrDefault<T_Activity_Apply>(" where t_user_guid=@0 and t_Activity_Guid=@1", new object[] { user.Guid, guid });

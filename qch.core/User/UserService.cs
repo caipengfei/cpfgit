@@ -20,6 +20,90 @@ namespace qch.core
         UserRepository rp = new UserRepository();
 
 
+        public Msg Reg(UserModel model)
+        {
+            Msg msg = new Msg();
+            msg.type = "error";
+            msg.Data = "注册失败";
+            try
+            {
+                /*
+                 * 1、验证注册信息
+                 * 2、验证推荐人信息
+                 * 3、save user
+                 * 4、查询需要赠送新注册会员什么优惠券并执行
+                 * 5、查询需要赠送推荐人多少积分并执行
+                 */
+                using (var db = new PetaPoco.Database(DbConfig.qch))
+                {
+                    db.BeginTransaction();
+                    
+                    db.CompleteTransaction();
+                }
+                msg.type = "success";
+                msg.Data = "注册成功";
+                return msg;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return msg;
+            }
+        }
+        /// <summary>
+        /// 获取某用户的所有一级推荐人
+        /// </summary>
+        /// <param name="UserGuid"></param>
+        /// <param name="Pinyin"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<UserModel> GetReferral1(int page, int pagesize, string UserGuid)
+        {
+            try
+            {
+                return rp.GetReferral1(page, pagesize, UserGuid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
+        /// 获取某用户的所有一级推荐人(数量)
+        /// </summary>
+        /// <param name="UserGuid"></param>
+        /// <param name="Pinyin"></param>
+        /// <returns></returns>
+        public int GetReferral1(string UserGuid)
+        {
+            try
+            {
+                return rp.GetReferral1(UserGuid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return 0;
+            }
+        }
+        /// <summary>
+        /// 获取某用户的所有二级推荐人(数量)
+        /// </summary>
+        /// <param name="UserGuid"></param>
+        /// <param name="Pinyin"></param>
+        /// <returns></returns>
+        public int GetReferral2(string UserGuid)
+        {
+            try
+            {
+                return rp.GetReferral2(UserGuid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return 0;
+            }
+        }
         /// <summary>
         /// 检测页面验证码
         /// </summary>
@@ -72,7 +156,7 @@ namespace qch.core
                     msg.Data = "用户名不存在";
                     return msg;
                 }
-                
+
                 model.LoginPwd = qch.Infrastructure.DESEncrypt.Encrypt(model.LoginPwd);
                 var user1 = rp.Login(model.LoginName, model.LoginPwd);
                 if (user1 != null)
@@ -166,7 +250,7 @@ namespace qch.core
                 log.Error(ex.Message);
                 return null;
             }
-        } 
+        }
         /// <summary>
         /// 根据UserStyle分页获取
         /// </summary>

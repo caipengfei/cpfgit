@@ -35,6 +35,23 @@ namespace qch.core
             }
         }
         /// <summary>
+        /// 众筹人次
+        /// </summary>
+        /// <param name="Guid"></param>
+        /// <returns></returns>
+        public int GetFundCourseCount(string Guid)
+        {
+            try
+            {
+                return rp.GetFundCourseCount(Guid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return 0;
+            }
+        }
+        /// <summary>
         /// 处理支付业务
         /// </summary>
         /// <param name="orderNo"></param>

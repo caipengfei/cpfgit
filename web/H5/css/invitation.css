@@ -1,0 +1,110 @@
+.container {
+    background: url(/h5/img/invitation/datu_img@2x.jpg) no-repeat 50% 0;
+    background-size: 100% 15rem;
+    padding-top: 15rem;
+    margin-bottom: 0;
+}
+
+table {
+    width: 100%;
+    background: #fff;
+    border-top: 1px solid rgb(238, 238, 238);
+    border-bottom: 1px solid rgb(238, 238, 238);
+}
+
+table td {
+    padding-top: 5rem;
+    text-align: center;
+    letter-spacing: 1px;
+    line-height: 1em;
+    width: 33.33%;
+    border-left: 1px solid rgb(238, 238, 238);
+}
+
+table td:nth-child(1) {
+    background: url(/h5/img/invitation/zhijie_img@2x.png) no-repeat 50% .5rem;
+    background-size: auto 4rem;
+    border-left: none;
+}
+
+table td:nth-child(2) {
+    background: url(/h5/img/invitation/jianjie_img@2x.png) no-repeat 50% .5rem;
+    background-size: auto 4rem;
+}
+
+table td:nth-child(3) {
+    background: url(/h5/img/invitation/jifen_img@2x.png) no-repeat 50% .5rem;
+    background-size: auto 4rem;
+}
+
+table td h2 {
+    color: rgb(165, 165, 165);
+    margin-bottom: 1em;
+    font-size: 1.2rem;
+}
+
+table td span {
+    color: rgb(162, 201, 240);
+    margin-bottom: 1em;
+    font-size: 1.2rem;
+}
+
+.seedetailsbox {
+    height: 5rem;
+    line-height: 5rem;
+    text-align: center;
+    background: #fff;
+    border-bottom: .5rem solid rgb(242, 244, 250);
+}
+
+.seedetailsbox a {
+    height: 2rem;
+    line-height: 2rem;
+    font-size: 1.2rem;
+    color: rgb(162, 201, 240);
+    letter-spacing: 1px;
+    background: url(/h5/img/invitation/shuangjiantou@2x.png) no-repeat right 50%;
+    background-size: auto 100%;
+    padding-right: 1.8rem;
+}
+
+.codebox {
+    padding: 0 1.4rem;
+    padding-top: 3rem;
+    background: #fff;
+}
+
+.codebox p {
+    height: 3rem;
+    line-height: 2.9rem;
+    border-radius: 1.5rem;
+    border: 1px solid rgb(165, 165, 165);
+    margin-bottom: 3rem;
+    overflow: hidden;
+}
+
+.codebox p span {
+    font-size: 1.2rem;
+    background: rgb(244, 244, 244);
+    padding: 0 1.4rem;
+    color: rgb(165, 165, 165);
+}
+
+.codebox p b {
+    font-size: 1.2rem;
+    float: right;
+    padding-right: 1.4rem;
+    color: rgb(165, 165, 165);
+    font-weight: normal;
+}
+
+.codebox a {
+    width: 100%;
+    height: 3rem;
+    line-height: 3rem;
+    text-align: center;
+    color: #fff;
+    background: rgb(162, 201, 240);
+    font-size: 1.2rem;
+    border-radius: 1.5rem;
+}

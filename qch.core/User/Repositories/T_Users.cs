@@ -164,5 +164,10 @@ namespace qch.Repositories
         /// </summary>
         [Column]
         public int t_Recommend { get; set; }
+        /// <summary>
+        /// 推荐人
+        /// </summary>
+        [Column]
+        public string t_ReommUser { get; set; }
     }
 }

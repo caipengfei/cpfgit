@@ -546,9 +546,9 @@
 .edui-container {
     z-index:7 !important;
 }
-.edui-modal-backdrop {
-    z-index:9998 !important;
+body.z-index .header{
+    z-index: 1 !important;
 }
-.edui-modal {
-    z-index:9999 !important;
+body.z-index{
+    overflow: hidden;
 }

@@ -1,4 +1,9 @@
-1
+修改人：蔡鹏飞 2016-05-20
+数据库改动：
+1、订单表增加字段 T_UserVoucher_Guid  varchar(49) 关联的用户优惠券id
+2、增加优惠券表 T_Voucher
+3、增加用户优惠券明细表 T_User_Voucher
+4、增加错误日志记录表 T_logs
 
 修改人：蔡鹏飞 2016-04-13
 数据库表T_Activity_Apply活动报名表增加字段：t_ProofCode报名凭证数字码varchar(20)、t_QrCode报名凭证二维码varchar(50)

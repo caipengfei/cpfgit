@@ -140,6 +140,18 @@ namespace qch.core
                 return null;
             }
         }
+        public WXUserModel GetByOpenId(string OpenId, string UnionId)
+        {
+            try
+            {
+                return rp.GetByOpenId(OpenId, UnionId);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
         /// <summary>
         /// GetByUnionId
         /// </summary>

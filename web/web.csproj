@@ -210,6 +210,7 @@
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InvitationController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\TenPayV3Controller.cs" />
     <Compile Include="Controllers\WeixinController.cs" />
@@ -222,14 +223,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="H5\SharePage.aspx.cs">
-      <DependentUpon>SharePage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="H5\SharePage.aspx.designer.cs">
-      <DependentUpon>SharePage.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\UserRegModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QCH_Activity\ActivityAddOrModify.aspx.cs">
       <DependentUpon>ActivityAddOrModify.aspx</DependentUpon>
@@ -746,6 +741,7 @@
     <Content Include="Content\image\ad_login\or.png" />
     <Content Include="Content\image\api-qr2.png" />
     <Content Include="Content\image\autonavi.png" />
+    <Content Include="Content\image\banner_2.jpg" />
     <Content Include="Content\image\captcha.jpg" />
     <Content Include="Content\image\check_yes.png" />
     <Content Include="Content\image\date_icon.png" />
@@ -764,6 +760,7 @@
     <Content Include="Content\image\index\banner\banner_1.jpg" />
     <Content Include="Content\image\index\banner\banner_2.jpg" />
     <Content Include="Content\image\index\banner\banner_3.jpg" />
+    <Content Include="Content\image\index\banner_2.jpg" />
     <Content Include="Content\image\index\car.png" />
     <Content Include="Content\image\index\chaguan.png" />
     <Content Include="Content\image\index\erweima.png" />
@@ -973,6 +970,7 @@
     <Content Include="H5\css\hasport_green.css" />
     <Content Include="H5\css\home.css" />
     <Content Include="H5\css\index.css" />
+    <Content Include="H5\css\invitation.css" />
     <Content Include="H5\css\m.common.css" />
     <Content Include="H5\css\mastert.css" />
     <Content Include="H5\css\orderPay.css" />
@@ -982,6 +980,7 @@
     <Content Include="H5\css\page4.css" />
     <Content Include="H5\css\page5.css" />
     <Content Include="H5\css\public.css" />
+    <Content Include="H5\css\register.css" />
     <Content Include="H5\css\shareCourse.css" />
     <Content Include="H5\css\shareTutor.css" />
     <Content Include="H5\css\signUp.css" />
@@ -989,8 +988,11 @@
     <Content Include="H5\css\signUpList.css" />
     <Content Include="H5\img\1459518578095.png" />
     <Content Include="H5\img\avator.png" />
+    <Content Include="H5\img\bg_down.jpg" />
     <Content Include="H5\img\car.jpg" />
     <Content Include="H5\img\crowdfunding_banner.jpg" />
+    <Content Include="H5\img\denglu_mm_img%402x.png" />
+    <Content Include="H5\img\denglu_sj_img%402x.png" />
     <Content Include="H5\img\ditiao.png" />
     <Content Include="H5\img\error.png" />
     <Content Include="H5\img\face.jpg" />
@@ -1012,13 +1014,16 @@
     <Content Include="H5\img\icon\heart.png" />
     <Content Include="H5\img\icon\huodong_wxz_btn%402x.png" />
     <Content Include="H5\img\icon\huodong_xz_btn%402x.png" />
+    <Content Include="H5\img\icon\imgnodata.png" />
     <Content Include="H5\img\icon\inline.png" />
+    <Content Include="H5\img\icon\logo_mob.png" />
     <Content Include="H5\img\icon\more_1.png" />
     <Content Include="H5\img\icon\paySuccess.jpg" />
     <Content Include="H5\img\icon\refresh.png" />
     <Content Include="H5\img\icon\right.png" />
     <Content Include="H5\img\icon\share.png" />
     <Content Include="H5\img\icon\slide.png" />
+    <Content Include="H5\img\icon\suibian%402x.png" />
     <Content Include="H5\img\icon\up.png" />
     <Content Include="H5\img\icon\wxzf.png" />
     <Content Include="H5\img\icon\xianchang.png" />
@@ -1032,6 +1037,18 @@
     <Content Include="H5\img\icon_right.png" />
     <Content Include="H5\img\icon_xin.png" />
     <Content Include="H5\img\icon_xing.png" />
+    <Content Include="H5\img\invitation\datu_img%402x.jpg" />
+    <Content Include="H5\img\invitation\genduo%402x.png" />
+    <Content Include="H5\img\invitation\jianjie_img%402x.png" />
+    <Content Include="H5\img\invitation\jifen_img%402x.png" />
+    <Content Include="H5\img\invitation\mingxi_ninchen_img%402x.png" />
+    <Content Include="H5\img\invitation\mingxi_yaoqingjiangli_img%402x.png" />
+    <Content Include="H5\img\invitation\mingxi_yaoqingrenshu_img%402x.png" />
+    <Content Include="H5\img\invitation\mingxi_zhanghao_img%402x.png" />
+    <Content Include="H5\img\invitation\mingxi_zhuceshijian_img%402x.png" />
+    <Content Include="H5\img\invitation\shuangjiantou%402x.png" />
+    <Content Include="H5\img\invitation\wode_yaoqingyoujiang_img%402x.png" />
+    <Content Include="H5\img\invitation\zhijie_img%402x.png" />
     <Content Include="H5\img\juan_11.png" />
     <Content Include="H5\img\juan_21.png" />
     <Content Include="H5\img\line.png" />
@@ -1053,9 +1070,13 @@
     <Content Include="H5\img\xf_bian_03_n2.png" />
     <Content Include="H5\img\xia.png" />
     <Content Include="H5\img\xian_cd.png" />
+    <Content Include="H5\img\xiazai_btn%402x.png" />
     <Content Include="H5\img\xuXian_2.png" />
     <Content Include="H5\img\yin_414.gif" />
     <Content Include="H5\img\yuan.png" />
+    <Content Include="H5\invitation.html" />
+    <Content Include="H5\invitationInfo.html" />
+    <Content Include="H5\invitationList.html" />
     <Content Include="H5\js\artTemplate.js" />
     <Content Include="H5\js\html2canvas.js" />
     <Content Include="H5\js\int.js" />
@@ -1063,6 +1084,7 @@
     <Content Include="H5\js\jquery.min.js" />
     <Content Include="H5\js\lib.pincolor.min.js" />
     <Content Include="H5\js\loader.js" />
+    <Content Include="H5\js\register.js" />
     <Content Include="H5\js\shareCourse.js" />
     <Content Include="H5\js\shareTutor.js" />
     <Content Include="H5\js\signUp2.js" />
@@ -1074,7 +1096,6 @@
     <Content Include="H5\ShareCourse.html" />
     <Content Include="H5\ShareCrowdfunding.html" />
     <Content Include="H5\ShareInvestPlace.html" />
-    <Content Include="H5\SharePage.aspx" />
     <Content Include="H5\ShareProject.html" />
     <Content Include="H5\ShareTopic.html" />
     <Content Include="H5\ShareTutor.html" />
@@ -1194,6 +1215,7 @@
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Views\App\appDown.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1271,6 +1293,12 @@
     <Content Include="Views\App\Index.cshtml" />
     <Content Include="Views\Order\CreateOrder.cshtml" />
     <Content Include="Views\Order\PayRequest.cshtml" />
+    <Content Include="Views\wxUser\Reg.cshtml" />
+    <Content Include="Views\wxUser\wxReg.cshtml" />
+    <Content Include="Views\Invitation\Index.cshtml" />
+    <Content Include="Views\Invitation\List.cshtml" />
+    <Content Include="Views\Invitation\List1.cshtml" />
+    <Content Include="Views\Invitation\Inof.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AppDown\unpackage\" />

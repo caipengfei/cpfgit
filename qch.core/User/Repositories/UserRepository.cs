@@ -15,6 +15,79 @@ namespace qch.Repositories
         Repository<UserModel> rp = new Repository<UserModel>();
 
 
+        /// <summary>
+        /// 获取某用户的所有一级推荐人
+        /// </summary>
+        /// <param name="UserGuid"></param>
+        /// <param name="Pinyin"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<UserModel> GetReferral1(int page,int pagesize,string UserGuid)
+        {
+            try
+            {
+                string sql = "select * from t_users where t_ReommUser=@0 and t_DelState=0";
+                return rp.GetPageData(page, pagesize, sql, new object[] { UserGuid });
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
+        /// 获取某用户的所有一级推荐人(数量)
+        /// </summary>
+        /// <param name="UserGuid"></param>
+        /// <param name="Pinyin"></param>
+        /// <returns></returns>
+        public int GetReferral1(string UserGuid)
+        {
+            try
+            {
+                int xy = 0;
+                using (var db = new PetaPoco.Database(DbConfig.qch))
+                {
+                    string sql = "select count(1) from t_users where t_ReommUser=@0 and t_DelState=0";
+                    xy = Convert.IsDBNull(db.ExecuteScalar<object>(sql, new object[] { UserGuid })) ? 0 : db.ExecuteScalar<int>(sql, new object[] { UserGuid });
+                }
+                return xy;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return 0;
+            }
+        }
+        /// <summary>
+        /// 获取某用户的所有二级推荐人(数量)
+        /// </summary>
+        /// <param name="UserGuid"></param>
+        /// <param name="Pinyin"></param>
+        /// <returns></returns>
+        public int GetReferral2(string UserGuid)
+        {
+            try
+            {
+                int xy = 0;
+                using (var db = new PetaPoco.Database(DbConfig.qch))
+                {
+                    string sql = "select count(1) from t_users where t_ReommUser in (select Guid from t_users where t_ReommUser=@0 and t_DelState=0) and and t_DelState=0";
+                    xy = Convert.IsDBNull(db.ExecuteScalar<object>(sql, new object[] { UserGuid })) ? 0 : db.ExecuteScalar<int>(sql, new object[] { UserGuid });
+                }
+                return xy;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return 0;
+            }
+        }
+        /// <summary>
+        /// 获取登录用户信息
+        /// </summary>
+        /// <param name="LoginName"></param>
+        /// <param name="LoginPwd"></param>
+        /// <returns></returns>
         public UserModel GetLoginUser(string LoginName, string LoginPwd)
         {
             try
