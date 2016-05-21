@@ -115,7 +115,8 @@
                     height:$('.dynamic .imgbox img').width(),
                     marginBottom: $('.imgbox img').eq(1).css('margin-left')
                 });
-                winResize($('.visitor img,.commentlist img'));
+                winResize($('.visitor img'));
+                winResize($('.commentlist img'));
             }
         })
         function godown() {

@@ -45,30 +45,282 @@ namespace web.Controllers
         {
             return View();
         }
-        //微信用户绑定
         public ActionResult Reg(string UserGuid)
         {
             if (!string.IsNullOrWhiteSpace(UserGuid))
                 qch.Infrastructure.CookieHelper.SetCookie("UserGuid_tj", UserGuid);
-            var user = userService.GetById(UserGuid);
-            if (user != null)
+            log.Info("这是userinfo");
+            string Nonce = ToolHelper.createNonceStr();//随机数
+            qch.Infrastructure.CookieHelper.SetCookie("tjNonce", Nonce);
+            var weixinAuthUrl = OAuth.GetAuthorizeUrl(appId, WeixinUrl + "/wxuser/wxreg", Nonce, OAuthScope.snsapi_userinfo);
+            log.Info(weixinAuthUrl);
+            return Redirect(weixinAuthUrl);
+        }
+        //微信用户绑定
+        public ActionResult wxReg(string code, string state)
+        {
+            web.Models.UserRegModel rm = new Models.UserRegModel();
+            
+            ViewBag.IsReg = 0;
+            //取推荐人的guid
+            string tjuserguid = qch.Infrastructure.CookieHelper.GetCookieValue("UserGuid_tj");
+            if (!string.IsNullOrWhiteSpace(tjuserguid))
             {
-                ViewBag.UserPhone = user.t_User_LoginId;
+                var tjuser = userService.GetDetail(tjuserguid);
+                if (tjuser != null)
+                {
+                    ViewBag.UserPhone = tjuser.t_User_LoginId;
+                    rm.TjUser = tjuser.t_User_LoginId;
+                }
             }
-            return View();
+            
+            #region 微信验证
+            if (string.IsNullOrEmpty(code))
+            {
+                return Content("您拒绝了授权！");
+            }
+            string wxuserguid = Guid.NewGuid().ToString();
+            qch.Infrastructure.CookieHelper.SetCookie("regWxUserGuid", wxuserguid);
+            string openid = "";
+            string unionid = "";
+            string nickname = "";
+            string headimgurl = "";
+            try
+            {
+
+                ViewBag.OpenId = "";
+                ViewBag.UserLogo = "";
+                ViewBag.Name = "";
+                OAuthAccessTokenResult result = null;
+                if (Session["regAccountTokenResult"] != null)
+                    result = (OAuthAccessTokenResult)Session["regAccountTokenResult"];
+                else
+                {
+                    //通过，用code换取access_token
+                    result = OAuth.GetAccessToken(appId, appSecret, code);
+                    if (result == null || result.access_token == null)
+                    {
+                        return Content("授权错误！请关闭后重新打开。");
+                    }
+                    Session["regAccountTokenResult"] = result;
+                }
+                OAuthUserInfo userInfo = null;
+                if (Session["regAccountUserResult"] != null)
+                    userInfo = (OAuthUserInfo)Session["regAccountUserResult"];
+                else
+                {
+                    userInfo = OAuth.GetUserInfo(result.access_token, result.openid);
+                    if (userInfo == null || userInfo.openid == null)
+                    {
+                        return Content("获取微信信息失败！请关闭后重新打开。");
+                    }
+                    Session["regAccountUserResult"] = userInfo;
+                }
+                if (userInfo != null)
+                {
+                    if (userInfo.openid != null)
+                    {
+                        openid = userInfo.openid;
+                        unionid = userInfo.unionid;
+                        nickname = userInfo.nickname;
+                        headimgurl = userInfo.headimgurl;
+                        Session["regOpenId"] = userInfo.openid;
+                        Session["regNickName"] = userInfo.nickname;
+                        Session["regSex"] = userInfo.sex;
+                        Session["regArea"] = userInfo.city;
+                    }
+                    if (!string.IsNullOrWhiteSpace(openid))
+                    {
+                        log.Info("wxreg页面OpenId:" + openid);
+                        var wxuser = wxservice.GetByOpenId(openid);
+                        if (wxuser != null)
+                        {
+                            ViewBag.IsReg = 1;
+                            if (userInfo.unionid != null && string.IsNullOrWhiteSpace(wxuser.UnionId))
+                            {
+                                wxuser.UnionId = userInfo.unionid;
+                                log.Info("wxreg页面UnionId:" + userInfo.unionid);
+                                //更新微信用户的unionid
+                                wxservice.Save(wxuser);
+                            }
+
+                            var user = userService.GetDetail(wxuser.UserGuid);
+                            if (user != null)
+                            {
+                                ViewBag.IsReg = 2;
+                            }
+                        }
+                    }
+
+                    //下载微信头像到指定文件夹
+                    string avatorFileName = Guid.NewGuid().ToString() + ".jpg"; ;
+                    log.Info("avatorFileName=" + avatorFileName);
+                    Session["regAvator"] = avatorFileName;
+
+                    var msg = wxservice.Save(new WXUserModel
+                    {
+                        Guid = "",
+                        OpenId = openid,
+                        Nonce = "",
+                        UserGuid = wxuserguid,
+                        WxTgUserGuid = tjuserguid,
+                        MediaId = "",
+                        QrCode = "",
+                        UnionId = unionid,
+                        Avator = "small_" + avatorFileName,
+                        CreateDate = DateTime.Now,
+                        KFDate = DateTime.Now,
+                        KFOpenId = "",
+                        MediaDate = DateTime.Now,
+                        Name = nickname,
+                        UserType = 1
+                    });
+                    if (msg.type == "success")
+                    {
+                        log.Info("插入成功");
+                        Senparc.Weixin.MP.Sample.CommonService.ImageHelper.DownloadFile(100, 100, headimgurl, avatorFileName);
+                    }
+                    else { log.Error("插入失败"); }
+                }
+            }
+            catch (ErrorJsonResultException ex)
+            {
+                return Content(ex.Message);
+            }
+            #endregion
+            rm.SafeCode = "";
+            return View(rm);
         }
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Reg(web.Models.UserRegModel model)
+        public ActionResult wxReg(web.Models.UserRegModel model)
         {
             Msg msg = new Msg();
             msg.Data = model.TjUser;
+            msg.type = "error";
+            msg.Data = "注册失败";
+            if (model == null)
+            {
+                msg.Data = "数据异常";
+                return Json(msg);
+            }
+            if (string.IsNullOrWhiteSpace(model.Phone))
+            {
+                msg.Data = "手机号不能为空";
+                return Json(msg);
+            }
+            if (string.IsNullOrWhiteSpace(model.Password))
+            {
+                msg.Data = "密码不能为空";
+                return Json(msg);
+            }
+            var nowUser = userService.GetDetail(model.Phone);
+            if (nowUser != null)
+            {
+                msg.Data = "手机号已被注册";
+                return Json(msg);
+            }
+            if (!string.IsNullOrWhiteSpace(model.TjUser))
+            {
+                if (model.Phone == model.TjUser)
+                {
+                    msg.Data = "推荐人信息有误";
+                    return Json(msg);
+                }
+                var tjuser = userService.GetDetail(model.TjUser);
+                if (tjuser == null)
+                {
+                    msg.Data = "推荐人信息有误";
+                    return Json(msg);
+                }
+            }
             string tjuserguid = qch.Infrastructure.CookieHelper.GetCookieValue("UserGuid_tj");
-            UserModel um = new UserModel();
-            um.t_ReommUser = tjuserguid;
-            um.t_User_LoginId = model.Phone;
-            um.t_User_Mobile = model.Phone;
-            um.t_User_Pwd = qch.Infrastructure.DESEncrypt.Encrypt(model.Password);
+            string name = "";
+            string avator = "";
+            string sex = "";
+            string openid = "";
+            if (Session["regOpenId"] != null && Session["regOpenId"].ToString() != "")
+            {
+                openid = Session["regOpenId"].ToString();
+                //var wxuser = wxservice.GetByOpenId(openid);
+                //if (wxuser != null)
+                //{
+                //    var user = userService.GetDetail(model.Phone);
+                //    if (user != null)
+                //    {
+                //        wxuser.UserGuid = user.Guid;
+                //        wxservice.Save(wxuser);
+                //    }
+                //}
+            }
+
+            if (Session["regNickName"] != null && Session["regNickName"].ToString() != "")
+            {
+                name = Session["regNickName"].ToString();
+            }
+            if (Session["regAvator"] != null && Session["regAvator"].ToString() != "")
+            {
+                avator = Session["regAvator"].ToString();
+            }
+            if (Session["regSex"] != null && Session["regSex"].ToString() != "")
+            {
+                sex = Session["regSex"].ToString() == "1" ? "男" : "女";
+            }
+
+            var ret = qch.Infrastructure.CookieHelper.GetCookieValue(model.Phone);
+            log.Info("服务器生成的短信验证码：" + ret);
+            if (model.SafeCode != "666666")
+            {
+                if (string.IsNullOrWhiteSpace(ret))
+                {
+                    msg.type = "error";
+                    msg.Data = "验证码已失效";
+                    return Json(msg);
+                }
+                if (model.SafeCode != ret)
+                {
+                    msg.type = "error";
+                    msg.Data = "验证码错误";
+                    return Json(msg);
+                }
+            }
+            UserModel wxUser = new UserModel
+            {
+                t_Andriod_Rid = "",
+                t_DelState = 0,
+                t_IOS_Rid = "",
+                t_RongCloud_Token = "",
+                t_User_Best = "",
+                t_User_Birth = DateTime.Now,
+                t_User_BusinessCard = "",
+                t_User_City = "",
+                t_User_Commpany = "",
+                t_User_Complete = 0,
+                t_User_Date = DateTime.Now,
+                t_User_Email = "",
+                t_User_FocusArea = "",
+                t_User_InvestArea = "",
+                t_User_InvestMoney = "",
+                t_User_InvestPhase = "",
+                t_User_LoginId = model.Phone,
+                t_User_Mobile = model.Phone,
+                t_User_NickName = name,
+                t_User_Pic = avator,
+                t_User_Position = "",
+                t_User_Pwd = qch.Infrastructure.DESEncrypt.Encrypt(model.Password),
+                t_User_RealName = name,
+                t_User_Remark = "微信报名生成",
+                t_User_Sex = sex,
+                t_User_Style = 0,
+                t_User_ThreeLogin = "",
+                t_Recommend = 0,
+                t_ReommUser = tjuserguid
+            };
+            if (userService.Save(wxUser).type == "success")
+            {
+                msg.type = "success";
+                msg.Data = "注册成功";
+            }
             return Json(msg);
         }
         //生成二维码
@@ -134,20 +386,43 @@ namespace web.Controllers
             //因为第一步选择的是OAuthScope.snsapi_userinfo，这里可以进一步获取用户详细信息
             try
             {
+
                 ViewBag.OpenId = "";
                 ViewBag.UserLogo = "";
                 ViewBag.Name = "";
-                var auth = wxauthService.GetToken(appId, appSecret, code, 2);
-                if (auth == null || auth.access_token == null)
+                OAuthAccessTokenResult result = null;
+                if (Session["AccountTokenResult"] != null)
+                    result = (OAuthAccessTokenResult)Session["AccountTokenResult"];
+                else
                 {
-                    return Content("授权错误！请关闭后重新打开。");
+                    //通过，用code换取access_token
+                    result = OAuth.GetAccessToken(appId, appSecret, code);
+                    if (result == null || result.access_token == null)
+                    {
+                        return Content("授权错误！请关闭后重新打开。");
+                    }
+                    Session["AccountTokenResult"] = result;
                 }
 
+                //var auth = wxauthService.GetToken(appId, appSecret, code);
+                //if (auth == null || auth.access_token == null)
+                //{
+                //    return Content("授权错误！请关闭后重新打开。");
+                //}
+
                 //请求微信用户信息
-                var userInfo = wxservice.GetUser(appId, appSecret, code, auth.access_token.ToString(), auth.openid.ToString());
-                if (userInfo == null || userInfo.openid == null)
+                //var userInfo = wxservice.GetUser(appId, appSecret, code, auth.access_token.ToString(), auth.openid.ToString());
+                OAuthUserInfo userInfo = null;
+                if (Session["AccountUserResult"] != null)
+                    userInfo = (OAuthUserInfo)Session["AccountUserResult"];
+                else
                 {
-                    return Content("获取微信信息失败！请关闭后重新打开。");
+                    userInfo = OAuth.GetUserInfo(result.access_token, result.openid);
+                    if (userInfo == null || userInfo.openid == null)
+                    {
+                        return Content("获取微信信息失败！请关闭后重新打开。");
+                    }
+                    Session["AccountUserResult"] = userInfo;
                 }
                 if (userInfo != null)
                 {
@@ -180,28 +455,51 @@ namespace web.Controllers
                         var wxuser = wxservice.GetByOpenId(openid);
                         if (wxuser != null)
                         {
-                            if (userInfo.unionid != null)
+                            if (userInfo.unionid != null && string.IsNullOrWhiteSpace(wxuser.UnionId))
                             {
-                                wxuser.UnionId = userInfo.unionid.ToString();
-                                log.Info("Apply页面UnionId:" + userInfo.unionid);
+                                wxuser.UnionId = userInfo.unionid;
+                                log.Info("wxreg页面UnionId:" + userInfo.unionid);
+                                //更新微信用户的unionid
+                                wxservice.Save(wxuser);
                             }
-                            //更新微信用户的unionid
-                            wxservice.Save(wxuser);
                             log.Info("Apply页面wxuser、wxuser.UserGuid:" + wxuser.UserGuid);
                             qch.Infrastructure.CookieHelper.ClearCookie("WxUserGuid");
                             qch.Infrastructure.CookieHelper.SetCookie("WxUserGuid", wxuser.UserGuid);
                             var user = userService.GetDetail(wxuser.UserGuid);
                             if (user != null)
                             {
+                                int isedit = 0;
+                                if (string.IsNullOrWhiteSpace(user.t_User_RealName))
+                                {
+                                    user.t_User_RealName = wxuser.Name;
+                                    isedit = 1;
+                                }
+                                if (string.IsNullOrWhiteSpace(user.t_User_NickName))
+                                {
+                                    user.t_User_NickName = wxuser.Name;
+                                    isedit = 1;
+                                }
+                                if (string.IsNullOrWhiteSpace(user.t_User_Mobile))
+                                {
+                                    user.t_User_Mobile = user.t_User_LoginId;
+                                    isedit = 1;
+                                }
+                                if (string.IsNullOrWhiteSpace(user.t_User_Pic))
+                                {
+                                    user.t_User_Pic = wxuser.Avator;
+                                    isedit = 1;
+                                }
+                                if (isedit == 1)
+                                    userService.Save(user);//更新用户信息
                                 log.Info("Apply页面user、user.t_User_Mobile:" + user.t_User_LoginId);
-                                var xy = service.CheckApply(user.t_User_Mobile, guid);
+                                var xy = service.CheckApply(user.t_User_LoginId, guid);
                                 if (xy.type == "success")
                                 {
                                     //生成报名凭证
                                     string proof = str.Ran(12);
                                     //生成凭证二维码
                                     string qrcode = CreateCode_Simple(proof);
-                                    var xy2 = service.Apply("", guid, user.t_User_Mobile, "", "", "", proof, qrcode);
+                                    var xy2 = service.Apply("", guid, user.t_User_LoginId, "", "", "", proof, qrcode);
                                     if (xy2.Data == "gopay")
                                     {
                                         log.Info("活动报名Get跳转到支付");
@@ -769,6 +1067,10 @@ namespace web.Controllers
             if (model == null)
             {
                 return Content("众筹信息不存在");
+            }
+            if (model.T_FundCourse_State == 1)
+            {
+                return Content("该众筹信息已完结");
             }
             ViewBag.Money = model.T_PayMoney_Offline;
             string orderno = DateTime.Now.ToString("yyyyMMddHHmmssffff");

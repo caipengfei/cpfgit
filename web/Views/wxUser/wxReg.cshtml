@@ -18,7 +18,7 @@
 <body>
 
     <form id="form0" class="form-horizontal" method="post" action="/wxuser/wxreg" novalidate="novalidate">
-        @Html.AntiForgeryToken()
+        @*@Html.AntiForgeryToken()*@
         @Html.ValidationSummary(true)
         <div class="container">
             <div class="facebox">
@@ -29,20 +29,16 @@
             </div>
             <div id="registerForm">
                 <div class="form-group">
-                    @*<input type="text" class="phone phone-1" placeholder="手机号码" maxlength="11">*@
                     @Html.TextBoxFor(p => p.Phone, new { type = "text", @class = "phone phone-1", placeholder = "手机号码", maxlength = "11" })
                 </div>
                 <div class="form-group">
-                    @*<input type="password" class="password" placeholder="密码(至少六位)" maxlength="16">*@
                     @Html.TextBoxFor(p => p.Password, new { type = "password", @class = "password", placeholder = "密码(至少六位)", maxlength = "16" })
                 </div>
                 <div class="form-group">
-                    @*<input type="text" class="validcode" placeholder="输入验证码" maxlength="6">*@
                     @Html.TextBoxFor(p => p.SafeCode, new { type = "text", @class = "validcode", placeholder = "输入验证码", maxlength = "6" })
                     <a class="getvalidcode enabled">获取验证码</a>
                 </div>
                 <div class="form-group">
-                    @*<input type="text" id="txtUserPhone" value="@ViewBag.UserPhone" class="phone phone-2" placeholder="推荐人号码(选填)" maxlength="11">*@
                     @Html.TextBoxFor(p => p.TjUser, new { type = "text", @class = "phone phone-2", placeholder = "推荐人号码(选填)", maxlength = "11", @id = "txtUserPhone", @value = "@ViewBag.UserPhone" })
                 </div>
                 <div class="form-group">
@@ -68,7 +64,21 @@
                 data: $("#form0").serialize(),
                 beforeSubmit: function () {
                     //表单提交前
+                    $('input').blur();
+                    var $phone = $('.phone-1'); // 用户手机号
+                    var $reference = $('.phone-2'); // 推荐人号码
+                    var $password = $('.password'); // 密码
+                    var $validcode = $('.validcode'); // 验证码
+                    var bReference = ($reference.val().trim() && validField($reference, regPhone, '', '推荐人手机号格式不正确！')) || true;
 
+                    // 用户手机号验证
+                    if (!validField($phone, regPhone, '手机号不能为空！', '用户手机号格式不正确！')) return;
+                    // 密码验证
+                    if (!validField($password, regPassword, '密码不能为空！', '密码格式不正确！')) return;
+                    // 验证码验证
+                    if (!validField($validcode, null, '验证码不能为空！')) return;
+                    // 推荐人验证
+                    //if (!bReference) return;
                 },
                 success: function (msg) {
                     alert(msg.Data);

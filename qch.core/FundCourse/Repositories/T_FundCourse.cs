@@ -315,5 +315,12 @@ namespace qch.Repository
             get { return _t_fundcourse_street; }
         }
         #endregion Model
+        /// <summary>
+        /// 状态
+        /// 0：正常；
+        /// 1：已完结
+        /// </summary>
+        [Column]
+        public int T_FundCourse_State { get; set; }
     }
 }

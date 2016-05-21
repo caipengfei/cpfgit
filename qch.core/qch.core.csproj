@@ -94,6 +94,10 @@
     <Compile Include="FundCourse\Repositories\T_FundCourse.cs" />
     <Compile Include="FundCourse\SelectFundCourse.cs" />
     <Compile Include="IDependency.cs" />
+    <Compile Include="Integral\IntegralModel.cs" />
+    <Compile Include="Integral\IntegralService.cs" />
+    <Compile Include="Integral\Repositories\IntegralRepository.cs" />
+    <Compile Include="Integral\Repositories\T_User_Integral.cs" />
     <Compile Include="Lecturer\LecturerModel.cs" />
     <Compile Include="Lecturer\LecturerService.cs" />
     <Compile Include="Lecturer\Repositories\LecturerRepository.cs" />

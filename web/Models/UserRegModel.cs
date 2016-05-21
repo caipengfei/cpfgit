@@ -11,7 +11,7 @@ namespace web.Models
     public class UserRegModel
     {
         public string Phone { get; set; }
-        public string Code { get; set; }
+        public string SafeCode { get; set; }
         public string TjUser { get; set; }
         public string Password { get; set; }
     }

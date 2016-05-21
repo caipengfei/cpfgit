@@ -19,6 +19,8 @@ namespace api.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
+        /// 
+        [HttpGet]
         public Msg CreateLogs(string ErrorInfo, string ErrorFrom, string ErrorAction, int ErrorLevel)
         {
             Msg msg = new Msg();
