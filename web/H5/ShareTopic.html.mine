@@ -1,0 +1,229 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>动态详情</title>
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/page5.css">
+</head>
+
+<body>
+    <div class="shade-div"></div>
+    <table class="downloadbox" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>
+                <div class="image"><img src="img/logo.png"></div>
+            </td>
+            <td>
+                <h2>青创汇 / 为创业者而生</h2>
+                <p>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <strong>10万人下载</strong>
+                </p>
+            </td>
+            <td><a onclick="godown()">立即下载</a></td>
+        </tr>
+    </table>
+
+    <div class="container loading">
+        <header>
+            <!--<a class="left"><i class="fa fa-angle-left"></i></a>
+            <a class="right">...</a>
+            <h2>动态详情</h2>-->
+        </header>
+        <div class="dynamic">
+            <table id="tabInfo" class="title">
+                <tr>
+                    <td>
+                        <img onerror="this.src='img/avator.png'"></td>
+                    <td>
+                        <h2></h2>
+                        <h3></h3>
+                    </td>
+                </tr>
+            </table>
+            <p class="black" id="pRemark"></p>
+            <div class="imgbox" id="divImgs"></div>
+            <p class="position">
+                <i class="fa fa-map-marker"></i><span id="spAddress"></span>
+            </p>
+            <div class="tools">
+                <a class="left" onclick="godown()"><i class="fa fa-share"></i></a>
+                <a class="right msg" onclick="godown()"><i class="fa fa-comment"></i></a>
+                <a class="right like" onclick="godown()"><i class="fa fa-heart"></i></a>
+                <!--<a class="left" onclick="godown()">转</a>
+                <a class="right msg" onclick="godown()">评</a>
+                <a class="right like" onclick="godown()">赞</a>-->
+            </div>
+            <p class="date" id="pDate">5天前</p>
+        </div>
+        <div class="visitor">
+            <div class="box" id="dianzan"></div>
+        </div>
+        <div class="commentbox">
+            <h2>最新评论</h2>
+            <ul class="commentlist" id="ulComment">
+                <!--<li>
+                    <a>
+                        <img src="img/photo3.jpg?v=8ee13fcc1f5652b80ca87e4fa116751d"></a>
+                    <div>
+                        <h3>欧阳博远<span>刚刚</span><a class="remove">删除</a></h3>
+                        <p>
+                            <strong>回复愣文青:</strong>
+                            你可以多多号召你的朋友们来参加，说不定还能促成几段好姻缘~
+                        </p>
+                    </div>
+                </li>-->
+            </ul>
+        </div>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/loader.js"></script>
+    <script src="../js/common.js"></script>
+    <script>
+        var guid = GetUrlParam("Guid");
+        if (!guid || guid == "") {
+            guid = '4480b706-1d7b-4a6b-a761-efc935f9a4e6';
+        }
+        //获取动态详情
+        $.ajax({
+                type: 'post',
+                cache: false,
+                dataType: 'json',
+                url: '../QCH_Topic/Ajax_Topic.ashx',
+                data: [{
+                    name: 'Action',
+                    value: 'GetTopicView'
+                }, {
+                    name: 'Guid',
+                    value: guid
+                }],
+                success: function(data) {
+                    if (data) {
+                        if (data.Pic.length > 0) {
+                            var model = data.Pic;
+                            var list = '';
+                            for (var item in model) {
+                                list += '<img src="' + imgUrl + model[item].t_Pic_Url + '">';
+                            }
+                            $("#divImgs").append(list);
+                            $('#divImgs img').filter(function(i) {
+                                return !(i % 3);
+                            }).addClass('first');
+                            if (data.Pic.length == 1) {
+                                $('#divImgs img').css({
+                                    width: '100%'
+                                });
+                            } else if (data.Pic.length == 2) {
+                                $('#divImgs img').css({
+                                    width: '49%'
+                                });
+                            }
+                            $('#divImgs img').css({
+                                height:$('#divImgs img').width()
+                            })
+                        }
+                        var avator = 'img/avator.png';
+                        if (data.t_User_Pic && data.t_User_Pic != "") {
+                            avator = avatorUrl + data.t_User_Pic;
+                        }
+                        $("#tabInfo").replaceWith('<table id="tabInfo" class="title"><tr><td><img src="' + avator + '"></td><td><h2>' + data.t_User_RealName + '</h2><h3>' + data.PositionName + ' ' + data.t_User_Commpany + '</h3></td></tr></table>');
+                        $("#pRemark").text(data.t_Topic_Contents);
+                        $("#spAddress").text(data.t_Topic_Address);
+                        $("#pDate").text(data.t_Date);
+                        if (data.PraiseCount == 0) {
+                            $("#dianzan").append('<p>暂无点赞信息</p>');
+                        } else {
+                            var list = '';
+                            var model = data.PraiseUsers;
+                            for (var item in model) {
+                                if (model[item].PraiseUserPic && model[item].PraiseUserPic != "") {
+                                    avator = avatorUrl + model[item].PraiseUserPic;
+                                }
+                                list += '<a><img src="' + avator + '"></a>';
+                            }
+                            $("#dianzan").append(list);
+                            winResize($('#dianzan img'));
+                            $('#dianzan img').filter(function(i) {
+                                return !(i % 8);
+                            }).addClass('first');
+                        }
+                    }
+                }
+            })
+            //获取评论信息   6216 9130 0019 2824
+        $.ajax({
+            type: 'post',
+            cache: false,
+            dataType: 'json',
+            url: '../QCH_User/Ajax_User.ashx',
+            data: [{
+                name: 'Action',
+                value: 'GetTalk'
+            }, {
+                name: 'Guid',
+                value: guid
+            }],
+            success: function(data) {
+                if (data && data[0].result != '暂无数据') {
+                    var list = '';
+                    for (var item in data) {
+                        var avator = 'img/avator.png';
+                        if (data[item].t_User_Pic && data[item].t_User_Pic != "") {
+                            avator = avatorUrl + data[item].t_User_Pic;
+                        }
+                        var name = data[item].t_User_RealName;
+                        if (!name || name == "") {
+                            name = data[item].t_User_LoginId;
+                            if (name || name.length > 3) {
+                                name = name.substring(0, 3) + '****' + name.substring(name.length - 2, name.length - 1);
+                            }
+                        }
+                        list += '<li><a><img src="' + avator + '"></a><div><h3>' + name + '<span>' + data[item].t_Talk_FromDate + '</span></h3><p>' + data[item].t_Talk_FromContent + '</p></div></li>'
+                    }
+                    $("#ulComment").append(list);
+                    winResize($('#ulComment img'));
+                } else {
+                    $("#ulComment").append('<li><a>暂无</a></li>');
+                }
+            }
+        })
+        
+        function godown() {
+            location.href = 'http://www.cn-qch.com/app';
+        }
+        function winResize($e) {
+            $e.css({
+                height: $e.width(),
+                borderRadius: $e.width() / 2
+            })
+        }
+        $(function() {
+            $(window).resize(function() {
+                $('.imgbox img').css({
+                    height: $('.imgbox img').width(),
+                    marginBottom: $('.imgbox img').eq(1).css('margin-left')
+                })
+                winResize($('.visitor img'));
+                winResize($('.commentbox .commentlist>li>a>img'));
+            }).resize();
+            $('.visitor .box a').filter(function(i) {
+                return !(i % 8);
+            }).addClass('first');
+
+        })
+        $(function() {
+            $(document).ajaxStop(function() {
+                imageLoader(removeShade);
+            })
+        })
+    </script>
+</body>
+</html>

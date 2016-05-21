@@ -1,0 +1,408 @@
+#mainContainer .row1 {
+    width: 100%;
+    height: 700px;
+    color: #000;
+}
+
+#mainContainer .row1 .banner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+#mainContainer .row1 .banner .box {
+    width: 100%;
+    height: 100%;
+    background: #000;
+}
+
+#mainContainer .row1 .banner .box li {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding-top: 240px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    background-position: 50% 0;
+    background-repeat: no-repeat;
+}
+
+#mainContainer .row1 .banner .box li h1 {
+    font-size: 30px;
+    margin-bottom: .7em;
+    font-weight: bold;
+}
+
+#mainContainer .row1 .banner .box li.current {
+    display: block;
+}
+
+#mainContainer .row1 .banner .controls a {
+    position: absolute;
+    top: 100px;
+    background-image: url(../image/index/zbf_scrollBtn.png);
+    background-repeat: no-repeat;
+    width: 43px;
+    height: 71px;
+    opacity: .3;
+    filter: alpha(opacity=30);
+    transition: opacity .3s;
+}
+
+#mainContainer .row1 .banner .controls a.prev {
+    left: 0;
+    background-position: -3px -100px;
+}
+
+#mainContainer .row1 .banner .controls a.next {
+    right: 0;
+    background-position: -54px -100px;
+}
+
+#mainContainer .row1 .banner:hover .controls a.prev {
+    background-position: -3px 0;
+}
+
+#mainContainer .row1 .banner:hover .controls a.next {
+    background-position: -54px 0;
+}
+
+#mainContainer .row1 .banner .controls a:hover {
+    opacity: .9 !important;
+    filter: alpha(opacity=90);
+}
+
+#mainContainer .row1 .banner .controls_2 {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+}
+
+#mainContainer .row1 .banner .controls_2 a {
+    width: 12px;
+    height: 12px;
+    background: #000;
+    border-radius: 6px;
+    margin: 0 3px;
+}
+
+#mainContainer .row1 .banner .controls_2 a.current {
+    background: #f00;
+}
+
+#mainContainer .row2 {
+    text-align: center;
+    width: 100%;
+    padding-top: 90px;
+    padding-bottom: 110px;
+}
+
+#mainContainer .row2 .box {
+    width: 830px;
+    margin: auto;
+}
+
+#mainContainer .row2 img {
+    max-width: 90%;
+    margin-bottom: 50px;
+}
+
+#mainContainer .row2 h2 {
+    color: #000;
+    font-size: 17px;
+    margin-bottom: 40px;
+}
+
+#mainContainer .row2 p {
+    color: #696969;
+    font-size: 15px;
+    line-height: 2em;
+}
+
+#mainContainer .row3 {
+    width: 100%;
+    text-align: center;
+    background: #eee;
+    padding-top: 110px;
+    padding-bottom: 140px;
+}
+
+#mainContainer .row3>h2 {
+    font-size: 29px;
+    border-bottom: 1px solid rgb(220, 220, 220);
+    width: 645px;
+    margin: 0 auto;
+    margin-bottom: 1.3em;
+    line-height: 1em;
+}
+
+#mainContainer .row3>h2 span {
+    color: #2782da;
+    padding: 0 1em;
+    background: #eee;
+    position: relative;
+    top: .5em;
+}
+
+#mainContainer .row3>h4 {
+    font-size: 14px;
+    color: #999;
+    margin-bottom: 110px;
+    letter-spacing: 1px;
+}
+
+#mainContainer .row3 .box {
+    width: 1180px;
+    margin: 0 auto;
+}
+
+#mainContainer .row3 .box a {
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    width: 150px;
+    height: 150px;
+    line-height: 150px;
+    border: 1px solid #aaa;
+    border-radius: 75px;
+    margin: 0 30px;
+    background-color: #fff;
+    position: relative;
+    overflow: hidden;
+}
+
+#mainContainer .row3 .box a.item1 {
+    background-image: url(../image/index/house.png);
+}
+
+#mainContainer .row3 .box a.item2 {
+    background-image: url(../image/index/fuhua.png);
+}
+
+#mainContainer .row3 .box a.item3 {
+    background-image: url(../image/index/touziguwen.png);
+}
+
+#mainContainer .row3 .box a.item4 {
+    background-image: url(../image/index/fengxianbakong.png);
+}
+
+#mainContainer .row3 .box a.item5 {
+    background-image: url(../image/index/jinrong.png);
+}
+
+#mainContainer .row3 .box a span {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    position: absolute;
+    top: 150px;
+    left: 0;
+    transition: top .3s;
+    background-color: rgb(243, 168, 23);
+    color: #fff;
+    font-size: 24px;
+    font-family: 宋体;
+}
+
+#mainContainer .row3 .box a:hover {
+    border-color: rgb(243, 168, 23);
+}
+
+#mainContainer .row3 .box a:hover span {
+    top: 0;
+}
+
+#mainContainer .row4 {
+    background-color: rgb(64, 138, 213);
+    text-align: center;
+    padding-top: 110px;
+    padding-bottom: 140px;
+}
+
+#mainContainer .row4>h2 {
+    font-size: 29px;
+    border-bottom: 1px solid rgb(220, 220, 220);
+    width: 645px;
+    margin: 0 auto;
+    margin-bottom: 1.3em;
+    line-height: 1em;
+}
+
+#mainContainer .row4>h2 span {
+    color: #fff;
+    padding: 0 1em;
+    background: rgb(64, 138, 213);
+    position: relative;
+    top: .5em;
+}
+
+#mainContainer .row4>h4 {
+    font-size: 14px;
+    color: #dfdfdf;
+    margin-bottom: 90px;
+    letter-spacing: 1px;
+}
+
+#mainContainer .row4 .box {
+    width: 1180px;
+    margin: 0 auto;
+}
+
+#mainContainer .row4 .box a {
+    width: 180px;
+    height: 200px;
+    border: 2px solid #79bcff;
+    margin: 0 22px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    cursor: default;
+    padding-top: 60px;
+    color: #fff;
+}
+
+#mainContainer .row4 .box a b {
+    display: block;
+    font-size: 22px;
+    font-weight: normal;
+    font-family: 宋体;
+    margin-bottom: 15px;
+}
+
+#mainContainer .row4 .box a span {
+    font-family: Helvetica;
+    font-size: 12px;
+}
+
+#mainContainer .row5 {
+    background-color: #fff;
+    text-align: center;
+    padding-top: 110px;
+    padding-bottom: 120px;
+}
+
+#mainContainer .row5 .box {
+    width: 1070px;
+    margin: 0 auto;
+}
+
+#mainContainer .row5>h2 {
+    font-size: 29px;
+    border-bottom: 1px solid rgb(220, 220, 220);
+    width: 645px;
+    margin: 0 auto;
+    margin-bottom: 1.3em;
+    line-height: 1em;
+}
+
+#mainContainer .row5>h2 span {
+    color: #2782da;
+    padding: 0 1em;
+    background: #fff;
+    position: relative;
+    top: .5em;
+}
+
+#mainContainer .row5>h4 {
+    font-size: 14px;
+    color: #999;
+    margin-bottom: 90px;
+    letter-spacing: 1px;
+}
+
+#mainContainer .row5 .box a {
+    width: 25%;
+    height: 200px;
+    float: left;
+    margin: 25px 4.1%;
+    position: relative;
+    color: #fff;
+    overflow: hidden;
+}
+
+#mainContainer .row5 .box a img {
+    width: 100%;
+    height: 100%;
+}
+
+#mainContainer .row5 .box a span {
+    width: 100%;
+    height: 100%;
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0);
+    transition: top .4s,background .4s;
+    position: absolute;
+    top: -200px;
+    left: 0;
+    line-height: 1.6em;
+    text-align: center;
+    font-size: 16px;
+    letter-spacing: 1px;
+    padding-top:80px;
+    
+}
+
+#mainContainer .row5 .box a:hover span {
+    top: 0;background:rgba(0,0,0,.5);
+}
+
+#mainContainer .row6 {
+    text-align: center;
+    padding-top: 110px;
+    padding-bottom: 120px;
+    background: url(../image/index/shipinbg.png) no-repeat 50% 0;
+}
+
+#mainContainer .row6 .box {
+    width: 100%;
+    margin: 0 auto;
+}
+
+#mainContainer .row6>h2 {
+    font-size: 29px;
+    height: 1em;
+    line-height: 1em;
+    width: 645px;
+    margin: 0 auto;
+    margin-bottom: 1.3em;
+}
+
+#mainContainer .row6>h2 b {
+    border-bottom: 1px solid rgb(220, 220, 220);
+    width: 226px;
+    height: 100%;
+}
+
+#mainContainer .row6>h2 b.b1 {
+    float: left;
+}
+
+#mainContainer .row6>h2 b.b2 {
+    float: right;
+}
+
+#mainContainer .row6>h2 span {
+    color: #2782da;
+    padding: 0 1em;
+    position: relative;
+    top: .5em;
+}
+
+#mainContainer .row6>h4 {
+    font-size: 14px;
+    color: #999;
+    margin-bottom: 60px;
+    letter-spacing: 1px;
+}
+
+#mainContainer .row6 video {
+    width: 645px;
+}
+
+#mainContainer .row6 .box p {
+    color: #fff;
+}

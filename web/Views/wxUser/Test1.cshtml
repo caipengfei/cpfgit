@@ -1,0 +1,85 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Test1</title>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+</head>
+<body>
+    <div>
+        jsapi测试页面
+    </div>
+    <script src="/content/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        var shareLink = window.location;
+
+        wx.config({
+            debug: false,
+            appId: '@ViewBag.AppId',
+            timestamp: @ViewBag.Timestamp,
+            nonceStr: '@ViewBag.Noncestr',
+            signature: '@ViewBag.Signature',
+            jsApiList: [
+              'checkJsApi',
+              'onMenuShareTimeline',
+              'onMenuShareAppMessage'
+            ]
+        });
+
+        wx.ready(function () {
+            wx.onMenuShareAppMessage(
+                    {
+                        title: '分享给朋友',
+                        desc: '分享给朋友的描述',
+                        link: 'http://test.cn-qch.com/wxuser/test1',
+                        imgUrl: 'http://120.25.106.244:8002/Attach/Images/20160408111248482.jpg',
+
+                        trigger: function (res) {
+                            //分享给朋友
+                        },
+                        success: function (res) {
+                            alert('已分享');
+                            
+                        },
+                        cancel: function (res) {
+                            alert('已取消');
+                        },
+                        fail: function (res) {
+                            alert(JSON.stringify(res));
+                        }
+                    }
+                );
+            wx.onMenuShareTimeline(
+                {
+                    title: '分享到朋友圈',
+                    desc: '分享到朋友圈描述',
+                    link: 'http://test.cn-qch.com/wxuser/test1',
+                    imgUrl: 'http://120.25.106.244:8002/Attach/Images/20160408111248482.jpg',
+
+                    trigger: function (res) {
+                        //分享到朋友圈
+                    },
+                    success: function (res) {
+                        alert('已分享');
+                    },
+                    cancel: function (res) {
+                        alert('已取消');
+                    },
+                    fail: function (res) {
+                        alert(JSON.stringify(res));
+                    }
+                }
+                );
+        });
+
+        wx.error(function (res) {
+            //alert(res.errMsg);
+        });
+    </script>
+</body>
+</html>

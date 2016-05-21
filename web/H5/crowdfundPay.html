@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>众筹支付</title>
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/crowdfundPay.css">
+</head>
+
+<body>
+    <table class="downloadbox" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>
+                <div class="image">
+                    <img src="img/logo.png"></div>
+            </td>
+            <td>
+                <h2>青创汇 / 为创业者而生</h2>
+                <p>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <strong onclick="godown()">10万人下载</strong>
+                </p>
+            </td>
+            <td><a onclick="godown()">立即下载</a></td>
+        </tr>
+    </table>
+    <!-- 主内容区 模板渲染 -->
+    <div class="container">
+        <div class="typebox">
+            <h2>选择授课类型</h2>
+            <ul>
+                <li>
+                    <span>现场听课</span>
+                </li>
+                <li>
+                    <span>在线直播</span>
+                </li>
+            </ul>
+        </div>
+        <div class="tipsbox">
+            <h2>众筹小贴士</h2>
+            <div>
+                <p>现场听课：导师零距离接触，诊断创业难题，企业家交流互动，扩展事业人脉。</p>
+                <p>在线直播：移动课程，学习业务两不误，也有机会得线下导师答疑。</p>
+            </div>
+        </div>
+        <div class="paybox">
+            <p>需要支付金额：￥80.00</p>
+            <a class="btn-pay">确定</a>
+        </div>
+    </div>
+    
+    <script src="js/jquery.min.js"></script>
+    <script>
+        function godown(){
+            location.href = 'http://www.cn-qch.com/app';
+        }
+    </script>
+</body>
+</html>

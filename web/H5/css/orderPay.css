@@ -1,0 +1,98 @@
+body {
+    background: rgb(244, 244, 244);
+}
+
+.container {
+    margin-top: 4rem;
+    padding: 0 .6rem;
+}
+
+.order_title {
+    background: #fff;
+    line-height: 3rem;
+    padding: 0 .3rem;
+    border-radius: .4rem;
+    overflow: hidden;
+    margin-bottom: .6rem;
+}
+
+.order_title>* {
+    padding-left: 1rem;
+    font-size: 1.1rem;
+    border-bottom: 1px solid rgb(244, 244, 244);
+    width: 100%;
+}
+
+.order_title p strong {
+    color: rgb(160, 160, 160);
+    font-weight: normal;
+    font-size: 1.2rem;
+}
+
+.order_title>span {
+    color: #63AFFB;
+}
+
+.pay_mode {
+    background: #fff;
+    padding: 0 .6rem;
+    border-radius: .4rem;
+    overflow: hidden;
+}
+
+.pay_mode h2 {
+    line-height: 3rem;
+    border-bottom: 1px solid rgb(244, 244, 244);
+    font-size: 1.2rem;
+}
+
+.pay_mode ul {
+    padding: 0 .6rem;
+}
+
+.pay_mode ul li {
+    height: 5rem;
+    line-height: 5rem;
+    border-bottom: 1px solid rgb(244, 244, 244);
+    background: url(../img/icon/huodong_wxz_btn@2x.png) no-repeat right 50%;
+    background-size: 1.6rem auto;
+}
+
+.pay_mode ul li.active {
+    background-image: url(../img/icon/huodong_xz_btn@2x.png);
+}
+
+.pay_mode ul li img {
+    width: 3rem;
+    height: 3rem;
+    border-radius:.6rem;
+    float: left;
+    position: relative;
+    top: 1rem;
+    margin-right: 1rem;
+}
+
+.pay_mode ul li span {
+    font-size: 1.1rem;
+}
+
+.pay_mode p {
+    height: 4rem;
+    line-height: 4rem;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.btn_ok {
+    display: block;
+    width: 90%;
+    height: 2.8rem;
+    line-height: 2.8rem;
+    font-size: 1.4rem;
+    background: rgb(162, 201, 240);
+    color: #fff;
+    border-radius: 1.4rem;
+    margin: auto;
+    margin-top: 2rem;
+    text-align: center;
+}

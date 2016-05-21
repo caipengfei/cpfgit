@@ -1,0 +1,65 @@
+body{
+    background: rgb(242, 242, 242);
+}
+.container{
+    margin-top:3.4rem;
+    padding: 0 1.4rem;
+    background: rgb(242, 242, 242);
+}
+.container>div>h2{
+    line-height: 2.8rem;
+    font-size: 1rem;
+}
+.typebox ul,.tipsbox div{
+    background: #fff;
+}
+.typebox li{
+    line-height: 3.5rem;
+    border-top:1px solid rgb(242, 242, 242);
+    padding:0 3.4em;
+    font-size: 1.1rem;
+}
+.typebox li:nth-child(1){
+    background: url(../img/icon/huodong_xz_btn@2x.png) no-repeat 1.4rem 50%;
+    background-size: 1.4rem 1.4rem;
+}
+.typebox li:nth-child(2){
+    background: url(../img/icon/huodong_wxz_btn@2x.png) no-repeat 1.4rem 50%;
+    background-size: 1.4rem 1.4rem;
+}
+.typebox li span{
+    padding-left:2.2rem;
+}
+.typebox li:nth-child(1) span{
+    background: url(../img/icon/xianchang.png) no-repeat 0 50%;
+    background-size: 1.4rem 1.4rem;
+}
+.typebox li:nth-child(2) span{
+    background: url(../img/icon/inline.png) no-repeat 0 50%;
+    background-size: 1.4rem 1.4rem;
+}
+.tipsbox div{
+    padding:2em 1.4em;
+}
+.tipsbox p{
+    text-indent: 1em;
+    font-size: 1rem;
+    line-height: 1.6em;
+}
+.paybox{
+    text-align: center;
+    padding:2em 0 1.4em 0;
+}
+.paybox p{
+    padding-bottom:3em;
+    font-size: 1rem;
+}
+.paybox .btn-pay{
+    background:  #4a90e2;
+    height:2.8rem;
+    line-height: 2.8rem;
+    width:80%;
+    border-radius:1.4rem;
+    color:#fff;
+    font-size: 1.1rem;
+}

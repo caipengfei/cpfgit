@@ -1,0 +1,59 @@
+.container{
+    background: url(../img/login_bg.jpg); background-size: 100% 100%; overflow: hidden; margin-bottom:0 !important;
+}
+header{
+    padding: 3rem 2rem; text-align: center;
+}
+header img{
+    width:8rem; height:8rem; border-radius: 4rem; border:2px solid #fff;
+}
+header h2{
+    color:#fff; font-size: 1.5rem; margin-top:1rem; font-weight: bold;
+}
+form{
+    position: relative;
+}
+.form-group{
+    width:100%; height:3.6rem; line-height: 3.6rem; padding:0 2rem; margin-bottom:1.2rem; position: relative;
+}
+.form-group input,#submit{
+    width:100%; height:100%; outline: none; border:none; padding-left:1rem; font-size: 1.2rem; border-radius: 1.8rem; color:#333;
+}
+.form-group #getValidcode{
+    position: absolute; top:0; right:2rem; height:100%; width:40%; text-align: center; font-size: 1.3rem;
+    border-radius: 1.8rem; background:rgb(193,193,193);
+}
+.form-group #submit{
+    background-color: rgba(0,0,0,0); color:#fff; font-size: 1.5rem; border:.15rem solid #fff; text-align: center;
+}
+.help{
+    position: absolute; top:-2rem; left:3.8rem; line-height: 2rem; width:100%; color:#f00; font-size: 1.2rem;
+}
+form .form-group:last-child{
+    margin-top:2.5rem;
+}
+
+#clipBox{
+    width:100%; height:100%; position: fixed; top:0; left:0;
+}
+.shade{
+    width:100%; height:100%; background: #555;
+}
+.myClip{
+    width:70%; position: absolute; border-radius:.4rem;  overflow:hidden; z-index: 1001; background: #fff; text-align: center; padding:1.5rem 1rem; opacity:0;
+}
+.myClip img{
+    width:50%; background: none;
+}
+#clipBox .close{
+    width:3rem; height:3rem; position: absolute; top:0; right:0; line-height: 3rem; text-align: center; color:#666; font-size: 2rem;
+}
+#clipBox h2{
+    text-align: center; font-size: 1.2rem; margin-bottom:1.6rem; margin-top:.6rem;
+}
+#clipBox p{
+    text-align: center; font-size: 1.1rem; width:82%; height:3rem; line-height: 3rem; background: #0099e9; margin:auto; color:#fff; border-radius:.4rem;
+}
+a{
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}

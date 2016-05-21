@@ -1,0 +1,55 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Test</title>
+    <link href="@Url.Content("/Content/ueditor_mini/themes/default/css/umeditor.min.css")" rel="stylesheet" type="text/css" />
+    <style>
+        .table_m li input[type="text"] {
+        }
+
+        .goods-can {
+            width: 100px;
+            margin-right: 7px;
+        }
+
+        .goods-canshu-span {
+            width: 60px;
+            height: 17px;
+            line-height: 17px;
+            vertical-align: middle;
+            display: inline-block;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        @Html.TextArea("editor", new { @id = "myEditor", @style = "width: 900px; height: 500px;" })
+    </div>
+    <script src="~/Content/js/jquery.min.js"></script>
+    <script src="/Content/ueditor_mini/umeditor.config.js"></script>
+    <script src="/Content/ueditor_mini/umeditor.min.js"></script>
+    <script type="text/javascript">
+
+        window.UMEDITOR_CONFIG.UMEDITOR_HOME_URL = "/Content/ueditor_mini/";
+        // world编辑器
+        var um1 = UM.getEditor('myEditor', {
+            initialFrameWidth: 770,
+            initialFrameHeight: 260,
+            toolbar: [
+            ' undo redo | bold italic underline strikethrough | superscript subscript | forecolor backcolor | removeformat |',
+            'insertorderedlist insertunorderedlist | selectall cleardoc paragraph | fontfamily fontsize',
+            '| justifyleft justifycenter justifyright justifyjustify |',
+            'link unlink | emotion image | map',
+            '| horizontal preview fullscreen', 'drafts', 'formula'
+            ]
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+body{
+    background: url(../image/ad_login/bg-start.jpg) no-repeat 50% 0; min-width: 370px; min-height:430px;
+}
+.container{
+    margin:auto;
+}
+#logo{
+    width:278px; height:70px; margin:auto; background: url(../image/ad_login/logo.png) no-repeat 50% 0; margin-bottom:30px;
+}
+#formbox{
+  width:360px; margin:auto; background: #fff; background: rgba(255,255,255,.8); position: relative;
+}
+#formbox input{
+    outline: none;
+}
+#formbox li>h2{
+    width:100%; height:43px; line-height: 43px; text-align: center; color:#fff; background: rgb(0,0,0); background: rgba(0,0,0,0.8);
+}
+#formbox li>div{
+    padding:15px; width:100%;
+}
+#formbox li div .col1 .form-control{
+    width:100%; height:40px; position: relative;
+}
+#formbox li div .col1 .form-control>input{
+    width:100%; height:100%; line-height: 40px; border:1px solid #ccc; outline: none; padding-left:12px; background: none;
+}
+#formbox li div .col1 .form-control .help{
+    position: absolute; top:0; right:5px; color:#f00; line-height: 40px;
+}
+#formbox li div .col1 .form-control>input.username{
+    border-bottom:none;
+}
+#formbox li div .col1>.login-btn{
+    margin-top:12px;background: #337ab7; margin-bottom:5px; color:#fff; border-radius:6px;
+    width:100%; border:1px solid #ccc; outline: none; padding-left:12px; height:40px; font-size: 16px; font-weight: bold;
+}
+#formbox li div .col1>.login-btn:hover{
+    background: #286090;
+}
+#formbox li div .col1>label{
+    float: left;
+}
+#formbox li div .col1>label [type=checkbox]{
+    float: left; width:17px; height:17px;
+}
+#formbox li.item2 div .col1 .validbox .help{
+    color:#f00; margin-top:5px; margin-left:12px;
+}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link href="css/public.css" rel="stylesheet" />
+    <link href="css/signUp.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="img/yuan.png">
+            <h2>用户昵称</h2>
+        </header>
+        <form>
+            <span class="help"></span>
+            <div class="form-group">
+                <input type="text" class="phone" placeholder="请输入你的手机号">
+            </div>
+            <div class="form-group">
+                <input type="text" class="validcode" placeholder="请输入短信验证码">
+                <a id="getValidcode" class="enabled">获取验证码</a>
+            </div>
+            <div class="form-group">
+                <input type="button" id="submit" data-url="" value="我要报名">
+            </div>
+        </form>
+    </div>
+    
+    <script src="js/zepto.min.js"></script>
+    <script>
+        var waitTime;
+        $(function(){
+            $(window).resize(function(){
+                var winWidth=$(window).width(),conHeight;
+                if(winWidth>=480&&winWidth<768){
+                    conHeight=$(window).height()*1.6;
+                }else{
+                    conHeight=$(window).height();
+                }
+                $('.container').css({
+                    height:conHeight
+                })
+            }).resize();
+            $('.phone').blur(function(){
+                var reg=/^([1]([3][0-9]{1}|59|58|70|86|87|88|89)[0-9]{8})$/;
+                validField($(this),reg,'手机号不能为空！','手机号格式不正确！');
+            })
+            $('.validcode').blur(function(){
+                validField($(this),null,'验证码不能为空！')
+            })
+            $('#submit')[0].addEventListener('touchend',function(){signUpHandler(this);},false);
+            // 获取验证码
+            $('#getValidcode.enabled')[0].addEventListener('touchend',function(){
+                if(window.td) return;
+                $('#getValidcode').removeClass('enabled');
+                waitTime=60;
+                window.td=setInterval(function(){
+                    waitTime--;
+                    if(waitTime==0){
+                        clearInterval(window.td);
+                        window.td=0;
+                        $('#getValidcode').addClass('enabled').text('获取验证码');
+                        return ;
+                    }
+                    $('#getValidcode').text(waitTime+'s后重新获取');
+                },1000)
+            },false);
+        })
+        // 验证文本框
+        function validField($input,reg,helpText1,helpText2){
+            var value= $.trim($input.val());
+            var $help=$('.help');
+            if(!value){
+                $help.html(helpText1).removeClass('hide');
+                return false;
+            }else{
+                if(reg&&!reg.test(value)){
+                    $help.html(helpText2).removeClass('hide');
+                    return false;
+                }
+            }
+            $help.html('').addClass('hide');
+            return true;
+        }
+        // 报名提交
+        function signUpHandler(el){
+            var $phone=$('.phone');
+            var $validcode=$('.validcode');
+            var regPhone=/^([1]([3][0-9]{1}|59|58|70|86|87|88|89)[0-9]{8})$/;
+            if(validField($phone,regPhone,'手机号不能为空！','手机号格式不正确！') && validField($validcode,null,'验证码不能为空！')){
+                var data={
+                    phone:$phone.val()
+                };
+                var postUrl=$(el).data('url');
+                $.post(postUrl,data,function(res){
+                    if(res.success=='false'){
+                        $('.help').html(res.message).removeClass('hide');
+                    }else{
+                        alert('登录成功')
+                    }
+                })
+            }
+        }
+        
+    </script>
+</body>
+</html>
+

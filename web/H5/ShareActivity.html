@@ -1,0 +1,267 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>活动详情</title>
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/page4.css">
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+</head>
+
+<body>
+    <table class="downloadbox" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>
+                <div class="image">
+                    <img src="img/logo.png"></div>
+            </td>
+            <td>
+                <h2>青创汇 / 为创业者而生</h2>
+                <p>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <strong onclick="godown()">10万人下载</strong>
+                </p>
+            </td>
+            <td><a onclick="godown()">立即下载</a></td>
+        </tr>
+    </table>
+    <!-- 加载遮罩层 -->
+    <div class="shade-div"></div>
+    <!-- 主内容 通过模板渲染 -->
+    <div class="container loading"></div>
+    <!-- 表单遮罩层 -->
+    <div class="shade-blur hide"></div>
+    <!-- 评论表单 -->
+    <div class="commentForm">
+        <div class="form-header">
+            <a class="cancel">取消</a>
+            <a class="send">发送</a>
+            <h2>请输入你的评论</h2>
+        </div>
+        <textarea class="comment-content"></textarea>
+    </div>
+    <!-- 主内容模板 -->
+    <script type="text/html" id="contentTemplate">
+    <%var imgUrl='http://www.cn-qch.com:8002/attach/images/'%>
+    <%var avatorUrl='http://www.cn-qch.com:8002/attach/user/'%>
+    <%var defaultAvatorUrl='img/avator.png'%>
+        <header></header>
+        <div class="content">
+            <div class="image">
+                <img src="<%=imgUrl + data.activityImg%>">
+            </div>
+            <div class="details">
+                <h2><%=data.activityTitle%></h2>
+                <ul>
+                    <li><label>主 办 方:</label><b><%=data.sponsor%></b></li>
+                    <li><label>活动费用:</label><span><%=data.activityCost>0?data.activityCost.toFixed(2):'免费'%></span></li>
+                    <li><label>咨询电话:</label><a href="<%='tel://' + data.telephone%>"><%=data.telephone%></a></li>
+                    <li><label>活动时间:</label><span><%=data.activityTime%></span></li>
+                    <li><label>活动地点:</label><span><%=data.activityAddress%></span></li>
+                </ul>
+            </div>
+            <div class="signed">
+                <h2 id="baoming">已报名<strong> <%=data.numSigns+ '/' + data.numTotal %> </strong>人</h2>
+                <div class="box" id="members">
+                    <%data.avatar.forEach(function(item,index){%>
+                        <a <%if(index%8==0){%>class="first"<%}%>><img class="lazy" data-src="<%=item.userAvator?avatorUrl +item.userAvator:defaultAvatorUrl%>"></a>
+                    <%})%>
+                </div>
+            </div>
+        </div>
+        <div class="detailsbox">
+            <h2>活动介绍</h2>
+            <div class="text1"><%==data.activityDetails.replace(/===/g,'<br>')%></div>
+        </div>
+        <div class="commentbox">
+            <h2>最新评论</h2>
+            <ul class="commentlist" id="ulComment">
+                <%if(data.comments.items.length==0){%><li>暂无</li><%}%>
+                <%data.comments.items.forEach(function(item,index){%>
+                    <%var name=item.userName||''%>
+                    <%name=name.length>2?name.slice(0,2)+'**':name%>
+                    <li>
+                        <a><img class="lazy" data-src="<%=item.userAvator?avatorUrl +item.userAvator:defaultAvatorUrl%>"></a>
+                        <div>
+                            <h3><%=name%><span><%=item.t_Talk_FromDate%></span></h3>
+                            <p><%=item.t_Talk_FromContent%></p>
+                        </div>
+                    </li>
+                <%})%>
+            </ul>
+        </div>
+        <div class="more">
+            <a onclick="godown()">查看更多评论</a>
+        </div>
+        <footer>
+            <nav>
+                <a class="btn-comment">我要评论</a>
+                <a onclick="apply()">我要报名</a>
+            </nav>
+        </footer>
+    </script>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/artTemplate.js"></script>
+    <script charset="gb2312" src="js/loader.js"></script>
+    <script>
+        function godown() {
+            location.href = 'http://www.cn-qch.com/app';
+        }
+        function apply() {
+            location.href = 'http://test.cn-qch.com/wxuser/userinfo?guid=' + guid;
+        }
+        function GetUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]); return null;
+        }
+        var guid = GetUrlParam("Guid") || '406c0819-b33d-4a7a-92b7-199781eb7440';
+            //获取活动详情
+        $.ajax({
+            type: 'get',
+            cache: false,
+            dataType: 'json',
+            url: 'http://120.25.106.244:9001/api/activity/ApplyInfo',
+            data: {guid:guid},
+            success: function(data) {
+                if (data) {
+                    $('.container').html(template('contentTemplate', { data: data }));
+                    $('.detailsbox .text1 img').each(function () {
+                        var index = $(this).attr('src').indexOf('http://');
+                        (index == -1 || index != 0) && (this.src = 'http://cn-qch.com:8002' + $(this).attr('src'));
+                    })
+                    loadPic('.content .image img');
+                    winResize($('#members img,.commentbox img'));
+                    
+                    wxShare({
+                        title: $('.details>h2').text(),
+                        desc: $(".detailsbox .text1").text().slice(0, 40) + '...',
+                        imgUrl: $('.content .image img').attr('src')
+                    });
+                }
+            }
+        })
+        function winResize($e) {
+            $e.css({
+                height: $e.width(),
+                borderRadius: $e.width() / 2
+            })
+        }
+        // 首图预加载
+        function loadPic(selector) {
+            var image = new Image();
+            image.onload = function () {
+                $('img.lazy').each(function () {
+                    $(this).attr('src', $(this).data('src')).removeClass('lazy');
+                    this.removeAttribute('data-src');
+                })
+            }
+            image.src = $(selector).get(0).src;
+        }
+        // 图片懒加载 对有lazy类的图片进行懒加载
+        $(window).bind('scroll', lazy_img);
+        function lazy_img() {
+            var len = $('img.lazy').length;
+            !len && $(window).unbind('scroll', lazy_img);
+            $('img.lazy').each(function () {
+                var oTop = this.offsetTop || this.offsetParent.offsetTop;
+                var sTop = $(document).scrollTop();
+                var winH = $(window).height();
+                if (sTop + winH >= oTop) {
+                    $(this).attr('src', $(this).data('src')).removeClass('lazy');
+                    this.removeAttribute('data-src');
+                }
+            })
+        }
+
+        $(document).ajaxStop(function () {
+            $('.container').removeClass('loading');
+            $('.shade-div').remove();
+            initCommentForm();
+        });
+        function initCommentForm(){
+            // 阻止滚动屏幕
+            $('.commentForm')[0].addEventListener('touchstart', preventScroll, false);
+            // 打开评论盒子
+            $('.btn-comment').click( function() {
+                    godown();
+                    // $('.shade-blur').removeClass('hide').get(0).addEventListener('touchstart', cancelComment, false);
+                    // $('.commentForm').fadeIn(200, function () {
+                    //     $('footer').fadeOut(200);
+                    // }).find('textarea').val('').focus();
+                })
+                // 关闭评论盒子
+            $('.commentForm .cancel')[0].addEventListener('touchend', cancelComment, false);
+            // 发送评论内容
+            $('.commentForm .send')[0].addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                    var $textarea = $('.commentForm textarea');
+                    $textarea.blur();
+                    if (!$textarea.val().trim()) {
+                        tipInfo('评论不能为空！');
+                        $textarea.val('');
+                        return false;
+                    }
+                }, false)
+                // 让文本域得到焦点
+            $('.commentForm textarea')[0].addEventListener('touchend', function(e) {
+                e.preventDefault();
+                $(this).focus();
+            }, false);
+        }
+        // 阻止滚动屏幕
+        function preventScroll(e) {
+            e.preventDefault();
+        }
+        // 关闭评论盒子
+        function cancelComment(e) {
+            e.preventDefault();
+            $('.commentForm textarea').blur();
+            $('.commentForm').fadeOut(200, function() {
+                $('footer').fadeIn(200);
+            });
+            $('.shade-blur').addClass('hide').get(0).removeEventListener('touchstart', cancelComment, false);
+        }
+        // 提示信息
+        function tipInfo(t) {
+            $('p.tipinfo').remove();
+            if (window.tid) {
+                clearTimeout(window.tid);
+                window.tid = 0;
+            }
+            var winWidth = $(window).width();
+            var $tipinfo = $('<p class="tipinfo">').text(t).css({
+                position: 'fixed',
+                textAlign: 'center',
+                fontSize: '1rem',
+                color: '#fff',
+                borderRadius: '.5rem',
+                background: 'rgba(0,0,0,.8)',
+                padding: '.6rem 1rem',
+                transform: 'translate3d(0,0,0)',
+                top: '1rem'
+            }).appendTo('body').css({
+                left: (winWidth - $('p.tipinfo')[0].offsetWidth) / 2
+            });
+            window.tid = setTimeout(function() {
+                $tipinfo.css({
+                    top: '3rem',
+                    opacity: 0,
+                    transition: 'top .6s,opacity .6s'
+                });
+                setTimeout(function() {
+                    $tipinfo.remove();
+                }, 600);
+            }, 800)
+        }
+    </script>
+</body>
+</html>
