@@ -1,0 +1,62 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>TestApi</title>
+</head>
+<body>
+    <div>
+    </div>
+    <script src="~/H5/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        var username = '@ViewBag.UserName';
+        var key = '@ViewBag.Key';
+        //$.get('http://www.memvip.net/api/userApi', { cmd: 'getUserInfo', PassportName: username, PowerKey: key }, function (msg) {
+        //    if (msg) {
+        //        alert(msg.activateMoney);
+        //    }
+        //})
+        //获取
+        $.ajax({
+            type: 'post',
+            cache: false,
+            dataType: 'JSONP',
+            url: 'http://www.memvip.net/api/userApi',
+            data: {
+                cmd: 'getUserInfo',
+                PassportName: username,
+                PowerKey: key
+            },
+            success: function (data) {
+                if (data) {
+                    alert(data.activateMoney);
+                }
+            }
+        })
+        //编辑
+        //$.ajax({
+        //    type: 'post',
+        //    cache: false,
+        //    dataType: 'JSON',
+        //    url: 'http://www.memvip.net/api/userApi',
+        //    data: {
+        //        cmd: 'modifyUserInfo',
+        //        PassportName: username,
+        //        PowerKey: key,
+        //        Email: '123@qq.com',
+        //        Mobile:'18538550001'
+        //    },
+        //    success: function (data) {
+        //        if (data) {
+                    
+        //        }
+        //    }
+        //})
+    </script>
+</body>
+</html>

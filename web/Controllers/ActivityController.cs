@@ -35,7 +35,88 @@ namespace web.Controllers
         //发布活动
         public ActionResult Publish(string ActivityGuid, string code, string state)
         {
-            
+            #region 微信验证
+            string Nonce = qch.Infrastructure.CookieHelper.GetCookieValue("Nonce");
+            string wxuserguid = Guid.NewGuid().ToString();
+            qch.Infrastructure.CookieHelper.SetCookie("WxUserGuid", wxuserguid);
+            ViewBag.ActivityGuid = ActivityGuid;
+            ViewBag.OpenId = "";
+            ViewBag.UserLogo = "";
+            ViewBag.Name = "";
+            string token = qch.Infrastructure.CookieHelper.GetCookieValue("wxLoginToken");
+            string openid = qch.Infrastructure.CookieHelper.GetCookieValue("wxLoginOpenId");
+            string refresh = qch.Infrastructure.CookieHelper.GetCookieValue("wxLoginRefresh");
+            log.Info("Publish页面的token=" + token);
+            log.Info("Publish页面的openid=" + openid);
+            log.Info("Publish页面的refresh=" + refresh);
+            if (!string.IsNullOrWhiteSpace(openid) && string.IsNullOrWhiteSpace(code) && string.IsNullOrWhiteSpace(state))
+            {
+                var weixinUser = wxservice.GetByOpenId(openid);
+                if (weixinUser != null)
+                {
+                    ViewBag.OpenId = weixinUser.OpenId;
+                    ViewBag.UserLogo = weixinUser.Avator;
+                    ViewBag.Name = weixinUser.Name;
+                    return View();
+                }
+                else
+                {
+                    return Redirect("/wxUser/wxlogin");
+                }
+            }
+            else
+            {
+                var auth = wxauthService.GetToken(appId, appSecret, code);
+                if (auth == null || auth.access_token == null)
+                {
+                    return Redirect("/wxUser/wxlogin");
+                }
+                qch.Infrastructure.CookieHelper.SetCookie("wxLoginToken", auth.access_token.ToString());
+                qch.Infrastructure.CookieHelper.SetCookie("wxLoginRefresh", auth.refresh_token.ToString());
+                qch.Infrastructure.CookieHelper.SetCookie("wxLoginOpenId", auth.openid.ToString());
+                //请求微信用户信息
+                var userInfo = wxservice.GetUser(appId, appSecret, code, auth.access_token.ToString(), auth.openid.ToString());
+                if (userInfo != null)
+                {
+                    ViewBag.OpenId = userInfo.openid;
+                    ViewBag.UserLogo = userInfo.headimgurl;
+                    ViewBag.Name = userInfo.nickname;
+                    qch.Infrastructure.CookieHelper.SetCookie("wxLoginName", userInfo.nickname.ToString());
+                    if (userInfo.openid != null)
+                    {
+                        openid = userInfo.openid.ToString();
+                        log.Info("Publish页面OpenId:" + openid);
+                    }
+                    string avatorFileName = Guid.NewGuid().ToString() + ".jpg"; ;
+                    log.Info("avatorFileName=" + avatorFileName);
+                    var msg = wxservice.Save(new WXUserModel
+                    {
+                        Guid = "",
+                        OpenId = "",
+                        Nonce = Nonce,
+                        UserGuid = wxuserguid,
+                        WxTgUserGuid = "",
+                        MediaId = "",
+                        QrCode = "",
+                        UnionId = userInfo.unionid.ToString(),
+                        Avator = avatorFileName,
+                        CreateDate = DateTime.Now,
+                        KFDate = DateTime.Now,
+                        KFOpenId = userInfo.openid.ToString(),
+                        MediaDate = DateTime.Now,
+                        Name = userInfo.nickname.ToString(),
+                        UserType = 2
+                    });
+                    if (msg.type == "success")
+                    {
+                        log.Info("插入成功");
+                        //下载微信头像到指定文件夹
+                        Senparc.Weixin.MP.Sample.CommonService.ImageHelper.DownloadFile(100, 100, userInfo.headimgurl.ToString(), avatorFileName);
+                    }
+                    else { log.Error("插入失败"); }
+                }
+            }
+            #endregion
             var list = areaService.GetAllProvince();
             return View(list);
         }

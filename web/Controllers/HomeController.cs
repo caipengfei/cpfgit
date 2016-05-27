@@ -7,6 +7,9 @@ using System.Web.Mvc;
 using System.Drawing;
 using ThoughtWorks.QRCode.Codec;
 using ThoughtWorks.QRCode.Codec.Data;
+using System.Net.Http;
+using web.Models;
+using Newtonsoft.Json;
 
 
 namespace web.Controllers
@@ -16,7 +19,6 @@ namespace web.Controllers
         //首页
         public ActionResult Index()
         {
-            
             return View();
         }
         //头部
@@ -53,6 +55,54 @@ namespace web.Controllers
             return View();
         }
 
+        public ActionResult TestApi()
+        {
+            string miyao = "life4u4me";
+
+            string username = "CN12189";
+            miyao = qch.Infrastructure.Encrypt.MD5Encrypt(username + miyao, true);
+            //string url1 = string.Format("http://www.memvip.net/api/userApi?cmd=modifyUserInfo&PassportName={0}&PowerKey={1}&SpecialEMoney=22", username, miyao);
+            //var user1 = EditUsers(url1);
+            string url = string.Format("http://www.memvip.net/api/userApi?cmd=getUserInfo&PassportName={0}&PowerKey={1}", username, miyao);
+            var user = GetUsers(url);
+            return View();
+        }
+
+
+        public static object GetUsers(string Url)
+        {
+            GetUserModel user = new GetUserModel();
+            //var resourceServerUri = new Uri(Url);
+            HttpClient client = new HttpClient();
+            var response = client.GetStringAsync(Url).Result;
+            //HttpResponseMessage response = client.GetAsync(Url).Result;
+            //response.EnsureSuccessStatusCode();
+            //string responseBody = response.Content.ReadAsStringAsync().Result;
+            if (response != null)
+            {
+                
+                user = (GetUserModel)JsonConvert.DeserializeObject(response, typeof(GetUserModel));
+                //var u = response.Content.ReadAsAsync<GetUserModel>().Result;
+            }
+            return user;
+        }
+        public static object EditUsers(string Url)
+        {
+            GetUserModel user = new GetUserModel();
+            //var resourceServerUri = new Uri(Url);
+            HttpClient client = new HttpClient();
+            var response = client.GetStringAsync(Url).Result;
+            //HttpResponseMessage response = client.GetAsync(Url).Result;
+            //response.EnsureSuccessStatusCode();
+            //string responseBody = response.Content.ReadAsStringAsync().Result;
+            if (response != null)
+            {
+
+                user = (GetUserModel)JsonConvert.DeserializeObject(response, typeof(GetUserModel));
+                //var u = response.Content.ReadAsAsync<GetUserModel>().Result;
+            }
+            return user;
+        }
 
         #region 生成二维码
         //生成二维码方法一
@@ -161,7 +211,7 @@ namespace web.Controllers
             return Json(msg);
         }
         [HttpPost]
-        public ActionResult CheckSMS(string phone,string code)
+        public ActionResult CheckSMS(string phone, string code)
         {
             SMS sms = new SMS();
             Msg msg = new Msg();

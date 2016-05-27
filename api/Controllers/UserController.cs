@@ -31,6 +31,10 @@ namespace api.Controllers
                 var model = userService.GetById(Guid);
                 if (model == null)
                     return null;
+                //关注人数
+
+                //粉丝数量
+
                 var target = new
                 {
                     username = model.t_User_RealName,

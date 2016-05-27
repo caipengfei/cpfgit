@@ -213,6 +213,7 @@
     <Compile Include="Controllers\InvitationController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\TenPayV3Controller.cs" />
+    <Compile Include="Controllers\VoucherController.cs" />
     <Compile Include="Controllers\WeixinController.cs" />
     <Compile Include="Controllers\WeixinController_OldPost.cs" />
     <Compile Include="Controllers\wxUserController.cs" />
@@ -224,6 +225,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\GetUserModel.cs" />
+    <Compile Include="Models\UserInfoModel_xsl.cs" />
     <Compile Include="Models\UserRegModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QCH_Activity\ActivityAddOrModify.aspx.cs">
@@ -965,6 +968,7 @@
     <Content Include="H5\ActivityInstruction.html" />
     <Content Include="H5\AdView.html" />
     <Content Include="H5\css\Ad.css" />
+    <Content Include="H5\css\coupon.css" />
     <Content Include="H5\css\crowdfundPay.css" />
     <Content Include="H5\css\font-awesome.css" />
     <Content Include="H5\css\hasport_green.css" />
@@ -990,6 +994,12 @@
     <Content Include="H5\img\avator.png" />
     <Content Include="H5\img\bg_down.jpg" />
     <Content Include="H5\img\car.jpg" />
+    <Content Include="H5\img\coupon\img%402x.png" />
+    <Content Include="H5\img\coupon\juxing%402x.png" />
+    <Content Include="H5\img\coupon\shape_right.png" />
+    <Content Include="H5\img\coupon\xiaduan%402x.png" />
+    <Content Include="H5\img\coupon\xiazai%402x.png" />
+    <Content Include="H5\img\coupon\youhuiquan%402x.png" />
     <Content Include="H5\img\crowdfunding_banner.jpg" />
     <Content Include="H5\img\denglu_mm_img%402x.png" />
     <Content Include="H5\img\denglu_sj_img%402x.png" />
@@ -1058,6 +1068,7 @@
     <Content Include="H5\img\loadingBj.png" />
     <Content Include="H5\img\loading_5.gif" />
     <Content Include="H5\img\login_bg.jpg" />
+    <Content Include="H5\img\logo-.png" />
     <Content Include="H5\img\logo.png" />
     <Content Include="H5\img\logo2.png" />
     <Content Include="H5\img\more_btn.png" />
@@ -1078,6 +1089,7 @@
     <Content Include="H5\invitationInfo.html" />
     <Content Include="H5\invitationList.html" />
     <Content Include="H5\js\artTemplate.js" />
+    <Content Include="H5\js\coupon.js" />
     <Content Include="H5\js\html2canvas.js" />
     <Content Include="H5\js\int.js" />
     <Content Include="H5\js\jquery-1.12.2.min.js" />
@@ -1298,7 +1310,9 @@
     <Content Include="Views\Invitation\Index.cshtml" />
     <Content Include="Views\Invitation\List.cshtml" />
     <Content Include="Views\Invitation\List1.cshtml" />
-    <Content Include="Views\Invitation\Inof.cshtml" />
+    <Content Include="Views\Invitation\Info.cshtml" />
+    <Content Include="Views\Voucher\Index.cshtml" />
+    <Content Include="Views\Home\TestApi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AppDown\unpackage\" />

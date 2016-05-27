@@ -48,6 +48,8 @@ namespace qch.Repositories
         /// <summary>
         /// 关联主键
         /// </summary>
+        /// 
+        [Column]
         public string t_IntegralManager_Guid
         {
             set { _t_integralmanager_guid = value; }
@@ -56,6 +58,8 @@ namespace qch.Repositories
         /// <summary>
         /// 
         /// </summary>
+        /// 
+        [Column]
         public string t_IntegralManager_PinYin
         {
             set { _t_integralmanager_pinyin = value; }

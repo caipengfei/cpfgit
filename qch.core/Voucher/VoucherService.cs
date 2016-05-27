@@ -8,66 +8,29 @@ using System.Text;
 namespace qch.core
 {
     /// <summary>
-    /// 积分业务层
+    /// 优惠券业务层
     /// </summary>
-    public class IntegralService
+    public class VoucherService
     {
         readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        IntegralRepository rp = new IntegralRepository();
+        VoucherRepository rp = new VoucherRepository();
 
 
         /// <summary>
-        /// 获取某人推荐会员的时候当时获取的积分奖励
+        /// 根据全拼获取
         /// </summary>
-        /// <param name="UserGuid"></param>
-        /// <param name="regDate"></param>
-        /// <returns></returns>
-        public int GetTJIntegral(string UserGuid, DateTime regDate)
-        {
-            try
-            {
-                return rp.GetTJIntegral(UserGuid, regDate);
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex.Message);
-                return 0;
-            }
-        }
-        /// <summary>
-        /// 获取某用户的积分总额
-        /// </summary>
-        /// <param name="UserGuid"></param>
         /// <param name="Pinyin"></param>
         /// <returns></returns>
-        public int GetIntegral(string UserGuid)
+        public VoucherModel GetByAction(string Pinyin)
         {
             try
             {
-                return rp.GetIntegral(UserGuid);
+                return rp.GetByAction(Pinyin);
             }
             catch (Exception ex)
             {
                 log.Error(ex.Message);
-                return 0;
-            }
-        }
-        /// <summary>
-        /// 获取某用户的某项积分总额
-        /// </summary>
-        /// <param name="UserGuid"></param>
-        /// <param name="Pinyin"></param>
-        /// <returns></returns>
-        public int GetIntegral(string UserGuid, string Pinyin)
-        {
-            try
-            {
-                return rp.GetIntegral(UserGuid, Pinyin);
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex.Message);
-                return 0;
+                return null;
             }
         }
         /// <summary>
@@ -75,7 +38,7 @@ namespace qch.core
         /// </summary>
         /// <param name="Guid"></param>
         /// <returns></returns>
-        public IntegralModel GetById(string Guid)
+        public VoucherModel GetById(string Guid)
         {
             try
             {
@@ -94,7 +57,7 @@ namespace qch.core
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public Msg Save(IntegralModel model)
+        public Msg Save(VoucherModel model)
         {
             Msg msg = new Msg();
             msg.type = "error";
@@ -116,7 +79,8 @@ namespace qch.core
                 else
                 {
                     model.Guid = Guid.NewGuid().ToString();
-                    model.t_AddDate = DateTime.Now;
+                    model.T_CreateDate = DateTime.Now;
+                    model.T_sDate = DateTime.Now;
                     if (rp.Add(model))
                     {
                         msg.type = "success";
@@ -144,7 +108,7 @@ namespace qch.core
                 var model = GetById(Guid);
                 if (model == null)
                     return false;
-                model.t_DelState = DelState;
+                model.T_DelState = DelState;
                 return rp.Edit(model);
             }
             catch (Exception ex)

@@ -14,6 +14,34 @@ namespace qch.Repositories
         readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         Repository<IntegralModel> rp = new Repository<IntegralModel>();
 
+
+        /// <summary>
+        /// 获取某人推荐会员的时候当时获取的积分奖励
+        /// </summary>
+        /// <param name="UserGuid"></param>
+        /// <param name="regDate"></param>
+        /// <returns></returns>
+        public int GetTJIntegral(string UserGuid, DateTime regDate)
+        {
+            try
+            {
+                int xy = 0;
+                using (var db = new PetaPoco.Database(DbConfig.qch))
+                {
+                    string sql = "select top 1 t_UserIntergral_AddReward from T_User_Integral where t_User_Guid=@0 and t_IntegralManager_PinYin='yonghuzhuce' and t_DelState=0 and DATEDIFF(ss,[t_AddDate],@1)<=30";
+                    //xy = Convert.IsDBNull(db.ExecuteScalar<object>(sql, new object[] { UserGuid, regDate })) ? 0 : db.ExecuteScalar<int>(sql, new object[] { UserGuid, regDate });
+                    var xy2 = db.ExecuteScalar<object>(sql, new object[] { UserGuid, regDate });
+                    if (xy2 != null)
+                        xy = Convert.ToInt32(xy2);
+                }
+                return xy;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return 0;
+            }
+        }
         /// <summary>
         /// 获取某用户的积分总额
         /// </summary>
@@ -27,8 +55,11 @@ namespace qch.Repositories
                 int xy = 0;
                 using (var db = new PetaPoco.Database(DbConfig.qch))
                 {
-                    string sql = "select sum(t_UserIntegral_Reward) from T_User_Integral where t_User_Guid=@0 and t_DelState=0";
-                    xy = Convert.IsDBNull(db.ExecuteScalar<object>(sql, new object[] { UserGuid })) ? 0 : db.ExecuteScalar<int>(sql, new object[] { UserGuid });
+                    string sql = "select top 1 t_UserIntegral_Reward from T_User_Integral where t_User_Guid=@0 and t_DelState=0 order by t_AddDate desc";
+                    //xy = Convert.IsDBNull(db.ExecuteScalar<object>(sql, new object[] { UserGuid })) ? 0 : db.ExecuteScalar<int>(sql, new object[] { UserGuid });
+                    var xy2 = db.ExecuteScalar<object>(sql, new object[] { UserGuid });
+                    if (xy2 != null)
+                        xy = Convert.ToInt32(xy2);
                 }
                 return xy;
             }
@@ -51,8 +82,11 @@ namespace qch.Repositories
                 int xy = 0;
                 using (var db = new PetaPoco.Database(DbConfig.qch))
                 {
-                    string sql = "select sum(t_UserIntegral_Reward) from T_User_Integral where t_User_Guid=@0 and t_IntegralManager_PinYin=@1 and t_DelState=0";
-                    xy = Convert.IsDBNull(db.ExecuteScalar<object>(sql, new object[] { UserGuid, Pinyin })) ? 0 : db.ExecuteScalar<int>(sql, new object[] { UserGuid, Pinyin });
+                    string sql = "select top 1 t_UserIntegral_Reward from T_User_Integral where t_User_Guid=@0 and t_IntegralManager_PinYin=@1 and t_DelState=0 order by t_AddDate desc";
+                    //xy = Convert.IsDBNull(db.ExecuteScalar<object>(sql, new object[] { UserGuid, Pinyin })) ? 0 : db.ExecuteScalar<int>(sql, new object[] { UserGuid, Pinyin });
+                    var xy2 = db.ExecuteScalar<object>(sql, new object[] { UserGuid, Pinyin });
+                    if (xy2 != null)
+                        xy = Convert.ToInt32(xy2);
                 }
                 return xy;
             }

@@ -97,7 +97,12 @@
     <Compile Include="Integral\IntegralModel.cs" />
     <Compile Include="Integral\IntegralService.cs" />
     <Compile Include="Integral\Repositories\IntegralRepository.cs" />
+    <Compile Include="Integral\Repositories\T_IntegralManger.cs" />
     <Compile Include="Integral\Repositories\T_User_Integral.cs" />
+    <Compile Include="JPUSH\JPushService.cs" />
+    <Compile Include="JPUSH\PushModel.cs" />
+    <Compile Include="JPUSH\Repositories\PushRepository.cs" />
+    <Compile Include="JPUSH\Repositories\T_HistoryPush.cs" />
     <Compile Include="Lecturer\LecturerModel.cs" />
     <Compile Include="Lecturer\LecturerService.cs" />
     <Compile Include="Lecturer\Repositories\LecturerRepository.cs" />
@@ -106,6 +111,7 @@
     <Compile Include="Logs\LogsService.cs" />
     <Compile Include="Logs\Repositories\LogsRepository.cs" />
     <Compile Include="Logs\Repositories\T_Logs.cs" />
+    <Compile Include="Voucher\Repositories\T_Voucher.cs" />
     <Compile Include="Order\OrderModel.cs" />
     <Compile Include="Order\OrderService.cs" />
     <Compile Include="Order\Repositories\OrderRepository.cs" />
@@ -123,6 +129,11 @@
     <Compile Include="str.cs" />
     <Compile Include="UserTalk\SelectModel.cs" />
     <Compile Include="UserTalk\SelectTalkModel.cs" />
+    <Compile Include="Voucher\Repositories\T_User_Voucher.cs" />
+    <Compile Include="Voucher\Repositories\VoucherRepository.cs" />
+    <Compile Include="Voucher\UserVoucherModel.cs" />
+    <Compile Include="Voucher\VoucherModel.cs" />
+    <Compile Include="Voucher\VoucherService.cs" />
     <Compile Include="wxJS-SDK\Repositories\T_Weixin_OAuth.cs" />
     <Compile Include="wxJS-SDK\Repositories\WXAuthRepository.cs" />
     <Compile Include="wxJS-SDK\WXAuthModel.cs" />

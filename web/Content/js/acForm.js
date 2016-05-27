@@ -7,7 +7,11 @@ $(function () {
         // 显示时间选择列表 如果日期不为空 则显示
         .on('click', '#hd_date .post_time', function () {
             var date_text = $(this).prev().find('input').val();
-            date_text && $(this).find('.time_list').removeClass('hide');
+            if (date_text) {
+                $(this).find('.time_list').removeClass('hide');
+            } else {
+                tipInfo('请先输入' + $(this).prev('div').find('input').attr('placeHolder'));
+            }
         })
         // 时间选择列表项单击
         .on('click', '#hd_date .time_list li', function () {
@@ -254,6 +258,19 @@ function postForm() {
         tipInfo("主题请在35个字以内");
         return;
     }
+    // 活动详情不能为空 并不能低于10个字 不能多于10000字
+    if (!_content) {
+        tipInfo("请输入" + partyThem + "详情");
+        return;
+    }
+    if (_content.length < 10) {
+        tipInfo(partyThem + "详情写得太少了");
+        return;
+    }
+    if (_content.length > 10000) {
+        tipInfo(partyThem + "详情写得有点多了");
+        return;
+    }
     // 开始和结束时间不能为空 开始时间必须大于当前时间 但不能大于结束时间
     if (!(_startymd && _starthm)) {
         tipInfo("请选择" + partyThem + "开始的具体时间");
@@ -282,19 +299,6 @@ function postForm() {
     }
     if (_detailAddr.length > 35) {
         tipInfo("地址请在35个字以内");
-        return;
-    }
-    // 活动详情不能为空 并不能低于10个字 不能多于10000字
-    if (!_content) {
-        tipInfo("请输入" + partyThem + "详情");
-        return;
-    }
-    if (_content.length < 10) {
-        tipInfo(partyThem + "详情写得太少了");
-        return;
-    }
-    if (_content.length > 10000) {
-        tipInfo(partyThem + "详情写得有点多了");
         return;
     }
     // 举办方不能为空 并不能多于70个字
@@ -436,7 +440,7 @@ function tipInfo(t) {
         background: 'rgba(0,0,0,.8)',
         padding: '8px 15px',
         transform: 'translate3d(0,0,0)',
-        bottom: '100px'
+        bottom: '200px'
     }).appendTo('body').css({
         left: (winWidth - $('p.tipinfo')[0].offsetWidth) / 2
     });

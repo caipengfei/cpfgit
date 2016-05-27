@@ -92,7 +92,7 @@
     <script src="js/artTemplate.js"></script>
     <script src="js/shareTutor.js"></script>
     <script>
-        var guid = GetUrlParam("guid") || '38fdf6e8-47bb-47d4-81b9-903c4871d931';
+        var guid = GetUrlParam("guid") || GetUrlParam("Guid") || '38fdf6e8-47bb-47d4-81b9-903c4871d931';
         $.ajax({
             type: 'get',
             cache: false,

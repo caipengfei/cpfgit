@@ -58,6 +58,7 @@ namespace qch.Repositories
                 return 0;
             }
         }
+        
         /// <summary>
         /// 获取某用户的所有二级推荐人(数量)
         /// </summary>
@@ -71,7 +72,7 @@ namespace qch.Repositories
                 int xy = 0;
                 using (var db = new PetaPoco.Database(DbConfig.qch))
                 {
-                    string sql = "select count(1) from t_users where t_ReommUser in (select Guid from t_users where t_ReommUser=@0 and t_DelState=0) and and t_DelState=0";
+                    string sql = "select count(1) from t_users where t_ReommUser in (select Guid from t_users where t_ReommUser=@0 and t_DelState=0) and t_DelState=0";
                     xy = Convert.IsDBNull(db.ExecuteScalar<object>(sql, new object[] { UserGuid })) ? 0 : db.ExecuteScalar<int>(sql, new object[] { UserGuid });
                 }
                 return xy;

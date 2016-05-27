@@ -86,8 +86,7 @@
         </header>
         <div class="contentbox">
             <div class="detailsbox clear">
-                <%var instruction=data.t_FundCourse_Info.replace(/===/g,'<br>
-                ')%>
+                <%var instruction=data.t_FundCourse_Info.replace(/===/g,'<br>')%>
                 <%var show_limit=90%>
                 <h2>详情</h2>
                 <p>
@@ -156,7 +155,7 @@
     <script src="js/artTemplate.js"></script>
     <script src="js/shareCourse.js"></script>
     <script>
-        var guid = GetUrlParam("guid") || 'c797f6ac-282e-4e50-9e51-1bd56dae2068';
+        var guid = GetUrlParam("Guid") || GetUrlParam("guid") || 'c797f6ac-282e-4e50-9e51-1bd56dae2068';
         function gopay() {
             location.href = 'http://test.cn-qch.com/wxuser/Pay?Guid=' + guid;
         }

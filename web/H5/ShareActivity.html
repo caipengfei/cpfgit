@@ -123,15 +123,15 @@
             var r = window.location.search.substr(1).match(reg);
             if (r != null) return unescape(r[2]); return null;
         }
-        var guid = GetUrlParam("Guid") || '406c0819-b33d-4a7a-92b7-199781eb7440';
-            //获取活动详情
+        var guid = GetUrlParam("Guid") || GetUrlParam("guid") || '406c0819-b33d-4a7a-92b7-199781eb7440';
+        //获取活动详情
         $.ajax({
             type: 'get',
             cache: false,
             dataType: 'json',
             url: 'http://120.25.106.244:9001/api/activity/ApplyInfo',
-            data: {guid:guid},
-            success: function(data) {
+            data: { guid: guid },
+            success: function (data) {
                 if (data) {
                     $('.container').html(template('contentTemplate', { data: data }));
                     $('.detailsbox .text1 img').each(function () {
@@ -141,7 +141,7 @@
                     loadPic('.content .image img');
                     winResize($('#members img'));
                     winResize($('.commentbox img'));
-                    
+
                     wxShare({
                         title: $('.details>h2').text(),
                         desc: $(".detailsbox .text1").text().slice(0, 40) + '...',
@@ -188,32 +188,32 @@
             $('.shade-div').remove();
             initCommentForm();
         });
-        function initCommentForm(){
+        function initCommentForm() {
             // 阻止滚动屏幕
             $('.commentForm')[0].addEventListener('touchstart', preventScroll, false);
             // 打开评论盒子
-            $('.btn-comment').click( function() {
-                    godown();
-                    // $('.shade-blur').removeClass('hide').get(0).addEventListener('touchstart', cancelComment, false);
-                    // $('.commentForm').fadeIn(200, function () {
-                    //     $('footer').fadeOut(200);
-                    // }).find('textarea').val('').focus();
-                })
-                // 关闭评论盒子
+            $('.btn-comment').click(function () {
+                godown();
+                // $('.shade-blur').removeClass('hide').get(0).addEventListener('touchstart', cancelComment, false);
+                // $('.commentForm').fadeIn(200, function () {
+                //     $('footer').fadeOut(200);
+                // }).find('textarea').val('').focus();
+            })
+            // 关闭评论盒子
             $('.commentForm .cancel')[0].addEventListener('touchend', cancelComment, false);
             // 发送评论内容
-            $('.commentForm .send')[0].addEventListener('touchend', function(e) {
-                    e.preventDefault();
-                    var $textarea = $('.commentForm textarea');
-                    $textarea.blur();
-                    if (!$textarea.val().trim()) {
-                        tipInfo('评论不能为空！');
-                        $textarea.val('');
-                        return false;
-                    }
-                }, false)
-                // 让文本域得到焦点
-            $('.commentForm textarea')[0].addEventListener('touchend', function(e) {
+            $('.commentForm .send')[0].addEventListener('touchend', function (e) {
+                e.preventDefault();
+                var $textarea = $('.commentForm textarea');
+                $textarea.blur();
+                if (!$textarea.val().trim()) {
+                    tipInfo('评论不能为空！');
+                    $textarea.val('');
+                    return false;
+                }
+            }, false)
+            // 让文本域得到焦点
+            $('.commentForm textarea')[0].addEventListener('touchend', function (e) {
                 e.preventDefault();
                 $(this).focus();
             }, false);
@@ -226,7 +226,7 @@
         function cancelComment(e) {
             e.preventDefault();
             $('.commentForm textarea').blur();
-            $('.commentForm').fadeOut(200, function() {
+            $('.commentForm').fadeOut(200, function () {
                 $('footer').fadeIn(200);
             });
             $('.shade-blur').addClass('hide').get(0).removeEventListener('touchstart', cancelComment, false);
@@ -252,13 +252,13 @@
             }).appendTo('body').css({
                 left: (winWidth - $('p.tipinfo')[0].offsetWidth) / 2
             });
-            window.tid = setTimeout(function() {
+            window.tid = setTimeout(function () {
                 $tipinfo.css({
                     top: '3rem',
                     opacity: 0,
                     transition: 'top .6s,opacity .6s'
                 });
-                setTimeout(function() {
+                setTimeout(function () {
                     $tipinfo.remove();
                 }, 600);
             }, 800)

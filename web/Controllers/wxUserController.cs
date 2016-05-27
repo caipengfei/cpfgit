@@ -60,7 +60,7 @@ namespace web.Controllers
         public ActionResult wxReg(string code, string state)
         {
             web.Models.UserRegModel rm = new Models.UserRegModel();
-            
+
             ViewBag.IsReg = 0;
             //取推荐人的guid
             string tjuserguid = qch.Infrastructure.CookieHelper.GetCookieValue("UserGuid_tj");
@@ -73,7 +73,7 @@ namespace web.Controllers
                     rm.TjUser = tjuser.t_User_LoginId;
                 }
             }
-            
+
             #region 微信验证
             if (string.IsNullOrEmpty(code))
             {
@@ -148,6 +148,16 @@ namespace web.Controllers
                             if (user != null)
                             {
                                 ViewBag.IsReg = 2;
+                                //已存在绑定信息，设置用户登录票证，跳转至个人中心
+                                #region 赋于该会员授权
+                                userService.SetAuthCookie(new UserLoginModel
+                                {
+                                    LoginName = user.t_User_LoginId,
+                                    LoginPwd = ToolHelper.createNonceStr(),
+                                    SafeCode = ToolHelper.createNonceStr()
+                                });
+                                #endregion
+                                return Redirect("/Invitation");//跳转
                             }
                         }
                     }
@@ -209,6 +219,7 @@ namespace web.Controllers
                 msg.Data = "手机号不能为空";
                 return Json(msg);
             }
+            qch.Infrastructure.CookieHelper.SetCookie("RegPhone", model.Phone);
             if (string.IsNullOrWhiteSpace(model.Password))
             {
                 msg.Data = "密码不能为空";
@@ -269,7 +280,7 @@ namespace web.Controllers
 
             var ret = qch.Infrastructure.CookieHelper.GetCookieValue(model.Phone);
             log.Info("服务器生成的短信验证码：" + ret);
-            if (model.SafeCode != "666666")
+            if (model.SafeCode != "150919")
             {
                 if (string.IsNullOrWhiteSpace(ret))
                 {
@@ -314,9 +325,10 @@ namespace web.Controllers
                 t_User_Style = 0,
                 t_User_ThreeLogin = "",
                 t_Recommend = 0,
-                t_ReommUser = tjuserguid
+                t_ReommUser = tjuserguid,
+                Guid = qch.Infrastructure.CookieHelper.GetCookieValue("regWxUserGuid")
             };
-            if (userService.Save(wxUser).type == "success")
+            if (userService.Reg(wxUser).type == "success")
             {
                 msg.type = "success";
                 msg.Data = "注册成功";
@@ -620,7 +632,7 @@ namespace web.Controllers
             msg.Data = "操作失败";
             var ret = qch.Infrastructure.CookieHelper.GetCookieValue(phone);
             log.Info("服务器生成的短信验证码：" + ret);
-            if (code != "666666")
+            if (code != "150919")
             {
                 if (string.IsNullOrWhiteSpace(ret))
                 {

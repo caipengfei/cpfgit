@@ -71,7 +71,7 @@
         function godown() {
             location.href = 'http://www.cn-qch.com/app';
         }
-        var guid = GetUrlParam("Guid");
+        var guid = GetUrlParam("Guid") || GetUrlParam("guid");
         if (!guid || guid == "") {
             guid = '8119af13-0086-4931-8707-69c4f9dc1ba4';
         }

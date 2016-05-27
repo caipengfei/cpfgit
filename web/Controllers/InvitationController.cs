@@ -60,7 +60,7 @@ namespace web.Controllers
             {
                 ViewBag.Phone = LoginUser.t_User_LoginId;
                 ViewBag.Integral = 0;
-                int zhijie = integralService.GetIntegral(LoginUser.Guid, "zhijietuijian");
+                int zhijie = integralService.GetIntegral(LoginUser.Guid, "yonghuzhuce");
                 int jianjie = integralService.GetIntegral(LoginUser.Guid, "jianjietuijian");
                 ViewBag.tj1 = userService.GetReferral1(LoginUser.Guid);
                 ViewBag.tj2 = userService.GetReferral2(LoginUser.Guid);
@@ -89,9 +89,20 @@ namespace web.Controllers
             return View();
         }
         //一级推荐人明细页面
-        public ActionResult Inof(string UserGuid)
+        public ActionResult Info(string UserGuid)
         {
             var model = userService.GetById(UserGuid);
+            int x = 0;
+            if (model != null)
+            {
+                if (!string.IsNullOrWhiteSpace(model.t_ReommUser))
+                {
+                    x = integralService.GetTJIntegral(model.t_ReommUser, model.t_User_Date);
+                }
+            }
+            else
+                model = new UserModel();
+            ViewBag.TjIntegral = x;
             ViewBag.tuijian = userService.GetReferral1(UserGuid);
             return View(model);
         }

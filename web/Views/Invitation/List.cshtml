@@ -93,7 +93,7 @@
                 {
                     foreach (var item in Model.Items)
                     {
-                    <tr>
+                    <tr data-url="/Invitation/Info?UserGuid=@item.Guid">
                         <td>@item.t_User_LoginId</td>
                         <td>@item.t_User_Date.ToShortDateString()</td>
                     </tr>
@@ -108,6 +108,14 @@
     }
     <script src="~/Content/js/jquery.min.js"></script>
     <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            var tr = document.querySelectorAll('tbody tr');
+            for (var i = 0, len = tr.length; i < len; i++) {
+                tr[i].onclick = function () {
+                    location.href=this.dataset.url;
+                }
+            }
+        }, false);
         var page = 2;
 
         $(window).scroll(function () {

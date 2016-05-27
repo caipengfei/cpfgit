@@ -11,6 +11,7 @@
     <meta name="renderer" content="webkit" />
     <title>APP下载</title>
     <link rel="stylesheet" href="/h5/css/public.css">
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <style>
         .container {
             margin: 0 !important;
@@ -63,6 +64,68 @@
                 window.location.href = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.qingchuang.app';
             }
         })
+        wx.config({
+            debug: false,
+            appId: '@ViewBag.AppId',
+            timestamp: @ViewBag.Timestamp,
+            nonceStr: '@ViewBag.Noncestr',
+            signature: '@ViewBag.Signature',
+            jsApiList: [
+              'checkJsApi',
+              'onMenuShareTimeline',
+              'onMenuShareAppMessage'
+            ]
+        });
+
+        wx.ready(function () {
+            wx.onMenuShareAppMessage(
+                    {
+                        title: '青创汇APP下载',
+                        desc: '梦想太大，青创汇替你装下，这里有一站式创业解决方案。',
+                        link: 'http://cn-qch.com/App/Index',
+                        imgUrl: 'http://cn-qch.com/h5/img/logo-.png',
+
+                        trigger: function (res) {
+                            //分享给朋友
+                        },
+                        success: function (res) {
+                            //alert('已分享');
+                            
+                        },
+                        cancel: function (res) {
+                            alert('已取消');
+                        },
+                        fail: function (res) {
+                            alert(JSON.stringify(res));
+                        }
+                    }
+                );
+            wx.onMenuShareTimeline(
+                {
+                    title: '青创汇APP下载',
+                    desc: '梦想太大，青创汇替你装下，这里有一站式创业解决方案。',
+                    link: 'http://cn-qch.com/App/Index',
+                    imgUrl: 'http://cn-qch.com/h5/img/logo-.png',
+
+                    trigger: function (res) {
+                        //分享到朋友圈
+                    },
+                    success: function (res) {
+                        //alert('已分享');
+                    },
+                    cancel: function (res) {
+                        alert('已取消');
+                    },
+                    fail: function (res) {
+                        alert(JSON.stringify(res));
+                    }
+                }
+                );
+        });
+
+        wx.error(function (res) {
+            //alert(res.errMsg);
+        });
     </script>
 </body>
 </html>
