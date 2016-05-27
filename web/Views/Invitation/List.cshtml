@@ -1,0 +1,129 @@
+﻿@{
+    Layout = null;
+}
+@model PetaPoco.Page<qch.Models.UserModel>
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>邀请人列表</title>
+    <link rel="stylesheet" href="/h5/css/public.css">
+    <style>
+        body {
+            background: rgb(242, 244, 250);
+        }
+
+        table {
+            width: 100%;
+            background: #fff;
+        }
+
+        th,
+        td {
+            height: 4rem;
+            text-align: center;
+            border-bottom: 1px solid rgb(247, 247, 247);
+            font-size: 1.2rem;
+            padding: 0 1.4rem;
+        }
+
+            th:first-child,
+            td:first-child {
+                width: 48%;
+            }
+
+        th {
+            color: rgb(151, 151, 151);
+        }
+
+        td {
+            color: #4E4E4E;
+        }
+
+            td:first-child {
+                text-align: left;
+            }
+
+            td:last-child {
+                background: url(/h5/img/invitation/genduo@2x.png) no-repeat right 50%;
+                background-size: auto 80%;
+            }
+
+        .empty {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: #fff url(/h5/img/invitation/imgnodata.png) no-repeat 50% 14rem;
+            background-size: 10rem auto;
+            padding-top: 24rem;
+            text-align: center;
+            z-index: 0;
+            font-size: 1.2rem;
+            color: #4E4E4E;
+            line-height: 2em;
+        }
+
+        .container {
+            margin-bottom: 0;
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <table cellpadding="0" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>邀请的人</th>
+                    <th>注册时间</th>
+                </tr>
+            </thead>
+
+            <tbody id="tj-list">
+                @if (Model != null && Model.Items != null)
+                {
+                    foreach (var item in Model.Items)
+                    {
+                    <tr>
+                        <td>@item.t_User_LoginId</td>
+                        <td>@item.t_User_Date.ToShortDateString()</td>
+                    </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    @if (Model == null || Model.Items == null || Model.TotalItems <= 0 || Model.Items.Count <= 0)
+    {
+        <div class="empty">暂无邀请人</div>
+    }
+    <script src="~/Content/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        var page = 2;
+
+        $(window).scroll(function () {
+            if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+                var name = localStorage.getItem("GoodsName");
+                var url = "/Invitation/List1";
+                $.get(url, { page: page }, function (model) {
+                    page = page + 1;
+                    if (model != null) {
+                        $("#tj-list").append(model).animate({ opacity: 1 }, 800);
+                    } else {
+
+                    }
+                })
+            }
+        });
+    </script>
+</body>
+</html>

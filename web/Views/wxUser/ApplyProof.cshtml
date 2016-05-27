@@ -1,0 +1,94 @@
+﻿@{
+    Layout = null;
+}
+@model qch.Models.ProofModel
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>报名凭证页面</title>
+    <link rel="stylesheet" href="/h5/css/signUp2.css">
+</head>
+
+<body>
+    <div id="cardBox">
+        <i></i>
+        <div class="itembox1">
+            <h2>@Model.ActivityName</h2>
+            <span>数字码：<b>@Model.ProofCode</b></span>
+            <div class="qrcode">
+                <p>
+                    <img src="@Model.QrCodeImage">
+                </p>
+                <strong>@Model.Fee</strong>
+            </div>
+            @*<img src="/h5/img/juan_21.png">*@
+        </div>
+        <ul class="itembox2">
+            <li><span>活动时间：</span><span>@Model.ActivityDate.ToShortDateString()</span></li>
+            <li><span>活动地点：</span><span class="address">@Model.Addr</span></li>
+            <li><span>主办方：</span><span>@Model.Holder</span></li>
+            <li><span>报名人：</span><span>@Model.ApplyUserName (@Model.Phone)</span></li>
+        </ul>
+    </div>
+    <div class="btn-group">
+        <a id="saveSign">保存报名凭证</a>
+        <a href="@ViewBag.ReturnUrl">查看活动</a>
+        <p><span>您还可以</span></p>
+    </div>
+    <ul id="otherBox">
+        <li onclick="guanzhu()">
+            <a>
+                <b class="icon icon-xin"></b>
+                <div>
+                    <h4>关注青创汇公众号</h4>
+                    <p>随时查看报名凭证，接收官方精选推荐</p>
+                </div>
+            </a>
+        </li>
+        <li onclick="godown()">
+            <a>
+                <b class="icon icon_down"></b>
+                <div>
+                    <h4>下载青创汇App</h4>
+                    <p>查看报名凭证，接收活动提醒，发布自己的活动</p>
+                </div>
+            </a>
+        </li>
+        <li onclick="querylist()">
+            <a>
+                <b class="icon icon_xing"></b>
+                <div>
+                    <h4>查看报名凭证列表页</h4>
+                    <p>登录后可在该页查看您所有的报名凭证</p>
+                </div>
+            </a>
+        </li>
+    </ul>
+    <div id="clipBox" class="hide">
+        <div class="shade"></div>
+        <div class="myClip">
+            <a class="close">&times;</a>
+            <h2>保存报名凭证</h2>
+            <div class="canvasContainer"><img src="" /></div>
+            <p>长按图片或手机截屏保存，或直接下载青创汇app随时查询报名凭证</p>
+        </div>
+    </div>
+    <script src="/h5/js/jquery.min.js"></script>
+    <script src="/h5/js/html2canvas.js"></script>
+    <script src="/h5/js/signUp2.js"></script>
+    <script type="text/javascript">
+        function guanzhu() {
+            location.href = 'http://mp.weixin.qq.com/s?__biz=MzA5OTU0NDE0Nw==&mid=400794286&idx=1&sn=fd17729afc68fd053901611c8435f546&scene=0&previewkey=MppKeYHdEw4HcdCKutlldsNS9bJajjJKzz%2F0By7ITJA%3D#wechat_redirect';
+        }
+        function godown() {
+            location.href = 'http://www.cn-qch.com/app';
+        }
+        function querylist() {
+            location.href = '/wxuser/ProofList?guid=@Model.t_User_Guid';
+        }
+    </script>
+</body>
+</html>
+

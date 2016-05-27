@@ -1,0 +1,202 @@
+body {
+    background: #f3f3f3;
+}
+
+header {
+    background: url(../img/header3.jpg);
+    background-size: 100% 100%;
+    padding-top: 4rem;
+    padding-bottom: 1.2rem;
+    color: #fff;
+}
+
+header .head-nav {
+    height: 4rem;
+    line-height: 4rem;
+}
+
+header .head-nav a {
+    color: #fff;
+    font-size: 2.2rem;
+    min-width: 4rem;
+    height: 100%;
+    text-align: center;
+}
+
+header .head-nav a.left {
+    float: left;
+}
+
+header .head-nav a.right {
+    float: right;
+}
+
+header .box {
+    text-align: center;
+}
+
+header .box img {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 3rem;
+    margin-bottom: .8rem;
+}
+
+header .box h2 {
+    font-size: 1.3rem;
+}
+
+.table {
+    display: flex;
+    background: #fff;
+    padding: 1.2rem 0 .8rem 0;
+    border-bottom: 1px solid #d2d2d2;
+}
+
+.table li {
+    width: 50%;
+    color: #353535;
+    text-align: center;
+    font-size: 1.3rem;
+}
+
+.table li b {
+    display: block;
+    margin-top: .5rem;
+    font-weight: normal;
+    color: #bcbcbc;
+}
+
+.table li:nth-child(1) {
+    background: url(../img/line.png) no-repeat right 50%;
+    background-size: 1px 80%;
+}
+
+.aboutbox {
+    background: #fff;
+    padding: 2rem 0 .5rem 0;
+    margin-bottom: .5rem;
+}
+
+.aboutbox h2 {
+    font-size: 1.3rem;
+    padding-left: 1.5rem;
+    margin-bottom: .5em;
+    color: #1a1a1a;
+}
+
+.aboutbox p {
+    font-size: 1.2rem;
+    padding: 0 2em;
+    line-height: 1.6em;
+    color: #777777;
+}
+
+.aboutbox .more {
+    float: right;
+    font-size: 1.2rem;
+    margin-right: 1rem;
+    padding: 1rem;
+    color: #8c8c8c;
+}
+
+.aboutbox:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.case {
+    background: #fff;
+    padding-top: 2rem;
+    margin-bottom: .5rem;
+}
+
+.case h2 {
+    font-size: 1.3rem;
+    color: #1b1b1b;
+    padding-left: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.case .listbox li {
+    width: 25%;
+    float: left;
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.case .listbox li a {
+    width: 75%;
+    color: #1a1a1a;
+}
+
+.case .listbox li a img {
+    width: 100%;
+    margin-bottom: .6rem;
+}
+
+.case:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.member {
+    background: #fff;
+    padding: 2rem 0;
+}
+
+.member > h2 {
+    font-size: 1.3rem;
+    color: #1b1b1b;
+    padding-left: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.member table {
+    padding:0 1.5rem;
+    width: 100%;
+}
+
+.member table td a,
+.member table td img {
+    width: 100%;
+}
+
+.member table td h3 {
+    color: #1b1b1b;
+    font-size: 1.3rem;
+    margin-bottom: .6rem;
+}
+
+.member table td p {
+    color: #c9c9c9;
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+}
+
+.member table td:nth-child(1) {
+    width: 30%;
+    padding-right: 2rem;
+}
+
+.member table td:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+footer {
+    height: 4rem;
+    line-height: 4rem;
+    background: #4a90e2;
+}
+
+footer a {
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    font-size: 1.3rem;
+}

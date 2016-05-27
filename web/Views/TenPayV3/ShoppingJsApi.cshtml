@@ -1,0 +1,161 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>购物支付</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=GBK" />   
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+   
+    <style type="text/css">
+       
+
+        #bottomNav {
+            background-color: #cc3333;
+            border-top: 1px solid #993333;
+            text-align: center;
+            z-index: 999;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            line-height: 50px;
+            /* for IE6 */ _position: absolute;
+            _top: expression(documentElement.scrollTop + documentElement.clientHeight-this.offsetHeight);
+            overflow: visible;
+        }
+    </style>
+
+
+    
+
+</head>
+<body style="background-color: #ffffff;z-index:-99" >
+    @* <div class="WCPay">
+            <a id="getBrandWCPayRequest" href="javascript:void(0);">
+                <h1 class="title">用微信支付购买</h1>
+            </a>
+        </div>*@
+
+    <input type="text" id="url" value="@ViewBag.ReturnUrl"  style="display:none"/>
+
+    <div class="main" id="main">
+        <header class="sy_show">等待支付</header>
+        <table border="0" class="jiaoyi_list" cellpadding="0" cellspacing="0">
+            <tr>
+                <th scope="col" class="jiaoyi_pic" style="border-right: 0px;">
+                    <img src="" width="46" height="46">
+                </th>
+                <th scope="col" class="jiaoyi_th_zi" style="border-left: 0px;">恭喜您！您的订单已生成</th>
+            </tr>
+            @* <tr>
+                <td class="jiaoyi_zi02">订单号：</td>
+                <td class="jiaoyi_zi06">@ViewData["orderno"]</td>
+            </tr>
+            <tr>
+                <td class="jiaoyi_zi04">日期：</td>
+                <td class="jiaoyi_zi08">@ViewData["date"]</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="jiaoyi_zi09">支付额：<span>@ViewData["money"] 元</span></td>*@
+            <tr class="WCPay">
+                <td colspan="2" class="jiaoyi_button">
+                    <a id="getBrandWCPayRequest" href="javascript:void(0);" target="_blank">立即支付</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+     <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+   @* <script language="javascript" src="https://res.mail.qq.com/mmr/static/lib/js/jquery.js" type="text/javascript"></script>*@
+    <script  src="https://res.mail.qq.com/mmr/static/lib/js/lazyloadv3.js" type="text/javascript"></script>
+    <script  src="https://res.wx.qq.com/open/js/jweixin-1.1.0.js" type="text/javascript"></script>
+
+    <script  type="text/javascript">
+        
+        // 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            //公众号支付
+            jQuery('a#getBrandWCPayRequest').click(function (e) {
+                WeixinJSBridge.invoke('getBrandWCPayRequest', {
+                    "appId": "@ViewData["appId"]", //公众号名称，由商户传入
+                    "timeStamp": "@ViewData["timeStamp"]", //时间戳
+                    "nonceStr": "@ViewData["nonceStr"]", //随机串
+                    "package": "@Html.Raw(ViewData["package"])",//扩展包
+                    "signType": "MD5", //微信签名方式:1.sha1
+                    "paySign": "@ViewData["paySign"]" //微信签名
+                }, function (res) {
+
+                    if (res.err_msg == "get_brand_wcpay_request:ok") {
+                        alert("微信支付成功!");
+                        // location.href='/relay/share?OrderNo=@ViewData["orderno"]';
+                            var url = $("#url").val();
+
+                            location.href = url;
+                        } else if (res.err_msg == "get_brand_wcpay_request:cancel") {
+                            alert("用户取消支付!");
+                        } else {
+                            // alert(res.err_msg);
+                            alert("支付失败!");
+                        }
+                        // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+                        //因此微信团队建议，当收到ok返回时，向商户后台询问是否收到交易成功的通知，若收到通知，前端展示交易成功的界面；若此时未收到通知，商户后台主动调用查询订单接口，查询订单的当前状态，并反馈给前端展示相应的界面。
+                    });
+
+            });
+
+            //WeixinJSBridge.log('yo~ ready.');
+
+        }, true);
+
+        @* wx.config({
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: '@ViewData["appId"]', // 必填，公众号的唯一标识
+            timestamp: "@ViewData["timeStamp"]", // 必填，生成签名的时间戳
+            nonceStr: '@ViewData["nonceStr"]', // 必填，生成签名的随机串
+            signature: '@ViewData["paySign"]',// 必填，签名，见附录1
+            jsApiList: ['getBrandWCPayRequest'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        });
+
+        wx.ready(function () {
+
+            // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+            wx.chooseWXPay({
+                timestamp: "@ViewData["timeStamp"]", // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+                nonceStr: '@ViewData["nonceStr"]', // 支付签名随机串，不长于 32 位
+                package: '@Html.Raw(ViewData["package"])', // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
+                signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+                paySign: '@ViewData["paySign"]', // 支付签名
+                success: function (res) {
+                    // 支付成功后的回调函数
+
+                    if (res.err_msg == "get_brand_wcpay_request:ok") {
+                        alert("微信支付成功!");
+                    
+                         var url = $("#url").val();
+
+                         location.href = url;
+                     } else if (res.err_msg == "get_brand_wcpay_request:cancel") {
+                         alert("用户取消支付!");
+                     } else {
+                         // alert(res.err_msg);
+                         alert("支付失败!");
+                     }
+
+                }
+            });
+
+        });
+
+        wx.error(function (res) {
+
+            // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+
+        });*@
+    </script>
+</body>
+</html>

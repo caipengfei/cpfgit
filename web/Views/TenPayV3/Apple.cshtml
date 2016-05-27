@@ -1,0 +1,162 @@
+﻿@{
+    Layout = null;
+}
+
+
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>消费通圣诞夜 平安果大派送~</title>
+    <link rel="stylesheet" href="/content/css/active-main.css">
+    <link rel="stylesheet" href="/content/css/swiper.min.css">
+</head>
+<body>
+    <form id="form1" action="/tenpayv3/apple" method="post">
+
+        <div class="wrap">
+            <div class="main">
+                <!--首图轮播-->
+                <div class="swiper-container" id="swiper-container1">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img src="/content/images/2.jpg" />
+                        </div>
+                    </div>
+                    <!-- Add Pagination -->
+                    <div class="swiper-pagination"></div>
+                </div>
+                <!--商品信息-->
+                <div class="a-content">
+                    <h2>消费通圣诞夜 平安果大派送~</h2>
+                    <h5>支付2元参与活动，成功注册消费通会员，即奖励2元至您会员账户，可消费，可提现。</h5>
+                    <p class="price-infor">抢购价：2元/个+礼盒</p>
+                    <div class="a-num">
+                        <input type="text" value="apple" id="GoodsCode" name="GoodsCode" style="display: none" />
+                        <span>数量</span>
+                        <div class="quantity-wrapper">
+                            <input value="200" type="hidden">
+                            <a class="quantity-decrease" href="javascript:">-</a>
+                            <input size="4" value="1" name="Quantity" id="txtNum" disabled="disabled" class="quantity" type="text">
+                            <a class="quantity-increase" href="javascript:">+</a>
+                            <span class="nuit">件</span>
+                        </div>
+                    </div>
+                </div>
+                <!--商品详情-->
+                <div class="goods-infor">
+                    <p class="g-til">产品详情</p>
+                    <p>
+                        <img src="/content/images/goods_05.jpg" alt="">
+                        <img src="/content/images/goods_06.jpg" alt="">
+                        <img src="/content/images/goods_07.jpg" alt="">
+                        <img src="/content/images/2.jpg" alt="">
+                        <img src="/content/images/IMG_0514.JPG" alt="">
+                    </p>
+                </div>
+            </div>
+            <!--底部按钮-->
+            <div class="h50"></div>
+            <div class="a-bottom">
+                <input type="text" value="2" id="BuyType" name="BuyType" style="display: none" />
+                <ul class="pay-btn">
+
+                    <li class="p-btn1" onclick="gopay(1)">抢购(需要邮寄)</li>
+                    <li class="p-btn2" onclick="gopay(2)">抢购(无需邮寄)</li>
+                </ul>
+            </div>
+            <!--备注弹出开始-->
+            <div class="zhezhao"></div>
+            <div class="grade-cate  align cate-bottom">
+                <div class="newlist-con">
+                    <p class="catetitle">
+                        温馨提示：为确保您能及时收到商品请正确填写收货信息
+                    </p>
+                    <div class="input-area">
+                        <p class="input-list">
+                            <label>收货人姓名</label><input type="text" id="txtName" name="UserName" class="input-text" placeholder="">
+                        </p>
+                        <p class="input-list">
+                            <label>联系电话</label><input type="text" id="txtPhone" name="Phone" class="input-text" placeholder="">
+                        </p>
+                        <p class="input-list">
+                            <textarea class="input-textarea" name="Address" id="txtAddress" placeholder="请输入详细的收货地址"></textarea>
+                        </p>
+                    </div>
+                    <p class="freight">邮寄费：10元</p>
+                    <p class="bot-button">
+                        <span class="cancel">取消</span><span class="check" onclick="save()">确定</span>
+                    </p>
+                </div>
+            </div>
+            <!--备注弹出结束-->
+        </div>
+
+    </form>
+    <script src="/content/js/jquery.min.js"></script>
+    <script src="/content/js/swiper.min.js"></script>
+
+    <script>
+        function gopay(paytype) {
+            var num = $("#txtNum").val();
+            if (num < 1) {
+                alert("数量必须大于等于1");
+                return false;
+            }
+
+            if (paytype == 1) {
+                //邮寄
+                $("#BuyType").val(1);
+
+            }
+
+            if (paytype == 2) {
+                //不邮寄
+                $("#BuyType").val(2);
+                $("#form1").submit();
+            }
+
+
+            //$.post('/xft/apple?Quantity=' + num);
+        }
+        function save() {
+            $("#form1").submit();
+        }
+        var swiper1 = new Swiper('#swiper-container1', {
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+            autoplay: 3000,
+            speed: 400,
+            autoplayDisableOnInteraction: false,
+            loop: true,
+        });
+        //加
+        $(".quantity-increase").bind('click', function () {
+            var mount = parseInt($(this).prev().val());
+            if (mount < 0 || mount >= 50) return false; else mount += 1;
+            $(this).prev().val(mount);
+        });
+        //减
+        $(".quantity-decrease").bind('click', function () {
+            var mount = parseInt($(this).next().val());
+            if (mount < 2 || mount >= 50) return false; else mount -= 1;
+            $(this).next().val(mount);
+        });
+        /*设置备注*/
+        $(".zhezhao").click(function () {
+            $(".zhezhao").fadeOut();
+            $(".grade-cate").fadeOut();
+        })
+        $(".cancel").click(function () {
+            $(".zhezhao").fadeOut();
+            $(".grade-cate").fadeOut();
+        })
+        $(".p-btn1").click(function () {
+            $(".grade-cate").slideDown();
+            $(".zhezhao").addClass("zhezhao-show").show();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+﻿@{
+    ViewBag.Title = "文章列表";
+    Layout = "~/Areas/admin/Views/Shared/_ligerUI.cshtml";
+}
+
+@section css{
+    <script type="text/javascript">
+
+        var seData = [{ IsActive: 0, text: '否' }, { IsActive: 1, text: '是' }];
+        $(f_initGrid);
+        var manager, g;
+        function f_initGrid() {
+            g = manager = $("#maingrid").ligerGrid({
+                columns: [
+                { display: '编号', name: 'Guid', width: 50, type: 'int', frozen: true },
+                { display: '文章标题', name: 'CateName', editor: { type: 'text' } },
+                { display: '种类级别', name: 'CateLevel', editor: { type: 'text' } },
+                { display: '种类连接', name: 'CateUrl', editor: { type: 'text' } },
+                { display: '所属行业', name: 'Trade', editor: { type: 'text' } },
+                { display: '是否标红', name: 'IsRed', editor: { type: 'text' } },
+                { display: '修改时间', name: 'ModifyDate', type: 'date', editor: { type: "date" } },
+                { display: '顺序', name: 'ShowSequence', editor: { type: 'int' } }
+                ],
+                toolbar: {
+                    items: [
+                        { text: '添加', click: add, icon: 'modify' },
+                    { line: true },
+                    { text: '编辑', click: update, icon: 'modify' },
+                    { line: true },
+                    { text: '删除', click: del, img: '/Content/admin/lib/ligerUI/skins/icons/delete.gif' }
+                    ]
+                },
+                onSelectRow: function (rowdata, rowindex) {
+                    $("#txtrowindex").val(rowindex);
+                },
+                enabledEdit: true,
+                clickToEdit: false,
+                isScroll: false,
+                url: "@Url.Action("Index", "News")" + "?name=@ViewBag.name",
+                dataAction: "server",
+                pageSize: 30,
+                pageSizeOptions: [30, 40, 50],
+                dateFormat: "yyyy-MM-dd hh:mm:ss",
+                width: '100%'
+            });
+        }
+
+
+
+
+        //添加按钮事件
+        function add(item) {
+            location.href = "@Url.Action("Save")";
+        }
+        //修改按钮事件
+        function update(item) {
+            var row = manager.getSelectedRow();
+            if (!row) { $.ligerDialog.warn('请点击要操作的数据'); return; }
+
+            location.href = "@Url.Action("Save")" + "/" + row.Guid;
+        }
+        //删除按钮事件
+        function del(item) {
+            var row = manager.getSelectedRow();
+            if (!row) { $.ligerDialog.warn('请点击要操作的数据'); return; }
+
+            $.ligerDialog.confirm('你确定要删除此记录吗?', function (yes) {
+                if (yes) {
+                    $.post("@Url.Action("Del")" + "/" + row.Guid, function (msg) {
+                        if (msg.type == "success") {
+                            manager.loadData();
+                            $.ligerDialog.success(msg.Data);
+
+                        } else {
+                            $.ligerDialog.error(msg.Data);
+                        }
+
+                    });
+                }
+            });
+        }
+
+
+    </script>
+}
+
+
+<table cellpadding="0" cellspacing="0" class="l-table-edit">
+    <tr>
+        <td align="right" class="l-table-edit-td">按文章标题模糊查询:</td>
+        <td align="left" class="l-table-edit-td">
+            <input name="txtDate" type="text" id="txtKey" ltype="text" />
+        </td>
+        <td align="left" class="l-table-edit-td">
+            <input type="button" value="查 询" class="l-button" onclick="search()" />
+        </td>
+    </tr>
+</table>
+
+<div id="maingrid" style="margin-top: 20px"></div>
+<br />
+@section js{
+    <script type="text/javascript">
+        function search() {
+            if ($("#txtKey").val() == "") {
+                alert("请输入");
+                return false;
+            }
+            location.href = "/admin/News/Index?name=" + $("#txtKey").val();
+        }
+    </script>
+}

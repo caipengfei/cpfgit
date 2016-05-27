@@ -1,0 +1,190 @@
+			ul,
+			li,
+			h4,
+			p {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+			}
+			
+			#menu {
+				margin: 0;
+				padding: 0;
+				position: fixed;
+				left: 10px;
+				top: 10px;
+				list-style-type: none;
+				z-index: 70;
+			}
+			
+			#menu li {
+				float: left;
+				margin: 0 10px 0 0;
+				font-size: 14px;
+			}
+			
+			#menu a {
+				float: left;
+				padding: 10px 20px;
+				background-color: #fff;
+				color: #333;
+				text-decoration: none;
+			}
+			
+			.section2 a {
+				color: white;
+				text-decoration: none;
+			}
+			
+			.section {
+				"Microsoft Yahei";
+				color: #fff;
+			}
+			
+			.section2 img {
+				position: relative;
+				width: 50%;
+				display: block;
+			}
+			.section2 .img-top{ top:2%; width:60%; left:20%;}
+			.section2 .img-phone{ top:4%; width:50%; left: 25%;}
+			.section2 .one {
+				position: relative;
+				font-size: 20px;
+				float: right;
+				width: 100%;
+			}
+			
+			.section2 h4 {
+				width: 100%;
+				text-align: center;
+				margin: 0;
+				padding: 0;
+			}
+			
+			.section2 h3 {
+				text-align: center;
+				font-size: 24px;
+				background-position: left;
+				background-size: 40px;
+				background-repeat: no-repeat;
+				line-height: 48px;
+				margin: 0;
+				padding: 0;
+				margin-top: 10px;
+			}
+			.section2 .one a {
+				width: 100px;
+				font-size: 16px;
+				text-align: center;
+				line-height: 40px;
+				float: left;
+				margin-left: 10px;
+				margin-top:40px;
+				color: #ffc6c4;
+				
+			}
+			
+			.button-box {
+				width: 220px;
+				margin: auto;
+				overflow: hidden;
+			}
+			
+			.section2 .one .io {background-position: top; background-repeat: no-repeat; background-size: 60px;}
+			.section2 .one .an {background-position: top; background-repeat: no-repeat; background-size:60px;}
+			
+			.section1 .two {
+				position: relative;
+				float: right;
+				width: 100%;
+				font-size: 16px;
+			}
+			
+			.section1 .two p {
+				width: 94%;
+				text-align: center;
+				margin-left: 3%;
+			}
+			
+			.two h3 {
+				width: 100%;
+				text-align: center;
+				margin-top: 20px;
+				margin-bottom: 20px;
+			}
+			
+			.two p {
+				float: left;
+				text-align: center;
+				width: 94%;
+				margin-left: 3%;
+			}
+			
+			.section2 img {
+				position: relative;
+				left: 25%;
+				width: 50%;
+			}
+			
+			.section4 {
+				background-image: url(../images/app_bg.jpg);
+				background-size: 120%;
+			}
+			
+			.section5 {
+				background-image: url(../images/app_bg.jpg);
+				background-size: 120%;
+			}
+			
+			.section6 {
+				background-image: url(../images/app_bg.jpg);
+				background-size: 120%;
+			}
+			
+			.section3 .three {
+				position: relative;
+				float: right;
+				width: 100%;
+				margin-left: 5%;
+				font-size: 16px;
+				top: 0;
+			}
+			
+			.section3 .three ul {
+				font-size: 12px;
+			}
+			
+			.section3 .three h4 {
+				margin: 0;
+				padding: 0;
+			}
+			
+			.section3 img {
+				position: relative;
+				right: -120%;
+				width: 60%;
+			}
+			
+			.section4 div h3 {
+				width: 100%;
+				text-align: center;
+			}
+			
+			.section4 img {
+				position: relative;
+				left: -120%;
+				width: 60%;
+			}
+			
+			.section5 img {
+				position: relative;
+				right: -120%;
+				width: 60%;
+			}
+			
+			.section6 img {
+				position: relative;
+				left: -120%;
+				width: 60%;
+			}

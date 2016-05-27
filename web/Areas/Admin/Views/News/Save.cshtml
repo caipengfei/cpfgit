@@ -1,0 +1,190 @@
+﻿@{
+    Layout = null;
+}
+@model qch.Models.NewsModel
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Save</title>
+    <link href="@Url.Content("/Content/ueditor_mini/themes/default/css/umeditor.min.css")" rel="stylesheet" type="text/css" />
+    <style>
+        .table_m li input[type="text"] {
+        }
+
+        .goods-can {
+            width: 100px;
+            margin-right: 7px;
+        }
+
+        .goods-canshu-span {
+            width: 60px;
+            height: 17px;
+            line-height: 17px;
+            vertical-align: middle;
+            display: inline-block;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <form id="form0" class="form-horizontal" method="post" action="/admin/News/Save" novalidate="novalidate">
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(p => p.Guid)
+            <table border="1">
+                <tr>
+                    <td>标题</td>
+                    <td>@Html.TextBoxFor(p => p.t_News_Title, new { @style = "width: 100px;", id = "txtTitle" })</td>
+                </tr>
+                <tr>
+                    <td>省份</td>
+                    <td>@Html.DropDownListFor(p => p.CateId1, ViewData["Province"] as SelectList, new { id = "Menu1" })</td>
+                </tr>
+                <tr>
+                    <td>城市</td>
+                    <td>@Html.DropDownListFor(p => p.CateId2, ViewData["City"] as SelectList, new { id = "Menu2" })</td>
+                </tr>
+                <tr>
+                    <td>区县</td>
+                    <td>@Html.DropDownListFor(p => p.CateId3, ViewData["Distrct"] as SelectList, new { id = "Menu3" })</td>
+                </tr>
+                <tr>
+                    <td>是否推荐：</td>
+                    <td>@Html.CheckBoxFor(p => p.Recommand)</td>
+                </tr>
+                <tr>
+                    <td>样式：</td>
+                    <td>@Html.TextBoxFor(p => p.t_Style_Name)</td>
+                </tr>
+                <tr>
+                    <td>index</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>作者：</td>
+                    <td>@Html.TextBoxFor(p => p.t_News_Author, new { @style = "width: 100px;", @readonly = "true" })</td>
+                </tr>
+                <tr>
+                    <td>发布日期：</td>
+                    <td>@Html.TextBoxFor(p => p.t_News_Date, new { @style = "width: 100px;", @readonly = "true" })</td>
+                </tr>
+                <tr>
+                    <td>图片：</td>
+                    <td>
+                        <input type="file" name="file1" id="file1" style="border: none;" /></td>
+                </tr>
+                <tr>
+                    <td>内容：</td>
+                    <td>@Html.TextAreaFor(p => p.t_News_Contents, new { @id = "myEditor", @style = "width: 900px; height: 500px;" })</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="button" value="  保存  " onclick="Save()" /></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <script src="~/Content/js/jquery.min.js"></script>
+    <script src="~/Scripts/jquery.form.js"></script>
+    <script src="/Content/ueditor_mini/umeditor.config.js"></script>
+    <script src="/Content/ueditor_mini/umeditor.min.js"></script>
+    <script type="text/javascript">
+        window.UMEDITOR_CONFIG.UMEDITOR_HOME_URL = "/Content/ueditor_mini/";
+        // world编辑器
+        var um1 = UM.getEditor('myEditor', {
+            initialFrameWidth: 770,
+            initialFrameHeight: 260,
+            toolbar: [
+            ' undo redo | bold italic underline strikethrough | superscript subscript | forecolor backcolor | removeformat |',
+            'insertorderedlist insertunorderedlist | selectall cleardoc paragraph | fontfamily fontsize',
+            '| justifyleft justifycenter justifyright justifyjustify |',
+            'link unlink | emotion image | map',
+            '| horizontal preview fullscreen', 'drafts', 'formula'
+            ]
+        });
+
+        function Save() {
+            $("#form0").ajaxSubmit({
+                type: 'POST',
+                url: '/admin/News/Save',
+                data: $("#form0").serialize(),
+                beforeSubmit: function () {
+                    //表单提交前
+                    if (!$("#file1").val()) {
+                        alert("请上传文章封面图片！");
+                        return false;
+                    }
+                    var goodsContent = um1.getContent();
+                    um1.sync();//编辑器异步提交
+                },
+                success: function (msg) {
+                    if (msg.type == "success") {
+                        alert(msg.Data);
+                        location.href = msg.ParentURL;
+                    } else {
+                        alert(msg.Data);
+                    }
+                },
+                error: function (data, status, e) {
+                    alert('上传文件出错:' + e);
+                }
+
+            });
+        }
+        $(function () {
+            //三级联动
+            $("#Menu1").change(function () {
+                var selec = $(this).val();  //获取改变的选项值 
+                var url = "@Url.Action("GetCity", "News")";  //参数依次类型(action,Controller,area）
+                    $.post(url, { 'Id': selec }, function (data) {
+                        ///Id是参数名和Controllers中的action参数名相同 
+                        if (data.length > 0) {
+                            $("#Menu2").find("option").remove();
+                            for (var i = 0; i < data.length; i++) {
+                                //向栏目下拉框中动态添加栏目名称， value 值为栏目Id号， text 值为栏目名称      
+                                $("<option></option>").val(data[i].CityID).text(data[i].CityName).appendTo($("#Menu2"));
+                            }
+                            // 重新设置 ligerUi 栏目下拉框中的数据，使其设置生效，同时显示出来
+                            //$("#Menu2").ligerGetComboBoxManager().setSelect();
+                            var selec2 = data[0].CityID;  //获取改变的选项值 
+                            var url2 = "@Url.Action("GetDis", "News")";  //参数依次类型(action,Controller,area）
+                            $.post(url2, { 'Id': selec2 }, function (data) {
+                                ///Id是参数名和Controllers中的action参数名相同 
+                                if (data.length > 0) {
+                                    $("#Menu3").find("option").remove();
+                                    for (var i = 0; i < data.length; i++) {
+                                        //向栏目下拉框中动态添加栏目名称， value 值为栏目Id号， text 值为栏目名称      
+                                        $("<option></option>").val(data[i].DistrictID).text(data[i].DistrictName).appendTo($("#Menu3"));
+                                    }
+                                    // 重新设置 ligerUi 栏目下拉框中的数据，使其设置生效，同时显示出来
+                                    //$("#shopMenu3").ligerGetComboBoxManager().setSelect();
+                                }
+                            });
+                        }
+                    });
+                });
+            $("#Menu2").change(function () {
+                var selec = $(this).val();  //获取改变的选项值 
+                var url = "@Url.Action("GetDis", "News")";  //参数依次类型(action,Controller,area）
+                    $.post(url, { 'Id': selec }, function (data) {
+                        ///Id是参数名和Controllers中的action参数名相同 
+                        if (data.length > 0) {
+                            $("#Menu3").find("option").remove();
+                            for (var i = 0; i < data.length; i++) {
+                                //向栏目下拉框中动态添加栏目名称， value 值为栏目Id号， text 值为栏目名称      
+                                $("<option></option>").val(data[i].DistrictID).text(data[i].DistrictName).appendTo($("#Menu3"));
+                            }
+                            // 重新设置 ligerUi 栏目下拉框中的数据，使其设置生效，同时显示出来
+                            //$("#shopMenu3").ligerGetComboBoxManager().setSelect();
+                            //var value = $("#Menu3").find("option:selected").text();
+                        }
+                    });
+                });
+        })
+    </script>
+</body>
+</html>

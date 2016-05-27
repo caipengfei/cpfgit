@@ -1,0 +1,247 @@
+﻿@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link href="/h5/css/public.css" rel="stylesheet" />
+    <link href="/h5/css/signUp.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container hide">
+        <header>
+            <img src="@ViewBag.UserLogo" />
+            <h2>@ViewBag.Name</h2>
+        </header>
+        <form>
+            @*<span class="help"></span>*@
+            <div class="form-group">
+                <input type="text" class="phone" placeholder="请输入您的手机号" />
+            </div>
+            <div class="form-group">
+                <input type="text" class="validcode" placeholder="请输入短信验证码" />
+                <a id="getValidcode" class="enabled">获取验证码</a>
+            </div>
+            <div class="form-group">
+                <a id="submit">我要报名</a>
+            </div>
+        </form>
+    </div>
+    <div id="clipBox" class="hide">
+        <div class="shade"></div>
+        <div class="myClip">
+            @*<a class="close">&times;</a>*@
+            <img src="/h5/img/icon_joinOk1.png" />
+            <h2><span id="spcode">报名成功</span></h2>
+            <p onclick="goproof()" id="pContent">点此领取报名凭证</p>
+        </div>
+    </div>
+    <input style="display:none" value="@ViewBag.CodeMessage" id="txtCodemsg" />
+    <input style="display:none" value="@ViewBag.ApplyGuid" id="txtApplyGuid" />
+    <script src="~/H5/js/jquery.min.js"></script>
+    <script>
+        var applyguid = $("#txtApplyGuid").val();
+        var codemsg = $("#txtCodemsg").val();
+        if (codemsg == "0002") {
+            showSucess();
+        } else if (codemsg == "0001") {
+            $("#pContent").text("点此查看报名凭证");
+            $("#spcode").text("已报名");
+            showSucess();
+        } else {
+            $(".container").removeClass("hide");
+        }
+        //if (codemsg == "0003") {
+        //    $(".container").removeClass("hide");
+        //}
+        function goproof() {
+            window.location.href = '/wxuser/ApplyProof?guid=' + applyguid;
+        }
+        function showSucess() {
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            $('#clipBox').removeClass('hide');
+
+            $('.myClip').css({
+                top: (winHeight - $('.myClip')[0].offsetHeight) / 2,
+                left: (winWidth - $('.myClip')[0].offsetWidth) / 2
+            }).css({
+                opacity: 1
+            });
+        }
+
+        //$(function () {
+
+        //    $('.shade')[0].addEventListener('touchend', closeClip, false);
+        //    $('#clipBox .close')[0].addEventListener('touchend', closeClip, false);
+        //})
+        function closeClip(e) {
+            e.preventDefault();
+            $(this).parents('#clipBox').addClass('hide');
+        }
+        //发送验证码
+        function sendsms(phone) {
+            if (phone == "") {
+                tipInfo("手机号不能为空");
+                return false;
+            }
+            $.post('/home/SendSMS', { phone: phone }, function (msg) {
+                tipInfo(msg.Data);
+            })
+        }
+        //function jiance() {
+        //    var phone = $("#txtPhone").val();
+        //    var code = $("#txtSMS").val();
+        //    if (phone == "") {
+        //        alert("手机号不能为空");
+        //        return false;
+        //    }
+        //    if (code == "") {
+        //        alert("验证码不能为空");
+        //        return false;
+        //    }
+        //    $.post('/home/CheckSMS', { phone: phone, code: code }, function (msg) {
+        //        alert(msg.Data);
+        //    })
+        //}
+        var regPhone = /^([1]((3|5|7|8)[0-9]{1})[0-9]{8})$/;
+        var waitTime, winWidth, winHeight;
+        $(function () {
+            winWidth = $(window).width();
+            winHeight = $(window).height();
+            $(window).resize(function () {
+                $('.container').css({
+                    height: winHeight
+                })
+                $('#clipBox').css({
+                    height: winHeight,
+                    width: winWidth
+                })
+            }).resize();
+
+            //$('.phone').blur(function () {
+
+            //    validField($(this), regPhone, '手机号不能为空！', '手机号格式不正确！');
+            //})
+            //$('.validcode').blur(function () {
+            //    validField($(this), null, '验证码不能为空！')
+            //})
+            $('#submit')[0].addEventListener('touchend', function (e) {
+                e.preventDefault();
+                signUpHandler(this);
+            }, false);
+            // 获取验证码按钮事件
+            $('#getValidcode.enabled')[0].addEventListener('touchend', function (e) {
+                e.preventDefault();
+                $('[type=text]').blur();
+                if (window.td) return;
+                if (!validField($('.phone'), regPhone, '手机号不能为空！', '手机号格式不正确！')) return;
+                $(this).siblings('[type=text]').focus();
+                //检查输入的手机号是否重复参与该活动
+                $.post('/wxuser/checkapply', { phone: $('.phone').val() }, function (msg) {
+                    if (msg.type == "success") {
+                        //发送验证码
+                        sendsms($('.phone').val());
+                        $('#getValidcode').removeClass('enabled');
+                        waitTime = 60;
+                        window.td = setInterval(function () {
+                            waitTime--;
+                            if (waitTime == 0) {
+                                clearInterval(window.td);
+                                window.td = 0;
+                                $('#getValidcode').addClass('enabled').text('获取验证码');
+                                return;
+                            }
+                            $('#getValidcode').text(waitTime + 's后重新获取');
+                        }, 1000)
+                    } else {
+                        tipInfo(msg.Data);
+                    }
+                }, false);
+
+            })
+        })
+        //function isMaxthon() {
+        //    var userAgent = navigator.userAgent.toLowerCase();
+        //    if (userAgent.indexOf('mxbrowser') != -1) {
+        //        return true;
+        //    }
+        //    return false;
+        //}
+
+        // 验证文本框
+        function validField($input, reg, helpText1, helpText2) {
+            var value = $.trim($input[0].value);
+            if (!value) {
+                tipInfo(helpText1);
+                return false;
+            } else {
+                if (reg && !reg.test(value)) {
+                    tipInfo(helpText2);
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // 报名提交
+        function signUpHandler(el) {
+            $('[type=text]').blur();
+            var $phone = $('.phone');
+            var $validcode = $('.validcode');
+            if (validField($phone, regPhone, '手机号不能为空！', '手机号格式不正确！') && validField($validcode, null, '验证码不能为空！')) {
+                var data = {
+                    phone: $phone.val(),
+                    code: $validcode.val()
+                };
+                $.post('/wxuser/ActivityApply', data, function (msg) {
+                    if (msg.type == "success") {
+                        applyguid = msg.Remark;
+                        showSucess();
+                    } else {
+                        tipInfo(msg.Data);
+                    }
+                })
+            }
+        }
+        function tipInfo(t) {
+            $('p.tipinfo').remove();
+            if (window.tid) {
+                clearTimeout(window.tid);
+                window.tid = 0;
+            }
+            var winWidth = $(window).width();
+            var $tipinfo = $('<p class="tipinfo">').text(t).css({
+                position: 'fixed',
+                textAlign: 'center',
+                fontSize: '1rem',
+                color: '#fff',
+                borderRadius: '.5rem',
+                background: 'rgba(0,0,0,.8)',
+                padding: '.6rem 1rem',
+                transform: 'translate3d(0,0,0)'
+            }).appendTo('body').css({
+                left: (winWidth - $('p.tipinfo')[0].offsetWidth) / 2,
+                top: '1rem'
+            });
+            window.tid = setTimeout(function () {
+                $tipinfo.css({ top: '3rem', opacity: 0, transition: 'top .6s,opacity .6s' });
+                setTimeout(function () { $tipinfo.remove(); }, 600);
+            }, 800)
+        }
+
+
+    </script>
+</body>
+</html>
+
+

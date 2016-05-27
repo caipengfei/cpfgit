@@ -1,0 +1,138 @@
+﻿@{
+    Layout = null;
+}
+
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>青创汇首页</title>
+    <meta name="keywords" content="创业O2O平台,众创空间,梦想演播厅,演播厅,青创汇,深圳青创汇,孵化器,项目孵化器">
+    <meta name="Description" content="青创汇，中国首款O2O创业生态社交软件、创客管理云系统，是专为“双创”量身定制的一站式创业资源对接平台。">
+    <link rel="stylesheet" href="/content/css/public.css">
+    <link rel="stylesheet" href="/content/css/index.css">
+    <script src="/content/js/lib/jquery-1.12.2.min.js"></script>
+</head>
+
+<body>
+    @Html.Action("Top", "Home")
+    <div id="mainContainer">
+        <div class="row1">
+            <div class="banner">
+                <ul class="box">
+                    <li class="current" style="background-image: url(/content/image/index/banner/banner_1.jpg)"></li>
+                    <li style="background-image: url(/content/image/index/banner/banner_2.jpg)"></li>
+                    <li style="background-image: url(/content/image/index/banner/banner_3.jpg)"></li>
+                </ul>
+                <div class="controls">
+                    <a class="prev"></a>
+                    <a class="next"></a>
+                </div>
+                <div class="controls_2">
+                    <a class="current"></a>
+                    <a></a>
+                    <a></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row2">
+            <div class="box">
+                <img src="/content/image/index/logo2.png" />
+                <h2>About-青创汇是致力于青年创业的一站式双创资源服务云平台</h2>
+                <p>
+                    布局全国300余家线下体验中心，拥有超过100名创业实战导师，1000家投资机构青创汇颠覆性开发国内首款创业移动软件， 将创业资源整合融入APP实现线上APP结合线下体验中心的移动创业梦想。
+                </p>
+            </div>
+        </div>
+
+        <div class="row3">
+            <h2><span>我们为创业者铺路领航</span></h2>
+            <h4>让您的商业计划书变成拔地而起的高楼大厦</h4>
+            <div class="box">
+                <a class="item1"><span>创客空间</span></a>
+                <a class="item2"><span>落地辅导</span></a>
+                <a class="item3"><span>人才招募</span></a>
+                <a class="item4"><span>项目推广</span></a>
+                <a class="item5"><span>资金对接</span></a>
+            </div>
+        </div>
+
+        <div class="row4">
+            <h2><span>我们为投资人匠心臻选</span></h2>
+            <h4>让你花的每一分钱都物有所值</h4>
+            <div class="box">
+                <a>
+                    <b>项目筛选</b>
+                    <span>PROJECT SELECTION</span>
+                </a>
+                <a>
+                    <b>投资顾问</b>
+                    <span>INVESTMENT ADVISOR</span>
+                </a>
+                <a>
+                    <b>风险把控</b>
+                    <span>CONTROL RISK</span>
+                </a>
+                <a>
+                    <b>资金管理</b>
+                    <span>FUNDS MANAGEMENT</span>
+                </a>
+                <a>
+                    <b>多样化投资</b>
+                    <span>DIVERSIFICATION</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="row5">
+            <h2><span>入孵项目</span></h2>
+            <h4>HATCHING PROJECT</h4>
+            <div class="box clear">
+                <a>
+                    <img src="/content/image/index/zhsht.png">
+                    <span>浙商通——浙商人专享的商务平台</span>
+                </a>
+                <a>
+                    <img src="/content/image/index/hkbj.png">
+                    <span>黑格伯爵——专属于青少年的国际公馆</span>
+                </a>
+                <a>
+                    <img src="/content/image/index/chaguan.png">
+                    <span>点卡木茶馆——一个互联网共享茶馆</span>
+                </a>
+                <a>
+                    <img src="/content/image/index/lifejia.png">
+                    <span>生活家——智慧型本地商家联盟</span>
+                </a>
+                <a>
+                    <img src="/content/image/index/car.png">
+                    <span>新能源汽车——产业链集群化发展平台</span>
+                </a>
+                <a>
+                    <img src="/content/image/index/6.png">
+                    <span>车联天下——一家用互联网思维服务汽车后市场的公司</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="row6">
+            <h2><b class="b1"></b><b class="b2"></b><span>创业电影</span></h2>
+            <h4>Entrepreneurship Video</h4>
+            <div class="box">
+                <video src="/content/media/qch.mp4" controls preload="metadata">
+                    <p>不好意思，你的浏览器不支持video标签，请使用IE9+，chrome，火狐等任一浏览器访问</p>
+                </video>
+            </div>
+        </div>
+    </div>
+    @Html.Action("Footer", "Home")
+
+    @Html.Action("DownLoad", "Home")
+    <div id="cover2"></div>
+
+    <script src="/content/js/index.js"></script>
+</body>
+
+</html>

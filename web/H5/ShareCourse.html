@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>课程分享</title>
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/shareCourse.css">
+</head>
+
+<body>
+    <table class="downloadbox" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>
+                <div class="image">
+                    <img src="img/logo.png"></div>
+            </td>
+            <td>
+                <h2>青创汇 / 为创业者而生</h2>
+                <p>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <strong onclick="godown()">10万人下载</strong>
+                </p>
+            </td>
+            <td><a onclick="godown()">立即下载</a></td>
+        </tr>
+    </table>
+    <div class="shade-div"></div>
+    <!-- 主内容区 模板渲染 -->
+    <div class="container loading"></div>
+    
+    <!-- 主内容区模板 -->
+    <script type="text/html" id="contentTemplate">
+    <%var default_avator='img/avator.png'%>
+    <%var videoBaseUrl='http://120.25.106.244:8002/Attach/media/'%>
+        <header>
+            <div class="videobox">
+                <video src="<%=videoBaseUrl+data.t_Course_Src%>" controls preload="metadata"></video>
+            </div>
+            <h2 class="clear">
+                <b class="playcount"><%=data.t_Course_Counts%></b>
+                <span><%=data.t_Course_Title%></span>
+            </h2>
+            <!--<div class="listbox">
+                <h2 class="clear">
+                    <span>展开课程</span>
+                    <a></a>
+                </h2>
+                <ul>
+                    <li class="active"><a><span></span>第一讲 课程名称标题占位课程名称标题占位</a></li>
+                    <li><a><span></span>第二讲 课程名称标题占位课程名称标题占位</a></li>
+                    <li><a><span></span>第三讲 课程名称标题占位课程名称标题占位</a></li>
+                </ul>
+            </div>-->
+            <div class="morebox"><a class="more" onclick="godown()"><span>更多课程</span></a></div>
+
+            <div class="menunav clear">
+                <a class="active" data-tar=".detailsbox">详情</a>
+                <a data-tar=".tutorbox">讲师</a>
+                <a data-tar=".recommendbox">推荐</a>
+                <a data-tar=".commentbox">评论</a>
+            </div>
+        </header>
+        <div class="contentbox">
+            <div class="detailsbox clear">
+                <%var instruction=data.t_Course_Instruction.replace(/===/g,'<br>')%>
+                <%var show_limit=80%>
+                <h2>详情</h2>
+                <p>
+                    <%==instruction.slice(0,show_limit)%> 
+                    <%if(instruction.length>=show_limit){%><span class="hide"><%==instruction.slice(show_limit)%></span><%}%>
+                </p>
+                <%if(instruction.length>=show_limit){%>
+                <a class="slideup">展开</a>
+                <%}%>
+            </div>
+            <div class="tutorbox">
+                <h2>讲师</h2>
+                <ul>
+                    <li class="clear" data-guid="<%=data.t_Lecturer_Guid%>">
+                        <img class="lazy" data-src="<%=data.lecturerAvator||default_avator%>">
+                        <div>
+                            <h2><%=data.lecturerName%></h2>
+                            <p><%=data.t_Course_OneWord%></p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- 推荐 模板渲染 -->
+            <div class="recommendbox"></div>
+            
+            <div class="commentbox">
+                <h2>评论</h2>
+                <ul>
+                    <%if(data.talk.length==0){%><li>暂无评论</li><%}%>
+                    <%data.talk.forEach(function(item,index){%>
+                    <li class="clear">
+                        <img class="lazy" data-src="<%=item.userAvator||default_avator%>">
+                        <div>
+                            <h2><%=item.userName%><span><%=item.t_Talk_FromDate%></span></h3>
+                            <p><%=item.t_Talk_FromContent%></p>
+                        </div>
+                    </li>
+                    <%})%>
+                </ul>
+            </div>
+        </div>
+        <footer>
+            <a class="btn-comment" onclick="godown();">我要评论</a>
+        </footer>
+    </script>
+    
+    <!-- 推荐模板 -->
+    <script type="text/html" id="recommendTemplate">
+        <h2>推荐</h2>
+        <ul>
+        <%data.items.forEach(function(item,index){%>
+            <li class="clear" data-guid="<%=item.guid%>">
+                <img class="lazy" data-src="<%=item.t_Course_Pic%>">
+                <div>
+                    <h3><%=item.t_Course_Title%></h3>
+                    <p><%=item.t_Course_Instruction%></p>
+                </div>
+            </li>
+        <%})%>
+        </ul>
+    </script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/artTemplate.js"></script>
+    <script src="js/shareCourse.js"></script>
+    <script>
+        var guid = GetUrlParam("guid") || '4199e40b-3b3d-4e3a-b3d1-070854f5b0f3';
+        $.ajax({
+            type: 'get',
+            cache: false,
+            dataType: 'json',
+            url: 'http://120.25.106.244:9001/api/course/getbyid',
+            data: {
+                guid: guid
+            },
+            success: function(res) {
+                if(!res) return;
+                $('.container').html(template('contentTemplate', {
+                    data: res
+                }));
+                $.get('http://120.25.106.244:9001/api/course/GetRecommendCourse', {
+                    page: 1,
+                    pagesize: 5
+                }, function(res) {
+                    $('.recommendbox').html(template('recommendTemplate', {
+                        data: res
+                    }));
+                    initpage();
+                })
+            }
+        })
+    </script>
+</body>
+</html>

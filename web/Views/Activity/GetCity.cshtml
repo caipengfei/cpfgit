@@ -1,0 +1,13 @@
+﻿@{
+    Layout = null;
+}
+
+@model IEnumerable<qch.Repositories.inf_city>
+
+@if (Model != null)
+{
+    foreach (var item in Model.ToList())
+    {
+    <li id="@item.CityID">@item.CityName</li>
+    }
+}

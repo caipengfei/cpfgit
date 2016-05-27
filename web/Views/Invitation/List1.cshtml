@@ -1,0 +1,14 @@
+﻿@{
+    Layout = null;
+}
+@model PetaPoco.Page<qch.Models.UserModel>
+@if (Model != null && Model.Items != null)
+{
+    foreach (var item in Model.Items)
+    {
+    <tr>
+        <td>@item.t_User_LoginId</td>
+        <td>@item.t_User_Date.ToShortDateString()</td>
+    </tr>
+    }
+}

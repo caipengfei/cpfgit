@@ -1,0 +1,70 @@
+.header{
+    position: static;
+}
+body.gray {
+    position: relative;
+    min-height: 700px !important;
+    min-width: 1180px !important;
+    background-color: #eee;
+}
+
+.outSide {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.wxDlbtn {
+    width: 90%;
+    overflow: hidden;
+    border-radius: 8px;
+    margin: 20px auto;
+}
+
+.wxDlbtn li {
+    background-color: #0099e9;
+    color: #FFF;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+}
+
+.wx_Dl .miaoShu2m {
+    text-align: center;
+    padding: 30px 30px 10px;
+    color: #000;
+    line-height: 22px;
+    width: 100%;
+    font-size: 16px;
+}
+
+.Quyu2ma {
+    text-align: center;
+}
+
+.Quyu2ma img {
+    width: 200px;
+    height: 200px;
+    border: 1px solid #ccc;
+    margin: 10px auto;
+}
+
+.greenBtn2 {
+    height: 42px;
+    margin: 20px 30px;
+}
+
+.greenBtn2 a {
+    width: 100%;
+    height: 42px;
+    line-height: 42px;
+    text-align: center;
+    background-color: #5ac64f;
+    border-radius: 8px;
+    font-size: 18px;
+    color: #FFF;
+}
+
+.greenBtn2 a:hover {
+    background-color: #51b347;
+}

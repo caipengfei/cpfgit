@@ -1,0 +1,358 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    border: 0;
+    vertical-align: baseline;
+}
+
+a {
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+span {
+    display: inline-block;
+}
+
+li {
+    list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-weight: normal;
+}
+
+body {
+    font-family: 'Microsoft YaHei';
+    font-size: 13px;
+    min-width: 1180px;
+}
+
+.hide {
+    display: none;
+}
+
+.clear:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.clear:before {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.header {
+    width: 100%;
+    height: 70px;
+    box-sizing: border-box;
+    background: #2E2E2E;
+    background: rgba(0, 0, 0, .7);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9;
+}
+
+.header .headbox {
+    width: 1180px;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.header .logo {
+    float: left;
+    width: 162px;
+    height: 100%;
+    background: url(/content/image/logo1.png) no-repeat 50% 50%;
+}
+
+.header .logo a {
+    width: 100%;
+    height: 100%;
+}
+
+.header .mainnav {
+    float: right;
+    line-height: 70px;
+}
+
+.header .mainnav li {
+    float: left;
+    margin: 0 10px;
+}
+
+.header .mainnav li>a {
+    width: 92px;
+    height: 32px;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    border: 1px solid #fff;
+    border-radius: 16px;
+}
+
+.header .mainnav li>a:hover,
+.header .mainnav li>a.active {
+    background-color: #FCCC37;
+    border-color: #FCCC37;
+    color: #4A4A4A;
+}
+.header .userface{
+    float:right; width:70px; height:100%; padding:15px;
+}
+.header .userface img{
+    width:100%; height:100%; border-radius:20px;
+}
+
+
+.footer {
+    width: 100%;
+}
+
+.footer .topbox {
+    width: 1180px;
+    margin: 0 auto;
+    margin-bottom: 25px;
+}
+
+.footer .topbox>h2 {
+    background: url(../image/index/logo22.png) no-repeat 0 50%;
+    height: 60px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 15px;
+}
+
+.footer .topbox .item1 {
+    float: right;
+    width: 120px;
+    height: 120px;
+    position: relative;
+    top: 5px;
+}
+
+.footer .topbox .item1 div,
+.footer .topbox .item1 div img {
+    width: 100%;
+    height: 100%;
+}
+
+.footer .topbox .item2 {
+    float: left;
+    margin-right: 150px;
+    letter-spacing: 1px;
+}
+
+.footer .topbox .item2 p {
+    margin-top: 1em;
+    color: #999;
+}
+
+.footer .topbox .item2 div a {
+    color: #000;
+}
+
+.footer .topbox .item2 div a:hover {
+    text-decoration: underline;
+}
+
+.footer .topbox .item3 {
+    float: left;
+    letter-spacing: 1px;
+}
+
+.footer .topbox .item3 h2 {
+    font-size: 15px;
+    line-height: 1em;
+}
+
+.footer .topbox .item3 div {
+    width: 590px;
+}
+
+.footer .topbox .item3 div a {
+    padding-right: 38px;
+    background-position: 0 50%;
+    background-repeat: no-repeat;
+    margin-top: 1em;
+    color: #999;
+}
+
+.footer .bottombox {
+    background: #dcdcdc;
+    height: 60px;
+    overflow: hidden;
+}
+
+.footer .bottombox p {
+    width: 1180px;
+    height: 60px;
+    line-height: 60px;
+    margin: auto;
+    color: #696969;
+    font-size: 12px;
+}
+
+.footer .bottombox p span {
+    margin-left: 40px;
+}
+
+
+/*下载APP弹窗*/
+
+.indexTc {
+    margin: auto;
+    position: fixed;
+    z-index: 9999;
+    width: 730px;
+    height: 590px;
+    background-image: url(../image/indexTcbj.png);
+    display: none;
+}
+
+.indexTc .guanbiQu a {
+    width: 28px;
+    height: 28px;
+    float: right;
+    margin-top: 11px;
+    margin-right: 11px;
+    overflow: hidden;
+}
+
+.indexTc .guanbiQu a:hover img,
+.indexTc .guanbiQu a:active img {
+    margin-top: -28px;
+}
+
+.indexTc .guanbiQu a img {
+    width: 28px;
+    height: 56px;
+}
+
+.indexTc .top {
+    width: 730px;
+    height: 100px;
+}
+
+.indexTc .top li {
+    width: 364px;
+    height: 50px;
+    line-height: 50px;
+    float: right;
+    text-align: center;
+    color: #b5b5b5;
+    font-size: 22px;
+    cursor: pointer;
+    position: relative;
+    top:3px;
+}
+
+.indexTc .top li.thisOver {
+    border-bottom: 4px solid #0099e9;
+    color: #444444;
+}
+
+.indexTc .top li.firstLi {
+    float: left;
+}
+
+.tcNr li p.tc_tt {
+    text-align: center;
+    font-size: 22px;
+    color: #666;
+}
+
+.tcNr .tc_Ma2 {
+    margin-top: 45px;
+    width: 100%;
+    height: 274px;
+    text-align: center;
+}
+
+.tcNr .tc_Ma2 a img {
+    width: 24px;
+    float: left;
+    margin-left: 20px;
+    margin-top: 7px;
+}
+
+.tcNr .tc_Ma2 a {
+    width: 165px;
+    height: 42px;
+    line-height: 42px;
+    text-align: center;
+    color: #FFF;
+    font-size: 16px;
+    margin-left: 35px;
+    margin-top: 45px;
+    background-color: #48494b;
+    border-radius: 5px;
+}
+
+.tcNr .tc_Ma2 a.xia_a {
+    background-color: #94e13f;
+    margin-top: 20px;
+}
+
+.tcNr .tc_Ma2 a:hover {
+    background-color: #222;
+}
+
+.tcNr .tc_Ma2 a.xia_a:hover {
+    background-color: #7fc136;
+}
+
+.tcNr li p.tc_tt {
+    text-align: center;
+    font-size: 22px;
+    color: #666;
+}
+
+.tcNr li p.tc_img {
+    text-align: center;
+    padding-top: 30px;
+    padding-bottom: 20px;
+}
+
+.tcNr li p.tc_gz {
+    text-align: center;
+    font-size: 16px;
+    color: #444444;
+    padding-left: 0;
+    margin-top: 15px;
+}
+
+.indexTc .guanbiQu {
+    height: 49px;
+}
+
+#cover2 {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #333333;
+    filter: alpha(opacity=80);
+    opacity: 0.8;
+    z-index: 9998;
+    display: none;
+}
+
+.tcNr li p.tc_img img{
+    width:203px;
+    height:203px;
+}
+.tcNr .tc_Ma2>img{
+    width:177px;
+    height:177px;
+}
