@@ -3,4 +3,7 @@
     2，下载链接跳转由js的location.href控制改为给下载链接添加href属性
     3，去掉对jquery库的引用
     
-二，
+二，活动分享和动态分享页面
+    1，调整整体样式
+    2，优化js代码
+    3，跳转由js的location.href控制改为给链接添加href属性
