@@ -176,6 +176,7 @@ header h2 {
     width: 10.5%;
     float: left;
     margin: .3rem 0 .3rem 2%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .visitor div a img {
@@ -208,6 +209,7 @@ header h2 {
     margin-right: 2%;
     position: relative;
     top: .7rem;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .commentbox .commentlist li > a img {
