@@ -26,10 +26,10 @@
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
-                    <strong onclick="godown()">10万人下载</strong>
+                    <strong>10万人下载</strong>
                 </p>
             </td>
-            <td><a onclick="godown()">立即下载</a></td>
+            <td><a href="http://www.cn-qch.com/app">立即下载</a></td>
         </tr>
     </table>
     <!-- 加载遮罩层 -->
@@ -98,12 +98,12 @@
             </ul>
         </div>
         <div class="more">
-            <a onclick="godown()">查看更多评论</a>
+            <a href="http://www.cn-qch.com/app">查看更多评论</a>
         </div>
         <footer>
             <nav>
-                <a class="btn-comment">我要评论</a>
-                <a onclick="apply()">我要报名</a>
+                <a class="btn-comment" href="http://www.cn-qch.com/app">我要评论</a>
+                <a href="http://test.cn-qch.com/wxuser/userinfo?guid=<%=data.guid%>">我要报名</a>
             </nav>
         </footer>
     </script>
@@ -112,12 +112,6 @@
     <script src="js/artTemplate.js"></script>
     <script charset="gb2312" src="js/loader.js"></script>
     <script>
-        function godown() {
-            location.href = 'http://www.cn-qch.com/app';
-        }
-        function apply() {
-            location.href = 'http://test.cn-qch.com/wxuser/userinfo?guid=' + guid;
-        }
         function GetUrlParam(name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
             var r = window.location.search.substr(1).match(reg);
@@ -133,15 +127,19 @@
             data: { guid: guid },
             success: function (data) {
                 if (data) {
+                    data.guid=guid;
                     $('.container').html(template('contentTemplate', { data: data }));
                     $('.detailsbox .text1 img').each(function () {
                         var index = $(this).attr('src').indexOf('http://');
                         (index == -1 || index != 0) && (this.src = 'http://cn-qch.com:8002' + $(this).attr('src'));
                     })
                     loadPic('.content .image img');
-                    winResize($('#members img'));
-                    winResize($('.commentbox img'));
-
+                    $('#members img,.commentbox img').each(function(){
+                        var width=$(this).width();
+                        $(this).css({height:width,borderRadius:width/2});
+                    })
+                    $('.container').removeClass('loading').siblings('.shade-div').remove();
+                    //initCommentForm();
                     wxShare({
                         title: $('.details>h2').text(),
                         desc: $(".detailsbox .text1").text().slice(0, 40) + '...',
@@ -150,12 +148,6 @@
                 }
             }
         })
-        function winResize($e) {
-            $e.css({
-                height: $e.width(),
-                borderRadius: $e.width() / 2
-            })
-        }
         // 首图预加载
         function loadPic(selector) {
             var image = new Image();
@@ -182,18 +174,11 @@
                 }
             })
         }
-
-        $(document).ajaxStop(function () {
-            $('.container').removeClass('loading');
-            $('.shade-div').remove();
-            initCommentForm();
-        });
         function initCommentForm() {
             // 阻止滚动屏幕
             $('.commentForm')[0].addEventListener('touchstart', preventScroll, false);
             // 打开评论盒子
             $('.btn-comment').click(function () {
-                godown();
                 // $('.shade-blur').removeClass('hide').get(0).addEventListener('touchstart', cancelComment, false);
                 // $('.commentForm').fadeIn(200, function () {
                 //     $('footer').fadeOut(200);
