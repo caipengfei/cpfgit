@@ -38,17 +38,27 @@
         <%var avatorUrl='http://www.cn-qch.com:8002/attach/user/'%>
         <%var defaultAvatorUrl='img/avator.png'%>
         <header>
-            <div class="head-nav"></div>
-            <div class="box">
-                <img src="<%=avatorUrl + data.userAvatar%>">
-                <h2><%=data.username%></h2>
-                <h3><span><%=data.company%></span></h3>
-            </div>
+            <img src="<%=avatorUrl + data.userAvatar%>">
+            <h2><%=data.username%></h2>
+            <h3><span><%=data.company%></span></h3>
         </header>
-        <ul class="table">
+        <ul class="table clear">
+            <li><span><%=data.city%></span><b>城市</b></li>
             <li><span><%=data.numFollow%></span><b>关注</b></li>
             <li><span><%=data.fans.length%></span><b>粉丝</b></li>
         </ul>
+        <div class="dynamicbox">
+            <h2>Ta的动态</h2>
+            <table>
+                <tr>
+                    <td><img src="<%=avatorUrl + data.userAvatar%>"></td>
+                    <td>
+                        <h3>思考网站架构！</h3>
+                        <p><span>03-15 21:36</span> 湖南省地区</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
         <div class="aboutbox">
             <h2>个人简介</h2>
             <p><%=data.description%></p>

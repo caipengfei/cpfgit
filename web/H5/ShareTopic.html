@@ -58,9 +58,9 @@
                     <img <%if(index%3==0){%>class="first"<%}%> src="<%=imgUrl+item.t_Pic_Url%>" style="width:<%=width%>">
                 <%})%>
             </div>
-            <p class="position">
-                <i class="fa fa-map-marker"></i><span><%=data.currentPosition%></span>
-            </p>
+            <%if(data.currentPosition){%>
+                <p class="position"><%=data.currentPosition%></p>
+            <%}%>
             <div class="tools">
                 <a class="left" href="http://www.cn-qch.com/app"><i class="fa fa-share"></i></a>
                 <a class="right msg" href="http://www.cn-qch.com/app"><i class="fa fa-comment"></i></a>

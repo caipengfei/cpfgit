@@ -99,7 +99,12 @@ header h2 {
 .dynamic > p.position {
     color: #d6d6d6;
     font-size: 1rem;
-    margin-bottom: .9rem;
+    height: 1.6rem;
+    line-height: 1.6rem;
+    margin-bottom: 1rem;
+    background: url(../img/ditiao.png) no-repeat 0 30%;
+    background-size:auto 1rem;
+    padding-left: 1.2rem;
 }
 
 .dynamic > p.position i {
