@@ -49,60 +49,60 @@
         </ul>
         <div class="dynamicbox">
             <h2>Ta的动态</h2>
-            <table>
-                <tr>
-                    <td><img src="<%=avatorUrl + data.userAvatar%>"></td>
-                    <td>
+            <ul>
+                <li class="clear">
+                    <img src="<%=avatorUrl + data.userAvatar%>">
+                    <div>
                         <h3>思考网站架构！</h3>
-                        <p><span>03-15 21:36</span> 湖南省地区</p>
-                    </td>
-                </tr>
-            </table>
+                        <p><span>03-15 21:36</span> 湖南省地区湖南省地区湖南省地区湖南省地区</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="projectbox">
+            <h2>Ta的项目</h2>
+            <ul>
+                <li class="clear">
+                    <img src="<%=avatorUrl + data.userAvatar%>">
+                    <h3>思考网站架构！</h3>
+                </li>
+            </ul>
+        </div>
+        <div class="infobox">
+            <h2>Ta的信息</h2>
+            <div>
+                <h3>个人描述</h3>
+                <p><%=data.description%></p>
+            </div>
         </div>
         <div class="aboutbox">
-            <h2>个人简介</h2>
-            <p><%=data.description%></p>
-        </div>
-        <div class="invest">
-            <h2>投资风格</h2>
+            <h2>个人简历</h2>
             <ul>
-                <li>
-                    <h3>投资领域</h3>
-                    <div><%=data.investArea%></div>
-                </li>
-                <li>
-                    <h3>投资阶段</h3>
-                    <div><%=data.investPhase%></div>
-                </li>
-                <li>
-                    <h3>投资金额</h3>
-                    <div><span><%=data.investMoney%></span></div>
-                </li>
+                <li>2015.01-2015.03 电脑组装员 上海达丰电子</li>
+                <li>2015.01-2015.03 电脑组装员 上海达丰电子</li>
             </ul>
         </div>
-        <div class="case">
-            <h2>投资案例</h2>
-            <span style="padding-left:30px;">暂无</span>
-        </div>
-        <!--<div class="follow">
-            <h2>关注的项目</h2>
-            <ul class="listbox">
-                <li>
-                    <a>
-                        <img src="/static/img/photo3.jpg?v=8ee13fcc1f5652b80ca87e4fa116751d">青创汇</a>
-                </li>
-                <li>
-                    <a>
-                        <img src="/static/img/photo3.jpg?v=8ee13fcc1f5652b80ca87e4fa116751d">青创汇</a>
-                </li>
+        <div class="fieldbox">
+            <h2>关注领域</h2>
+            <ul class="clear">
+                <li>汽车</li>
+                <li>金融</li>
+                <li>移动互联网</li>
+                <li>O2O</li>
             </ul>
-        </div>-->
+        </div>
+        <div class="goodatbox">
+            <h2>我最擅长</h2>
+            <ul class="clear">
+                <li>产品</li>
+                <li>运营</li>
+                <li>推广策划</li>
+                <li>项目管理</li>
+            </ul>
+        </div>
         <footer>
-            <nav>
-                <a class="talk" href="http://www.cn-qch.com/app"><i class="fa fa-commenting"></i> 约谈</a>
-                <a class="follow" href="http://www.cn-qch.com/app"><i class="fa fa-user-plus"></i> 关注</a>
-                <a class="post" href="http://www.cn-qch.com/app">提交项目</a>
-            </nav>
+            <a class="talk" href="http://www.cn-qch.com/app"><i class="fa fa-user-plus"></i> 私信</a>
+            <a class="follow" href="http://www.cn-qch.com/app"><i class="fa fa-commenting"></i> 关注</a>
         </footer>
     </script>
     
@@ -126,168 +126,6 @@
                 $('.container').removeClass('loading').siblings('.shade-div').remove();
             }
         })
-        //     //根据类型Id获取类型名称
-        // function getStyles(Ids, tid) {
-        //     var xy = '';
-        //     if (Ids && Ids != "") {
-        //         if (Ids.split(";").length > 1) {
-        //             var id = Ids.split(";");
-        //             if (id.length > 0) {
-        //                 for (var i = 0; i < id.length; i++) {
-        //                     xy += id[i] + ',';
-        //                 }
-        //             }
-        //             xy = xy.substring(0, xy.length - 1);
-        //             $.ajax({
-        //                 type: 'post',
-        //                 cache: false,
-        //                 dataType: 'json',
-        //                 url: '../QCH_Style/Ajax_Style.ashx',
-        //                 data: [{
-        //                     name: 'Action',
-        //                     value: 'StyleDataByIds'
-        //                 }, {
-        //                     name: 'IDs',
-        //                     value: xy
-        //                 }],
-        //                 success: function(data) {
-        //                     if (data) {
-        //                         var model = data;
-        //                         var list = '<div id="' + tid + '">';
-        //                         for (var item in model) {
-
-        //                             list += '<a>' + model[item].text + '</a>';
-        //                         }
-        //                         list += '</div>';
-        //                         $("#" + tid).replaceWith(list);
-        //                     }
-        //                 }
-        //             })
-        //         } else {
-        //             $.ajax({
-        //                 type: 'post',
-        //                 cache: false,
-        //                 dataType: 'json',
-        //                 url: '../QCH_Style/Ajax_Style.ashx',
-        //                 data: [{
-        //                     name: 'Action',
-        //                     value: 'StyleDataByIds'
-        //                 }, {
-        //                     name: 'IDs',
-        //                     value: Ids
-        //                 }],
-        //                 success: function(data) {
-        //                     if (data) {
-        //                         var model = data;
-        //                         var list = '<div id="' + tid + '">';
-        //                         list += '<a>' + model.text + '</a>';
-        //                         list += '</div>';
-        //                         $("#" + tid).replaceWith(list);
-        //                     }
-        //                 }
-        //             })
-        //         }
-        //     }
-        // }
-        // //投资案例
-        // $.ajax({
-        //         type: 'post',
-        //         cache: false,
-        //         dataType: 'json',
-        //         url: '../QCH_Place/Ajax_Place.ashx',
-        //         data: [{
-        //             name: 'Action',
-        //             value: 'PlaceCase'
-        //         }, {
-        //             name: 'guid',
-        //             value: guid
-        //         }],
-        //         success: function(data) {
-        //             if (data) {
-        //                 var list = '<div class="case" id="divCase"><h2>投资案例</h2><table cellpadding="0" cellspacing="0">';
-        //                 var model = data.Rows;
-        //                 for (var item in model) {
-        //                     var tid = 'td_' + model[item].t_Invest_Phase.split(";")[0];
-        //                     list += '<tr><td><img src="' + imgUrl + model[item].t_Invest_Pic + '"></td><td>' + model[item].t_Invest_Project + '</td><td id="' + tid + '">' + getStyle(model[item].t_Invest_Phase, tid) + '</td><td>' + GetDate(model[item].t_Invest_Date) + '</td></tr>';
-        //                 }
-        //                 list += '</table></div>';
-        //                 $("#divCase").replaceWith(list);
-        //                 winResize($('#divCase img'));
-        //             }
-        //         }
-        //     })
-        //     //获取关注的人（数量）
-        // $.ajax({
-        //         type: 'post',
-        //         cache: false,
-        //         dataType: 'json',
-        //         url: '../QCH_User/Ajax_User.ashx',
-        //         data: [{
-        //             name: 'Action',
-        //             value: 'Attention'
-        //         }, {
-        //             name: 'guid',
-        //             value: guid
-        //         }],
-        //         success: function(data) {
-        //             if (data) {
-        //                 $("#spAttention").text(data.Total);
-        //             }
-        //         }
-        //     })
-        //     //获取粉丝（数量）
-        // $.ajax({
-        //         type: 'post',
-        //         cache: false,
-        //         dataType: 'json',
-        //         url: '../QCH_User/Ajax_User.ashx',
-        //         data: [{
-        //             name: 'Action',
-        //             value: 'MyFans'
-        //         }, {
-        //             name: 'guid',
-        //             value: guid
-        //         }],
-        //         success: function(data) {
-        //             if (data) {
-        //                 $("#spFans").text(data.Total);
-        //             }
-        //         }
-        //     })
-        //     //根据类型Id获取类型名称
-        // function getStyle(Ids, tid) {
-        //     var id = Ids.split(";")[0];
-        //     $.post("../QCH_Style/Ajax_Style.ashx", {
-        //         Action: "StyleDataByIds",
-        //         IDs: id
-        //     }, function(data) {
-        //         if (data) {
-        //             $("#" + tid).text(data.text);
-        //         }
-        //     }, "json")
-
-        // }
-
-        // function winResize($e) {
-        //     $e.css({
-        //         height: $e.width(),
-        //         borderRadius: $e.width() / 2
-        //     })
-        // }
-        // $(function() {
-        //     $(window).resize(function() {
-        //         winResize($('.follow img'));
-        //         winResize($('.member img'));
-        //         winResize($('.case img'));
-        //     }).resize();
-        // })
-        // $(function() {
-        //     $(document).ajaxStop(function() {
-        //         imageLoader(removeShade);
-        //     })
-        // })
     </script>
-
 </body>
-
 </html>
