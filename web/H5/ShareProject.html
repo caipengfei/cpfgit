@@ -25,184 +25,146 @@
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
-                    <strong onclick="godown()">10万人下载</strong>
+                    <strong>10万人下载</strong>
                 </p>
             </td>
-            <td><a onclick="godown()">立即下载</a></td>
+            <td><a href="http://www.cn-qch.com/app">立即下载</a></td>
         </tr>
     </table>
    
-    <div class="container loading">
+    <div class="container loading"></div>
+    <!-- 主内容模板 -->
+    <script type="text/html" id="contentTemplate">
+    <%var imgUrl='http://www.cn-qch.com:8002/attach/images/'%>
+    <%var avatorUrl='http://www.cn-qch.com:8002/attach/user/'%>
+    <%var defaultAvatorUrl='img/avator.png'%>
         <header>
-            <div class="head-nav">
-                <!-- <a class="left"><i class="fa fa-angle-left"></i></a>
-                <a class="right">...</a>-->
-            </div>
-            <div class="box" id="dviTop">
-                <img>
-                <h2>叫个外卖</h2>
-                <h3>一站式O2O餐饮服务</h3>
-            </div>
+            <img src="<%=imgUrl + data.logo%>">
+            <h2><%=data.projectName%></h2>
+            <h3><%=data.projectDescription%></h3>
         </header>
-        <div class="lists">
-            <ul>
-                <li>
-                    <label>所在城市</label><span id="spCityName">郑州市</span></li>
-            </ul>
-            <ul>
-                <li>
-                    <label>项目领域</label><span id="spArea">餐饮</span></li>
-                <li>
-                    <label>项目阶段</label><span id="spStage">已盈利</span></li>
-            </ul>
-            <ul>
-                <li>
-                    <label>融资状态</label><span id="spStage1">仅投资人可见</span></li>
-                <li>
-                    <label>融资金额</label><span id="spStage2">仅投资人可见</span></li>
-                <li>
-                    <label>资金用途</label><span id="spStage3">仅投资人可见</span></li>
-            </ul>
+        <ul class="lists lists1">
+            <li><label>所在城市</label><span><%=data.city%></span></li>
+            <li><label>项目领域</label><span><%=data.projectField.t_Style_Name%></span></li>
+            <li><label>项目阶段</label><span><%=data.projectStage.t_Style_Name%></span></li>
+        </ul>
+        <div class="detailsbox">
+            <h2>项目描述</h2>
+            <p><%==data.aboutProject.replace(/===/g,'<br>')%></p>
         </div>
-        <div class="aboutbox">
-            <h2>项目简介</h2>
-            <p id="pInfo">
-                项目片区交通极为发达，与北通道无缝对接，实现红灯直达室内各区。片区内更是拥有11个公园，
-保护郊野公园，生态公园，市政公园形态丰富，几乎可实现每步行10分钟可进入一个公园，清林
-静水库提供23平方公里还好的积水面积，其周边打造的农家乐，垂钓等休闲活动也成为片区一大度假场所。
-            </p>
+        <div class="detailsbox">
+            <h2>项目优势</h2>
+            <p><%==data.aboutProject.replace(/===/g,'<br>')%></p>
+        </div>
+        <div class="detailsbox">
+            <h2>目标用户</h2>
+            <p><%==data.aboutProject.replace(/===/g,'<br>')%></p>
+        </div>
+        <ul class="lists lists2">
+            <li><label>融资状态</label><span><%=data.financingState.t_Style_Name%></span></li>
+            <li><label>融资金额</label><span>仅投资人可见</span></li>
+            <li><label>资金用途</label><span>仅投资人可见</span></li>
+        </ul>
+        <div class="detailsbox">
+            <h2>盈利途径</h2>
+            <p><%==data.aboutProject.replace(/===/g,'<br>')%></p>
+        </div>
+        <div class="teambox">
+            <h2>核心团队</h2>
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <td><img src="<%=imgUrl + data.logo%>"></td>
+                    <td>
+                        <h3>李阳</h3>
+                        <p>没有人看懂我，只因为我太能隐藏</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td><img src="<%=imgUrl + data.logo%>"></td>
+                    <td>
+                        <h3>李阳</h3>
+                        <p>没有人看懂我，只因为我太能隐藏</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="showbox">
+            <h2>导师展示</h2>
+            <div class="banner">
+                <div class="frame">
+                    <div class="box">
+                        <img src="<%=imgUrl+data.logo%>">
+                        <img src="<%=imgUrl+data.logo%>">
+                        <img src="<%=imgUrl+data.logo%>">
+                    </div>
+                </div>
+                <div class="tag">
+                    <span class="current"></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+        <div class="linksbox">
+            <h2>项目链接</h2>
+            <div class="clear">
+                <a class="gw" href="">官网</a>
+                <a class="ct" href="">客户端</a>
+                <a class="wx" href="">微信公众号</a>
+            </div>
         </div>
         <div class="demand">
-            <h2>合作人需求</h2>
-            <div id="divNeed">
-                <a href="javascript:">技术</a>
+            <h2 class="first">合作人需求</h2>
+            <div class="clear">
+                <a><%=data.partnerDemand%></a>
             </div>
+            <h2 class="last">评论</h2>
         </div>
+        <ul class="commentlist">
+            <li class="clear">
+                <a><img src="<%=imgUrl+data.logo%>"></a>
+                <div>
+                    <h3>你好<span>2015-03-03</span></h3>
+                    <p>还不辍的啊</p>
+                </div>
+            </li>
+            <li class="clear">
+                <a><img src="<%=imgUrl+data.logo%>"></a>
+                <div>
+                    <h3>你好<span>2015-03-03</span></h3>
+                    <p>还不辍的啊</p>
+                </div>
+            </li>
+            <p>暂无评论</p>
+        </ul>
         <footer>
-            <nav>
-                <a class="talk" onclick="godown()"><i class="fa fa-commenting"></i> 约谈</a>
-                <a class="follow" onclick="godown()"><i class="fa fa-user-plus"></i> 关注</a>
-            </nav>
+            <a href="http://www.cn-qch.com/app"><i class="fa fa-user-plus"></i> 私信</a>
+            <a href="http://www.cn-qch.com/app"><i class="fa fa-commenting"></i> 关注</a>
+            <a href="http://www.cn-qch.com/app"><i class="fa fa-commenting"></i> 评论</a>
         </footer>
-    </div>
+    </script>
     <script src="js/jquery.min.js"></script>
-    <script src="js/loader.js"></script>
-    <script type="text/javascript">
+    <script src="js/artTemplate.js"></script>
+    <script src="js/shareProject.js"></script>
+    <script>
         //获取Url中的参数
-        function getQueryString(name) {
-            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        function GetUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
             var r = window.location.search.substr(1).match(reg);
             if (r != null) return unescape(r[2]); return null;
         }
-        function godown() {
-            location.href = 'http://www.cn-qch.com/app';
-        }
-        //根据类型Id获取类型名称
-        function getStyle(Ids, tid) {
-            var id = Ids;
-            $.post("../QCH_Style/Ajax_Style.ashx", { Action: "StyleDataByIds", IDs: id }, function (data) {
-                if (data) {
-                    $("#" + tid).text(data.text);
-                }
-            }, "json")
-        }
-        var projectGuid = getQueryString('Guid');
-        if (!projectGuid || projectGuid == "") { projectGuid = '1ca35368-c5ed-4e7b-8210-7e459d0e27d1'; }
-        //获取项目信息
+        var guid = GetUrlParam("Guid") || GetUrlParam("guid") || '283737b7-f222-46c1-a9ee-3ed2cdb0533b';
         $.ajax({
-            type: 'post',
+            type: 'get',
             cache: false,
             dataType: 'json',
-            url: '../QCH_Project/Ajax_Project.ashx',
-            data: [
-                { name: 'Action', value: 'getModel' },
-                { name: 'Guid', value: projectGuid }
-            ],
+            url: 'http://120.25.106.244:9001/api/Project/GetProject',
+            data: { guid: guid },
             success: function (data) {
-                if (data) {
-                    var img = 'img/avator.png';
-                    if (data.t_Project_ConverPic && data.t_Project_ConverPic != "") {
-                        img = imgUrl + data.t_Project_ConverPic;
-                    }
-                    var topinfo = '<div class="box" id="dviTop"><img src="' + img + '"><h2>' + data.t_Project_Name + '</h2><h3>' + data.t_Project_OneWord + '</h3></div>'
-                    $("#dviTop").replaceWith(topinfo);
-                    $("#spCityName").text(data.t_Project_CityName);
-                    //$("#spArea").text(data.t_Project_Field);
-                    //$("#spStage").text(data.t_Project_Phase);
-                    //$("#spStage1").text(data.t_Project_FinancePhase);
-                    $("#spStage2").text(data.t_Project_Finance);
-                    $("#spStage3").text(data.t_Project_FinanceUse);
-                    $("#pInfo").html(data.t_Project_Instruction);
-                    getStyle(data.t_Project_Field, "spArea");
-                    getStyle(data.t_Project_Phase, "spStage");
-                    getStyle(data.t_Project_FinancePhase, "spStage1");
-                    if (data.t_Project_ParterWant) {
-                        getStyles(data.t_Project_ParterWant, "divNeed");
-                    }
-                }
+                $('.container').html(template('contentTemplate', { data: data }));
+                $('.container').removeClass('loading').siblings('.shade-div').remove();
+                $('.banner .box img').length && banner.init();
             }
-        })
-        //根据类型Id获取类型名称
-        function getStyles(Ids, tid) {
-            var xy = '';
-            if (Ids && Ids != "") {
-                if (Ids.split(";").length > 1) {
-                    var id = Ids.split(";");
-                    if (id.length > 0) {
-                        for (var i = 0; i < id.length; i++) {
-                            xy += id[i] + ',';
-                        }
-                    }
-                    xy = xy.substring(0, xy.length - 1);
-                    $.ajax({
-                        type: 'post',
-                        cache: false,
-                        dataType: 'json',
-                        url: '../QCH_Style/Ajax_Style.ashx',
-                        data: [
-                            { name: 'Action', value: 'StyleDataByIds' },
-                            { name: 'IDs', value: xy }
-                        ],
-                        success: function (data) {
-                            if (data) {
-                                var model = data;
-                                var list = '<div id="' + tid + '">';
-                                for (var item in model) {
-
-                                    list += '<a>' + model[item].text + '</a>';
-                                }
-                                list += '</div>';
-                                $("#" + tid).replaceWith(list);
-                            }
-                        }
-                    })
-                } else {
-                    $.ajax({
-                        type: 'post',
-                        cache: false,
-                        dataType: 'json',
-                        url: '../QCH_Style/Ajax_Style.ashx',
-                        data: [
-                            { name: 'Action', value: 'StyleDataByIds' },
-                            { name: 'IDs', value: Ids }
-                        ],
-                        success: function (data) {
-                            if (data) {
-                                var model = data;
-                                var list = '<div id="' + tid + '">';
-                                list += '<a>' + model.text + '</a>';
-                                list += '</div>';
-                                $("#" + tid).replaceWith(list);
-                            }
-                        }
-                    })
-                }
-            }
-        }
-        $(function () {
-            $(document).ajaxStop(function () {
-                imageLoader(removeShade);
-            })
         })
     </script>
 </body>

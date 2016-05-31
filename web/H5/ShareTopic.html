@@ -28,7 +28,7 @@
                     <strong>10万人下载</strong>
                 </p>
             </td>
-            <td><a onclick="godown()">立即下载</a></td>
+            <td><a href="http://www.cn-qch.com/app">立即下载</a></td>
         </tr>
     </table>
     <!-- 主内容 通过模板渲染 -->
@@ -58,13 +58,13 @@
                     <img <%if(index%3==0){%>class="first"<%}%> src="<%=imgUrl+item.t_Pic_Url%>" style="width:<%=width%>">
                 <%})%>
             </div>
-            <p class="position">
-                <i class="fa fa-map-marker"></i><span><%=data.currentPosition%></span>
-            </p>
+            <%if(data.currentPosition){%>
+                <p class="position"><%=data.currentPosition%></p>
+            <%}%>
             <div class="tools">
-                <a class="left" onclick="godown()"><i class="fa fa-share"></i></a>
-                <a class="right msg" onclick="godown()"><i class="fa fa-comment"></i></a>
-                <a class="right like" onclick="godown()"><i class="fa fa-heart"></i></a>
+                <a class="left" href="http://www.cn-qch.com/app"><i class="fa fa-share"></i></a>
+                <a class="right msg" href="http://www.cn-qch.com/app"><i class="fa fa-comment"></i></a>
+                <a class="right like" href="http://www.cn-qch.com/app"><i class="fa fa-heart"></i></a>
             </div>
             <p class="date"><%=data.date%></p>
         </div>
@@ -87,7 +87,7 @@
                     <%var name=item.userName||''%>
                     <%name=name.length>2?name.slice(0,2)+'**':name%>
                     <li>
-                        <a><img src="<%=item.t_User_Pic?avatorUrl+item.t_User_Pic:defaultAvatorUrl%>"></a>
+                        <a><img src="<%=item.userAvator?avatorUrl+item.userAvator:defaultAvatorUrl%>"></a>
                         <div>
                             <h3><%=name%><span><%=item.t_Talk_FromDate%></span></h3>
                             <p><%=item.t_Talk_FromContent%></p>
@@ -100,7 +100,7 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/artTemplate.js"></script>
     <script>
-        var guid = GetUrlParam("Guid") || 'bf323cd2-d0d0-4512-b831-f5bcf5760bcc';
+        var guid = GetUrlParam("Guid") || GetUrlParam("guid") || 'ecba17df-bb3c-4a48-aa03-0ae01cb00a8d';
         $.ajax({
             type: 'get',
             cache: false,
@@ -115,31 +115,19 @@
                     height:$('.dynamic .imgbox img').width(),
                     marginBottom: $('.imgbox img').eq(1).css('margin-left')
                 });
-                winResize($('.visitor img'));
-                winResize($('.commentlist img'));
+                $('.visitor img,.commentlist img').each(function(){
+                    var width=$(this).width();
+                    $(this).css({height:width,borderRadius:width/2});
+                })
+                $('.container').removeClass('loading').siblings('.shade-div').remove();
             }
         })
-        function godown() {
-            location.href = 'http://www.cn-qch.com/app';
-        }
-        function winResize($e) {
-            $e.css({
-                height: $e.width(),
-                borderRadius: $e.width() / 2
-            })
-        }
         function GetUrlParam(name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
             var r = window.location.search.substr(1).match(reg);
             if (r != null) return unescape(r[2]);
             return null;
         }
-        $(function() {
-            $(document).ajaxStop(function() {
-                $('.container').removeClass('loading');
-                $('.shade-div').remove();
-            })
-        })
     </script>
 </body>
 </html>

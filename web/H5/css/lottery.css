@@ -1,0 +1,89 @@
+body {
+    background: #e62d2d;
+    overflow-x: hidden;
+}
+.container{
+    max-width: 768px;
+    margin:auto;
+    padding: 3.4rem 0;
+}
+/* 大转盘样式 */
+#turnplate {
+    position: relative;
+    background-image: url(../img/lottery/turnplate-bg.png);
+    background-size: 100% 100%;
+    width:80%;
+    margin:0 auto;
+    padding:1rem;
+    box-sizing: content-box;
+}
+#turnplate canvas {
+    transform: translate3d(0, 0, 0);
+}
+
+#turnplate .pointer {
+    position: absolute;
+    width: 32%;
+    height: 42%;
+    left: 34%;
+    top: 23.4%;
+    background: url(../img/lottery/turnplate-pointer.png) no-repeat;
+    background-size: 100% 100%;
+}
+/* 提示盒子 */
+.tipbox {
+    position: fixed;
+    width: 60%;
+    height: auto;
+    background-color: #fff;
+    border-radius: .5rem;
+    text-align: center;
+    opacity: 0;
+    padding-bottom: 1.2rem;
+    z-index: 10;
+    transform: translate3d(0, 0, 0);
+    transition:opacity .3s;
+    top:5000px;
+}
+.fadeIn{
+    opacity:1 !important;
+}
+.tipbox span {
+    width: 8rem;
+    height: 8rem;
+    background: url(../img/lottery/gx.png) no-repeat 60% 50%;
+    background-size: 80% auto;
+    display: inline-block;
+}
+.tipbox span.no {
+    background: url(../img/lottery/sorry.png) no-repeat 50% 50%;
+}
+.tipbox p {
+    font-size: 1.8rem;
+    color: #444;
+    margin-bottom: .6em;
+}
+.tipbox .ok {
+    font-size: 1.6rem;
+    color: #fff;
+    background: #4a90e2;
+    height: 2.4rem;
+    display: inline-block;
+    line-height: 2.4rem;
+    padding: 0 1.4rem;
+    border-radius: .5rem;
+}
+.tipbox .ok:active {
+    opacity: .8;
+}
+.shade {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    background: rgba(0, 0, 0, .6);
+    transform: translate3d(0, 0, 0);
+    transition:opacity .3s;
+    top:5000px;
+}
