@@ -14,7 +14,24 @@ namespace qch.Repositories
         readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         Repository<StyleModel> rp = new Repository<StyleModel>();
 
-
+        /// <summary>
+        /// 批量获取
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        public IEnumerable<StyleModel> GetByIds(string ids)
+        {
+            try
+            {
+                string sql = "select * from T_Style where Id in (@0) and t_DelState=0";
+                return rp.GetAll(sql, new object[] { ids });
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
         /// <summary>
         /// 分页获取所有
         /// </summary>

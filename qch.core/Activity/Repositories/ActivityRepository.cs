@@ -14,6 +14,53 @@ namespace qch.Repositories
         readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         Repository<ActivityModel> rp = new Repository<ActivityModel>();
 
+
+        public PetaPoco.Page<ActivityModel> GetListFroWX(int page, int pagesize, string CityName, int days, string payType)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select [Guid],[t_User_Guid],[t_Activity_Title],[t_Activity_CoverPic],[t_Activity_sDate],t_Activity_eDate,[t_Activity_CityName] from [T_Activity] where t_DelState=0 ");
+                if (!string.IsNullOrWhiteSpace(CityName))
+                {
+                    sql.Append("and t_Activity_CityName='" + CityName + "'");
+                }
+                if (days > 0)
+                {
+                    sql.Append("and DATEDIFF(day,t_Activity_sDate,getDate())<=" + days + " ");
+                }
+                if (!string.IsNullOrWhiteSpace(payType))
+                {
+                    sql.Append("and t_Activity_FeeType='" + payType + "'");
+                }
+                sql.Append("order by t_Activity_Recommand,t_Activity_sDate desc");
+                return rp.GetPageData(page, pagesize, sql.ToString());
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
+        /// 获取所有活动，按照推荐和开始日期排序
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<ActivityModel> GetAll(int page, int pagesize)
+        {
+            try
+            {
+                string sql = "select * from T_Activity where t_DelState=0 order by t_Activity_Recommand,t_Activity_sDate desc";
+                return rp.GetPageData(page, pagesize, sql);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
         /// <summary>
         /// 分页获取某人发布的所有未删除活动
         /// </summary>

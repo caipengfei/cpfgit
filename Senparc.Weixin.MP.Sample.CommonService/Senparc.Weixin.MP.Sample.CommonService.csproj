@@ -81,7 +81,12 @@
     <Compile Include="RequestHelper.cs" />
     <Compile Include="ToolHelper.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\qch.core\qch.core.csproj">
+      <Project>{7b39af3f-32b0-4ae3-a791-ce2855ded364}</Project>
+      <Name>qch.core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

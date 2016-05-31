@@ -10,7 +10,7 @@ namespace qch.core
     /// <summary>
     /// 项目业务层
     /// </summary>
-    public class PorjectService
+    public class ProjectService
     {
         readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         ProjectRepository rp = new ProjectRepository();

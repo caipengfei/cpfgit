@@ -15,6 +15,25 @@ namespace qch.Repositories
         Repository<FoucsModel> rp = new Repository<FoucsModel>();
         Repository<FoucsUser> rp1 = new Repository<FoucsUser>();
 
+
+        /// <summary>
+        /// 获取我关注的所有人
+        /// </summary>
+        /// <param name="Guid"></param>
+        /// <returns></returns>
+        public IEnumerable<FoucsUser> GetFoucsFroMe(string Guid)
+        {
+            try
+            {
+                string sql = "select a.Guid,a.t_Focus_Guid,a.t_User_Guid as UserGuid,a.t_Date as FoucsDate,b.t_User_RealName as UserName,b.t_User_Pic as UserAvator from T_User_Foucs as a left join t_users as b on a.t_User_Guid=b.Guid where a.t_User_Guid=@0";
+                return rp1.GetAll(sql, new object[] { Guid });
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
         /// <summary>
         /// 获取某人的所有粉丝
         /// </summary>

@@ -168,9 +168,11 @@
     <Compile Include="Controllers\AreaController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\FundCourseController.cs" />
+    <Compile Include="Controllers\InvestController.cs" />
     <Compile Include="Controllers\JsApiController.cs" />
     <Compile Include="Controllers\LecturerController.cs" />
     <Compile Include="Controllers\LogsController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\TopicController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserTalkController.cs" />

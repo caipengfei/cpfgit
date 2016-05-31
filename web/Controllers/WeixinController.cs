@@ -22,6 +22,7 @@ namespace Senparc.Weixin.MP.Sample.Controllers
 
     public partial class WeixinController : Controller
     {
+        readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public static readonly string Token = System.Configuration.ConfigurationManager.AppSettings["WeixinToken"];//与微信公众账号后台的Token设置保持一致，区分大小写。
 
         private static TenPayV3Info _tenPayV3Info;
@@ -50,6 +51,7 @@ namespace Senparc.Weixin.MP.Sample.Controllers
         [ActionName("Index")]
         public ActionResult Get(string signature, string timestamp, string nonce, string echostr)
         {
+            log.Info("GetToken:" + Token);
             if (CheckSignature.Check(signature, timestamp, nonce, Token))
             {
                 return Content(echostr); //返回随机字符串则表示验证通过
@@ -70,14 +72,16 @@ namespace Senparc.Weixin.MP.Sample.Controllers
         [ActionName("Index")]
         public ActionResult Post(PostModel postModel)
         {
+            log.Info("PostToken:" + Token);
+            log.Info("Index");
             if (!CheckSignature.Check(postModel.Signature, postModel.Timestamp, postModel.Nonce, Token))
             {
                 return Content("参数错误！");
             }
 
             postModel.Token = Token;
-			postModel.EncodingAESKey = "nlvOIeTpy2UReSurSewYB16djYdeVMeS8SyqFAYshAR";//根据自己后台的设置保持一致
-			postModel.AppId =TenPayV3Info.AppId;//根据自己后台的设置保持一致
+            postModel.EncodingAESKey = "TzXxUPOEkUlPCErEETs8WPHiOWwW78ivzGr1UXLTElL";//根据自己后台的设置保持一致
+            postModel.AppId = TenPayV3Info.AppId;//根据自己后台的设置保持一致
 
             //v4.2.2之后的版本，可以设置每个人上下文消息储存的最大数量，防止内存占用过多，如果该参数小于等于0，则不限制
             var maxRecordCount = 10;
@@ -115,6 +119,7 @@ namespace Senparc.Weixin.MP.Sample.Controllers
             }
             catch (Exception ex)
             {
+                log.Error(ex.Message);
                 using (TextWriter tw = new StreamWriter(Server.MapPath("~/App_Data/Error_" + DateTime.Now.Ticks + ".txt")))
                 {
                     tw.WriteLine("ExecptionMessage:" + ex.Message);
@@ -141,6 +146,7 @@ namespace Senparc.Weixin.MP.Sample.Controllers
         [ActionName("MiniPost")]
         public ActionResult MiniPost(string signature, string timestamp, string nonce, string echostr)
         {
+            log.Info("最简化的处理流程");
             if (!CheckSignature.Check(signature, timestamp, nonce, Token))
             {
                 //return Content("参数错误！");//v0.7-

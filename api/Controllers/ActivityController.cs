@@ -19,6 +19,25 @@ namespace api.Controllers
         ActivityService activityService = new ActivityService();
         UserTalkService talkService = new UserTalkService();
 
+
+        /// <summary>
+        /// 获取所有活动，按照推荐和开始日期排序
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<ActivityModel> GetAll(int page, int pagesize, string CityName, int days, string payType)
+        {
+            try
+            {
+                return activityService.GetListFroWX(page, pagesize, CityName, days, payType);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
         /// <summary>
         /// 活动详情
         /// </summary>
@@ -49,6 +68,7 @@ namespace api.Controllers
                         activityCost = model.t_Activity_Fee,
                         Telephone = model.t_Activity_Tel,
                         activityTime = model.t_Activity_sDate,
+                        endTime = model.t_Activity_eDate,
                         activityAddress = model.t_Activity_Street,
                         activityDetails = model.t_Activity_Instruction,
                         numTotal = model.t_Activity_LimitPerson,

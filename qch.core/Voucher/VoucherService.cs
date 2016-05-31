@@ -15,7 +15,49 @@ namespace qch.core
         readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         VoucherRepository rp = new VoucherRepository();
 
-
+        #region 用户优惠券业务
+        /// <summary>
+        /// 获取某用户的某种类型的优惠券
+        /// </summary>
+        /// <param name="Guid"></param>
+        /// <param name="voucherType"></param>
+        /// <returns></returns>
+        public VoucherTypeModel GetVoucherByUser(string Guid, int voucherType)
+        {
+            try
+            {
+                string xy = "";
+                int xy2 = 0;
+                using (var db = new PetaPoco.Database(DbConfig.qch))
+                {
+                    string sql = "select a.T_Voucher_Type as VoucherTypeText from T_Voucher as a left join T_User_Voucher as b on a.guid=b.T_Voucher_Guid where b.T_User_Guid=@0 and a.T_Voucher_Type=@1";
+                    var list = db.Query<VoucherModel>(sql, new object[] { Guid, voucherType });
+                    if (list != null && list.Count() > 0)
+                    {
+                        foreach (var item in list.ToList())
+                        {
+                            xy = item.VoucherTypeText;
+                            if (!string.IsNullOrWhiteSpace(xy))
+                                break;
+                        }
+                        xy2 = list.Count();
+                    }
+                }
+                var target = new VoucherTypeModel
+                {
+                    VoucherType = xy,
+                    VoucherCount = xy2
+                };
+                return target;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        #endregion
+        #region 优惠券基础业务
         /// <summary>
         /// 根据全拼获取
         /// </summary>
@@ -117,5 +159,6 @@ namespace qch.core
                 return false;
             }
         }
+        #endregion
     }
 }

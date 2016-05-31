@@ -12,7 +12,8 @@ using Senparc.Weixin.MP.AdvancedAPIs;
 using System.Net;
 using System.IO;
 using System.Text;
-using xftwl.Common.Card;
+using qch.core;
+using qch.Models;
 
 namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
 {
@@ -21,13 +22,11 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
     /// </summary>
     public partial class CustomMessageHandler
     {
-
-        xftwl.Common.Card.CardWeixinService cardweixinService = new xftwl.Common.Card.CardWeixinService();
-        xftwl.Common.Card.VipCardService cardService = new xftwl.Common.Card.VipCardService();
-        xftwl.Common.UserService userService = new xftwl.Common.UserService();
-        xftwl.Common.SmsService smsService = new xftwl.Common.SmsService();
-        xftwl.Common.Card.RePacketsService repackService = new xftwl.Common.Card.RePacketsService();
-
+        UserService userService = new UserService();
+        WXUserService wxservice = new WXUserService();
+        AccountService accountService = new AccountService();
+        IntegralService integralService = new IntegralService();
+        VoucherService voucherService = new VoucherService();
         /// <summary>
         /// 图片保存路径
         /// </summary>        
@@ -112,7 +111,7 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
                     //    #endregion
 
                     var strongResponseMessage = CreateResponseMessage<ResponseMessageText>();
-                    strongResponseMessage.Content = "<a href='http://service.vip-wifi.com/Portal/Wx/login?weixin=xfthmk'>欢迎来到消费通网络公司，点击此处开始免费上网</a>";
+                    strongResponseMessage.Content = "<a href='http://service.vip-wifi.com/Portal/Wx/login?weixin=xfthmk'>欢迎来到，点击此处开始免费上网</a>";
                     return strongResponseMessage;
 
 
@@ -135,7 +134,7 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
         //自定义菜单点击事件
         public override IResponseMessageBase OnEvent_ClickRequest(RequestMessageEvent_Click requestMessage)
         {
-            xftwl.Common.UserModel userInfo = new xftwl.Common.UserModel();
+            UserModel userInfo = new UserModel();
             IResponseMessageBase reponseMessage = null;
             string appId = System.Configuration.ConfigurationManager.AppSettings["TenPayV3_AppId"].ToString();
             //获取用户OpenId，如果用户没有绑定会员卡，提示登录并绑定
@@ -143,187 +142,38 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
             //菜单点击，需要跟创建菜单时的Key匹配
             switch (requestMessage.EventKey)
             {
-                case "mycode":
-                    {
-                        #region 我的推广二维码
-                        try
-                        {
-
-                            string Nonce = ToolHelper.createNonceStr();//随机数
-                            log.Info("****服务器生成的随机数：" + Nonce);
-                            log.Info("****服务器段的OpenId：" + OpenId);
-                            var bindInfo = cardweixinService.Get(OpenId);
-                            //未绑定会员帐户
-                            if (bindInfo == null || bindInfo.UserId == 0)
-                            {
-                                if (bindInfo == null)
-                                { //己关注，但数据库中无信息时
-                                    bindInfo = new CardWeixinModel
-                                    {
-                                        CreateDate = DateTime.Now,
-                                        Id = 0,
-                                        Nonce = Nonce,
-                                        OpenId = OpenId,
-                                        QrCode = "",
-                                        UserId = 0,
-                                        WxTgUserId = 0
-                                    };
-                                }
-
-                                bindInfo.Nonce = Nonce; //该用户随机数
-                                cardweixinService.Save(bindInfo);
-
-                                var responseMessage = CreateResponseMessage<ResponseMessageText>();
-                                string url = OAuth.GetAuthorizeUrl(appId, "https://wx.xftka.com/user/bind.html", Nonce, OAuthScope.snsapi_userinfo);
-                                responseMessage.Content = "<a href='" + url + "'>请先绑定消费通会员帐户</a>";
-                                return responseMessage;
-                            }
-                            else
-                            {
-                                ImageHelper imgService = new ImageHelper();
-                                /*
-                                    生成二维码，
-                                    用背景图再生成带水印的图片，
-                                    把水印图上传到微信服务器，
-                                    发送图片给微信用户
-                                */
-                                //accesstoken
-                                string apptoken = CommonAPIs.AccessTokenContainer.GetToken(appId);
-                                //openid
-                                string openId = requestMessage.FromUserName;
-                                //微信用户
-                                var wxuser = CommonAPIs.CommonApi.GetUserInfo(apptoken, openId);
-                                //微信用户的头像
-                                var wxavator = wxuser.headimgurl;
-
-                                log.Info("**********************微信头像：" + wxavator + "************************");
-                                //如果该用户请求过临时二维码
-                                if (!string.IsNullOrWhiteSpace(bindInfo.MediaId))
-                                {
-
-                                    log.Info("当前用户的MediaId为" + bindInfo.MediaId);
-                                    //二维码修改为3天过期，在即将过期的时间 提前60秒
-                                    if (bindInfo.MediaDate.AddSeconds(259140) > DateTime.Now)
-                                    {
-                                        log.Info("如果二维码未过期");
-                                        log.Info(bindInfo.MediaDate.AddSeconds(259140).ToString());
-                                        //如果二维码在有效期内，直接返回
-                                        var responseMsg = CreateResponseMessage<ResponseMessageImage>();
-                                        log.Info(string.Format("apptoken={0},openid={1},mediaid={2}", apptoken, openId, bindInfo.MediaId));
-                                        Senparc.Weixin.MP.AdvancedAPIs.Custom.SendImage(apptoken, openId, bindInfo.MediaId);
-                                        responseMsg.FromUserName = openId;
-                                        responseMsg.Image.MediaId = bindInfo.MediaId;
-                                        return responseMsg;
-                                    }
-                                    else
-                                    {
-                                        log.Info("如果二维码已过期");
-                                        //如果二维码已过期，清除掉该图片节省空间，重新请求
-                                        System.IO.File.Delete(bindInfo.QrCode);
-                                        //获取二维码
-                                        string media_id = imgService.CreateUserQrCode(wxavator, wxuser.nickname, bindInfo.UserId);
-                                        if (media_id != "")
-                                        {
-                                            //2发送图片给用户
-                                            log.Info(string.Format("apptoken={0},openid={1},mediaid={2}", apptoken, openId, media_id));
-                                            var responseMsg = CreateResponseMessage<ResponseMessageImage>();
-                                            Senparc.Weixin.MP.AdvancedAPIs.Custom.SendImage(apptoken, openId, media_id);
-                                            responseMsg.FromUserName = openId;
-                                            responseMsg.Image.MediaId = media_id;
-                                            return responseMsg;
-                                        }
-                                        else
-                                        {
-                                            var responseMsg = CreateResponseMessage<ResponseMessageText>();
-                                            responseMsg.Content = "系统繁忙,暂无法生成二维码";
-                                            return responseMsg;
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    log.Info("当前用户的MediaId不存在");
-                                    //获取二维码
-                                    string media_id = imgService.CreateUserQrCode(wxavator, wxuser.nickname, bindInfo.UserId);
-                                    log.Info("新生成的MediaId=" + media_id);
-                                    if (media_id != "")
-                                    {
-                                        log.Info("保存新生成mediaId");
-                                        //2发送图片给用户
-                                        var responseMsg = CreateResponseMessage<ResponseMessageImage>();
-                                        log.Info("开始向这个用户发消息" + openId);
-                                        Senparc.Weixin.MP.AdvancedAPIs.Custom.SendImage(apptoken, openId, media_id);
-                                        responseMsg.FromUserName = openId;
-                                        responseMsg.Image.MediaId = media_id;
-                                        return responseMsg;
-                                    }
-                                    else
-                                    {
-                                        var responseMsg = CreateResponseMessage<ResponseMessageText>();
-                                        responseMsg.Content = "系统繁忙,暂无法生成二维码";
-                                        return responseMsg;
-                                    }
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            log.Error(ex.Message);
-                        }
-
-                        #endregion
-                    }
-                    break;
-                case "myorder": //我的订单
-                    {
-                        #region 我的订单
-                        var strongResponseMessage = CreateResponseMessage<ResponseMessageText>();
-                        reponseMessage = strongResponseMessage;
-
-                        strongResponseMessage.Content = "正在完善";
-                        #endregion
-                    }
-                    break;
-                case "scsp": //上传商品
-                    {
-                        #region 上传商品
-                        var strongResponseMessage = CreateResponseMessage<ResponseMessageText>();
-                        reponseMessage = strongResponseMessage;
-
-                        strongResponseMessage.Content = "正在完善";
-                        #endregion
-                    }
-                    break;
-
-                case "account": //查询我的帐户
+                case "myMessage": //查询我的帐户
                     {
                         string Nonce = ToolHelper.createNonceStr();//随机数
                         log.Info("****服务器生成的随机数：" + Nonce);
                         log.Info("****服务器段的OpenId：" + OpenId);
-                        var bindInfo = cardweixinService.Get(OpenId);
+                        var bindInfo = wxservice.GetByOpenId(OpenId);
                         //未绑定会员帐户
-                        if (bindInfo == null || bindInfo.UserId == 0)
+                        if (bindInfo == null || string.IsNullOrWhiteSpace(bindInfo.UserGuid))
                         {
                             if (bindInfo == null)
                             { //己关注，但数据库中无信息时
-                                bindInfo = new CardWeixinModel
+                                bindInfo = new WXUserModel
                                 {
                                     CreateDate = DateTime.Now,
-                                    Id = 0,
+                                    Guid = Guid.NewGuid().ToString(),
                                     Nonce = Nonce,
                                     OpenId = OpenId,
                                     QrCode = "",
-                                    UserId = 0,
-                                    WxTgUserId = 0
+                                    UserGuid = "",
+                                    WxTgUserGuid = "",
+                                    Avator = "",
+                                    KFOpenId = "",
+                                    MediaDate = DateTime.Now
                                 };
                             }
 
                             bindInfo.Nonce = Nonce; //该用户随机数
-                            cardweixinService.Save(bindInfo);
+                            wxservice.Save(bindInfo);
 
                             var responseMessage = CreateResponseMessage<ResponseMessageText>();
-                            string url = OAuth.GetAuthorizeUrl(appId, "https://wx.xftka.com/user/bind.html", Nonce, OAuthScope.snsapi_userinfo);
-                            responseMessage.Content = "<a href='" + url + "'>请先绑定消费通会员帐户</a>";
+                            string url = OAuth.GetAuthorizeUrl(appId, "http://test.cn-qch.com/wxuser/reg", Nonce, OAuthScope.snsapi_userinfo);
+                            responseMessage.Content = "<a href='" + url + "'>请先绑定青创汇帐户</a>";
                             return responseMessage;
                         }
                         else
@@ -332,18 +182,20 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
                             //如果己绑定查询该用户会员卡信息
                             var responseMessage = CreateResponseMessage<ResponseMessageText>();
 
-                            xftwl.OAuth.Client.Signature signSerivce = new xftwl.OAuth.Client.Signature();
-                            signSerivce.SetParameter("OpenId", OpenId);
-                            var sign = signSerivce.CreateSign("AppSecret", System.Web.Configuration.WebConfigurationManager.AppSettings["OauthClientSecret"].ToString());
-                            var package = signSerivce.GetContent();
+                            //xftwl.OAuth.Client.Signature signSerivce = new xftwl.OAuth.Client.Signature();
+                            //signSerivce.SetParameter("OpenId", OpenId);
+                            //var sign = signSerivce.CreateSign("AppSecret", System.Web.Configuration.WebConfigurationManager.AppSettings["OauthClientSecret"].ToString());
+                            //var package = signSerivce.GetContent();
 
-                            xftwl.OAuth.Client.GetResult<Models.CardInfoModel> client = new xftwl.OAuth.Client.GetResult<Models.CardInfoModel>();
-                            client.ApiServerUrl = "https://cardapi.xftka.com";
-                            System.Collections.Generic.Dictionary<string, string> dir = new System.Collections.Generic.Dictionary<string, string>();
-                            dir.Add("AppId", System.Web.Configuration.WebConfigurationManager.AppSettings["OauthClient"].ToString());
-                            dir.Add("PackageContent", package);
-                            dir.Add("Sign", sign);
-                            var target = client.PostData("/api/card/getinfo", dir);
+                            //xftwl.OAuth.Client.GetResult<Models.CardInfoModel> client = new xftwl.OAuth.Client.GetResult<Models.CardInfoModel>();
+                            //client.ApiServerUrl = "https://cardapi.xftka.com";
+                            //System.Collections.Generic.Dictionary<string, string> dir = new System.Collections.Generic.Dictionary<string, string>();
+                            //dir.Add("AppId", System.Web.Configuration.WebConfigurationManager.AppSettings["OauthClient"].ToString());
+                            //dir.Add("PackageContent", package);
+                            //dir.Add("Sign", sign);
+                            //var target = client.PostData("/api/card/getinfo", dir);
+
+                            var target = userService.GetDetail(bindInfo.UserGuid);
 
                             if (target == null)
                             {
@@ -355,16 +207,20 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
                             if (target != null)
                             {
                                 log.Info("己取到这个微信用户数据");
+                                var account = accountService.GetBalance(target.Guid);
+                                var integral = integralService.GetIntegral(target.Guid);
+                                //var voucher1 = voucherService.GetVoucherByUser(target.Guid, 1);
+                                //var voucher2 = voucherService.GetVoucherByUser(target.Guid, 2);
+                                //var voucher3 = voucherService.GetVoucherByUser(target.Guid, 3);
+                                responseMessage.Content = string.Format("日期:{0}\r\n姓名:{1}\r\n手机号:{2}\r\n", DateTime.Now, target.t_User_RealName, target.t_User_LoginId);
 
-                                responseMessage.Content = string.Format("日期:{0}\r\n姓名:{1}\r\n卡号:{2}\r\n", DateTime.Now, target.TrueName, target.CardNo);
-
-
-                                responseMessage.Content += string.Format("总余额:{0}\r\n可用余额:{1}\r\n可退余额:{2}\r\n活动保证金:{3}\r\n", target.Balance, target.AvailableBalance, target.TixianBalance, target.Deposit);
-
-                                responseMessage.Content += string.Format("直推人数:{0}\r\n间推人数:{1}\r\n", target.T1, target.T2);
-                                responseMessage.Content += string.Format("总奖励:{0}\r\n", target.Awards);
-                                responseMessage.Content += string.Format("区域:{0} {1} {2}\r\n", target.Province, target.City, target.Dis);
-                                string url = string.Format("<a href='https://wx.xftka.com/relay/MyRelay?OpenId={0}'>查看我的分享赚</a>", OpenId);
+                                responseMessage.Content += string.Format("您当前的创业币:{0}\r\n", account);
+                                responseMessage.Content += string.Format("可用优惠券:0\r\n");
+                                //responseMessage.Content += string.Format("{0}:{1}\r\n", voucher1.VoucherType, voucher1.VoucherCount);
+                                //responseMessage.Content += string.Format("{0}:{1}\r\n", voucher2.VoucherType, voucher2.VoucherCount);
+                                //responseMessage.Content += string.Format("{0}:{1}\r\n", voucher3.VoucherType, voucher3.VoucherCount);
+                                responseMessage.Content += string.Format("累计积分:{0} \r\n", integral);
+                                string url = string.Format("<a href='http://test.cn-qch.com/wxuser/reg?OpenId={0}'>查看个人中心</a>", OpenId);
 
                                 responseMessage.Content += url;
                                 return responseMessage;
@@ -375,473 +231,19 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
                         }
 
                     }
-                    //break;
-
-                /***********************************************************/
-                case "bangding"://绑定
-                    {
-                        #region 卡绑定
-                        //思路，微信生成签名去访问https://www.xftka.com
-                        //未绑定用户执行用户绑定
-
-                        var strongResponseMessage = CreateResponseMessage<ResponseMessageText>();
-                        reponseMessage = strongResponseMessage;
-
-                        //获取用户OpenId，如果用户没有绑定会员卡，提示登录并绑定
-
-
-                        var bindInfo = cardweixinService.Get(requestMessage.FromUserName);
-                        //未绑定会员帐户
-                        if (bindInfo == null)
-                        {
-                            //时间戳
-                            string timestamp = xftwl.Infrastructure.TimeHelper.ConvertDateTime(DateTime.Now);
-                            string token = System.Web.Configuration.WebConfigurationManager.AppSettings["xftkaToken"].ToString();//这个是微信与www.xftka.com之间的约定
-                            string xftkaSecret = System.Web.Configuration.WebConfigurationManager.AppSettings["xftkaSecret"].ToString(); //签名密钥
-                            //应用签名=token+签名密钥
-                            string signature = xftwl.Infrastructure.DESEncrypt.Encrypt(xftkaSecret, token);
-                            //加密OpenId
-                            OpenId = xftwl.Infrastructure.DESEncrypt.Encrypt(OpenId, token);
-                            strongResponseMessage.Content = string.Format("<a href='https://www.xftka.com/weixin/login?OpenId={0}&timestamp={1}&signature={2}'>点此绑定惠民卡帐户</a>", OpenId, timestamp, signature);
-                        }
-                        else
-                        {
-
-                            //如果己绑定查询该用户会员卡信息
-                            userInfo = userService.GetDetail(bindInfo.UserId);
-
-                            //这个过程实际已经在OnTextOrEventRequest中完成，这里不会执行到。
-
-                            var income = cardService.GetIncome(userInfo.CardNo);//总收益
-                            var balance = cardService.GetBalance(userInfo.CardNo);//卡余额
-                            var award = cardService.SumAward(userInfo.CardNo);//提成
-                            if (string.IsNullOrWhiteSpace(userInfo.CardNo))
-                            {
-                                strongResponseMessage.Content = "您的会员卡号没有找到";
-
-                            }
-                            else
-                            {
-                                strongResponseMessage.Content = "您已经绑定过会员卡了~";
-                            }
-                        }
-                        #endregion
-                    }
-                    break;
-                case "balance": //查询余额及红包
-                    {
-                        #region 余额以及红包
-                        //思路，微信生成签名去访问https://www.xftka.com
-                        //未绑定用户执行用户绑定
-
-                        var strongResponseMessage = CreateResponseMessage<ResponseMessageText>();
-                        reponseMessage = strongResponseMessage;
-
-                        //获取用户OpenId，如果用户没有绑定会员卡，提示登录并绑定
-
-
-                        var bindInfo = cardweixinService.Get(requestMessage.FromUserName);
-                        //未绑定会员帐户
-                        if (bindInfo == null)
-                        {
-                            //时间戳
-                            string timestamp = xftwl.Infrastructure.TimeHelper.ConvertDateTime(DateTime.Now);
-                            string token = System.Web.Configuration.WebConfigurationManager.AppSettings["xftkaToken"].ToString();//这个是微信与www.xftka.com之间的约定
-                            string xftkaSecret = System.Web.Configuration.WebConfigurationManager.AppSettings["xftkaSecret"].ToString(); //签名密钥
-                            //应用签名=token+签名密钥
-                            string signature = xftwl.Infrastructure.DESEncrypt.Encrypt(xftkaSecret, token);
-                            //加密OpenId
-                            OpenId = xftwl.Infrastructure.DESEncrypt.Encrypt(OpenId, token);
-                            strongResponseMessage.Content = string.Format("<a href='https://wx.xftka.com/user/bind.html'>请先绑定惠民卡帐户</a>", OpenId, timestamp, signature);
-                        }
-                        else
-                        {
-
-                            //如果己绑定查询该用户会员卡信息
-                            userInfo = userService.GetDetail(bindInfo.UserId);
-
-                            //这个过程实际已经在OnTextOrEventRequest中完成，这里不会执行到。
-                            int hongbao = 0;//红包总数
-                            int redpack = 0;//可用红包数量
-                            var balance = cardService.GetBalance(userInfo.CardNo);//卡余额
-                            string phone = "";
-                            if (!string.IsNullOrEmpty(userInfo.Phone))
-                                phone = userInfo.Phone;
-                            if (phone != "")
-                            {
-                                //红包总数
-                                var redList = repackService.GetByPhone(phone, false);
-                                if (redList != null && redList.ToList().Count > 0)
-                                    hongbao = redList.ToList().Count;
-                                //现有红包数量
-                                var redList1 = repackService.GetByPhone(phone, true);
-                                if (redList1 != null && redList1.ToList().Count > 0)
-                                    redpack = redList1.ToList().Count;
-                            }
-                            //hongbao = repackService.Search(userInfo.CardNo);
-                            if (string.IsNullOrWhiteSpace(userInfo.CardNo))
-                            {
-                                strongResponseMessage.Content = "您的会员卡号没有找到";
-
-                            }
-                            else
-                            {
-                                strongResponseMessage.Content = string.Format("截止日期:{0}\r\n会员卡号:{1}\r\n余额:{2}\r\n红包数量:{3}个(单个价值10元)", DateTime.Now, userInfo.CardNo, balance, redpack);
-                            }
-                        }
-                        #endregion
-                    }
-                    break;
-
-                case "liucheng": //办卡流程
-                    {
-                        # region 办卡流程
-                        //思路，微信生成签名去访问https://www.xftka.com
-                        //未绑定用户执行用户绑定
-
-                        var strongResponseMessage = CreateResponseMessage<ResponseMessageText>();
-                        reponseMessage = strongResponseMessage;
-
-                        //获取用户OpenId，如果用户没有绑定会员卡，提示登录并绑定
-
-                        var bindInfo = cardweixinService.Get(requestMessage.FromUserName);
-                        //未绑定会员帐户
-                        if (bindInfo == null)
-                        {
-                            //时间戳
-                            string timestamp = xftwl.Infrastructure.TimeHelper.ConvertDateTime(DateTime.Now);
-                            string token = System.Web.Configuration.WebConfigurationManager.AppSettings["xftkaToken"].ToString();//这个是微信与www.xftka.com之间的约定
-                            string xftkaSecret = System.Web.Configuration.WebConfigurationManager.AppSettings["xftkaSecret"].ToString(); //签名密钥
-                            //应用签名=token+签名密钥
-                            string signature = xftwl.Infrastructure.DESEncrypt.Encrypt(xftkaSecret, token);
-                            //加密OpenId
-                            OpenId = xftwl.Infrastructure.DESEncrypt.Encrypt(OpenId, token);
-                            strongResponseMessage.Content = string.Format("<a href='https://www.xftka.com/weixin/login?OpenId={0}&timestamp={1}&signature={2}'>请先绑定惠民卡帐户</a>", OpenId, timestamp, signature);
-                        }
-                        else
-                        {
-
-                            //如果己绑定查询该用户会员卡信息
-                            userInfo = userService.GetDetail(bindInfo.UserId);
-
-                            //这个过程实际已经在OnTextOrEventRequest中完成，这里不会执行到。
-                            int hongbao = 0;//红包
-                            var balance = cardService.GetBalance(userInfo.CardNo);//卡余额
-                            var redList = repackService.Search(userInfo.CardNo);
-                            hongbao = redList * 10;
-                            if (string.IsNullOrWhiteSpace(userInfo.CardNo))
-                            {
-                                strongResponseMessage.Content = "您的会员卡号没有找到";
-
-                            }
-                            else
-                            {
-                                strongResponseMessage.Content = string.Format("截止日期:{0}\r\n会员卡号:{1}\r\n余额为{2}\r\n红包为:{3}", DateTime.Now, userInfo.CardNo, balance, hongbao);
-                            }
-                        }
-                        #endregion
-                    }
-                    break;
-
-                case "income"://收益查询
-                    {
-                        #region 收益查询
-                        //思路，微信生成签名去访问https://www.xftka.com
-                        //未绑定用户执行用户绑定
-
-                        var strongResponseMessage = CreateResponseMessage<ResponseMessageText>();
-                        reponseMessage = strongResponseMessage;
-
-                        //获取用户OpenId，如果用户没有绑定会员卡，提示登录并绑定
-
-
-                        var bindInfo = cardweixinService.Get(requestMessage.FromUserName);
-                        //未绑定会员帐户
-                        if (bindInfo == null)
-                        {
-                            //时间戳
-                            string timestamp = xftwl.Infrastructure.TimeHelper.ConvertDateTime(DateTime.Now);
-                            string token = System.Web.Configuration.WebConfigurationManager.AppSettings["xftkaToken"].ToString();//这个是微信与www.xftka.com之间的约定
-                            string xftkaSecret = System.Web.Configuration.WebConfigurationManager.AppSettings["xftkaSecret"].ToString(); //签名密钥
-                            //应用签名=token+签名密钥
-                            string signature = xftwl.Infrastructure.DESEncrypt.Encrypt(xftkaSecret, token);
-                            //加密OpenId
-                            OpenId = xftwl.Infrastructure.DESEncrypt.Encrypt(OpenId, token);
-                            strongResponseMessage.Content = string.Format("<a href='https://www.xftka.com/weixin/login?OpenId={0}&timestamp={1}&signature={2}'>请先绑定惠民卡帐户</a>", OpenId, timestamp, signature);
-                        }
-                        else
-                        {
-
-                            //如果己绑定查询该用户会员卡信息
-                            userInfo = userService.GetDetail(bindInfo.UserId);
-
-                            //这个过程实际已经在OnTextOrEventRequest中完成，这里不会执行到。
-
-                            var income = cardService.GetIncome(userInfo.CardNo);//总收益
-                            var balance = cardService.GetBalance(userInfo.CardNo);//卡余额
-                            var award = cardService.SumAward(userInfo.CardNo);//提成
-                            if (string.IsNullOrWhiteSpace(userInfo.CardNo))
-                            {
-                                strongResponseMessage.Content = "您的会员卡号没有找到";
-
-                            }
-                            else
-                            {
-                                strongResponseMessage.Content = string.Format("截止日期:{0}\r\n会员卡号:{1}\r\n余额:{2}\r\n累计收益:{3}\r\n累计奖励:{4}", DateTime.Now, userInfo.CardNo, balance, income, award);
-                            }
-                        }
-                        #endregion
-                    }
-                    break;
-                case "award"://奖励查询
-                    {
-                        //思路，微信生成签名去访问https://www.xftka.com
-                        //未绑定用户执行用户绑定
-                        #region 奖励查询
-                        var strongResponseMessage = CreateResponseMessage<ResponseMessageText>();
-                        reponseMessage = strongResponseMessage;
-
-                        //获取用户OpenId，如果用户没有绑定会员卡，提示登录并绑定
-
-
-                        var bindInfo = cardweixinService.Get(requestMessage.FromUserName);
-                        //未绑定会员帐户
-                        if (bindInfo == null)
-                        {
-                            //时间戳
-                            string timestamp = xftwl.Infrastructure.TimeHelper.ConvertDateTime(DateTime.Now);
-                            string token = System.Web.Configuration.WebConfigurationManager.AppSettings["xftkaToken"].ToString();//这个是微信与www.xftka.com之间的约定
-                            string xftkaSecret = System.Web.Configuration.WebConfigurationManager.AppSettings["xftkaSecret"].ToString(); //签名密钥
-                            //应用签名=token+签名密钥
-                            string signature = xftwl.Infrastructure.DESEncrypt.Encrypt(xftkaSecret, token);
-                            //加密OpenId
-                            OpenId = xftwl.Infrastructure.DESEncrypt.Encrypt(OpenId, token);
-                            strongResponseMessage.Content = string.Format("<a href='https://www.xftka.com/weixin/login?OpenId={0}&timestamp={1}&signature={2}'>请先绑定惠民卡帐户</a>", OpenId, timestamp, signature);
-                        }
-                        else
-                        {
-
-                            //如果己绑定查询该用户会员卡信息
-                            userInfo = userService.GetDetail(bindInfo.UserId);
-
-                            //这个过程实际已经在OnTextOrEventRequest中完成，这里不会执行到。
-
-                            var income = cardService.GetIncome(userInfo.CardNo);//总收益
-                            var balance = cardService.GetBalance(userInfo.CardNo);//卡余额
-                            var award = cardService.SumAward(userInfo.CardNo);//提成
-                            if (string.IsNullOrWhiteSpace(userInfo.CardNo))
-                            {
-                                strongResponseMessage.Content = "您的会员卡号没有找到";
-
-                            }
-                            else
-                            {
-                                var ReferralUserList = userService.GetReferralUser(userInfo.CardNo, 1, 10);
-                                long rs = 0;
-                                if (ReferralUserList != null)
-                                {
-                                    rs = ReferralUserList.TotalItems;
-                                }
-                                strongResponseMessage.Content = string.Format("截止日期:{0}\r\n会员卡号:{1}\r\n己推广{2}人\r\n累计奖励:{3}", DateTime.Now, userInfo.CardNo, rs, award);
-
-
-                            }
-                        }
-                        #endregion
-                    }
-                    break;
-                case "change"://立即充值
-                    {
-
-                        //获取用户OpenId，如果用户没有绑定会员卡，提示登录并绑定
-
-                        //验证该OpenId用户是否绑定
-                        var record = cardweixinService.Get(OpenId);
-                        //如果没有绑定进行用户绑定
-                        if (record == null)
-                        {
-                            requestMessage.EventKey = "OAuth";
-                        }
-                        else
-                        {
-                            //如果己绑定查询该用户会员卡信息
-                            userInfo = userService.GetDetail(record.UserId);
-                        }
-
-                        var strongResponseMessage = CreateResponseMessage<ResponseMessageText>();
-                        reponseMessage = strongResponseMessage;
-                        strongResponseMessage.Content = "微信支付正在申请中。";
-                    }
-                    break;
-
-
-                case "hd"://精彩活动
-                    {
-                        var strongResponseMessage = CreateResponseMessage<ResponseMessageNews>();
-                        reponseMessage = strongResponseMessage;
-
-                        //获取用户OpenId，如果用户没有绑定会员卡，提示登录并绑定
-
-
-                        var bindInfo = cardweixinService.Get(requestMessage.FromUserName);
-                        //未绑定会员帐户
-                        if (bindInfo == null)
-                        {
-                            //时间戳
-                            string timestamp = xftwl.Infrastructure.TimeHelper.ConvertDateTime(DateTime.Now);
-                            string token = System.Web.Configuration.WebConfigurationManager.AppSettings["xftkaToken"].ToString();//这个是微信与www.xftka.com之间的约定
-                            string xftkaSecret = System.Web.Configuration.WebConfigurationManager.AppSettings["xftkaSecret"].ToString(); //签名密钥
-                            //应用签名=token+签名密钥
-                            string signature = xftwl.Infrastructure.DESEncrypt.Encrypt(xftkaSecret, token);
-                            //加密OpenId
-                            OpenId = xftwl.Infrastructure.DESEncrypt.Encrypt(OpenId, token);
-                            strongResponseMessage.Articles.Add(new Article()
-                            {
-                                Title = "您还未绑定卡",
-                                Description = "点击图片进行绑定。",
-                                PicUrl = "http://wx.xftka.com/Images/xft-card.jpg",
-                                Url = string.Format("https://www.xftka.com/weixin/login?OpenId={0}&timestamp={1}&signature={2}", OpenId, timestamp, signature)
-
-                            });
-                        }
-                        else
-                        {
-
-                            //如果己绑定查询该用户会员卡信息
-                            userInfo = userService.GetDetail(bindInfo.UserId);
-
-                            //这个过程实际已经在OnTextOrEventRequest中完成，这里不会执行到。
-
-                            var income = cardService.GetIncome(userInfo.CardNo);//总收益
-                            var balance = cardService.GetBalance(userInfo.CardNo);//卡余额
-                            var award = cardService.SumAward(userInfo.CardNo);//提成
-                            if (string.IsNullOrWhiteSpace(userInfo.CardNo))
-                            {
-                                strongResponseMessage.Articles.Add(new Article()
-                                {
-                                    Title = "关注惠民卡，抢消费通红包",
-                                    Description = "点击图片转发给朋友即可得红包。",
-                                    PicUrl = "http://wx.xftka.com/Images/xft-card.jpg",
-                                    Url = "http://wx.xftka.com/xft/Index"
-                                });
-                            }
-                            else
-                            {
-                                strongResponseMessage.Articles.Add(new Article()
-                                {
-                                    Title = "关注惠民卡，抢消费通红包",
-                                    Description = "点击图片转发给朋友即可得红包。",
-                                    PicUrl = "http://wx.xftka.com/Images/xft-card.jpg",
-                                    Url = "http://wx.xftka.com/xft/Index#" + userInfo.UserId
-                                });
-                            }
-                        }
-
-
-                    }
-                    break;
-                case "question"://常见问题
-                    {
-                        var strongResponseMessage = CreateResponseMessage<ResponseMessageText>();
-                        reponseMessage = strongResponseMessage;
-                        strongResponseMessage.Content = "<a href='https://www.xftka.com/help/Index.html?pid=2'>常见问题</a>";
-                    }
-                    break;
-                case "introduce"://惠民卡介绍
-                    {
-                        var strongResponseMessage = CreateResponseMessage<ResponseMessageNews>();
-                        reponseMessage = strongResponseMessage;
-
-                        //获取用户OpenId，如果用户没有绑定会员卡，提示登录并绑定
-
-
-                        var bindInfo = cardweixinService.Get(requestMessage.FromUserName);
-                        //未绑定会员帐户
-                        if (bindInfo == null)
-                        {
-                            //时间戳
-                            string timestamp = xftwl.Infrastructure.TimeHelper.ConvertDateTime(DateTime.Now);
-                            string token = System.Web.Configuration.WebConfigurationManager.AppSettings["xftkaToken"].ToString();//这个是微信与www.xftka.com之间的约定
-                            string xftkaSecret = System.Web.Configuration.WebConfigurationManager.AppSettings["xftkaSecret"].ToString(); //签名密钥
-                            //应用签名=token+签名密钥
-                            string signature = xftwl.Infrastructure.DESEncrypt.Encrypt(xftkaSecret, token);
-                            //加密OpenId
-                            OpenId = xftwl.Infrastructure.DESEncrypt.Encrypt(OpenId, token);
-                            strongResponseMessage.Articles.Add(new Article()
-                            {
-                                Title = "您还未绑定卡",
-                                Description = "点击图片进行绑定。",
-                                PicUrl = "http://wx.xftka.com/Images/xft-card.jpg",
-                                Url = string.Format("https://www.xftka.com/weixin/login?OpenId={0}&timestamp={1}&signature={2}", OpenId, timestamp, signature)
-                            });
-                        }
-                        else
-                        {
-
-                            //如果己绑定查询该用户会员卡信息
-                            userInfo = userService.GetDetail(bindInfo.UserId);
-
-                            //这个过程实际已经在OnTextOrEventRequest中完成，这里不会执行到。
-
-                            var income = cardService.GetIncome(userInfo.CardNo);//总收益
-                            var balance = cardService.GetBalance(userInfo.CardNo);//卡余额
-                            var award = cardService.SumAward(userInfo.CardNo);//提成
-                            if (string.IsNullOrWhiteSpace(userInfo.CardNo))
-                            {
-                                strongResponseMessage.Articles.Add(new Article()
-                                {
-                                    Title = "三天充值七千万，小小卡片引无数市民竞“折腰”",
-                                    Description = "点击图片查看消费通惠民卡详情。",
-                                    PicUrl = "http://wx.xftka.com/Images/xft-card.jpg",
-                                    Url = "http://wx.xftka.com/Article/Index"
-                                });
-                            }
-                            else
-                            {
-                                strongResponseMessage.Articles.Add(new Article()
-                                {
-                                    Title = "三天充值七千万，小小卡片引无数市民竞“折腰”",
-                                    Description = "点击图片查看消费通惠民卡详情。",
-                                    PicUrl = "http://wx.xftka.com/Images/xft-card.jpg",
-                                    Url = "http://wx.xftka.com/Article/Index?id=" + userInfo.UserId
-                                });
-                            }
-                        }
-
-
-                    }
-                    break;
-                case "OAuth"://OAuth授权测试
-                    {
-                        //var strongResponseMessage = CreateResponseMessage<ResponseMessageNews>();
-                        //strongResponseMessage.Articles.Add(new Article()
-                        //{
-                        //	Title = "消费通会员微信绑定",
-                        //	Description = "消费通会员微信绑定"+requestMessage.FromUserName,
-                        //	Url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx041c67ba2f9b8cdb&redirect_uri=http://wx.xftka.com/oauth/UserInfoCallback&response_type=code&scope=snsapi_userinfo&state=xftka#wechat_redirect",
-                        //	PicUrl = "http://wx.xftka.com/Images/qrcode.jpg"
-                        //});
-                        //reponseMessage = strongResponseMessage;
-
-                        var strongResponseMessage = CreateResponseMessage<ResponseMessageText>();
-                        strongResponseMessage.Content = "<a href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx041c67ba2f9b8cdb&redirect_uri=https://www.xftka.com/oauth/UserInfoCallback&response_type=code&scope=snsapi_userinfo&state=xftka#wechat_redirect'>点击此链接完成帐号绑定</a>";
-                        reponseMessage = strongResponseMessage;
-
-                    }
-                    break;
 
                 case "kf"://联系客服
                     {
 
                         var strongResponseMessage = CreateResponseMessage<ResponseMessageText>();
-                        strongResponseMessage.Content = "客服转接中，请稍侯......\r\n 客服电话：400-822-7897";//显示欢迎信息
+                        strongResponseMessage.Content = "客服转接中，请稍侯......\r\n 客服电话：400-1690-999";//显示欢迎信息
                         reponseMessage = strongResponseMessage;
 
                         //多客服响应
                         return this.CreateResponseMessage<ResponseMessageTransfer_Customer_Service>();
 
                     }
-                    //break;
+                //break;
 
                 default:
                     {
@@ -980,103 +382,92 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
 
                     //获取推广用户OpenId
                     string txOpenId = "";
-                    var tguser = cardweixinService.Get(TgUserId);
+                    var tguser = wxservice.GetByOpenId("");
                     if (tguser != null)
                     {
                         txOpenId = tguser.OpenId;
                     }
                     else { log.Error("通过扫描关注后未能在xft_card_weixin表中获取到推广人的用户绑定信息"); }
                     //保存微信用户信息
-                    var user = cardweixinService.Get(openId);
+                    var user = wxservice.GetByOpenId("");
                     //如果不存在，直接新增 
                     if (user == null)
                     {
 
-                        CardWeixinModel cm = new CardWeixinModel()
-                        {
-                            CreateDate = DateTime.Now,
-                            Id = 0,
-                            MediaId = "",
-                            Nonce = Nonce,
-                            OpenId = openId,
-                            QrCode = "",
-                            UserId = 0,
-                            WxTgUserId = TgUserId
-                        };
-                        cardweixinService.Save(cm);
+
 
                         string content = string.Format("您推荐的一级合伙人:{0}己关注了消费通平台", wxuser.nickname);
                         //推送消息给推广人
                         Custom.SendText(token, tguser.OpenId, content);
 
                         #region 给推广人的上级发消息
-                        if (tguser.WxTgUserId > 0)
-                        {
-                            //上上级用户
-                            var tg2 = cardweixinService.Get(tguser.WxTgUserId);
+                        //if (tguser.WxTgUserId > 0)
+                        //{
+                        //    //上上级用户
+                        //    var tg2 = cardweixinService.Get(tguser.WxTgUserId);
 
-                            if (tg2 != null)
-                            {
-                                log.Info("上级的上级用户UserId=" + tg2.UserId + "  openid=" + tg2.OpenId);
-                                string content2 = string.Format("您推荐的二级合伙人:{0}己关注了消费通平台", wxuser.nickname);
-                                Custom.SendText(token, tg2.OpenId, content2);
-                                #region 给3级发消息
-                                //获取上上上级用户
-                                var tg3 = cardweixinService.Get(tg2.WxTgUserId);
-                                if (tg3 != null)
-                                {
-                                    log.Info("上级的上级的上级用户UserId=" + tg3.UserId + "  openid=" + tg3.OpenId);
-                                    string content3 = string.Format("您推荐的三级合伙人:{0}己关注了消费通平台", wxuser.nickname);
-                                    Custom.SendText(token, tg3.OpenId, content3);
-                                }
-                                #endregion
-                            }
-                        }
+                        //    if (tg2 != null)
+                        //    {
+                        //        log.Info("上级的上级用户UserId=" + tg2.UserId + "  openid=" + tg2.OpenId);
+                        //        string content2 = string.Format("您推荐的二级合伙人:{0}己关注了消费通平台", wxuser.nickname);
+                        //        Custom.SendText(token, tg2.OpenId, content2);
+                        //        #region 给3级发消息
+                        //        //获取上上上级用户
+                        //        var tg3 = cardweixinService.Get(tg2.WxTgUserId);
+                        //        if (tg3 != null)
+                        //        {
+                        //            log.Info("上级的上级的上级用户UserId=" + tg3.UserId + "  openid=" + tg3.OpenId);
+                        //            string content3 = string.Format("您推荐的三级合伙人:{0}己关注了消费通平台", wxuser.nickname);
+                        //            Custom.SendText(token, tg3.OpenId, content3);
+                        //        }
+                        //        #endregion
+                        //    }
+                        //}
 
                         #endregion
                     }
                     else
                     {
                         //如果存在，查看该微信用户是否有会员卡信息，如果没有会员信息，或者推荐人为空，那么更新xft_card_weixin WxTgUserId字段，其它情况不处理
-                        var userinfo = userService.GetDetail(user.UserId);
-                        if (userinfo == null || string.IsNullOrEmpty(userinfo.ReferrerCardNo))
-                        {
-                            user.WxTgUserId = tguser.UserId;
-                            cardweixinService.Save(user);
-                        }
-                        if (user.WxTgUserId != tguser.UserId)
-                        {
-                            string content = string.Format("您推荐的一级合伙人:{0}己关注了消费通平台", wxuser.nickname);
-                            //推送消息给推广人
-                            Custom.SendText(token, tguser.OpenId, content);
+                        //var userinfo = userService.GetDetail(user.UserId);
+                        //if (userinfo == null || string.IsNullOrEmpty(userinfo.ReferrerCardNo))
+                        //{
+                        //    user.WxTgUserId = tguser.UserId;
+                        //    cardweixinService.Save(user);
+                        //}
+                        //if (user.WxTgUserId != tguser.UserId)
+                        //{
+                        //    string content = string.Format("您推荐的一级合伙人:{0}己关注了消费通平台", wxuser.nickname);
+                        //    //推送消息给推广人
+                        //    Custom.SendText(token, tguser.OpenId, content);
 
-                            #region 给推广人的上级发消息
-                            if (tguser.WxTgUserId > 0)
-                            {
-                                var tg2 = cardweixinService.Get(tguser.WxTgUserId);
-                                if (tg2 != null)
-                                {
-                                    string content2 = string.Format("您推荐的二级合伙人:{0}己关注了消费通平台", wxuser.nickname);
-                                    Custom.SendText(token, tg2.OpenId, content2);
-                                    #region 给3级发消息
-                                    //获取上上上级用户
-                                    var tg3 = cardweixinService.Get(tg2.WxTgUserId);
-                                    if (tg3 != null)
-                                    {
-                                        log.Info("上级的上级的上级用户UserId=" + tg3.UserId + "  openid=" + tg3.OpenId);
-                                        string content3 = string.Format("您推荐的三级合伙人:{0}己关注了消费通平台", wxuser.nickname);
-                                        Custom.SendText(token, tg3.OpenId, content3);
-                                    }
-                                    #endregion
-                                }
-                            }
+                        //    #region 给推广人的上级发消息
+                        //    if (tguser.WxTgUserId > 0)
+                        //    {
+                        //        var tg2 = cardweixinService.Get(tguser.WxTgUserId);
+                        //        if (tg2 != null)
+                        //        {
+                        //            string content2 = string.Format("您推荐的二级合伙人:{0}己关注了消费通平台", wxuser.nickname);
+                        //            Custom.SendText(token, tg2.OpenId, content2);
+                        //            #region 给3级发消息
+                        //            //获取上上上级用户
+                        //            var tg3 = cardweixinService.Get(tg2.WxTgUserId);
+                        //            if (tg3 != null)
+                        //            {
+                        //                log.Info("上级的上级的上级用户UserId=" + tg3.UserId + "  openid=" + tg3.OpenId);
+                        //                string content3 = string.Format("您推荐的三级合伙人:{0}己关注了消费通平台", wxuser.nickname);
+                        //                Custom.SendText(token, tg3.OpenId, content3);
+                        //            }
+                        //            #endregion
+                        //        }
+                        //    }
 
-                            #endregion
-                        }
+                        //    #endregion
+                        //}
 
-                        user.WxTgUserId = tguser.UserId;
-                        user.Nonce = Nonce;
-                        cardweixinService.Save(user);
+                        //user.WxTgUserId = tguser.UserId;
+                        //user.Nonce = Nonce;
+                        //cardweixinService.Save(user);
 
 
                     }

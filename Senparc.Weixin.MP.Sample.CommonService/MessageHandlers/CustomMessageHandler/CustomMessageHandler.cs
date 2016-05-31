@@ -81,7 +81,7 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
                 //获取用户OpenId，如果用户没有绑定会员卡，提示登录并绑定
                 string OpenId = requestMessage.FromUserName;
 
-                var bindInfo = cardweixinService.Get(OpenId);
+                var bindInfo = wxservice.GetByOpenId(OpenId);
                 //未绑定会员帐户
                 if (bindInfo == null)
                 {
@@ -122,7 +122,7 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
                     //微信用户的昵称
                     var wxname = wxuser.nickname;
                     //推广用户的UserId
-                    int userId = bindInfo.UserId;
+                    int userId = 0;
                     //发送创建临时二维码ticket的请求
                     var qrcode = QrCode.Create(apptoken, 604800, userId);
                     if (qrcode != null)

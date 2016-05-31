@@ -15,7 +15,23 @@ namespace qch.core
         readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         FoucsRepository rp = new FoucsRepository();
 
-
+        /// <summary>
+        /// 获取我关注的所有人
+        /// </summary>
+        /// <param name="Guid"></param>
+        /// <returns></returns>
+        public IEnumerable<FoucsUser> GetFoucsFroMe(string Guid)
+        {
+            try
+            {
+                return rp.GetFoucsFroMe(Guid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
         /// <summary>
         /// 获取某人的所有粉丝
         /// </summary>

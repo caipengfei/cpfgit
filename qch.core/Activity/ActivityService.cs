@@ -19,6 +19,75 @@ namespace qch.core
 
 
         /// <summary>
+        /// 微信端活动列表
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <param name="CityName"></param>
+        /// <param name="days"></param>
+        /// <param name="payType"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<ActivityModel> GetListFroWX(int page, int pagesize, string CityName, int days, string payType)
+        {
+            try
+            {
+                var model = rp.GetListFroWX(page, pagesize, CityName, days, payType);
+                if (model != null && model.Items != null)
+                {
+                    model.Items.Select(o => o.Applys = this.GetApplys(o.Guid));
+                }
+                return model;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
+        /// 获取某个活动报名人数
+        /// </summary>
+        /// <param name="Guid"></param>
+        /// <returns></returns>
+        public int GetApplys(string Guid)
+        {
+            try
+            {
+                int xy = 0;
+                using (var db = new PetaPoco.Database(DbConfig.qch))
+                {
+                    string sql = "select count(1) from t_activity_apply where t_DelState=0 and t_Activity_Guid=@0";
+                    var model = db.ExecuteScalar<object>(sql, new object[] { Guid });
+                    if (model != null)
+                        xy = Convert.ToInt32(model);
+                }
+                return xy;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return 0;
+            }
+        }
+        /// <summary>
+        /// 获取所有活动，按照推荐和开始日期排序
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<ActivityModel> GetAll(int page, int pagesize)
+        {
+            try
+            {
+                return rp.GetAll(page, pagesize);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
         /// 发布活动
         /// </summary>
         /// <param name="openid"></param>

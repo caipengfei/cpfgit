@@ -15,6 +15,51 @@ namespace qch.core
         readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         StyleRepository rp = new StyleRepository();
 
+
+        /// <summary>
+        /// 批量获取
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        public IEnumerable<StyleModel> GetByIds(string ids)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(ids))
+                    return null;
+                if (ids.IndexOf(';') <= 0)
+                {
+                    var model = rp.GetByIds(ids);
+                    if (model == null)
+                        model = new List<StyleModel>();
+                    return model;
+                }
+                else
+                {
+                    string value = "";
+                    var xy = ids.Split(';');
+                    if (xy.Length > 0)
+                    {
+                        foreach (var item in xy)
+                        {
+                            value = value + item + ",";
+                        }
+                        value = value.Substring(0, value.Length);
+                        log.Info("获取属性值的ids：" + value);
+                        var model = rp.GetByIds(value);
+                        if (model == null)
+                            model = new List<StyleModel>();
+                        return model;
+                    }
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
         /// <summary>
         /// 分页获取所有
         /// </summary>
@@ -77,7 +122,7 @@ namespace qch.core
                     }
                 }
                 else
-                {                    
+                {
                     model.t_AddDate = DateTime.Now;
                     model.t_ModifydDate = DateTime.Now;
                     if (rp.Add(model))

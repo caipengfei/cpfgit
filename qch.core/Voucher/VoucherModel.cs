@@ -11,5 +11,22 @@ namespace qch.Models
     /// </summary>
     public class VoucherModel : T_Voucher
     {
+        /// <summary>
+        /// 优惠券类型
+        /// </summary>
+        public string VoucherTypeText
+        {
+            get
+            {
+                if (T_Voucher_Type == 1)
+                    return "抵扣券";
+                else if (T_Voucher_Type == 2)
+                    return "代用券";
+                else if (T_Voucher_Type == 3)
+                    return "随机折扣券";
+                else
+                    return "";
+            }
+        }
     }
 }

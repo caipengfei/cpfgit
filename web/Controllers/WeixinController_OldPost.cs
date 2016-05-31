@@ -26,8 +26,9 @@ namespace Senparc.Weixin.MP.Sample.Controllers
         [ActionName("OldIndex")]
         public ActionResult OldPost(string signature, string timestamp, string nonce, string echostr)
         {
-            LocationService locationService=new LocationService();
-            EventService eventService= new EventService();
+            log.Info("OldIndex");
+            LocationService locationService = new LocationService();
+            EventService eventService = new EventService();
 
             if (!CheckSignature.Check(signature, timestamp, nonce, Token))
             {
@@ -117,6 +118,7 @@ namespace Senparc.Weixin.MP.Sample.Controllers
             }
             catch (Exception ex)
             {
+                log.Error(ex.Message);
                 using (
                     TextWriter tw = new StreamWriter(Server.MapPath("~/App_Data/Error_" + DateTime.Now.Ticks + ".txt")))
                 {

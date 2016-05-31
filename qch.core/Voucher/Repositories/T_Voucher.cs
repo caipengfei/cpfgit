@@ -46,9 +46,9 @@ namespace qch.Repositories
         public DateTime T_eDate { get; set; }
         /// <summary>
         /// 优惠券类型
-        /// 1：优惠券；
-        /// 2：代金券；
-        /// 3：抵用券
+        /// 1：抵扣券；
+        /// 2：代用券；
+        /// 3：随机折扣券
         /// </summary>
         [Column]
         public int T_Voucher_Type { get; set; }

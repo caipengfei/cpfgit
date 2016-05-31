@@ -7,13 +7,9 @@ using System.Text;
 namespace qch.Models
 {
     /// <summary>
-    /// 活动实体类
+    /// 投资机构实体类
     /// </summary>
-    public class ActivityModel : T_Activity
+    public class InvestPlaceModel : T_Invest_Place
     {
-        /// <summary>
-        /// 报名人数
-        /// </summary>
-        public int Applys { get; set; }
     }
 }

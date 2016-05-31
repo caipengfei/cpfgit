@@ -66,6 +66,7 @@
     <Compile Include="Activity\ActivityService.cs" />
     <Compile Include="Activity\Repositories\ActivityRepository.cs" />
     <Compile Include="Activity\Repositories\T_Activity.cs" />
+    <Compile Include="Activity\SelectActivityModel.cs" />
     <Compile Include="AES.cs" />
     <Compile Include="Area\AreaModel.cs" />
     <Compile Include="Area\AreaService.cs" />
@@ -99,6 +100,16 @@
     <Compile Include="Integral\Repositories\IntegralRepository.cs" />
     <Compile Include="Integral\Repositories\T_IntegralManger.cs" />
     <Compile Include="Integral\Repositories\T_User_Integral.cs" />
+    <Compile Include="Invest\InvestCaseModel.cs" />
+    <Compile Include="Invest\InvestPlaceCase.cs" />
+    <Compile Include="Invest\InvestPlaceMember.cs" />
+    <Compile Include="Invest\InvestPlaceModel.cs" />
+    <Compile Include="Invest\InvestService.cs" />
+    <Compile Include="Invest\Repositories\InvestRepository.cs" />
+    <Compile Include="Invest\Repositories\T_InvestPlace_Case.cs" />
+    <Compile Include="Invest\Repositories\T_InvestPlace_Member.cs" />
+    <Compile Include="Invest\Repositories\T_Invest_Case.cs" />
+    <Compile Include="Invest\Repositories\T_Invest_Place.cs" />
     <Compile Include="JPUSH\JPushService.cs" />
     <Compile Include="JPUSH\PushModel.cs" />
     <Compile Include="JPUSH\Repositories\PushRepository.cs" />
@@ -134,6 +145,7 @@
     <Compile Include="Voucher\UserVoucherModel.cs" />
     <Compile Include="Voucher\VoucherModel.cs" />
     <Compile Include="Voucher\VoucherService.cs" />
+    <Compile Include="Voucher\VoucherTypeModel.cs" />
     <Compile Include="wxJS-SDK\Repositories\T_Weixin_OAuth.cs" />
     <Compile Include="wxJS-SDK\Repositories\WXAuthRepository.cs" />
     <Compile Include="wxJS-SDK\WXAuthModel.cs" />
