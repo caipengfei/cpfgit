@@ -51,11 +51,20 @@ namespace web.Controllers
                 this._loginUser = value;
             }
         }
+        JsapiService jsapiService = new JsapiService();
+        string appId
+        {
+            get
+            {
+                return System.Configuration.ConfigurationManager.AppSettings["TenPayV3_AppId"].ToString();
+            }
+        }
         //
         // GET: /Invitation/
         //用户推荐信息页面
         public ActionResult Index()
         {
+            ViewBag.UserGuid = "";
             if (LoginUser != null)
             {
                 ViewBag.Phone = LoginUser.t_User_LoginId;
@@ -65,7 +74,22 @@ namespace web.Controllers
                 ViewBag.tj1 = userService.GetReferral1(LoginUser.Guid);
                 ViewBag.tj2 = userService.GetReferral2(LoginUser.Guid);
                 ViewBag.Integral = zhijie + jianjie;
+                ViewBag.UserGuid = LoginUser.Guid;
             }
+            #region jsapi
+            string shareurl = Request.Url.ToString();
+            log.Info("邀请好友分享链接" + shareurl);
+            JsapiModel apiModel = new JsapiModel();
+            apiModel = jsapiService.GetSign(shareurl, shareurl, appId);
+            if (apiModel == null)
+            {
+                apiModel = new JsapiModel();
+            }
+            ViewBag.AppId = apiModel.AppId;
+            ViewBag.Timestamp = apiModel.Timestamp;
+            ViewBag.Noncestr = apiModel.Noncestr;
+            ViewBag.Signature = apiModel.Signature;
+            #endregion
             return View();
         }
         //一级推荐人列表
@@ -105,6 +129,13 @@ namespace web.Controllers
             ViewBag.TjIntegral = x;
             ViewBag.tuijian = userService.GetReferral1(UserGuid);
             return View(model);
+        }
+
+        public ActionResult Qiuyu(int? x,int? y)
+        {
+            var xy = x % y;
+            ViewBag.XY2 = xy;
+            return View();
         }
 
     }

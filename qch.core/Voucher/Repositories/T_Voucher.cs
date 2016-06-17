@@ -25,6 +25,11 @@ namespace qch.Repositories
         [Column]
         public string T_Voucher_Price { get; set; }
         /// <summary>
+        /// 积分兑换优惠券需要多少积分
+        /// </summary>
+        [Column]
+        public int T_Voucher_Integral { get; set; }
+        /// <summary>
         /// 优惠券获得途径/行为
         /// </summary>
         [Column]

@@ -54,7 +54,12 @@ namespace web.Controllers
         {
             return View();
         }
-
+        public ActionResult Test1()
+        {
+            NewsService ns = new NewsService();
+            var model = ns.GetAll(1, 300);
+            return View(model);
+        }
         public ActionResult TestApi()
         {
             string miyao = "life4u4me";

@@ -27,6 +27,7 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
         AccountService accountService = new AccountService();
         IntegralService integralService = new IntegralService();
         VoucherService voucherService = new VoucherService();
+        SignInService signInService = new SignInService();
         /// <summary>
         /// 图片保存路径
         /// </summary>        
@@ -43,38 +44,38 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
 
             var responseMessage = CreateResponseMessage<ResponseMessageNews>();
 
-            responseMessage.Articles.Add(new Article
-            {
-                Title = "消费通商城",
-                Description = "欢迎关注 让您睡觉都赚钱的平台 ----- 消费通商城 ！",
-                PicUrl = "https://mmbiz.qlogo.cn/mmbiz/tEhdqg7SO3l8CnMQDzPk5ia2kUowXyltVz5C4Ug75GNCkWlDaIZckMKnVicibHmJhbcst5aMicTEhj3ILXfY3GLqTg/0?wx_fmt=jpeg",
-                Url = "https://wx.xftka.com/ahome"
-            });
+            //responseMessage.Articles.Add(new Article
+            //{
+            //    Title = "消费通商城",
+            //    Description = "欢迎关注 让您睡觉都赚钱的平台 ----- 消费通商城 ！",
+            //    PicUrl = "https://mmbiz.qlogo.cn/mmbiz/tEhdqg7SO3l8CnMQDzPk5ia2kUowXyltVz5C4Ug75GNCkWlDaIZckMKnVicibHmJhbcst5aMicTEhj3ILXfY3GLqTg/0?wx_fmt=jpeg",
+            //    Url = "https://wx.xftka.com/ahome"
+            //});
 
-            //增加图文消息
-            responseMessage.Articles.Add(new Article
-            {
-                Title = "用户注册",
-                Description = "开启“消费能省钱，不消费也能赚钱”的全新体验",
-                PicUrl = "https://mmbiz.qlogo.cn/mmbiz/tEhdqg7SO3nb8rW3PoDrTQ2PTX6L5jy0xFJCiaia0Yib2lfLwmicx7gOdqb7pq1GkBo2h4kFmb5jIxhctehUbvZJPQ/0?wx_fmt=png",
-                Url = url
-            });
+            ////增加图文消息
+            //responseMessage.Articles.Add(new Article
+            //{
+            //    Title = "用户注册",
+            //    Description = "开启“消费能省钱，不消费也能赚钱”的全新体验",
+            //    PicUrl = "https://mmbiz.qlogo.cn/mmbiz/tEhdqg7SO3nb8rW3PoDrTQ2PTX6L5jy0xFJCiaia0Yib2lfLwmicx7gOdqb7pq1GkBo2h4kFmb5jIxhctehUbvZJPQ/0?wx_fmt=png",
+            //    Url = url
+            //});
 
-            responseMessage.Articles.Add(new Article
-            {
-                Title = "分享赚钱",
-                Description = "点击“分享赚钱”了解如何帮您赚钱",
-                PicUrl = "https://mmbiz.qlogo.cn/mmbiz/tEhdqg7SO3nb8rW3PoDrTQ2PTX6L5jy0gOqYatqjpYDMiaAe0Rh25dmaw9wXTSzz6v8bZ5P1rr2vqiadylH03wtA/0?wx_fmt=png",
-                Url = "https://wx.xftka.com/relay/index"
-            });
+            //responseMessage.Articles.Add(new Article
+            //{
+            //    Title = "分享赚钱",
+            //    Description = "点击“分享赚钱”了解如何帮您赚钱",
+            //    PicUrl = "https://mmbiz.qlogo.cn/mmbiz/tEhdqg7SO3nb8rW3PoDrTQ2PTX6L5jy0gOqYatqjpYDMiaAe0Rh25dmaw9wXTSzz6v8bZ5P1rr2vqiadylH03wtA/0?wx_fmt=png",
+            //    Url = "https://wx.xftka.com/relay/index"
+            //});
 
-            responseMessage.Articles.Add(new Article
-            {
-                Title = "服务中心",
-                Description = "点击“服务中心”让您更了解消费通网络公司",
-                PicUrl = "https://mmbiz.qlogo.cn/mmbiz/tEhdqg7SO3nb8rW3PoDrTQ2PTX6L5jy0RxlSzP2M4Uk0vxdcGVwiaw6CCIqXDBqEB2m2o01AYBGyCiagVhS7GV8Q/0?wx_fmt=png",
-                Url = "https://wx.xftka.com/ahome/kf"
-            });
+            //responseMessage.Articles.Add(new Article
+            //{
+            //    Title = "服务中心",
+            //    Description = "点击“服务中心”让您更了解消费通网络公司",
+            //    PicUrl = "https://mmbiz.qlogo.cn/mmbiz/tEhdqg7SO3nb8rW3PoDrTQ2PTX6L5jy0RxlSzP2M4Uk0vxdcGVwiaw6CCIqXDBqEB2m2o01AYBGyCiagVhS7GV8Q/0?wx_fmt=png",
+            //    Url = "https://wx.xftka.com/ahome/kf"
+            //});
 
             return responseMessage;
 
@@ -134,51 +135,33 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
         //自定义菜单点击事件
         public override IResponseMessageBase OnEvent_ClickRequest(RequestMessageEvent_Click requestMessage)
         {
-            UserModel userInfo = new UserModel();
+            //UserModel userInfo = new UserModel();
             IResponseMessageBase reponseMessage = null;
             string appId = System.Configuration.ConfigurationManager.AppSettings["TenPayV3_AppId"].ToString();
             //获取用户OpenId，如果用户没有绑定会员卡，提示登录并绑定
             string OpenId = requestMessage.FromUserName;
+            string Nonce = ToolHelper.createNonceStr();//随机数
+            log.Info("****服务器生成的随机数：" + Nonce);
+            log.Info("****服务器段的OpenId：" + OpenId);
+            var bindInfo = wxservice.GetByOpenId(OpenId);
             //菜单点击，需要跟创建菜单时的Key匹配
             switch (requestMessage.EventKey)
             {
+                #region 我的账户
                 case "myMessage": //查询我的帐户
                     {
-                        string Nonce = ToolHelper.createNonceStr();//随机数
-                        log.Info("****服务器生成的随机数：" + Nonce);
-                        log.Info("****服务器段的OpenId：" + OpenId);
-                        var bindInfo = wxservice.GetByOpenId(OpenId);
+
                         //未绑定会员帐户
                         if (bindInfo == null || string.IsNullOrWhiteSpace(bindInfo.UserGuid))
                         {
-                            if (bindInfo == null)
-                            { //己关注，但数据库中无信息时
-                                bindInfo = new WXUserModel
-                                {
-                                    CreateDate = DateTime.Now,
-                                    Guid = Guid.NewGuid().ToString(),
-                                    Nonce = Nonce,
-                                    OpenId = OpenId,
-                                    QrCode = "",
-                                    UserGuid = "",
-                                    WxTgUserGuid = "",
-                                    Avator = "",
-                                    KFOpenId = "",
-                                    MediaDate = DateTime.Now
-                                };
-                            }
-
-                            bindInfo.Nonce = Nonce; //该用户随机数
-                            wxservice.Save(bindInfo);
-
                             var responseMessage = CreateResponseMessage<ResponseMessageText>();
-                            string url = OAuth.GetAuthorizeUrl(appId, "http://test.cn-qch.com/wxuser/reg", Nonce, OAuthScope.snsapi_userinfo);
+                            string url = OAuth.GetAuthorizeUrl(appId, "http://www.cn-qch.com/wxuser/bind", Nonce, OAuthScope.snsapi_userinfo);
                             responseMessage.Content = "<a href='" + url + "'>请先绑定青创汇帐户</a>";
                             return responseMessage;
                         }
                         else
                         {
-                            log.Info("查询己绑定用户会员卡信息");
+                            log.Info("查询己绑定用户信息");
                             //如果己绑定查询该用户会员卡信息
                             var responseMessage = CreateResponseMessage<ResponseMessageText>();
 
@@ -209,18 +192,24 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
                                 log.Info("己取到这个微信用户数据");
                                 var account = accountService.GetBalance(target.Guid);
                                 var integral = integralService.GetIntegral(target.Guid);
+                                var voucher = voucherService.GetAlluvByUser(1, 9999, target.Guid);
+                                long vouchers = 0;
+                                if (voucher != null && voucher.Items != null)
+                                {
+                                    vouchers = voucher.TotalItems;
+                                }
                                 //var voucher1 = voucherService.GetVoucherByUser(target.Guid, 1);
                                 //var voucher2 = voucherService.GetVoucherByUser(target.Guid, 2);
                                 //var voucher3 = voucherService.GetVoucherByUser(target.Guid, 3);
                                 responseMessage.Content = string.Format("日期:{0}\r\n姓名:{1}\r\n手机号:{2}\r\n", DateTime.Now, target.t_User_RealName, target.t_User_LoginId);
 
                                 responseMessage.Content += string.Format("您当前的创业币:{0}\r\n", account);
-                                responseMessage.Content += string.Format("可用优惠券:0\r\n");
+                                responseMessage.Content += string.Format("可用优惠券:{0}\r\n", vouchers);
                                 //responseMessage.Content += string.Format("{0}:{1}\r\n", voucher1.VoucherType, voucher1.VoucherCount);
                                 //responseMessage.Content += string.Format("{0}:{1}\r\n", voucher2.VoucherType, voucher2.VoucherCount);
                                 //responseMessage.Content += string.Format("{0}:{1}\r\n", voucher3.VoucherType, voucher3.VoucherCount);
                                 responseMessage.Content += string.Format("累计积分:{0} \r\n", integral);
-                                string url = string.Format("<a href='http://test.cn-qch.com/wxuser/reg?OpenId={0}'>查看个人中心</a>", OpenId);
+                                string url = string.Format("<a href='http://www.cn-qch.com/wx/userCenter.html?UserGuid={0}'>查看个人中心</a>", target.Guid);
 
                                 responseMessage.Content += url;
                                 return responseMessage;
@@ -231,7 +220,127 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
                         }
 
                     }
+                #endregion
+                #region 绑定账户
+                case "bind":
+                    {
+                        log.Info("用户点击账户绑定按钮事件");
+                        if (bindInfo == null || string.IsNullOrWhiteSpace(bindInfo.UserGuid))
+                        {
+                            //不存在绑定信息
+                            var responseMessage = CreateResponseMessage<ResponseMessageText>();
+                            string url = OAuth.GetAuthorizeUrl(appId, "http://www.cn-qch.com/wxuser/bind", Nonce, OAuthScope.snsapi_userinfo);
+                            responseMessage.Content = "<a href='" + url + "'>点我去绑定</a>";
+                            log.Info(responseMessage.Content);
+                            return responseMessage;
+                        }
+                        else
+                        {
+                            //存在绑定信息
+                            var responseMessage = CreateResponseMessage<ResponseMessageText>();
+                            responseMessage.Content = "您已经绑定过青创汇\r\n";
+                            responseMessage.Content += "如需解除绑定，请回复 jcbd";
+                            return responseMessage;
+                        }
+                    }
+                #endregion
+                #region 创客社区
+                case "chuangke":
+                    {
+                        var responseMessage = CreateResponseMessage<ResponseMessageText>();
+                        responseMessage.Content = "功能开发中敬请期待！";
+                        return responseMessage;
+                    }
+                #endregion
+                #region 积分抽奖
+                    //已改为链接跳转
+                case "integral":
+                    {
+                        var responseMessage = CreateResponseMessage<ResponseMessageText>();
+                        responseMessage.Content = "功能开发中敬请期待！";
+                        return responseMessage;
+                    }
+                #endregion
+                #region 签到送积分
+                case "signUp":
+                    {
+                        //未绑定会员帐户
+                        if (bindInfo == null || string.IsNullOrWhiteSpace(bindInfo.UserGuid))
+                        {
+                            var responseMessage = CreateResponseMessage<ResponseMessageText>();
+                            string url = OAuth.GetAuthorizeUrl(appId, "http://www.cn-qch.com/wxuser/bind", Nonce, OAuthScope.snsapi_userinfo);
+                            responseMessage.Content = "<a href='" + url + "'>请先绑定青创汇帐户</a>";
+                            return responseMessage;
+                        }
+                        else
+                        {
+                            //如果己绑定查询该用户信息
+                            var responseMessage = CreateResponseMessage<ResponseMessageText>();
+                            var target = userService.GetDetail(bindInfo.UserGuid);
+                            if (target != null)
+                            {
+                                log.Info("用户签到，己取到这个微信用户数据");
+                                var msg = signInService.SignIn(target.Guid);
+                                responseMessage.Content = msg.Data;
+                                if (msg.type == "success")
+                                {
+                                    responseMessage.Content += "\r\n";
+                                    responseMessage.Content += msg.Remark;
+                                    responseMessage.Content += "\r\n去APP签到多送5积分哦~";
+                                }
+                                return responseMessage;
+                            }
+                            responseMessage.Content = "签到失败，请稍后再试";
+                            return responseMessage;
+                        }
 
+                    }
+                #endregion
+                #region 优惠券领取
+                case "voucher":
+                    {
+                        var responseMessage = CreateResponseMessage<ResponseMessageText>();
+                        responseMessage.Content = "运营喵策划中，敬请期待！！！";
+                        return responseMessage;
+                    }
+                #endregion
+                #region 预约报名查询
+                    //已经改为链接跳转
+                case "myserver":
+                    {
+                        var responseMessage = CreateResponseMessage<ResponseMessageText>();
+                        responseMessage.Content = "功能开发中......";
+                        return responseMessage;
+                    }
+                #endregion
+                #region 邀请好友结果
+                case "yqRequest":
+                    {
+                        var responseMessage = CreateResponseMessage<ResponseMessageText>();
+                        if (bindInfo != null)
+                        {
+                            var uservoucher = voucherService.GetVoucherByUser(bindInfo.UserGuid, "zhijietuijian");
+                            int xy1 = userService.GetReferral1(bindInfo.UserGuid);
+                            int xy2 = userService.GetReferral2(bindInfo.UserGuid);
+                            responseMessage.Content += string.Format("您当前的推荐信息:\r\n");
+                            responseMessage.Content += string.Format("直接邀请注册:{0}人\r\n", xy1);
+                            responseMessage.Content += string.Format("间接邀请注册:{0}人\r\n", xy2);
+                            responseMessage.Content += string.Format("获得奖励: \r\n");
+                            if (uservoucher != null)
+                                responseMessage.Content += string.Format("优惠券: {0}张{1}元{2}\r\n", uservoucher.VoucherCount, uservoucher.VoucherMoney, uservoucher.VoucherTypeText);
+                            else
+                                responseMessage.Content += string.Format("暂无优惠券奖励！ \r\n");
+                            responseMessage.Content += string.Format("创业币:{0} \r\n", 0);
+                            return responseMessage;
+                        }
+                        else
+                        {
+                            string url = OAuth.GetAuthorizeUrl(appId, "http://www.cn-qch.com/wxuser/reg", Nonce, OAuthScope.snsapi_userinfo);
+                            responseMessage.Content = "<a href='" + url + "'>请先绑定青创汇帐户</a>";
+                            return responseMessage;
+                        }
+                    }
+                #endregion
                 case "kf"://联系客服
                     {
 
@@ -377,8 +486,8 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
 
                     int TgUserId = Convert.ToInt32(requestMessage.EventKey.Split('_')[1]);
                     log.Info("扫码二维码得到的推荐人id：" + TgUserId);
-                    xftwl.Infrastructure.CookieHelper.ClearCookie("TgUId");
-                    xftwl.Infrastructure.CookieHelper.SetCookie("TgUId", TgUserId.ToString());
+                    qch.Infrastructure.CookieHelper.ClearCookie("TgUId");
+                    qch.Infrastructure.CookieHelper.SetCookie("TgUId", TgUserId.ToString());
 
                     //获取推广用户OpenId
                     string txOpenId = "";

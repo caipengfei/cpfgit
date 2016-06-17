@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <link rel="dns-prefetch" href="//test.cn-qch.com/" />
+    <link rel="dns-prefetch" href="//www.cn-qch.com/" />
+    <title>资讯详情</title>
+    <link rel="stylesheet" href="/content/css/public.css">
+    <link rel="stylesheet" href="/content/css/newsDetails.css">
+</head>
+
+<body>
+    <div class="header">
+        <div class="headbox">
+            <div class="logo">
+                <a href="/"></a>
+            </div>
+            <ul class="mainnav">
+                <li><a href="/">首页</a></li>
+                <li><a href="/content/news.html?fid=39">新闻资讯</a></li>
+                <li><a href="/activity/publish">+ 活动</a></li>
+                <li><a class="appDown">下载APP</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="mainContainer">
+        <h2></h2>
+        <div class="contentbox clear">
+            <div class="leftbox"></div>
+        </div>
+            
+    </div>
+
+    <div class="footer">
+        <div class="topbox clear">
+            <h2></h2>
+            <ul class="clear">
+                <li class="item1">
+                    <div>
+                        <img src="/content/image/index/erweima.png"></div>
+                </li>
+                <li class="item2">
+                    <div><a>关于QCH</a> | <a>加入我们</a> | <a class="appDown">APP下载</a></div>
+                    <p>客服电话: 400-1690-999</p>
+                    <p>工作时间: 周一到周五 9:00-18:00</p>
+                </li>
+                <li class="item3">
+                    <h2>合作伙伴:</h2>
+                    <div>
+                        <a>深圳中盟控股</a>
+                        <a>普及资本</a>
+                        <a>世界青年价值协会</a>
+                        <a>中华海外人才网</a>
+                        <a>天明集团CEO会</a>
+                        <a>新能源商会</a>
+                        <a>北京国投大成投资基金有限公司</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="bottombox">
+            <p>2016 青创汇 为创业者而生 <span> 粤ICP备15086625号-1</span></p>
+        </div>
+    </div>
+
+    <div class="indexTc" id="indexTc">
+        <div class="guanbiQu">
+            <a href="javascript:void(0);">
+                <img src="/content/image/share_qr_close3.png" alt="" /></a>
+        </div>
+        <ul class="top qieHover">
+            <li class="firstLi thisOver" id="sjB">下载App</li>
+            <li id="wxB">关注微信公众号</li>
+        </ul>
+        <ul class="tcNr">
+            <li id="sjBan">
+                <p class="tc_tt">扫一扫下方二维码下载App ，获取完整体验</p>
+                <div class="tc_Ma2">
+                    <img src="/content/image/index/erweima.png" alt="" />
+                </div>
+            </li>
+            <li id="wxBan" style="display: none;">
+                <p class="tc_tt">打开微信，扫一扫下方二维码</p>
+                <p class="tc_img">
+                    <img src="/content/image/qrcode_for_gh_36e651bc226a_430.jpg" alt="">
+                </p>
+                <p class="tc_gz">或者搜索并关注微信公众帐号：青创汇服务中心</p>
+            </li>
+        </ul>
+    </div>
+    <div id="cover2"></div>
+    <div class="loading"></div>
+
+    <script type="text/html" id="detailsTemplate">
+        <div class="topbox">
+            <h3><%=data.t_News_Title%></h3>
+            <p>更新时间：<%=formatDate(data.t_News_Date,'yyyy年MM月dd日')%>&nbsp;&nbsp;撰写客服：<%=data.t_News_Author%>  查看人数：<%=data.t_News_Counts%></p>
+        </div>
+        <div class="content"><%==data.t_News_Contents%></div>
+    </script>
+    <script src="/content/js/lib/jquery-1.12.2.min.js"></script>
+    <script src="/content/js/lib/artTemplate.js"></script>
+    <script src="/content/js/util.js"></script>
+    <script src="/content/js/news.js"></script>
+    <script>
+        $.ajax({
+            url:'http://120.25.106.244:9001/api/news/GetNewsMenu',
+            cache:false,
+            data:{fid:39},
+            success:function(res){
+                if(res){
+                    var html='';
+                    for(var i=0,len=res.length;i<len;i++){
+                        html+='<a href="/content/news.html?fid=39&id='+res[i].id+'" data-id='+res[i].id+'>'+res[i].t_Style_Name+'</a>'
+                    }
+                    $('#mainContainer>h2').html(html);
+                    $('#mainContainer>h2 a').each(function(){
+                        if($(this).data('id')==util.getUrlParam('id')){
+                            $(this).addClass('active');
+                        }
+                    })
+                    getData();
+                }
+            }
+        })
+        function getData(){
+            $.ajax({
+                url:'http://120.25.106.244:9001/api/news/GetById',
+                cache:false,
+                data:{guid:util.getUrlParam('guid')},
+                success:function(res){
+                    if(res){
+                        $('title').text('资讯详情--'+res.t_News_Title);
+                        $('.contentbox .leftbox').html(template('detailsTemplate',{data:res}));
+                        $('.loading').hide();
+                       /* $.ajax({
+                            url:'http://120.25.106.244:9001/api/news/GetAll',
+                            cache:false,
+                            data:{pagesize:20,page:1},
+                            success:function(res2){
+                                if(res2){
+                                    var html='';
+                                    for(var i=0,len=res2.items.length;i<len;i++){
+                                        var title=res2.items[i].t_News_Title;
+                                        html+='<li><a href="/content/newsDetails.html?id='+res2.items[i].t_News_Style+'&guid='+res2.items[i].guid+'">'+(title.length>20?title.slice(0,20)+'...':title)+'</a></li>'
+                                    }
+                                    $('.contentbox .rightbox ul').html(html);
+                                }
+                            }
+                        })*/
+                    }
+                }
+            })
+        }
+        template.helper('formatDate',util.formatDate);
+    </script>
+</body>
+
+</html>

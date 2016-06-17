@@ -11,5 +11,18 @@ namespace qch.Models
     /// </summary>
     public class UserVoucherModel : T_User_Voucher
     {
+        VoucherRepository rp = new VoucherRepository();
+
+        public T_Voucher VoucherInfo
+        {
+            get
+            {
+                var model = rp.GetById(T_Voucher_Guid);
+                if (model != null)
+                    return model;
+                else
+                    return new T_Voucher();
+            }
+        }
     }
 }

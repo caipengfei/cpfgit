@@ -48,6 +48,7 @@
     <input style="display:none" value="@ViewBag.CodeMessage" id="txtCodemsg" />
     <input style="display:none" value="@ViewBag.ApplyGuid" id="txtApplyGuid" />
     <script src="~/H5/js/jquery.min.js"></script>
+    <script src="~/H5/js/util.js"></script>
     <script>
         var applyguid = $("#txtApplyGuid").val();
         var codemsg = $("#txtCodemsg").val();
@@ -91,11 +92,11 @@
         //发送验证码
         function sendsms(phone) {
             if (phone == "") {
-                tipInfo("手机号不能为空");
+                util.msgBox("手机号不能为空", 1);
                 return false;
             }
             $.post('/home/SendSMS', { phone: phone }, function (msg) {
-                tipInfo(msg.Data);
+                util.msgBox(msg.Data);
             })
         }
         //function jiance() {
@@ -164,7 +165,7 @@
                             $('#getValidcode').text(waitTime + 's后重新获取');
                         }, 1000)
                     } else {
-                        tipInfo(msg.Data);
+                        util.msgBox(msg.Data);
                     }
                 }, false);
 
@@ -182,11 +183,11 @@
         function validField($input, reg, helpText1, helpText2) {
             var value = $.trim($input[0].value);
             if (!value) {
-                tipInfo(helpText1);
+                util.msgBox(helpText1);
                 return false;
             } else {
                 if (reg && !reg.test(value)) {
-                    tipInfo(helpText2);
+                    util.msgBox(helpText2);
                     return false;
                 }
             }
@@ -204,41 +205,14 @@
                     code: $validcode.val()
                 };
                 $.post('/wxuser/ActivityApply', data, function (msg) {
+                    util.msgBox(msg.Data);
                     if (msg.type == "success") {
                         applyguid = msg.Remark;
                         showSucess();
-                    } else {
-                        tipInfo(msg.Data);
                     }
                 })
             }
         }
-        function tipInfo(t) {
-            $('p.tipinfo').remove();
-            if (window.tid) {
-                clearTimeout(window.tid);
-                window.tid = 0;
-            }
-            var winWidth = $(window).width();
-            var $tipinfo = $('<p class="tipinfo">').text(t).css({
-                position: 'fixed',
-                textAlign: 'center',
-                fontSize: '1rem',
-                color: '#fff',
-                borderRadius: '.5rem',
-                background: 'rgba(0,0,0,.8)',
-                padding: '.6rem 1rem',
-                transform: 'translate3d(0,0,0)'
-            }).appendTo('body').css({
-                left: (winWidth - $('p.tipinfo')[0].offsetWidth) / 2,
-                top: '1rem'
-            });
-            window.tid = setTimeout(function () {
-                $tipinfo.css({ top: '3rem', opacity: 0, transition: 'top .6s,opacity .6s' });
-                setTimeout(function () { $tipinfo.remove(); }, 600);
-            }, 800)
-        }
-
 
     </script>
 </body>

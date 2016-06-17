@@ -36,6 +36,11 @@ namespace qch.Repositories
         public string t_Associate_Guid { get; set; }
         /// <summary>
         /// 订单类型
+        /// 1：充值订单；
+        /// 2：活动订单；
+        /// 3：众筹订单；
+        /// 4：课程支付；
+        /// 5：空间预约
         /// </summary>
         [Column]
         public int t_Order_OrderType { get; set; }

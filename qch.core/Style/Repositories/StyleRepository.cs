@@ -15,6 +15,24 @@ namespace qch.Repositories
         Repository<StyleModel> rp = new Repository<StyleModel>();
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fid"></param>
+        /// <returns></returns>
+        public IEnumerable<StyleModel> GetByfId(int fid)
+        {
+            try
+            {
+                string sql = "select * from T_Style where t_fid=@0 and t_DelState=0 order by t_SortIndex";
+                return rp.GetAll(sql, new object[] { fid });
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
         /// 批量获取
         /// </summary>
         /// <param name="ids"></param>

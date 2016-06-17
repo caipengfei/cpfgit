@@ -34,7 +34,11 @@ namespace qch.core
                 var model = rp.GetListFroWX(page, pagesize, CityName, days, payType);
                 if (model != null && model.Items != null)
                 {
-                    model.Items.Select(o => o.Applys = this.GetApplys(o.Guid));
+                    foreach (var item in model.Items)
+                    {
+                        item.Applys = this.GetApplys(item.Guid);
+                    }
+                    //model.Items.Select(o => o.Applys = this.GetApplys(o.Guid));
                 }
                 return model;
             }

@@ -89,6 +89,7 @@ namespace qch.core
                     jsmodel.access_token = access_token;
                     jsmodel.Jsapi_ticket = sign.Ticket;
                     jsmodel.Signature = GetSignature(sign.Ticket, noncestr, timestamp, ShareUrl);
+                    jsmodel.CreateDate = DateTime.Now;
                     jsapiRp.Add(jsmodel);
                     return jsmodel;
                 }
@@ -123,6 +124,7 @@ namespace qch.core
                         jsmodel.access_token = access_token;
                         jsmodel.Jsapi_ticket = sign.Ticket;
                         jsmodel.Signature = GetSignature(sign.Ticket, noncestr, timestamp, ShareUrl);
+                        jsmodel.CreateDate = DateTime.Now;
                         jsapiRp.Add(jsmodel);
                         return jsmodel;
                     }

@@ -1,0 +1,189 @@
+/* 分类菜单 */
+.toolsbox {
+    width: 100%;
+    height: 3.4rem;
+    line-height: 3.4rem;
+    background: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+}
+.toolsbox li {
+    width: 33.33%;
+    height: 100%;
+    float: left;
+    text-align: center;
+}
+.toolsbox li a {
+    width: 60%;
+    height: 100%;
+    border-bottom: 2px solid #fff;
+    font-size: 1.1rem;
+    color: #999;
+}
+.toolsbox li.active a {
+    border-color: #6e96f5;
+    color: #6e96f5;
+}
+/* 活动列表 */
+.listsbox{
+    padding-top: 3.4rem;
+}
+.listsbox a {
+    display: block !important;
+    height: 100%;
+    color: #000;
+}
+.activitybox{
+    padding: .7rem 1rem 0 1rem;
+}
+.activitybox li {
+    width: 100%;
+    height: 7.9rem;
+    background: url(../img/icon/item-bg.png) no-repeat 0 50%;
+    background-size: 100% auto;
+}
+.activitybox .boxright {
+    width:29%;
+    height: 100%;
+    padding: 1.1rem .8rem 1.2rem .8rem;
+    float: left;
+    text-align: center;
+    display: table;
+}
+.activitybox .boxright .subbox {
+    padding: .4rem;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    font-size: 1.2rem;
+    display: table-row;
+}
+.activitybox .boxright .subbox div {
+    border-radius: .3rem;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #fff;
+    display: table-cell;
+    vertical-align: middle;
+    line-height: 2rem;
+}
+.activitybox .boxleft {
+    width: 71%;
+    float: left;
+    border-left: none;
+    height: 100%;
+    padding: 1.1rem .5rem 1.1rem .8rem;
+    position: relative;
+}
+.activitybox .boxleft h2,.activitybox .boxleft p{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.activitybox .boxleft h2 {
+    font-size: 1rem;
+}
+.activitybox .boxleft p {
+    font-size: .9rem;
+    color: #666;
+    line-height: 1.6rem;
+}
+/* 过期样式 */
+.activitybox .expire{
+    background: url(../img/icon/item-bg2.png) no-repeat 0 50%;
+    background-size: 100% auto;
+}
+.expire span{
+    background: url(../img/icon/guoqi.png) no-repeat 0 50%;
+    background-size: 100% auto;
+    width: 3.96rem;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: .6rem;
+}
+/* 空间列表 课程列表 */
+.spacebox,.coursebox{
+    padding: 0 .6rem;
+}
+.spacebox li,.coursebox li{
+    padding: 1rem 0;
+    border-bottom: 1px solid rgb(235,235,235);
+}
+.spacebox li a,.coursebox li a{
+    display: block;
+}
+.spacebox li img,.coursebox li img{
+    width: 9rem;
+    height: 8rem;
+    float: left;
+    margin-right: .4rem;
+}
+.spacebox li h2,.coursebox li h2{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 1.1rem;
+    margin-bottom: .6rem;
+}
+.spacebox li p,.coursebox li p{
+    font-size: 1rem;
+    line-height: 1.6rem;
+}
+p.gray{
+    color: #999;
+}
+p.number{
+    color: #6d97f4;
+}
+span.time{
+    color: #999;
+    background: url(../img/icon/clock2.png) no-repeat 0 50%;
+    background-size: auto 1rem;
+    padding-left: 1.2rem;
+}
+span.city{
+    color: #6d97f4;
+    background: url(../img/icon/position.png) no-repeat 0 50%;
+    background-size: auto 1rem;
+    padding-left: 1.2rem;
+    float: right;
+}
+span.price{
+    color: #6d97f4;
+}
+.container>.more{
+    text-align: center;
+    color: #666;
+    font-size: 1.1rem;
+    line-height: 2.4rem;
+    height: 2.4rem;
+}
+.container>.more.loading{
+    background: url(../img/icon/loading.gif) no-repeat 50% 50%;
+    background-size: auto 1.2rem;
+}
+.container.nodata .listsbox>p{
+    padding-top: 14.5rem;
+    background: url(../img/icon/imgnodata.png) no-repeat 50% 0;
+    background-size: auto 14rem;
+    font-size: 1.2rem;
+    color: #999;
+    display: block !important;
+    text-align: center;
+}
+.container.nodata .more{
+    display: none !important;
+}
+.container.nodata .listsbox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    bottom: 0;
+    text-align: center;
+    padding-top: 14rem;
+}

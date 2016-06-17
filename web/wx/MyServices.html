@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <link rel="dns-prefetch" href="//test.cn-qch.com/" />
+    <link rel="dns-prefetch" href="//www.cn-qch.com/" />
+    <title>凭证列表</title>
+    <link rel="stylesheet" href="/wx/css/public.css">
+    <link rel="stylesheet" href="/wx/css/myServices.css">
+</head>
+
+<body>
+    <div class="container">
+        <ul class="toolsbox">
+            <li><a>空间</a></li>
+            <li class="active"><a>活动</a></li>
+            <li><a>课程</a></li>
+        </ul>
+        <div class="listsbox">
+            <!-- 空间列表 -->
+            <ul class="spacebox hide"></ul>
+            <!-- 活动列表 -->
+            <ul class="activitybox"></ul>
+            <!-- 课程列表 -->
+            <ul class="coursebox hide"></ul>
+            <p class="hide">暂无数据</p>
+        </div>
+        <div class="more loading"></div>
+    </div>
+    <!-- 空间模板 -->
+    <script type="text/html" id="spaceTemplate">
+        <%var imgUrl='http://www.cn-qch.com:8002/attach/images/'%>
+        <%data.items.forEach(function(item,index){%>
+            <li>
+                <img src="<%=imgUrl+item.placePic%>">
+                <div class="box">
+                    <h2><%=item.placeName%></h2>
+                    <p class="number">预约编号：<%=item.orderNo%></p>
+                    <p class="gray">场地类型：<%=item.placeStyle%></p>
+                    <p class="gray">支付金额：<span class="price">￥<%=item.placePrice%></span></p>
+                    <p class="clearfix"><span class="time"><%=item.orderDate%></span> <span class="city"><%=item.cityName%></span></p>
+                </div>
+            </li>
+        <%})%>
+    </script>
+    <!-- 活动模板 -->
+    <script type="text/html" id="activityTemplate">
+        <%data.items.forEach(function(item,index){%>
+            <li <%if(expire(item.activityDate)){%>class="expire"<%}%>>
+                <a class="clearfix" href="http://test.cn-qch.com//wxuser/ApplyProof?guid=<%=item.applyGuid%>">
+                    <div class="boxleft">
+                        <h2><%=item.activityName%></h2>
+                        <p>主办方：<%=item.holder%></p>
+                        <p>活动时间：<%=item.activityDate%></p>
+                        <p>活动地点：<%=item.addr%></p>
+                        <span></span>
+                    </div>
+                    <div class="boxright">
+                        <div class="subbox">
+                            <div><%==item.money?('付费<br>￥'+item.money):'免费<br>入场券'%></div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        <%})%>
+    </script>
+    <!-- 课程模板 -->
+    <script type="text/html" id="courseTemplate">
+        <li>
+            <a href="#">
+                <img src="/wx/img/temp.png">
+                <div class="box">
+                    <h2>房地产建安业全面营改增财税操作实务与涉税风险应对策略</h2>
+                    <p>导师名称：</p>
+                    <p class="gray">场地类型：移动办公室</p>
+                    <p class="gray">支付金额：<span class="price">￥100</span></p>
+                    <p class="clearfix"><span class="time">2016/06/04 8:00-12:00</span> <span class="city">郑州</span></p>
+                </div>
+            </a>
+        </li>
+    </script>
+    <script src="/wx/js/zepto.min.js"></script>
+    <script src="/wx/js/artTemplate.js"></script>
+    <script src="/wx/js/myServices.js"></script>
+</body>
+</html>
+

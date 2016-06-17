@@ -126,6 +126,68 @@ namespace qch.Repositories
 
         #region 用户优惠券信息资源
         /// <summary>
+        /// 获取某用户的某种行为产生的优惠券
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <param name="Guid"></param>
+        /// <param name="actionName"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<UserVoucherModel> GetAlluvByUser(int page, int pagesize, string Guid, string actionName)
+        {
+            try
+            {
+                string sql = "select * from T_User_Voucher where t_DelState=0 and T_User_Guid=@0 and T_Voucher_Guid in(select guid from T_Voucher where [T_Voucher_Scope]=@1 and T_Voucher_Audit=1 and t_delstate=0)";
+                return uvRp.GetPageData(page, pagesize, sql, new object[] { Guid, actionName });
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
+        /// 获取某用户的某种类型的优惠券
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <param name="Guid"></param>
+        /// <param name="typeId"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<UserVoucherModel> GetAlluvByUser(int page, int pagesize, string Guid, int typeId)
+        {
+            try
+            {
+                string sql = "select * from T_User_Voucher where t_DelState=0 and T_User_Guid=@0 and T_Voucher_Guid in(select guid from T_Voucher where T_Voucher_Type=@1 and T_Voucher_Audit=1 and t_delstate=0)";
+                return uvRp.GetPageData(page, pagesize, sql, new object[] { Guid, typeId });
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
+        /// 获取某用户的所有优惠券
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <param name="Guid"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<UserVoucherModel> GetAlluvByUser(int page, int pagesize, string Guid)
+        {
+            try
+            {
+                string sql = "select * from T_User_Voucher where t_DelState=0 and T_User_Guid=@0";
+                return uvRp.GetPageData(page, pagesize, sql, new object[] { Guid });
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
         /// 分页获取所有
         /// </summary>
         /// <param name="page"></param>

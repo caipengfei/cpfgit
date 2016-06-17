@@ -26,6 +26,8 @@ namespace api.Controllers
         /// <param name="page"></param>
         /// <param name="pagesize"></param>
         /// <returns></returns>
+        /// 
+        [HttpGet]
         public PetaPoco.Page<ActivityModel> GetAll(int page, int pagesize, string CityName, int days, string payType)
         {
             try

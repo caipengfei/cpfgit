@@ -15,6 +15,23 @@ namespace qch.core
         readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         NewsRepository rp = new NewsRepository();
 
+
+        /// <summary>
+        /// 获取所有推荐文章
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<NewsModel> GetAll()
+        {
+            try
+            {
+                return rp.GetAll();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
         /// <summary>
         /// 分页获取所有文章
         /// </summary>
@@ -30,6 +47,45 @@ namespace qch.core
                     return rp.GetAll(page, pagesize);
                 else
                     return rp.GetAll(page, pagesize, title);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <param name="typeId"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<NewsModel> GetAll(int page, int pagesize, int typeId)
+        {
+            try
+            {                
+                var model =  rp.GetAll(page, pagesize, typeId);
+                
+                return model;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
+        /// 分页获取所有
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<NewsModel> GetAll(int page, int pagesize)
+        {
+            try
+            {
+                return rp.GetAll(page, pagesize);
             }
             catch (Exception ex)
             {

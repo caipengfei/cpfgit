@@ -35,6 +35,11 @@ namespace qch.Repositories
         [Column]
         public string t_News_Title { get; set; }
         /// <summary>
+        /// 描述
+        /// </summary>
+        [Column]
+        public string t_News_LimitContents { get; set; }
+        /// <summary>
         /// 内容
         /// </summary>
         [Column]

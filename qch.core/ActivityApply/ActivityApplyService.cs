@@ -205,13 +205,16 @@ namespace qch.core
                             return msg;
                         }
                     }
+                    msg.PayType = "nopay";
                     int ispay = 0;
                     //验证是否需要支付
                     if (activity.t_Activity_Fee > 0)
                     {
                         log.Info("活动费用：" + activity.t_Activity_Fee);
                         msg.Data = "gopay";
+                        msg.PayType = "gopay";
                         msg.Remark = activity.t_Activity_Fee.ToString();
+                        msg.PayMoney = activity.t_Activity_Fee;
                         ispay = 1;
                         //return msg;
                     }
@@ -222,9 +225,42 @@ namespace qch.core
                     log.Info("qrcode-----------------" + qrcode);
                     if (user != null)
                     {
+                        int isedit = 0;
+                        if (string.IsNullOrWhiteSpace(user.t_User_RealName))
+                        {
+                            user.t_User_RealName = name;
+                            isedit = 1;
+                        }
+                        if (string.IsNullOrWhiteSpace(user.t_User_NickName))
+                        {
+                            user.t_User_NickName = name;
+                            isedit = 1;
+                        }
+                        if (string.IsNullOrWhiteSpace(user.t_User_Mobile))
+                        {
+                            user.t_User_Mobile = user.t_User_LoginId;
+                            isedit = 1;
+                        }
+                        if (string.IsNullOrWhiteSpace(user.t_User_Pic))
+                        {
+                            //报名成功把头像图片复制到qch2.0目录下
+                            string avatorFilePath = System.Web.HttpContext.Current.Server.MapPath("~/content/wxavator/" + avator);
+                            bool isrewrite = true; // true=覆盖已存在的同名文件,false则反之
+                            System.IO.File.Copy(avatorFilePath, "D:\\QCH2.0\\Attach\\User\\" + avator, isrewrite);
+                            user.t_User_Pic = avator;
+                            isedit = 1;
+                        }
+
+                        if (isedit == 1)
+                        {
+                            //更新用户信息
+                            string sql = "update t_users set [t_User_RealName]=@0,[t_User_NickName]=@1,[t_User_Mobile]=@2,[t_User_Pic]=@3 where guid=@4";
+                            db.Execute(sql, new object[] { user.t_User_RealName, user.t_User_NickName, user.t_User_Mobile, user.t_User_Pic, user.Guid });
+                        }
+
                         payUserGuid = user.Guid;
                         log.Info("用户信息正常，活动guid：" + guid);
-                        var useractivity = db.SingleOrDefault<T_Activity_Apply>(" where t_user_guid=@0 and t_Activity_Guid=@1", new object[] { user.Guid, guid });
+                        var useractivity = db.SingleOrDefault<T_Activity_Apply>(" where t_user_guid=@0 and t_Activity_Guid=@1 and t_delstate=0", new object[] { user.Guid, guid });
                         if (useractivity != null)
                         {
                             msg.Data = "请勿重复报名";
@@ -312,21 +348,22 @@ namespace qch.core
                             db.Insert(model);
                         }
                         //报名成功把头像图片复制到qch2.0目录下
-                        string avatorFilePath = System.Web.HttpContext.Current.Server.MapPath("~/content/wxavator/small_" + avator);
+                        string avatorFilePath = System.Web.HttpContext.Current.Server.MapPath("~/content/wxavator/" + avator);
                         bool isrewrite = true; // true=覆盖已存在的同名文件,false则反之
-                        System.IO.File.Copy(avatorFilePath, "D:\\QCH2.0\\Attach\\User\\small_" + avator, isrewrite);
+                        System.IO.File.Copy(avatorFilePath, "D:\\QCH2.0\\Attach\\User\\" + avator, isrewrite);
                         #endregion
                     }
                     db.CompleteTransaction();
 
                     if (ispay == 1)
                     {
+                        string orderGuid = Guid.NewGuid().ToString();
                         //如果是需要付费的活动，生成订单
                         string orderno = DateTime.Now.ToString("yyyyMMddHHmmssffff");
-                        OrderModel order = new OrderModel
+                        T_User_Order order = new T_User_Order
                         {
                             t_Associate_Guid = guid,
-                            Guid = Guid.NewGuid().ToString(),
+                            Guid = orderGuid,
                             t_DelState = 0,
                             t_Order_Date = DateTime.Now,
                             t_Order_Money = activity.t_Activity_Fee,
@@ -336,13 +373,25 @@ namespace qch.core
                             t_Order_PayType = "微信支付",
                             t_Order_Remark = applyGuid,
                             t_Order_State = 0,
-                            t_User_Guid = payUserGuid
+                            t_User_Guid = payUserGuid,
+                            T_UserVoucher_Guid = ""
                         };
                         db.Insert(order);
+                        //生成订单中的商品
+                        T_UserOrder_Good og = new T_UserOrder_Good
+                        {
+                            Guid = Guid.NewGuid().ToString(),
+                            t_Associate_Guid = guid,
+                            t_Date = DateTime.Now,
+                            t_Order_Guid = orderGuid
+                        };
+                        db.Insert(og);
                         msg.type = orderno;
+                        msg.OrderNo = orderno;
                         msg.ReturnUrl = applyGuid;
                         return msg;
                     }
+
                     msg.type = "success";
                     msg.Data = "报名成功";
                 }
@@ -373,7 +422,7 @@ namespace qch.core
                     var user = db.SingleOrDefault<T_Users>(" where t_User_LoginId=@0 and t_DelState=0", new object[] { phone });
                     if (user != null)
                     {
-                        var useractivity = db.SingleOrDefault<T_Activity_Apply>(" where t_user_guid=@0 and t_Activity_Guid=@1", new object[] { user.Guid, guid });
+                        var useractivity = db.SingleOrDefault<T_Activity_Apply>(" where t_user_guid=@0 and t_Activity_Guid=@1 and t_DelState=0", new object[] { user.Guid, guid });
                         if (useractivity != null)
                         {
                             msg.Data = "请勿重复报名";

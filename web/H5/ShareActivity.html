@@ -103,7 +103,7 @@
         <footer>
             <nav>
                 <a class="btn-comment" href="http://www.cn-qch.com/app">我要评论</a>
-                <a href="http://test.cn-qch.com/wxuser/userinfo?guid=<%=data.guid%>">我要报名</a>
+                <a href="http://www.cn-qch.com/wxuser/userinfo?guid=<%=data.guid%>" class="btn-sign">我要报名</a>
             </nav>
         </footer>
     </script>
@@ -132,7 +132,11 @@
                     $('.detailsbox .text1 img').each(function () {
                         var index = $(this).attr('src').indexOf('http://');
                         (index == -1 || index != 0) && (this.src = 'http://cn-qch.com:8002' + $(this).attr('src'));
+                        $(this).attr('height', '').css({ height: 'auto' });
                     })
+                    if(new Date(data.endTime.replace(/-/g,'/'))<=Date.now()){
+                        $('a.btn-sign').css({background:'#aaa'}).attr('href','javascript:;').text('活动已结束').prev('a').css({background:'none'});
+                    }
                     loadPic('.content .image img');
                     $('#members img,.commentbox img').each(function(){
                         var width=$(this).width();
@@ -252,6 +256,7 @@
         template.helper('formatDate', function (dateStr, opt) {
             var ymd = opt && opt.ymd ? opt.ymd : '/';
             var hms = opt && opt.hms ? opt.hms : ':';
+            dateStr = dateStr.replace(/-/g, '/');
             var date = new Date(/^(\d)+$/.test(dateStr) ? parseInt(dateStr) : dateStr);
             var year = date.getFullYear();
             var month = date.getMonth() + 1;

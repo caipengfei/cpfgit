@@ -45,7 +45,7 @@ namespace qch.Repositories
         {
             try
             {
-                string sql = "select a.Guid as 'ApplyGuid',a.t_Activity_Guid,a.t_User_Guid,a.t_QrCode as 'QrCode',a.t_ProofCode as 'ProofCode',b.t_Activity_Title as 'ActivityName',b.t_Activity_Fee as 'Money',b.t_Activity_sDate as 'ActivityDate',b.t_Activity_Street as 'Addr',b.t_Activity_Holder as 'Holder',c.t_User_RealName as 'ApplyUserName',c.t_User_Mobile as 'Phone' from T_Activity_Apply as a left join T_Activity as b on a.t_Activity_Guid=b.guid left join T_Users as c on a.t_User_Guid=c.guid where a.t_User_Guid=@0 and a.t_DelState=0";
+                string sql = "select a.Guid as 'ApplyGuid',a.t_Activity_Guid,a.t_User_Guid,a.t_QrCode as 'QrCode',a.t_ProofCode as 'ProofCode',b.t_Activity_Title as 'ActivityName',b.t_Activity_Fee as 'Money',b.t_Activity_sDate as 'ActivityDate',b.t_Activity_Street as 'Addr',b.t_Activity_Holder as 'Holder',c.t_User_RealName as 'ApplyUserName',c.t_User_LoginId as 'Phone' from T_Activity_Apply as a left join T_Activity as b on a.t_Activity_Guid=b.guid left join T_Users as c on a.t_User_Guid=c.guid where a.t_User_Guid=@0 and a.t_DelState=0";
                 return rp1.GetPageData(page, pagesize, sql, new object[] { UserGuid });
             }
             catch (Exception ex)
@@ -63,7 +63,7 @@ namespace qch.Repositories
         {
             try
             {
-                string sql = "select a.Guid as 'ApplyGuid',a.t_Activity_Guid,a.t_User_Guid,a.t_QrCode as 'QrCode',a.t_ProofCode as 'ProofCode',b.t_Activity_Title as 'ActivityName',b.t_Activity_Fee as 'Money',b.t_Activity_sDate as 'ActivityDate',b.t_Activity_Street as 'Addr',b.t_Activity_Holder as 'Holder',c.t_User_RealName as 'ApplyUserName',c.t_User_Mobile as 'Phone' from T_Activity_Apply as a left join T_Activity as b on a.t_Activity_Guid=b.guid left join T_Users as c on a.t_User_Guid=c.guid where a.t_User_Guid=@0 and a.t_DelState=0";
+                string sql = "select a.Guid as 'ApplyGuid',a.t_Activity_Guid,a.t_User_Guid,a.t_QrCode as 'QrCode',a.t_ProofCode as 'ProofCode',b.t_Activity_Title as 'ActivityName',b.t_Activity_Fee as 'Money',b.t_Activity_sDate as 'ActivityDate',b.t_Activity_Street as 'Addr',b.t_Activity_Holder as 'Holder',c.t_User_RealName as 'ApplyUserName',c.t_User_LoginId as 'Phone' from T_Activity_Apply as a left join T_Activity as b on a.t_Activity_Guid=b.guid left join T_Users as c on a.t_User_Guid=c.guid where a.t_User_Guid=@0 and a.t_DelState=0";
                 return rp1.GetAll(sql, new object[] { UserGuid });
             }
             catch (Exception ex)
@@ -81,7 +81,7 @@ namespace qch.Repositories
         {
             try
             {
-                string sql = "select a.Guid as 'ApplyGuid',a.t_Activity_Guid,a.t_User_Guid,a.t_QrCode as 'QrCode',a.t_ProofCode as 'ProofCode',b.t_Activity_Title as 'ActivityName',b.t_Activity_Fee as 'Money',b.t_Activity_sDate as 'ActivityDate',b.t_Activity_Street as 'Addr',b.t_Activity_Holder as 'Holder',c.t_User_RealName as 'ApplyUserName',c.t_User_Mobile as 'Phone' from T_Activity_Apply as a left join T_Activity as b on a.t_Activity_Guid=b.guid left join T_Users as c on a.t_User_Guid=c.guid where a.t_Activity_Guid=@0 and a.t_User_Guid=@1 and a.t_DelState=0";
+                string sql = "select a.Guid as 'ApplyGuid',a.t_Activity_Guid,a.t_User_Guid,a.t_QrCode as 'QrCode',a.t_ProofCode as 'ProofCode',b.t_Activity_Title as 'ActivityName',b.t_Activity_Fee as 'Money',b.t_Activity_sDate as 'ActivityDate',b.t_Activity_Street as 'Addr',b.t_Activity_Holder as 'Holder',c.t_User_RealName as 'ApplyUserName',c.t_User_LoginId as 'Phone' from T_Activity_Apply as a left join T_Activity as b on a.t_Activity_Guid=b.guid left join T_Users as c on a.t_User_Guid=c.guid where a.t_Activity_Guid=@0 and a.t_User_Guid=@1 and a.t_DelState=0";
                 return rp1.Get(sql, new object[] { ActivityGuid, UserGuid });
             }
             catch (Exception ex)
@@ -99,7 +99,7 @@ namespace qch.Repositories
         {
             try
             {
-                string sql = "select a.Guid as 'ApplyGuid',a.t_Activity_Guid,a.t_User_Guid,a.t_QrCode as 'QrCode',a.t_ProofCode as 'ProofCode',b.t_Activity_Title as 'ActivityName',b.t_Activity_Fee as 'Money',b.t_Activity_sDate as 'ActivityDate',b.t_Activity_Street as 'Addr',b.t_Activity_Holder as 'Holder',c.t_User_RealName as 'ApplyUserName',c.t_User_Mobile as 'Phone' from T_Activity_Apply as a left join T_Activity as b on a.t_Activity_Guid=b.guid left join T_Users as c on a.t_User_Guid=c.guid where a.guid=@0 and a.t_DelState=0";
+                string sql = "select a.Guid as 'ApplyGuid',a.t_Activity_Guid,a.t_User_Guid,a.t_QrCode as 'QrCode',a.t_ProofCode as 'ProofCode',b.t_Activity_Title as 'ActivityName',b.t_Activity_Fee as 'Money',b.t_Activity_sDate as 'ActivityDate',b.t_Activity_Street as 'Addr',b.t_Activity_Holder as 'Holder',c.t_User_RealName as 'ApplyUserName',c.t_User_LoginId as 'Phone' from T_Activity_Apply as a left join T_Activity as b on a.t_Activity_Guid=b.guid left join T_Users as c on a.t_User_Guid=c.guid where a.guid=@0 and a.t_DelState=0";
                 return rp1.Get(sql, new object[] { guid });
             }
             catch (Exception ex)

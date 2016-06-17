@@ -77,6 +77,16 @@ function signUpHandler() {
         reference:$reference.val()
     };
 }
+//发送验证码
+function sendsms(phone) {
+    if (phone == "") {
+        tipInfo("手机号不能为空");
+        return false;
+    }
+    $.post('/home/SendSMS', { phone: phone }, function (msg) {
+        tipInfo(msg.Data);
+    })
+}
 // 获取验证码
 var waitTime;
 function getvalidcode() {
@@ -86,6 +96,7 @@ function getvalidcode() {
     $(this).siblings('[type=text]').focus().end().removeClass('enabled');
     var that=this;
     waitTime = 60;
+    sendsms($('.phone-1').val());
     window.td = setInterval(function () {
         waitTime--;
         if (waitTime == 0) {

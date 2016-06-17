@@ -57,7 +57,7 @@ body img {
     }
 }
 .shade-div {
-    background: #eee url(../img/loading2.gif) no-repeat 50% 50%;
+    background: #eee url(../img/icon/loading.gif) no-repeat 50% 50%;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -70,7 +70,7 @@ body img {
     max-width: 768px;
     margin: auto;
 }
-.container.loading {
+.container.fixed {
     position: fixed;
     top: 0;
     bottom: 0;

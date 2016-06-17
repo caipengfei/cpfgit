@@ -1,0 +1,119 @@
+body{
+    background: rgb(247,247,247);
+}
+.header{
+    background: url(../img/user_center/bg.png);
+    background-size: 100% 100%;
+    height: 16rem;
+    position: relative;
+    padding: 2.4rem 1.2rem 0 1.2rem;
+    text-align: center;
+}
+.header img{
+    width: 5.85rem;
+    height: 5.85rem;
+    display: inline-block;
+    border: 3px solid rgba(255,255,255,.7);
+    border-radius: 3rem;
+}
+.header h2{
+    font-size: 1.2rem;
+    color: #fff;
+    margin: 1.2rem 0 .8rem 0;
+}
+.header h3{
+    font-size: 1.1rem;
+    color: #fff;
+}
+.header p{
+    font-size: 1rem;
+    color: #8ab1f4;
+    text-align: left;
+    position: absolute;
+    left: 1.2rem;
+    bottom: .8rem;
+}
+.listbox{
+    border-top: 1px solid #e4e4e4;
+    margin-top: 1.2rem;
+    background: #fff;
+}
+.listbox li{
+    border-bottom: 1px solid #e4e4e4;
+    font-size: 1.1rem;
+    line-height: 3.6rem;
+    height: 3.6rem;
+}
+.listbox a{
+    display: block;
+    padding: 0 1.2rem;
+    height: 100%;
+    color: #000;
+}
+.listbox a:active{
+    background: rgb(228,228,228);
+}
+
+.listbox li label{
+    float: left;
+    padding-left: 1.5rem;
+}
+.listbox li span{
+    float: right;
+    color: rgb(154,187,255);
+}
+.listbox li:nth-child(1) label{
+    background: url(../img/user_center/cyb.png) no-repeat 0 50%;
+    background-size: 1.2rem auto;
+}
+.listbox li:nth-child(2) label{
+    background: url(../img/user_center/yhq.png) no-repeat 0 50%;
+    background-size: 1.2rem auto;
+}
+.listbox li:nth-child(3) label{
+    background: url(../img/user_center/jf.png) no-repeat 0 50%;
+    background-size: 1.2rem auto;
+}
+.container>a.btn-lookup{
+    float: right;
+    margin-top: 1.9rem;
+    margin-right: 1.2rem;
+    color: rgb(154,187,255);
+    font-size: 1rem;
+    line-height: 2.4rem;
+}
+table{
+    width: 100%;
+    padding: 1.2rem 0;
+    text-align: center;
+    border-top: 1px solid #e4e4e4;
+    border-bottom: 1px solid #e4e4e4;
+    margin-top: 1.2rem;
+    background: #fff;
+}
+td{
+    width: 50%;
+    font-size: 1.1rem;
+}
+td:nth-child(1){
+    border-right: 1px solid #e4e4e4;
+}
+td label{
+    display: inline-block;
+    height: 2.6rem;
+    line-height: 2.6rem;
+    padding-left: 3rem;
+    margin-bottom: .4rem;
+}
+td span i{
+    color: rgb(154,187,255);
+    font-style: normal;
+}
+td:nth-child(1) label{
+    background: url(../img/user_center/zjtj.png) no-repeat 0 50%;
+    background-size: 2.4rem auto;
+}
+td:nth-child(2) label{
+    background: url(../img/user_center/jjtj.png) no-repeat 0 50%;
+    background-size: 2.4rem auto;
+}

@@ -17,6 +17,23 @@ namespace qch.core
 
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fid"></param>
+        /// <returns></returns>
+        public IEnumerable<StyleModel> GetByfId(int fid)
+        {
+            try
+            {
+                return rp.GetByfId(fid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
         /// 批量获取
         /// </summary>
         /// <param name="ids"></param>

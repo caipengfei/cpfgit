@@ -2,17 +2,267 @@
     Layout = null;
 }
 
-<!DOCTYPE html>
 
-<html>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Bind</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link href="/h5/css/public.css" rel="stylesheet" />
+    <link href="/h5/css/signUp.css" rel="stylesheet" />
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 </head>
 <body>
-    <div>
-        <img src="@ViewBag.UserLogo" />
-        @ViewBag.Name
+    <div class="container hide">
+        <header>
+            <img src="@ViewBag.UserLogo" />
+            <h2>@ViewBag.Name</h2>
+        </header>
+        <form>
+            @*<span class="help"></span>*@
+            <div class="form-group">
+                <input type="text" class="phone" placeholder="请输入您的手机号" />
+            </div>
+            <div class="form-group">
+                <input type="text" class="validcode" placeholder="请输入短信验证码" />
+                <a id="getValidcode" class="enabled">获取验证码</a>
+            </div>
+            <div class="form-group">
+                <a id="submit">立即绑定</a>
+            </div>
+        </form>
     </div>
+    <input style="display:none" value="@ViewBag.CodeMessage" id="txtCodemsg" />
+    <input style="display:none" value="@ViewBag.ApplyGuid" id="txtApplyGuid" />
+    <script src="~/H5/js/jquery.min.js"></script>
+    <script>
+        var applyguid = $("#txtApplyGuid").val();
+        var codemsg = $("#txtCodemsg").val();
+        if (codemsg == "0002") {
+            showSucess();
+        } else if (codemsg == "0001") {
+            $("#pContent").text("点此查看报名凭证");
+            $("#spcode").text("已报名");
+            showSucess();
+        } else {
+            $(".container").removeClass("hide");
+        }
+        //if (codemsg == "0003") {
+        //    $(".container").removeClass("hide");
+        //}
+        function goproof() {
+            window.location.href = '/wxuser/ApplyProof?guid=' + applyguid;
+        }
+        function showSucess() {
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            $('#clipBox').removeClass('hide');
+
+            $('.myClip').css({
+                top: (winHeight - $('.myClip')[0].offsetHeight) / 2,
+                left: (winWidth - $('.myClip')[0].offsetWidth) / 2
+            }).css({
+                opacity: 1
+            });
+        }
+        function closeClip(e) {
+            e.preventDefault();
+            $(this).parents('#clipBox').addClass('hide');
+        }
+        //发送验证码
+        function sendsms(phone) {
+            if (phone == "") {
+                tipInfo("手机号不能为空");
+                return false;
+            }
+            $.post('/home/SendSMS', { phone: phone }, function (msg) {
+                tipInfo(msg.Data);
+            })
+        }
+        var regPhone = /^([1]((3|5|7|8)[0-9]{1})[0-9]{8})$/;
+        var waitTime, winWidth, winHeight;
+        $(function () {
+            winWidth = $(window).width();
+            winHeight = $(window).height();
+            $(window).resize(function () {
+                $('.container').css({
+                    height: winHeight
+                })
+                $('#clipBox').css({
+                    height: winHeight,
+                    width: winWidth
+                })
+            }).resize();
+            $('#submit')[0].addEventListener('touchend', function (e) {
+                e.preventDefault();
+                signUpHandler(this);
+            }, false);
+            // 获取验证码按钮事件
+            $('#getValidcode.enabled')[0].addEventListener('touchend', function (e) {
+                e.preventDefault();
+                $('[type=text]').blur();
+                if (window.td) return;
+                if (!validField($('.phone'), regPhone, '手机号不能为空！', '手机号格式不正确！')) return;
+                $(this).siblings('[type=text]').focus();
+                //检查输入的手机号是否已被绑定
+                //$.post('/wxuser/checkapply', { phone: $('.phone').val() }, function (msg) {
+                //    if (msg.type == "success") {
+                        
+                //    } else {
+                //        tipInfo(msg.Data);
+                //    }
+                //}, false);
+                //发送验证码
+                sendsms($('.phone').val());
+                $('#getValidcode').removeClass('enabled');
+                waitTime = 60;
+                window.td = setInterval(function () {
+                    waitTime--;
+                    if (waitTime == 0) {
+                        clearInterval(window.td);
+                        window.td = 0;
+                        $('#getValidcode').addClass('enabled').text('获取验证码');
+                        return;
+                    }
+                    $('#getValidcode').text(waitTime + 's后重新获取');
+                }, 1000)
+
+            })
+        })
+
+        // 验证文本框
+        function validField($input, reg, helpText1, helpText2) {
+            var value = $.trim($input[0].value);
+            if (!value) {
+                tipInfo(helpText1);
+                return false;
+            } else {
+                if (reg && !reg.test(value)) {
+                    tipInfo(helpText2);
+                    return false;
+                }
+            }
+            return true;
+        }
+        wx.config({
+            debug: false,
+            appId: '@ViewBag.AppId',
+            timestamp: @ViewBag.Timestamp,
+            nonceStr: '@ViewBag.Noncestr',
+            signature: '@ViewBag.Signature',
+            jsApiList: [
+              'checkJsApi',
+              'onMenuShareTimeline',
+              'onMenuShareAppMessage',
+              "closeWindow"
+            ]
+        });
+        wx.ready(function () {
+            wx.onMenuShareAppMessage(
+                    {
+                        title: '我已将账号成功绑定至青创汇服务中心',
+                        desc: '使用微信就能便捷查询个人账户信息，订阅最新动态，参与热门活动。',
+                        link: 'http://www.cn-qch.com/wxuser/bind',
+                        imgUrl: 'http://cn-qch.com/h5/img/logo-.png',
+
+                        trigger: function (res) {
+                            //分享给朋友
+                        },
+                        success: function (res) {
+                            //tipInfo('已分享');
+                            
+                        },
+                        cancel: function (res) {
+                            tipInfo('已取消');
+                        },
+                        fail: function (res) {
+                            alert(JSON.stringify(res));
+                        }
+                    }
+                );
+            wx.onMenuShareTimeline(
+                {
+                    title: '会员绑定青创汇服务中心，快捷查询个人账户，参加活动。',
+                    desc: '梦想太大，青创汇替你装下，这里有一站式创业解决方案。',
+                    link: 'http://www.cn-qch.com/wxuser/bind',
+                    imgUrl: 'http://cn-qch.com/h5/img/logo-.png',
+
+                    trigger: function (res) {
+                        //分享到朋友圈
+                    },
+                    success: function (res) {
+                        //tipInfo('已分享');
+                    },
+                    cancel: function (res) {
+                        tipInfo('已取消');
+                    },
+                    fail: function (res) {
+                        alert(JSON.stringify(res));
+                    }
+                }
+                );
+        });
+
+        wx.error(function (res) {
+            //alert(res.errMsg);
+        });
+        // 提交
+        function signUpHandler(el) {
+            $('[type=text]').blur();
+            var $phone = $('.phone');
+            var $validcode = $('.validcode');
+            if (validField($phone, regPhone, '手机号不能为空！', '手机号格式不正确！') && validField($validcode, null, '验证码不能为空！')) {
+                var data = {
+                    Phone: $phone.val(),
+                    SafeCode: $validcode.val()
+                };
+                $.post('/wxuser/Bind', data, function (msg) {
+                    if (msg.type == "success") {
+                        tipInfo("绑定成功！");
+                        wx.closeWindow();
+                    } else {
+                        if(msg.Data.indexOf('已存在')>0){
+                            tipInfo("账户异常，请先解除绑定");
+                        }else{
+                            tipInfo(msg.Data);
+                        }
+                    }
+                })
+            }
+        }
+
+        function tipInfo(t) {
+            $('p.tipinfo').remove();
+            clearTimeout(window.tid);
+            var winWidth = $(window).width();
+            var winHeight = $(window).height();
+            var $tipinfo = $('<p class="tipinfo">').text(t).css({
+                position: 'fixed',
+                textAlign: 'center',
+                fontSize: '1.1rem',
+                color: '#000',
+                borderRadius: '.5rem',
+                background: '#fff',
+                padding: '3rem',
+                boxShadow:'#888 0 0 5px',
+                transform: 'translate3d(0,0,0)'
+            }).appendTo('body');
+            var left=(winWidth - $('p.tipinfo')[0].offsetWidth) / 2;
+            var top=(winHeight - $('p.tipinfo')[0].offsetHeight) / 2;
+            $tipinfo.css({ left: left,top: top});
+            window.tid = setTimeout(function () {
+                $tipinfo.css({ top: top+30, opacity: 0, transition: 'top .6s,opacity .6s,width .6s' });
+                setTimeout(function () { $tipinfo.remove(); }, 600);
+            }, 1200)
+        }
+
+    </script>
 </body>
 </html>
+
+

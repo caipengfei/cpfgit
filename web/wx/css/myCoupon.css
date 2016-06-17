@@ -1,0 +1,235 @@
+/* 分类菜单 */
+body{
+    background: rgb(247,247,247);
+}
+.header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+    background: #fff;
+}
+.header>h2{
+    padding: 0 1rem;
+    text-align: right;
+    border-bottom: .6rem solid rgb(247,247,247);
+    font-size: 1.1rem;
+}
+.header>h2 a{
+    display: block;
+    line-height: 3.4rem;
+    height: 3.4rem;
+    background: url(../img/my_coupon/ic_dedu_arrow_right.png) no-repeat right 50%;
+    background-size: 1rem auto;
+    padding-right: 1.2rem;
+    font-size: 1.1rem;
+    color: #6d97f4;
+}
+.toolsbox {
+    width: 100%;
+    height: 3.4rem;
+    line-height: 3.4rem;
+    border-bottom: 1px solid rgb(228,228,228);
+}
+.toolsbox li {
+    width: 50%;
+    height: 100%;
+    float: left;
+    text-align: center;
+}
+.toolsbox li a {
+    width: 60%;
+    height: 100%;
+    border-bottom: 2px solid #fff;
+    font-size: 1.1rem;
+    color: #999;
+}
+.toolsbox li.active a {
+    border-color: #6e96f5;
+    color: #6e96f5;
+}
+/* 抵扣券列表 */
+.listsbox{
+    padding-top: 7.4rem;
+}
+.listsbox a {
+    display: block !important;
+    height: 100%;
+    color: #000;
+}
+.rebatebox{
+    padding: .7rem 1rem 0 1rem;
+}
+.rebatebox li {
+    width: 100%;
+    height: 7.9rem;
+    background: url(../img/icon/item-bg.png) no-repeat 0 50%;
+    background-size: 100% auto;
+}
+.rebatebox .boxright {
+    width:29%;
+    height: 100%;
+    padding: 1.1rem .8rem 1.2rem .8rem;
+    float: left;
+    text-align: center;
+    display: table;
+}
+.rebatebox .boxright .subbox {
+    padding: .4rem;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    font-size: 1.2rem;
+    display: table-row;
+}
+.rebatebox .boxright .subbox div {
+    border-radius: .3rem;
+    width: 100%;
+    height: 100%;
+    display: table-cell;
+    vertical-align: middle;
+    line-height: 2rem;
+}
+.rebatebox .boxright .subbox div b{
+    font-size: 2.4rem;
+    font-weight: normal;
+}
+.rebatebox .boxleft {
+    width: 71%;
+    float: left;
+    border-left: none;
+    height: 100%;
+    padding: 1.1rem .5rem 1.1rem 2rem;
+    position: relative;
+}
+.rebatebox .boxleft h2,.rebatebox .boxleft p{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.rebatebox .boxleft h2 {
+    font-size: 1.1rem;
+    color: #6d97f4;
+    margin-bottom: .8rem;
+    line-height: 1.6rem;
+}
+.rebatebox .boxleft p {
+    font-size: .9rem;
+    color: #666;
+    line-height: 1.8rem;
+}
+/* 过期样式 */
+.rebatebox .expire{
+    background: url(../img/icon/item-bg2.png) no-repeat 0 50%;
+    background-size: 100% auto;
+}
+.rebatebox .expire span{
+    background: url(../img/icon/guoqi.png) no-repeat 0 50%;
+    background-size: 100% auto;
+    width: 3.96rem;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: .6rem;
+}
+/* 代用券列表 */
+.Alternativebox{
+    padding: 0 1rem;
+}
+.Alternativebox li{
+    padding: 1rem 0;
+}
+.Alternativebox li a{
+    display: block;
+}
+.Alternativebox li .box1{
+    background: url(../img/my_coupon/ic_experience_top.png);
+    background-size: 100% 100%;
+    text-align: center;
+    height: 3rem;
+    padding: 0 2rem;
+}
+.Alternativebox li .box2{
+    background: url(../img/my_coupon/ic_experience_bottom.png);
+    background-size: 100% 100%;
+    text-align: center;
+    height: 3.3rem;
+    line-height: 3.3rem;
+    padding: 0 2rem;
+}
+.Alternativebox li h2{
+    font-size: 1.1rem;
+    color: #fff;
+    border-bottom:1px solid rgb(255,255,255);
+    height: 1.5rem;
+    padding-top: 1.5rem;
+}
+.Alternativebox li h2 span{
+    position: relative;
+    top: -0.5rem;
+    line-height: 1em;
+    background: #6d97f4;
+    padding: 0 1.2rem;
+}
+.Alternativebox li .box2 h3{
+    float: left;
+    font-size: 1rem;
+    color: #6d97f4;
+}
+.Alternativebox li p{
+    font-size: .9rem;
+    color: #999;
+    float: right;
+}
+p.gray{
+    color: #999;
+}
+p.number,span.price{
+    color: #6d97f4;
+}
+.Alternativebox li.expire .box1{
+    background: url(../img/my_coupon/ic_experience_untop.png);
+    background-size: 100% 100%;
+}
+.Alternativebox li.expire .box2 p{
+    background: url(../img/my_coupon/ic_dedu_overdu.png) no-repeat 0 50%;
+    background-size: 4rem 100%;
+    padding-left: 3.4rem;
+}
+.Alternativebox li.expire span{
+    background: rgb(158,158,158);
+}
+
+.container>.more{
+    text-align: center;
+    color: #666;
+    font-size: 1.1rem;
+    line-height: 2.4rem;
+    height: 2.4rem;
+}
+.container>.more.loading{
+    background: url(../img/icon/loading.gif) no-repeat 50% 50%;
+    background-size: auto 1.2rem;
+}
+.container.nodata .listsbox>p{
+    padding-top: 14.5rem;
+    background: url(../img/icon/imgnodata.png) no-repeat 50% 0;
+    background-size: auto 14rem;
+    font-size: 1.2rem;
+    color: #999;
+    display: block !important;
+    text-align: center;
+}
+.container.nodata .more{
+    display: none !important;
+}
+.container.nodata .listsbox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    bottom: 0;
+    text-align: center;
+    padding-top: 14rem;
+}

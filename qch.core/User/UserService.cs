@@ -84,66 +84,92 @@ namespace qch.core
                         var tjuser = db.SingleOrDefault<T_Users>(" where guid=@0 and t_DelState=0", new object[] { model.t_ReommUser });
                         if (tjuser != null)
                         {
+                            #region 给推荐人赠送积分（已取消）
                             //查询积分信息
-                            var integral = db.SingleOrDefault<T_IntegralManger>(" where t_PinYin='yonghuzhuce' and t_DelState=0");
-                            if (integral == null)
+                            //var integral = db.SingleOrDefault<T_IntegralManger>(" where t_PinYin='yonghuzhuce' and t_DelState=0");
+                            //if (integral == null)
+                            //{
+                            //    log.Info(string.Format("用户注册时未能查询到注册赠送积分的信息，表名：T_IntegralManger，注册手机号：{0},推荐人Guid：{1}", model.t_User_Mobile, model.t_ReommUser));
+                            //}
+                            //else
+                            //{
+                            //    //获取用户现有积分余额
+                            //    int jifen = 0;
+                            //    string sql = "select top 1 * from t_user_integral where t_User_Guid='" + model.t_ReommUser + "' and t_DelState=0 order by t_AddDate desc";
+                            //    var nowIntegral = db.SingleOrDefault<T_User_Integral>(sql);
+                            //    if (nowIntegral != null)
+                            //        jifen = (int)nowIntegral.t_UserIntegral_Reward;
+                            //    T_User_Integral ui = new T_User_Integral
+                            //    {
+                            //        Guid = Guid.NewGuid().ToString(),
+                            //        t_AddDate = DateTime.Now,
+                            //        t_DelState = 0,
+                            //        t_IntegralManager_Guid = integral.Guid,
+                            //        t_IntegralManager_PinYin = integral.t_PinYin,
+                            //        t_Remark = "推荐用户注册赠送（微信端）",
+                            //        t_User_Guid = model.t_ReommUser,
+                            //        t_UserIntegral_ReduceReward = 0,
+                            //        t_UserIntegral_Reward = jifen + integral.t_Integral,
+                            //        t_UserIntergral_AddReward = integral.t_Integral
+                            //    };
+                            //    if (db.Insert(ui) != null)
+                            //    {
+                            //        string tmpguid = "";
+                            //        //向推荐人推送消息
+                            //        if (!string.IsNullOrWhiteSpace(tjuser.t_Andriod_Rid))
+                            //        {
+                            //            #region 客户推送并存储推送信息
+                            //            string strRid = tjuser.t_Andriod_Rid;
+                            //            string mes = string.Format("您推荐的【{0}】已加入青创汇，您获得了{1}积分奖励！", model.t_User_RealName, integral.t_Integral);
+
+                            //            string message = "{\"platform\": \"all\",\"audience\" : {\"registration_id\":[\"" + tjuser.t_Andriod_Rid + "\"]},\"notification\": { \"android\": { \"alert\": \"" + mes + "\",\"title\": \"" + mes + "\",\"builder_id\": 1,\"extras\": {\"Guid\": \"98d51a31-47c5-4743-bde6-5e1a8d86f89e\",\"type\": \"activity\"}}, \"ios\": {\"alert\": \"" + mes + "\",\"sound\": \"default\",\"badge\": \"+1\", \"extras\": {\"Guid\": \"98d51a31-47c5-4743-bde6-5e1a8d86f89e\",\"type\": \"activity\"}}},\"options\": { \"time_to_live\": 259200,\"apns_production\": false}}";
+                            //            JPush.PushMsg(message);
+                            //            //存入数据库
+                            //            T_HistoryPush modelpush = new T_HistoryPush()
+                            //            {
+                            //                Guid = Guid.NewGuid().ToString(),
+                            //                t_Alert = mes,
+                            //                t_Associate_Guid = tjuser.t_Andriod_Rid,
+                            //                t_Date = DateTime.Now,
+                            //                t_DelState = 0,
+                            //                t_Title = mes,
+                            //                t_Type = "message",
+                            //                t_User_Guid = tjuser.Guid
+                            //            };
+                            //            db.Insert(modelpush);
+                            //            #endregion
+                            //        }
+                            //    }
+                            //}
+                            #endregion
+                            #region 给推荐人赠送优惠券
+                            //给推荐人赠送优惠券
+                            //查询优惠券信息
+                            var tjvoucher = db.SingleOrDefault<T_Voucher>(" where T_Voucher_Scope='zhijietuijian' and T_DelState=0");
+                            if (tjvoucher == null)
                             {
-                                log.Info(string.Format("用户注册时未能查询到注册赠送积分的信息，表名：T_IntegralManger，注册手机号：{0},推荐人Guid：{1}", model.t_User_Mobile, model.t_ReommUser));
+                                log.Info("用户注册时未能获取到需要赠送给推荐人的优惠券信息");
                             }
                             else
                             {
-                                //获取用户现有积分余额
-                                int jifen = 0;
-                                string sql = "select top 1 * from t_user_integral where t_User_Guid='" + model.t_ReommUser + "' and t_DelState=0 order by t_AddDate desc";
-                                var nowIntegral = db.SingleOrDefault<T_User_Integral>(sql);
-                                if (nowIntegral != null)
-                                    jifen = (int)nowIntegral.t_UserIntegral_Reward;
-                                T_User_Integral ui = new T_User_Integral
+                                //为用户生成优惠券信息
+                                T_User_Voucher uv = new T_User_Voucher
                                 {
                                     Guid = Guid.NewGuid().ToString(),
-                                    t_AddDate = DateTime.Now,
-                                    t_DelState = 0,
-                                    t_IntegralManager_Guid = integral.Guid,
-                                    t_IntegralManager_PinYin = integral.t_PinYin,
-                                    t_Remark = "推荐用户注册赠送（微信端）",
-                                    t_User_Guid = model.t_ReommUser,
-                                    t_UserIntegral_ReduceReward = 0,
-                                    t_UserIntegral_Reward = jifen + integral.t_Integral,
-                                    t_UserIntergral_AddReward = integral.t_Integral
+                                    T_DelState = 0,
+                                    T_GetDate = DateTime.Now,
+                                    T_User_Guid = tjuser.Guid,
+                                    T_Voucher_Guid = tjvoucher.Guid,
+                                    T_Voucher_Pwd = createNonceStr(8),
+                                    T_Voucher_State = 0
                                 };
-                                if (db.Insert(ui) != null)
-                                {
-                                    string tmpguid = "";
-                                    //向推荐人推送消息
-                                    if (!string.IsNullOrWhiteSpace(tjuser.t_Andriod_Rid))
-                                    {
-                                        #region 客户推送并存储推送信息
-                                        string strRid = tjuser.t_Andriod_Rid;
-                                        string mes = string.Format("您推荐的【{0}】已加入青创汇，您获得了{1}积分奖励！", model.t_User_RealName, integral.t_Integral);
-
-                                        string message = "{\"platform\": \"all\",\"audience\" : {\"registration_id\":[\"" + tjuser.t_Andriod_Rid + "\"]},\"notification\": { \"android\": { \"alert\": \"" + mes + "\",\"title\": \"" + mes + "\",\"builder_id\": 1,\"extras\": {\"Guid\": \"98d51a31-47c5-4743-bde6-5e1a8d86f89e\",\"type\": \"activity\"}}, \"ios\": {\"alert\": \"" + mes + "\",\"sound\": \"default\",\"badge\": \"+1\", \"extras\": {\"Guid\": \"98d51a31-47c5-4743-bde6-5e1a8d86f89e\",\"type\": \"activity\"}}},\"options\": { \"time_to_live\": 259200,\"apns_production\": false}}";
-                                        JPush.PushMsg(message);
-                                        //存入数据库
-                                        T_HistoryPush modelpush = new T_HistoryPush()
-                                        {
-                                            Guid = Guid.NewGuid().ToString(),
-                                            t_Alert = mes,
-                                            t_Associate_Guid = tjuser.t_Andriod_Rid,
-                                            t_Date = DateTime.Now,
-                                            t_DelState = 0,
-                                            t_Title = mes,
-                                            t_Type = "message",
-                                            t_User_Guid = tjuser.Guid
-                                        };
-                                        db.Insert(modelpush);
-                                        #endregion
-                                    }
-                                }
+                                db.Insert(uv);
                             }
+                            #endregion
                         }
                         else
                         {
-                            log.Info("用户注册时，推荐人信息异常，未能完成给推荐人赠送积分功能");
+                            log.Info("用户注册时，推荐人信息异常，未能完成给推荐人赠送优惠券等功能");
                         }
                     }
                     db.CompleteTransaction();

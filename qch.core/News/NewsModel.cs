@@ -11,6 +11,7 @@ namespace qch.Models
     /// </summary>
     public class NewsModel : T_News
     {
+        
         /// <summary>
         /// 是否推荐
         /// </summary>

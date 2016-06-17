@@ -1,0 +1,104 @@
+body{
+    background: rgb(235,235,235);
+}
+.orderbox{
+    margin-bottom: 1rem;
+}
+.orderbox>p{
+    line-height: 3rem;
+    height: 3rem;
+    color: #a1a1a1;
+    font-size: 1.1rem;
+    padding:1rem 1.2rem 0 1.2rem;
+    background: #fff;
+    box-sizing: content-box;
+}
+.orderbox>div{
+    height: 6rem;
+    background: url(../img/icon/pay-bg.png);
+    background-size: 100% 100%;
+    position: relative;
+}
+.orderbox table{
+    width: 100%;
+    height: 100%;
+}
+.orderbox>div>span{
+    position: absolute;
+    right: 1.2rem;
+    bottom: 1.2rem;
+    color: #a1a1a1;
+    font-size: 1rem;
+}
+.orderbox td:nth-child(1){
+    width: 6rem;
+    height: 100%;
+    background: url(../img/icon/house.png) no-repeat 50% 50%;
+    background-size: 2.15rem auto;
+}
+.orderbox td h2{
+    font-size: 1.2rem;
+    margin-bottom: .8rem;
+}
+.orderbox td p{
+    font-size: 1.1rem;
+    color: #a1a1a1;
+}
+.paymode{
+    background: #fff;
+    padding: 0 1.2rem;
+}
+.paymode>h2{
+    line-height: 3.4rem;
+    height: 3.4rem;
+    color: #a1a1a1;
+    font-size: 1.2rem;
+    border-bottom: 1px solid rgb(235,235,235);
+}
+.paymode table{
+    width: 100%;
+}
+.paymode td{
+    height: 6rem;
+}
+.paymode tr:nth-child(1) td:nth-child(1){
+    width: 4.8rem;
+    background: url(../img/icon/wx-icon.png) no-repeat 50% 50%;
+    background-size: 2.15rem auto;
+}
+.paymode tr:nth-child(1) td:nth-child(3){
+    width: 2rem;
+    background: url(../img/icon/nocheck-icon.png) no-repeat 50% 50%;
+    background-size: 1.7rem auto;
+}
+.paymode tr:nth-child(1) td:nth-child(3).checked{
+    width: 2rem;
+    background: url(../img/icon/check-icon.png) no-repeat 50% 50%;
+    background-size: 1.7rem auto;
+}
+.paymode td h2{
+    font-size: 1.2rem;
+    margin-bottom: .8rem;
+}
+.paymode td p{
+    font-size: 1.1rem;
+    color: #a1a1a1;
+}
+.paybox{
+    padding: 0 1.2rem;
+    margin-top: 2rem;
+}
+.paybox .btn-pay{
+    width: 100%;
+    height: 3rem;
+    line-height: 3rem;
+    background: rgb(110,150,245);
+    text-align: center;
+    font-size: 1.1rem;
+    border-radius:2rem;
+    color: #fff;
+}
+
+.paybox .btn-pay:active{
+    opacity: .8;
+}

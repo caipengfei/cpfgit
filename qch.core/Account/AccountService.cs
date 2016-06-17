@@ -28,7 +28,7 @@ namespace qch.core
                 using (var db = new PetaPoco.Database(DbConfig.qch))
                 {
                     string sql = "select top 1 t_UserAccount_Reward from T_User_Account where t_User_Guid=@0 and t_DelState=0 order by t_AddDate desc";
-                    var model = db.SingleOrDefault<object>(sql, new object[] { Guid });
+                    var model = db.ExecuteScalar<object>(sql, new object[] { Guid });
                     if (model != null)
                         xy = Convert.ToDecimal(model);
                 }
@@ -38,6 +38,25 @@ namespace qch.core
             {
                 log.Error(ex.Message);
                 return 0;
+            }
+        }
+        /// <summary>
+        /// 分页获取某人的所有创业币流水
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <param name="Guid"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<AccountModel> GetAll(int page, int pagesize, string Guid)
+        {
+            try
+            {
+                return rp.GetAll(page, pagesize, Guid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
             }
         }
         /// <summary>

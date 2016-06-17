@@ -15,6 +15,7 @@
     <title>邀请好友</title>
     <link rel="stylesheet" href="/h5/css/public.css">
     <link rel="stylesheet" href="/h5/css/invitation.css">
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 </head>
 
 <body>
@@ -29,20 +30,148 @@
                     <h2>间接推荐</h2>
                     <span>@ViewBag.tj2 人</span>
                 </td>
-                <td>
+                @*<td>
                     <h2>获得奖励</h2>
                     <span>@ViewBag.Integral 积分</span>
-                </td>
+                </td>*@
             </tr>
         </table>
         <div class="seedetailsbox">
-            <a href="/invitation/list">查看明细</a>
+            <a href="/invitation/list">查看直接邀请的人</a>
         </div>
         <div class="codebox">
             <p><span>我的邀请码</span><b>@ViewBag.Phone</b></p>
-            @*<a href="javascript:">立即邀请</a>*@
+            <a href="javascript:" id="btn-invite">立即邀请</a>
         </div>
+        <img src="/h5/img/invitation/shade.png" id="shadeImg" style="display:none;opacity:0;position: fixed;top: 0;left: 0;bottom:0;right:0;z-index: 3;background-image:none;transform:translate3d(0,0,0);">
     </div>
+    <script src="~/H5/js/jquery.min.js"></script>
+    <script>
+
+        wx.config({
+            debug: false,
+            appId: '@ViewBag.AppId',
+            timestamp: @ViewBag.Timestamp,
+            nonceStr: '@ViewBag.Noncestr',
+            signature: '@ViewBag.Signature',
+            jsApiList: [
+              'checkJsApi',
+              'onMenuShareTimeline',
+              'onMenuShareAppMessage'
+            ]
+        });
+
+        wx.ready(function () {
+            wx.onMenuShareAppMessage(
+                    {
+                        title: '我在青创汇享受零门槛创业，你有创业梦就赶紧加入吧！',
+                        desc: '项目、资金、人才、导师、推广一个APP（应用）全解决，更重要的是，如此多的资源统统不要钱！',
+                        link: 'http://www.cn-qch.com/wxuser/reg?UserGuid=@ViewBag.UserGuid',
+                        imgUrl: 'http://cn-qch.com/h5/img/logo-.png',
+
+                        trigger: function (res) {
+                            //分享给朋友
+                        },
+                        success: function (res) {
+                            //alert('已分享');
+                            hideImg();
+                        },
+                        cancel: function (res) {
+                            //alert('已取消');
+                            hideImg(); 
+                        },
+                        fail: function (res) {
+                            alert(JSON.stringify(res));
+                        }
+                    }
+                );
+            wx.onMenuShareTimeline(
+                {
+                    title: '我在青创汇高效对接项目资金人才，轻松创业，你也赶快加入吧！',
+                    desc: '加入青创汇，创业资源一手掌握，创业从未如此简单',
+                    link: 'http://www.cn-qch.com/wxuser/reg?UserGuid=@ViewBag.UserGuid',
+                    imgUrl: 'http://cn-qch.com/h5/img/logo-.png',
+
+                    trigger: function (res) {
+                        //分享到朋友圈
+                    },
+                    success: function (res) {
+                        //alert('已分享');
+                        hideImg();
+                    },
+                    cancel: function (res) {
+                        //alert('已取消');
+                        hideImg();
+                    },
+                    fail: function (res) {
+                        alert(JSON.stringify(res));
+                    }
+                }
+                );
+        });
+
+        wx.error(function (res) {
+            //alert(res.errMsg);
+        });
+        function hideImg(){
+            var shadeImg = document.getElementById('shadeImg');
+            shadeImg.style.opacity = 0;
+            shadeImg.style.display = 'none';
+        }
+        function addTapEvent(el, cb) {
+            el.addEventListener('touchstart', function (e) {
+                var touch = e.targetTouches[0];
+                this.endX = this.startX = touch.clientX;
+                this.endY = this.startY = touch.clientY;
+            })
+            el.addEventListener('touchmove', function (e) {
+                var touch = e.targetTouches[0];
+                this.endX = touch.clientX;
+                this.endY = touch.clientY;
+            })
+            el.addEventListener('touchend', function (e) {
+                var x = Math.abs(this.endX - this.startX);
+                var y = Math.abs(this.endY - this.startY);
+                if (x <= 5 && y <= 5) {
+                    (typeof cb == 'function') && cb(this);
+                }
+            })
+        }
+        window.onload = function () {
+            var shadeImg = document.getElementById('shadeImg');
+            var btnInvite = document.getElementById('btn-invite');
+            shadeImg.style.width=(window.outerWidth||window.innerWidth)+'px';
+            shadeImg.style.height=(window.outerHeight||window.innerHeight)+'px';
+            shadeImg.aniFrame = null;
+            addTapEvent(btnInvite, function (el) {
+                shadeImg.style.display = 'block';
+                var alpha = 0;
+                (function () {
+                    shadeImg.aniFrame = requestAnimationFrame(arguments.callee);
+                    alpha += .08;
+                    shadeImg.style.opacity = alpha;
+                    if (alpha >= 1) {
+                        shadeImg.style.opacity = 1;
+                        cancelAnimationFrame(shadeImg.aniFrame);
+                    }
+                })();
+            });
+            addTapEvent(shadeImg, function (el) {
+                cancelAnimationFrame(shadeImg.aniFrame);
+                var alpha = 1;
+                (function () {
+                    shadeImg.aniFrame = requestAnimationFrame(arguments.callee);
+                    alpha -= .08;
+                    shadeImg.style.opacity = alpha;
+                    if (alpha <= 0) {
+                        shadeImg.style.opacity = 0;
+                        shadeImg.style.display = 'none';
+                        cancelAnimationFrame(shadeImg.aniFrame);
+                    }
+                })();
+            });
+        }
+    </script>
 </body>
 
 </html>

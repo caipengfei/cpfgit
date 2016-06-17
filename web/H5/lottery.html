@@ -1,36 +1,47 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
     <meta name="renderer" content="webkit" />
     <link rel="dns-prefetch" href="//test.cn-qch.com/" />
+    <link rel="dns-prefetch" href="//www.cn-qch.com/" />
     <link rel="stylesheet" href="/h5/css/public.css">
     <link rel="stylesheet" href="/h5/css/lottery.css">
-    <title>抽奖活动</title>
+    <title>幸运大转盘</title>
 </head>
 
 <body>
     <div class="container">
+        <div class="header">
+            <p class="jifen"></p>
+            <p>每次抽奖将会消耗10积分</p>
+        </div>
         <div id="turnplate">
-            <canvas></canvas>
+            <img src="/h5/img/lottery/zhuanpan2@2x.png" />
             <div class="pointer"></div>
+        </div>
+        <div class="lookup"><a></a></div>
+        <div class="rulebox">
+            <p>1,每次抽奖使用10积分，抽奖次数不限;</p>
+            <p>2,抽中的奖品我们客服人员将于24小时内与您电话确认;</p>
+            <p>3,若未中奖，消耗的积分不予返还;</p>
+            <p>4,青创汇在法律范围内保留本次活动最终解释权;</p>
         </div>
     </div>
     <div class="tipbox">
-        <span></span>
-        <p>恭喜你</p>
+        <p><i>获得</i> <b></b></p>
         <a class="ok">确定</a>
     </div>
     <div class="shade"></div>
-    <div style="display:none;">
-        <img src="/h5/img/lottery/shan.png" id="shan-img" />
-        <img src="/h5/img/lottery/sorry.png" id="sorry-img" />
+    <div class="loading"></div>
+    <div style="display:none">
+        <img src="/h5/img/lottery/tipbox.png">
+        <img src="/h5/img/lottery/pulling.png">
     </div>
-    <script src="/h5/js/stats.min.js"></script>
+    <script src="/h5/js/zepto.min.js"></script>
+    <script src="/h5/js/util.js"></script>
     <script src="/h5/js/lottery.js"></script>
 </body>
-
 </html>

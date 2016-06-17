@@ -87,6 +87,7 @@ body {
 .header .mainnav li {
     float: left;
     margin: 0 10px;
+    position: relative;
 }
 
 .header .mainnav li>a {
@@ -106,6 +107,28 @@ body {
     background-color: #FCCC37;
     border-color: #FCCC37;
     color: #4A4A4A;
+}
+.header .mainnav li:hover>div{
+    display: block;
+}
+.header .mainnav li>div{
+    width: 100%;
+    line-height: 30px;
+    text-align: center;
+    position: absolute;
+    /*padding-top: 19px;*/
+    top: 51px;
+    left: 0;
+    border-radius: 6px;
+    overflow: hidden;
+    display: none;
+}
+.header .mainnav li>div a{
+    display: block;
+    background: #fff;
+}
+.header .mainnav li>div a:hover{
+    background: rgb(228,228,228);
 }
 .header .userface{
     float:right; width:70px; height:100%; padding:15px;

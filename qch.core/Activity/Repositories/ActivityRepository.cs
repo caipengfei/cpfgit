@@ -20,20 +20,21 @@ namespace qch.Repositories
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.Append("select [Guid],[t_User_Guid],[t_Activity_Title],[t_Activity_CoverPic],[t_Activity_sDate],t_Activity_eDate,[t_Activity_CityName] from [T_Activity] where t_DelState=0 ");
+                sql.Append("select [Guid],[t_User_Guid],[t_Activity_Title],[t_Activity_CoverPic],[t_Activity_sDate],t_Activity_eDate,[t_Activity_CityName] from [T_Activity] where t_DelState=0 and [t_Activity_Audit]=1 ");
                 if (!string.IsNullOrWhiteSpace(CityName))
                 {
                     sql.Append("and t_Activity_CityName='" + CityName + "'");
                 }
                 if (days > 0)
                 {
-                    sql.Append("and DATEDIFF(day,t_Activity_sDate,getDate())<=" + days + " ");
+                    sql.Append("and DATEDIFF(day,t_Activity_sDate,getDate()) between 0 and " + days + " ");
                 }
                 if (!string.IsNullOrWhiteSpace(payType))
                 {
                     sql.Append("and t_Activity_FeeType='" + payType + "'");
                 }
                 sql.Append("order by t_Activity_Recommand,t_Activity_sDate desc");
+                log.Info("获取活动列表的Sql：" + sql);
                 return rp.GetPageData(page, pagesize, sql.ToString());
             }
             catch (Exception ex)

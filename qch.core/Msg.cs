@@ -27,5 +27,15 @@ namespace qch.core
         /// 其它信息
         /// </summary>
         public string Remark { get; set; }
+        /// <summary>
+        /// 其它结果
+        /// </summary>
+        public object Result { get; set; }
+        /// <summary>
+        /// 关联订单号
+        /// </summary>
+        public string OrderNo { get; set; }
+        public string PayType { get; set; }
+        public decimal PayMoney { get; set; }
     }
 }

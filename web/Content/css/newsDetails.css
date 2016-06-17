@@ -1,0 +1,106 @@
+#mainContainer{
+    padding-top: 70px;
+    background: #e5e5e5;
+}
+a{
+    color: #000;
+}
+.contentbox{
+    width: 1180px;
+    margin: auto;
+    margin-top: 30px;
+    color: #252525;
+}
+.contentbox .leftbox{
+    padding: 30px;
+    padding-top: 0;
+    width: 82%;
+    margin: auto;
+}
+.contentbox .rightbox{
+    width: 30%;
+    float: right;
+}
+.contentbox .leftbox .topbox{
+    text-align: center;
+}
+.contentbox .leftbox .topbox h3{
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.contentbox .leftbox .topbox p{
+    margin-bottom: 20px;
+    color: #999;
+}
+.contentbox .leftbox .content{
+    line-height: 1.8rem;
+    font-size: 14px;
+    background: #fff;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: #b5b5b5 0 0 5px;
+}
+.contentbox .leftbox .content img{
+    max-width: 100%;    
+    display: block;
+    margin-left:auto !important;
+    margin-right:auto !important;
+}
+.contentbox .leftbox .content span{
+    display: inline;
+}
+.contentbox .rightbox>h2{
+    font-size: 18px;
+    padding: 15px;
+    padding-top: 0;
+    padding-bottom: 0;
+    font-weight: bold;
+    color: #2782da;
+}
+.contentbox .rightbox>h2 .more{
+    float: right;
+    color: #2782da;
+    font-size: 13px;
+}
+.contentbox .rightbox>h2 .more:hover{
+    text-decoration: underline;
+}
+.contentbox .rightbox ul{
+    padding: 0 30px;
+}
+.contentbox .rightbox ul li{
+    margin: 20px 0;
+}
+.contentbox .rightbox ul li a{
+    font-size: 14px;
+    color: #252525;
+}
+.contentbox .rightbox ul li a:hover{
+    color: rgb(64,138,213);
+    text-decoration: underline;
+}
+.loading{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:#eee url(../image/loading.gif) no-repeat 50% 50%;
+}
+#mainContainer>h2{
+    width: 1180px;
+    margin: 40px auto;
+    color: #252525;
+}
+#mainContainer>h2 a{
+    margin-right: 20px;
+    color: #000;
+    border-bottom: 2px solid #e5e5e5;
+    font-size: 16px;
+    padding-bottom: 4px;
+}
+#mainContainer>h2 a:hover,#mainContainer>h2 a.active{
+    color: rgb(64,138,213);
+    border-color:rgb(64,138,213);
+}

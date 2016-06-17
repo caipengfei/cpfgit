@@ -1,15 +1,13 @@
 .container {
     background: url(/h5/img/invitation/datu_img@2x.jpg) no-repeat 50% 0;
-    background-size: 100% 15rem;
-    padding-top: 15rem;
-    margin-bottom: 0;
+    background-size: 100% 18rem;
+    padding-top: 19rem;
+    margin-bottom: 2rem;
 }
 
 table {
     width: 100%;
     background: #fff;
-    border-top: 1px solid rgb(238, 238, 238);
-    border-bottom: 1px solid rgb(238, 238, 238);
 }
 
 table td {
@@ -38,13 +36,13 @@ table td:nth-child(3) {
 }
 
 table td h2 {
-    color: rgb(165, 165, 165);
+    color: rgb(146, 146, 146);
     margin-bottom: 1em;
     font-size: 1.2rem;
 }
 
 table td span {
-    color: rgb(162, 201, 240);
+    color: rgb(143, 209, 255);
     margin-bottom: 1em;
     font-size: 1.2rem;
 }
@@ -61,7 +59,7 @@ table td span {
     height: 2rem;
     line-height: 2rem;
     font-size: 1.2rem;
-    color: rgb(162, 201, 240);
+    color: rgb(143, 209, 255);
     letter-spacing: 1px;
     background: url(/h5/img/invitation/shuangjiantou@2x.png) no-repeat right 50%;
     background-size: auto 100%;
@@ -76,25 +74,26 @@ table td span {
 
 .codebox p {
     height: 3rem;
-    line-height: 2.9rem;
+    line-height: 1.9rem;
     border-radius: 1.5rem;
-    border: 1px solid rgb(165, 165, 165);
+    border: 1px solid rgb(143, 209, 255);
     margin-bottom: 3rem;
     overflow: hidden;
+    padding: .5rem 0;
 }
 
 .codebox p span {
     font-size: 1.2rem;
-    background: rgb(244, 244, 244);
     padding: 0 1.4rem;
-    color: rgb(165, 165, 165);
+    border-right: 1px solid rgb(143, 209, 255);
+    color: rgb(143, 209, 255);
 }
 
 .codebox p b {
     font-size: 1.2rem;
     float: right;
     padding-right: 1.4rem;
-    color: rgb(165, 165, 165);
+    color: rgb(143, 209, 255);
     font-weight: normal;
 }
 
@@ -104,7 +103,7 @@ table td span {
     line-height: 3rem;
     text-align: center;
     color: #fff;
-    background: rgb(162, 201, 240);
+    background: rgb(100, 151, 245);
     font-size: 1.2rem;
     border-radius: 1.5rem;
 }

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <link rel="dns-prefetch" href="//test.cn-qch.com/" />
+    <link rel="dns-prefetch" href="//www.cn-qch.com/" />
+    <title>支付成功</title>
+    <link rel="stylesheet" href="/wx/css/public.css">
+    <link rel="stylesheet" href="/wx/css/paySuccess.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="successbox">
+            <img src="/wx/img/payok-img.png">
+            <h2>恭喜你,支付成功！</h2>
+            <a class="btn-look">查看订单</a>
+            <p class="p1">本次交易订单号: 201604046131534</p>
+            <p>交易完成后客服人员会尽快联系您</p>
+        </div>
+        <p class="tip">
+            温馨提示: 为提高场地利用率，让更多会员享受到青创汇的优质服务，如您因故需取消预约，
+            请提前一天（24小时）取消
+        </p>
+        <p class="yourcan"><span>您还可以</span></p>
+        <ul class="otherBox">
+            <li>
+                <a href="http://mp.weixin.qq.com/s?__biz=MzA5OTU0NDE0Nw==&mid=400794286&idx=1&sn=fd17729afc68fd053901611c8435f546&scene=0&previewkey=MppKeYHdEw4HcdCKutlldsNS9bJajjJKzz%2F0By7ITJA%3D#wechat_redirect">
+                    <b class="icon icon-xin"></b>
+                    <div>
+                        <h4>关注青创汇服务号</h4>
+                        <p>了解最新活动，掌握青创汇最热动态</p>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="http://www.cn-qch.com/app">
+                    <b class="icon icon_down"></b>
+                    <div>
+                        <h4>下载青创汇App</h4>
+                        <p>查看预约报名凭证，轻松对接项目资金人才</p>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <script src="/wx/js/zepto.min.js"></script>
+    <script>
+        function GetUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]); return null;
+        }
+        $(function () {
+            $('.successbox .p1').text('本次交易订单号:' + GetUrlParam('orderNo'));
+        })
+    </script>
+</body>
+</html>

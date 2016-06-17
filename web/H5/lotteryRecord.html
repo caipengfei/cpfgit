@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <link rel="dns-prefetch" href="//test.cn-qch.com/" />
+    <link rel="dns-prefetch" href="//www.cn-qch.com/" />
+    <link rel="stylesheet" href="/h5/css/public.css">
+    <style>
+        .container{ max-width: 768px; margin:auto; }
+        table{ width: 100%;}
+        table td{ height: 5rem; border-bottom: 1px solid rgb(235,235,235); font-size: 1.1rem; }
+        table td:nth-child(1){ padding-left: 1rem; color: #9e9e9e; width: 10rem; }
+        table td:nth-child(2){ text-align: center; width: 7rem; }
+        table td:nth-child(3){ padding-right: 1rem; }
+        td img{ width: 3.46rem; height: 3.46rem; background: none; }
+        .container.nodata{ position: absolute; top: 0; left: 0;width: 100%; bottom: 0;text-align: center; padding-top:14rem;}
+        .container.nodata>p{ padding-top: 14.5rem; background: url(/h5/img/icon/imgnodata.png) no-repeat 50% 0; background-size: auto 14rem; font-size: 1.2rem;
+         color: #999; display: block !important;}
+        .container.nodata .more{display: none !important; }
+        .container>.more{ text-align: center; color: #666; font-size: 1.1rem; line-height: 2.4rem; height: 2.4rem; }
+        .container>.more.loading{ background: url(/h5/img/loading.gif) no-repeat 50% 50%; background-size: auto 1.2rem; }
+    </style>
+    <title>中奖记录</title>
+</head>
+
+<body>
+    <div class="container">
+        <table cellpadding="0" cellspacing="0"></table>
+        <div class="more loading"></div>
+        <p class="hide">暂无数据</p>
+    </div>
+    <script type="text/html" id="listTemplate">
+        <%var jfImg="/h5/img/lottery/jifen@2x.png"%>
+        <%var yhjImg="/h5/img/lottery/dikouquan@2x.png"%>
+        <%data.items.forEach(function(item,index){%>
+        <%var isJf=(item.rollTitle.indexOf('积分')!=-1)%>
+            <tr>
+                <td><%=formatDate(item.t_AddDate,'yyyy/MM/dd hh:mm')%></td>
+                <td><img src="<%=isJf?jfImg:yhjImg%>"></td>
+                <td><%=isJf?('+'+item.rollTitle):item.rollTitle%></td>
+            </tr>
+        <%})%>
+    </script>
+    <script src="/h5/js/zepto.min.js"></script>
+    <script src="/wx/js/artTemplate.js"></script>
+    <script src="/h5/js/util.js"></script>
+    <script>
+        var guid = util.getUrlParam('UserGuid') || util.getUrlParam('userGuid');
+        var ajaxParam={ page:1, pagesize:20, UserGuid:guid }
+        var isOk = false;
+        $(function(){ getData(ajaxParam);})
+        function getData(param,cb){
+            $.ajax({
+                url:'http://120.25.106.244:9001/api/roll/GetAllByUser',
+                data:param,
+                cache:false,
+                success:function(res){
+                    if ((!res)||res.totalItems == 0) {
+                        $('.container').addClass('nodata');
+                        return;
+                    }
+                    if(res.items.length<param.pagesize){
+                        $('.container>.more').removeClass('loading').text('');
+                    }
+                    $('table').append(template('listTemplate',{data:res}));
+                    isOk = true;
+                    (typeof cb == 'function') && cb(res);
+                }
+            })
+        }
+        template.helper('formatDate',util.formatDate);
+        $(window).bind('scroll', loadItem);
+        function loadItem() {
+            var winHeight = $(window).height();
+            var sTop = $(window).scrollTop();
+            var boxHeight = $('table').height();
+            if ((winHeight + sTop >= boxHeight) && isOk) {
+                isOk = false;
+                ajaxParam.page++;
+                getData(ajaxParam, function (res) {
+                    if (ajaxParam.page >= res.totalPages) {
+                        $(window).unbind('scroll', loadItem);
+                        $('.container>.more').removeClass('loading').text('没有更多了');
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

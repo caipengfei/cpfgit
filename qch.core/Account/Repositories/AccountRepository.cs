@@ -16,6 +16,26 @@ namespace qch.Repositories
 
 
         /// <summary>
+        /// 分页获取某人的所有创业币流水
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <param name="Guid"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<AccountModel> GetAll(int page, int pagesize, string Guid)
+        {
+            try
+            {
+                string sql = "select * from T_User_Account where t_User_Guid=@0 and t_DelState=0";
+                return rp.GetPageData(page, pagesize, sql, new object[] { Guid });
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
         /// 获取某个人的所有流水
         /// </summary>
         /// <param name="Guid"></param>

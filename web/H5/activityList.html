@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <link rel="dns-prefetch" href="//test.cn-qch.com/" />
+    <link rel="dns-prefetch" href="//www.cn-qch.com/" />
+    <title>活动</title>
+    <link rel="stylesheet" href="/wx/css/public.css">
+    <link rel="stylesheet" href="/wx/css/activityList.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- 区域 时间 费用-->
+        <ul class="toolsbox">
+            <li>
+                <a><i>全国</i></a>
+                <div class="hide">
+                    <a data-city="">全国</a>
+                    <a data-city="北京">北京</a>
+                    <a data-city="上海">上海</a>
+                    <a data-city="广州">广州</a>
+                    <a data-city="深圳">深圳</a>
+                    <a data-city="天津">天津</a>
+                    <a data-city="杭州">杭州</a>
+                    <a data-city="成都">成都</a>
+                    <a data-city="南京">南京</a>
+                    <a data-city="武汉">武汉</a>
+                    <a data-city="西安">西安</a>
+                    <a data-city="厦门">厦门</a>
+                    <a data-city="重庆">重庆</a>
+                    <a data-city="郑州">郑州</a>
+                    <a data-city="长沙">长沙</a>
+                    <a data-city="苏州">苏州</a>
+                    <a data-city="大连">大连</a>
+                    <a data-city="沈阳">沈阳</a>
+                    <a data-city="长春">长春</a>
+                    <a data-city="福州">福州</a>
+                    <a data-city="济南">济南</a>
+                    <a data-city="青岛">青岛</a>
+                    <a data-city="哈尔滨">哈尔滨</a>
+                    <div></div>
+                </div>
+            </li>
+            <li>
+                <a><i>时间</i></a>
+                <div class="hide">
+                    <a data-days='0'>时间</a>
+                    <a data-days='1'>今天</a>
+                    <a data-days='2'>明天</a>
+                    <a data-days='7'>近一周</a>
+                    <div></div>
+                </div>
+            </li>
+            <li>
+                <a><i>费用</i></a>
+                <div class="hide">
+                    <a>费用</a>
+                    <a data-type='免费'>免费</a>
+                    <a data-type='付费'>付费</a>
+                    <div></div>
+                </div>
+            </li>
+        </ul>
+        <!-- 活动列表 模板渲染 -->
+        <ul class="listbox">
+            <p class="hide">暂无活动</p>
+        </ul>
+        <div class="more loading"></div>
+    </div>
+    <script type="text/html" id="listTemplate">
+    <%var imgUrl='http://www.cn-qch.com:8002/attach/images/'%>
+    <%data.items.forEach(function(item,index){%>
+        <li class="clearfix" data-guid="<%=item.guid%>">
+                <img src="<%=imgUrl+item.t_Activity_CoverPic%>">
+                <div>
+                    <h2><%=item.t_Activity_Title%></h2>
+                    <p><span class="city"><%=item.t_Activity_CityName%></span><span class="time"><%=formatDate(item.t_Activity_sDate)%></span></p>
+                    <span class="count"><b><%=item.applys%></b>人报名</span>
+                </div>
+            </li>
+    <%})%>
+    </script>
+    
+    <script src="/wx/js/zepto.min.js"></script>
+    <script src="/wx/js/artTemplate.js"></script>
+    <script src="/wx/js/activityList.js"></script>
+</body>
+</html>

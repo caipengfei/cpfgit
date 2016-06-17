@@ -1,0 +1,131 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+a {
+    display: inline-block;
+    text-decoration: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
+}
+span {
+    display: inline-block;
+}
+li {
+    list-style: none;
+}
+body {
+    overflow-x: hidden;
+}
+body img {
+    max-width: 100%;
+}
+.clearfix:after {
+    display: block;
+    content: '';
+    clear: both;
+}
+.hide {
+    display: none;
+}
+@media screen and (max-width:359px) {
+    html {
+        font-size: 12px;
+    }
+}
+@media screen and (min-width:360px) and (max-width:479px) {
+    html {
+        font-size: 13px;
+    }
+}
+@media screen and (min-width:480px) and (max-width:767px) {
+    html {
+        font-size: 14px;
+    }
+}
+@media screen and (min-width:768px) and (max-width:1024px) {
+    html {
+        font-size: 16px;
+    }
+}
+.shade-div {
+    background: #eee url(../img/icon/loading.gif) no-repeat 50% 50%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 1002;
+}
+.container{
+    width: 100%;
+    max-width: 768px;
+    margin: auto;
+    
+}
+.container.fixed {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+}
+.header{
+    height: 12rem;
+    background: url(../img/coupon/jifen.jpg);
+    background-size: 100% 100%;
+    margin: 0 .6rem;
+}
+.couponrulebox{
+    border-top: 1rem solid rgb(247,247,247);
+}
+.rulebox li{
+    padding: 0 .6rem 1rem .6rem;
+    border-bottom: 1px solid #f3f2f2;
+}
+.rulebox li h2{
+    font-size: 1.1rem;
+    color: rgb(59,139,220);
+    background: url(../img/coupon/juxing@2x.png) no-repeat 0 50%;
+    background-size: auto 1.4rem;
+    line-height: 3.4rem;
+    padding-left: 1rem;
+}
+.rulebox li p{
+    color: #999;
+    font-size: 1rem;
+    line-height: 1.6rem;
+}
+.rulebox li table{
+    width: 100%;
+    color: #999;
+    font-size: 1rem;
+    border-top: 1px solid #f3f2f2;
+    padding: 0 .6rem;
+    text-align: center;
+    margin-top: 1rem;
+}
+.rulebox li th,.rulebox li td{
+    font-weight: normal;
+    height: 3rem;
+    border-bottom: 1px solid #f3f2f2;
+    width: 33.33%;
+}
+.footer{
+    text-align: center;
+    color: #999;
+    margin-top: 1rem;
+}
+.couponuserulebox li{
+    border-top: 1rem solid rgb(247,247,247);
+    border-bottom:none;
+}

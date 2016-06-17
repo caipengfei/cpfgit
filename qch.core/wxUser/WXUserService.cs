@@ -255,13 +255,13 @@ namespace qch.core
                         log.Info("openid已存在");
                         return msg;
                     }
-                    var b = rp.GetByUserId(model.UserGuid);
-                    if (b != null)
-                    {
-                        msg.Data = "已存在";
-                        log.Info("已存在");
-                        return msg;
-                    }
+                    //var b = rp.GetByUserId(model.UserGuid);
+                    //if (b != null)
+                    //{
+                    //    msg.Data = "已存在";
+                    //    log.Info("已存在");
+                    //    return msg;
+                    //}
                     model.Guid = Guid.NewGuid().ToString();
                     model.CreateDate = DateTime.Now;
                     model.MediaDate = DateTime.Now;
@@ -279,6 +279,26 @@ namespace qch.core
                 return msg;
             }
         }
+        public Msg Bind(WXUserModel model)
+        {
+            Msg msg = new Msg();
+            msg.type = "error";
+            msg.Data = "绑定失败";
+            try
+            {
+                var m = GetByOpenId(model.OpenId, model.UnionId);
+                if (m != null)
+                {
+                    m.UserGuid = model.UserGuid;                    
+                }
+                return Save(m);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return msg;
+            }
+        }
         /// <summary>
         /// 删除
         /// </summary>
@@ -289,6 +309,21 @@ namespace qch.core
             try
             {
                 var model = GetById(Guid);
+                if (model == null)
+                    return false;
+                return rp.Del(model);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return false;
+            }
+        }
+        public bool DelByOpenId(string OpenId)
+        {
+            try
+            {
+                var model = GetByOpenId(OpenId);
                 if (model == null)
                     return false;
                 return rp.Del(model);

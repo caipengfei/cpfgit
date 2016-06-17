@@ -18,7 +18,59 @@ namespace api.Controllers
         FoucsService foucsService = new FoucsService();
         StyleService styleService = new StyleService();
         InvestService investService = new InvestService();
+        AccountService accountService = new AccountService();
+        VoucherService voucherService = new VoucherService();
+        IntegralService integralService = new IntegralService();
 
+        /// <summary>
+        /// 个人中心
+        /// </summary>
+        /// <param name="UserGuid"></param>
+        /// <returns></returns>
+        /// 
+        [HttpGet]
+        public object UserInfo(string UserGuid)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(UserGuid))
+                    return null;
+                var model = userService.GetById(UserGuid);
+                if (model == null)
+                    return null;
+                //用户创业币
+                var cyb = accountService.GetBalance(UserGuid);
+                //积分
+                var integral = integralService.GetIntegral(UserGuid);
+                //优惠券
+                long voucherCount = 0;
+                var voucher = voucherService.GetAlluvByUser(1, 9999, UserGuid);
+                if (voucher != null)
+                    voucherCount = voucher.TotalItems;
+                //直推
+                var zhijie = userService.GetReferral1(UserGuid);
+                //间推
+                var jianjie = userService.GetReferral2(UserGuid);
+                var target = new
+                {
+                    RegDate = model.t_User_Date, //注册日期
+                    Avator = model.t_User_Pic, //头像
+                    Name = model.t_User_RealName,//真实姓名
+                    Referral1 = zhijie,//直接推荐人（数量）
+                    Referral2 = jianjie,//简介推荐人（数字量）
+                    VoucherCount = voucherCount,//优惠券数量
+                    Integral = integral,//积分余额
+                    Balance = cyb,//创业币余额
+                    Phone = model.t_User_LoginId//用户手机号
+                };
+                return target;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
         /// <summary>
         /// 获取用户信息
         /// </summary>

@@ -55,9 +55,6 @@
     <Reference Include="xftwl.Common">
       <HintPath>..\..\packages\xftwl\xftwl.Common.dll</HintPath>
     </Reference>
-    <Reference Include="xftwl.Infrastructure">
-      <HintPath>..\..\packages\xftwl\xftwl.Infrastructure.dll</HintPath>
-    </Reference>
     <Reference Include="xftwl.OAuth.Client">
       <HintPath>..\..\packages\xftwl\xftwl.OAuth.Client.dll</HintPath>
     </Reference>
@@ -85,6 +82,10 @@
     <ProjectReference Include="..\qch.core\qch.core.csproj">
       <Project>{7b39af3f-32b0-4ae3-a791-ce2855ded364}</Project>
       <Name>qch.core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\qch.Infrastructure\qch.Infrastructure.csproj">
+      <Project>{aa92a157-0056-4e23-a0b5-f3b25d2b94f8}</Project>
+      <Name>qch.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <link rel="dns-prefetch" href="//test.cn-qch.com/" />
+    <link rel="dns-prefetch" href="//www.cn-qch.com/" />
+    <title>账户明细</title>
+    <link rel="stylesheet" href="/wx/css/public.css">
+    <style>
+        body{ background: rgb(235,235,235); }
+        ul{ padding: 0 1.2rem;}
+        li{ margin-top: 1.2rem; padding: .6rem; padding-bottom: 0; background: #fff; }
+        table{ width: 100%; border-bottom: 1px solid #666; }
+        td{ vertical-align: top; padding: 0 0 1rem .6rem;}
+        td:nth-child(2){ text-align: right; }
+        td h3{ font-size: 1.1rem; margin-bottom: .6rem; }
+        td .date{ color: #999; font-size: .9rem; }
+        td strong{ color: #f35f05; font-size: 1rem; }
+        p.order-code{ line-height: 3.4rem; border-bottom: 1px solid #666; }
+        p.order-code span{ color: #999; margin-right: 2rem; }
+        .slide{ line-height: 3.4rem; height: 3.4rem; background: url(/wx/img/icon/icon-bottom.png) no-repeat 50% bottom;
+            background-size: 1rem auto; background-origin: content-box; padding-bottom: .6rem; width: 100%; }
+        .slide.down{ background: url(/wx/img/icon/icon-top.png) no-repeat 50% bottom; background-size: 1rem auto; background-origin: content-box; }
+        .container.nodata{ position: absolute; top: 0; left: 0;width: 100%; bottom: 0;text-align: center; padding-top:14rem; background:#fff;}
+        .container.nodata>p{ padding-top: 14.5rem; background: url(/h5/img/icon/imgnodata.png) no-repeat 50% 0; background-size: auto 14rem; font-size: 1.2rem;
+         color: #999; display: block !important;}
+        .container.nodata .more{display: none !important; }
+        .container>.more{ text-align: center; color: #666; font-size: 1.1rem; line-height: 2.4rem; height: 2.4rem; }
+        .container>.more.loading{ background: url(/h5/img/loading.gif) no-repeat 50% 50%; background-size: auto 1.2rem; }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <ul></ul>
+        <div class="more loading"></div>
+        <p class="hide">暂无记录</p>
+    </div>
+
+    <script type="text/html" id="listTemplate">
+        <%data.items.forEach(function(item,index){%>
+            <li>
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td>
+                            <h3><%=item.t_Remark%></h3>
+                            <span class="date"><%=item.t_AddDate%></span>
+                        </td>
+                        <td>
+                            <strong>+￥<%=item.t_UserAccount_AddReward.toFixed(2)%></strong>
+                        </td>
+                    </tr>
+                </table>
+                <p class="order-code"><span>订单号:</span><%=item.t_UserAccount_No%></p>
+                <a class="slide"></a>
+            </li>
+        <%})%>
+    </script>
+    <script src="/wx/js/zepto.min.js"></script>
+    <script src="/wx/js/artTemplate.js"></script>
+    <script src="/h5/js/util.js"></script>
+    <script>
+        var guid=util.getUrlParam('guid');
+        var ajaxParam={ page:1, pagesize:10, Guid:guid }
+        var isOk = false;
+        $(function(){ getData(ajaxParam);})
+        function getData(param,cb){
+            $.ajax({
+                url:'http://120.25.106.244:9001/api/account/GetAll',
+                data:param,
+                cache:false,
+                success:function(res){
+                    if ((!res)||res.totalItems == 0) {
+                        $('.container').addClass('nodata');
+                        return;
+                    }
+                    if(res.items.length<param.pagesize){
+                        $('.container>.more').removeClass('loading').text('');
+                    }
+                    $('.container>ul').append(template('listTemplate',{data:res}));
+                    isOk = true;
+                    (typeof cb == 'function') && cb(res);
+                }
+            })
+        }
+        $(window).bind('scroll', loadItem);
+        function loadItem() {
+            var winHeight = $(window).height();
+            var sTop = $(window).scrollTop();
+            var boxHeight = $('.container>ul').height();
+            if ((winHeight + sTop >= boxHeight) && isOk) {
+                isOk = false;
+                ajaxParam.page++;
+                getData(ajaxParam, function (res) {
+                    if (ajaxParam.page >= res.totalPages) {
+                        $(window).unbind('scroll', loadItem);
+                        $('.container>.more').removeClass('loading').text('没有更多了');
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>
