@@ -41,7 +41,7 @@
   <ItemGroup>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\cpf\log4net.dll</HintPath>
+      <HintPath>..\packages\qch\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Maticsoft.BLL">
       <HintPath>..\packages\qch\Maticsoft.BLL.dll</HintPath>
@@ -1025,6 +1025,8 @@
     <Content Include="H5\img\header3.png" />
     <Content Include="H5\img\icon\amount.png" />
     <Content Include="H5\img\icon\comment.png" />
+    <Content Include="H5\img\icon\denglu_mm_img%402x.png" />
+    <Content Include="H5\img\icon\denglu_sj_img%402x.png" />
     <Content Include="H5\img\icon\dot_1.png" />
     <Content Include="H5\img\icon\dot_2.png" />
     <Content Include="H5\img\icon\down.png" />
@@ -1036,6 +1038,7 @@
     <Content Include="H5\img\icon\huodong_xz_btn%402x.png" />
     <Content Include="H5\img\icon\imgnodata.png" />
     <Content Include="H5\img\icon\inline.png" />
+    <Content Include="H5\img\icon\li_bg.png" />
     <Content Include="H5\img\icon\logo_mob.png" />
     <Content Include="H5\img\icon\more_1.png" />
     <Content Include="H5\img\icon\paySuccess.jpg" />
@@ -1068,6 +1071,8 @@
     <Content Include="H5\img\invitation\shuangjiantou%402x.png" />
     <Content Include="H5\img\invitation\wode_yaoqingyoujiang_img%402x.png" />
     <Content Include="H5\img\invitation\zhijie_img%402x.png" />
+    <Content Include="H5\img\kehuduan_btn1%402x.png" />
+    <Content Include="H5\img\kehuduan_btn2%402x.png" />
     <Content Include="H5\img\line.png" />
     <Content Include="H5\img\line_white.png" />
     <Content Include="H5\img\loading.gif" />
@@ -1098,6 +1103,10 @@
     <Content Include="H5\img\pingzheng_full.png" />
     <Content Include="H5\img\share_1.png" />
     <Content Include="H5\img\tutor_bg.jpg" />
+    <Content Include="H5\img\wangzhi_btn1%402x.png" />
+    <Content Include="H5\img\wangzhi_btn2%402x.png" />
+    <Content Include="H5\img\weixin_btn1%402x.png" />
+    <Content Include="H5\img\weixin_btn2%402x.png" />
     <Content Include="H5\img\xf_bian_02.png" />
     <Content Include="H5\img\xf_bian_03.png" />
     <Content Include="H5\img\xf_bian_03_n2.png" />
@@ -1205,6 +1214,7 @@
     <Content Include="wx\AccountDetails.html" />
     <Content Include="wx\activityList.html" />
     <Content Include="wx\css\activityList.css" />
+    <Content Include="wx\css\IntegralRecord.css" />
     <Content Include="wx\css\myCoupon.css" />
     <Content Include="wx\css\myServices.css" />
     <Content Include="wx\css\orderPay.css" />
@@ -1222,6 +1232,7 @@
     <Content Include="wx\img\icon\guoqi.png" />
     <Content Include="wx\img\icon\house.png" />
     <Content Include="wx\img\icon\house2.png" />
+    <Content Include="wx\img\icon\huode2%402x.png" />
     <Content Include="wx\img\icon\icon-bottom.png" />
     <Content Include="wx\img\icon\icon-right2.png" />
     <Content Include="wx\img\icon\icon-top.png" />
@@ -1243,6 +1254,7 @@
     <Content Include="wx\img\icon\time.png" />
     <Content Include="wx\img\icon\wx-icon.png" />
     <Content Include="wx\img\icon\xian_cd.png" />
+    <Content Include="wx\img\icon\xiaofei2%402x.png" />
     <Content Include="wx\img\my_coupon\ic_dedu_arrow_right.png" />
     <Content Include="wx\img\my_coupon\ic_dedu_overdu.png" />
     <Content Include="wx\img\my_coupon\ic_experience_bottom.png" />
@@ -1258,6 +1270,7 @@
     <Content Include="wx\img\user_center\jjtj.png" />
     <Content Include="wx\img\user_center\yhq.png" />
     <Content Include="wx\img\user_center\zjtj.png" />
+    <Content Include="wx\IntegralRecord.html" />
     <Content Include="wx\js\activityList.js" />
     <Content Include="wx\js\artTemplate.js" />
     <Content Include="wx\js\myCoupon.js" />

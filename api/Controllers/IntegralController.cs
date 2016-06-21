@@ -30,5 +30,24 @@ namespace api.Controllers
                 return 0;
             }
         }
+        /// <summary>
+        /// 分页获取某用户的积分记录
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <param name="UserGuid"></param>
+        /// <returns></returns>
+        public object GetAll(int page, int pagesize, string UserGuid, int typeId)
+        {
+            try
+            {
+                return servicer.GetAll(page, pagesize, UserGuid, typeId);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
     }
 }

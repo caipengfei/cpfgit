@@ -16,6 +16,18 @@ namespace qch.core
         PlaceRepository rp = new PlaceRepository();
 
         #region 用户预约过的空间业务
+        public bool IsOrderToday(string UserGuid)
+        {
+            try
+            {
+                return rp.IsOrderToday(UserGuid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return false;
+            }
+        }
         /// <summary>
         /// 获取某用户的空间预约信息
         /// </summary>

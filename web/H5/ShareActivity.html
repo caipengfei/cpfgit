@@ -85,12 +85,11 @@
             <ul class="commentlist" id="ulComment">
                 <%if(data.comments.items.length==0){%><li>暂无</li><%}%>
                 <%data.comments.items.forEach(function(item,index){%>
-                    <%var name=item.userName||''%>
-                    <%name=name.length>2?name.slice(0,2)+'**':name%>
+                    
                     <li>
                         <a><img class="lazy" data-src="<%=item.userAvator?avatorUrl +item.userAvator:defaultAvatorUrl%>"></a>
                         <div>
-                            <h3><%=name%><span><%=item.t_Talk_FromDate%></span></h3>
+                            <h3><%=item.userName%><span><%=item.t_Talk_FromDate%></span></h3>
                             <p><%=item.t_Talk_FromContent%></p>
                         </div>
                     </li>

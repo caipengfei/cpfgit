@@ -19,6 +19,24 @@ namespace qch.Repositories
         Repository<OrderedPlaceModel> orderedRp = new Repository<OrderedPlaceModel>();
 
         #region 用户预约过的空间资源
+
+        public bool IsOrderToday(string UserGuid)
+        {
+            try
+            {
+                string sql = "select * from T_Place_Ordered where t_User_Guid=@0 and t_State!=3 and t_delstate=0 and t_AddDate between @1 and @2";
+                var model = orderedRp.Get(sql, new object[] { UserGuid, qch.Infrastructure.TimeHelper.GetStartDateTime(DateTime.Now), qch.Infrastructure.TimeHelper.GetEndDateTime(DateTime.Now) });
+                if (model == null)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return false;
+            }
+        }
         /// <summary>
         /// 获取某用户的空间预约信息
         /// </summary>

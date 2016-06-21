@@ -189,7 +189,7 @@ header h3 {
 
 .banner .tag {
     position: absolute;
-    bottom:1.6rem;
+    bottom:.6rem;
     right: 2rem;
 }
 
@@ -230,18 +230,33 @@ header h3 {
 }
 
 .linksbox div a.gw{
-    background: url(../img/icon_xin.png) no-repeat 50% 0;
-    background-size: 3rem 3rem;
+    background: url(../img/wangzhi_btn1@2x.png) no-repeat 50% 0;
+    background-size: 3.6rem 3.6rem;
 }
 
 .linksbox div a.ct{
-    background: url(../img/icon_xin.png) no-repeat 50% 0;
-    background-size: 3rem 3rem;
+    background: url(../img/kehuduan_btn1@2x.png) no-repeat 50% 0;
+    background-size: 3.6rem 3.6rem;
 }
 
 .linksbox div a.wx{
-    background: url(../img/icon_xin.png) no-repeat 50% 0;
-    background-size: 3rem 3rem;
+    background: url(../img/weixin_btn1@2x.png) no-repeat 50% 0;
+    background-size: 3.6rem 3.6rem;
+}
+
+.linksbox div a.gw.active{
+    background: url(../img/wangzhi_btn2@2x.png) no-repeat 50% 0;
+    background-size: 3.6rem 3.6rem;
+}
+
+.linksbox div a.ct.active{
+    background: url(../img/kehuduan_btn2@2x.png) no-repeat 50% 0;
+    background-size: 3.6rem 3.6rem;
+}
+
+.linksbox div a.wx.active{
+    background: url(../img/weixin_btn2@2x.png) no-repeat 50% 0;
+    background-size: 3.6rem 3.6rem;
 }
 
 .demand {
@@ -365,4 +380,9 @@ i.fa {
     height: 1rem;
     position: relative;
     top:2px;
+}
+
+.teambox table td h3 span{
+    font-size: 1rem;
+    color: #999;
 }

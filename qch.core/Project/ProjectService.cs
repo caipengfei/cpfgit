@@ -15,6 +15,24 @@ namespace qch.core
         readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         ProjectRepository rp = new ProjectRepository();
 
+
+        /// <summary>
+        /// 获取项目团队
+        /// </summary>
+        /// <param name="ProjectGuid"></param>
+        /// <returns></returns>
+        public IEnumerable<SelectProjectTeam> GetTeam(string ProjectGuid)
+        {
+            try
+            {
+                return rp.GetTeam(ProjectGuid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
         /// <summary>
         /// 分页获取所有项目
         /// </summary>

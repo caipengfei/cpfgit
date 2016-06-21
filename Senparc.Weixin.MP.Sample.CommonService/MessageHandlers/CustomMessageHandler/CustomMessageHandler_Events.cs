@@ -155,8 +155,13 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
                         if (bindInfo == null || string.IsNullOrWhiteSpace(bindInfo.UserGuid))
                         {
                             var responseMessage = CreateResponseMessage<ResponseMessageText>();
-                            string url = OAuth.GetAuthorizeUrl(appId, "http://www.cn-qch.com/wxuser/bind", Nonce, OAuthScope.snsapi_userinfo);
-                            responseMessage.Content = "<a href='" + url + "'>请先绑定青创汇帐户</a>";
+                            string urlReg = OAuth.GetAuthorizeUrl(appId, "http://www.cn-qch.com/wxuser/reg", Nonce, OAuthScope.snsapi_userinfo);
+                            string urlBind = OAuth.GetAuthorizeUrl(appId, "http://www.cn-qch.com/wxuser/bind", Nonce, OAuthScope.snsapi_userinfo);
+                            responseMessage.Content = string.Format("亲，您尚未绑定青创汇服务号！\r\n");
+                            responseMessage.Content += string.Format("已有青创汇账号？\r\n");
+                            responseMessage.Content += "<a href='" + urlBind + "'>请点击这里绑定</a>\r\n";
+                            responseMessage.Content += "What？你还没注册青创汇？\r\n";
+                            responseMessage.Content += "<a href='" + urlReg + "'>点击这里注册并绑定</a>\r\n";
                             return responseMessage;
                         }
                         else
@@ -229,8 +234,13 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
                         {
                             //不存在绑定信息
                             var responseMessage = CreateResponseMessage<ResponseMessageText>();
-                            string url = OAuth.GetAuthorizeUrl(appId, "http://www.cn-qch.com/wxuser/bind", Nonce, OAuthScope.snsapi_userinfo);
-                            responseMessage.Content = "<a href='" + url + "'>点我去绑定</a>";
+                            string urlReg = OAuth.GetAuthorizeUrl(appId, "http://www.cn-qch.com/wxuser/reg", Nonce, OAuthScope.snsapi_userinfo);
+                            string urlBind = OAuth.GetAuthorizeUrl(appId, "http://www.cn-qch.com/wxuser/bind", Nonce, OAuthScope.snsapi_userinfo);
+                            responseMessage.Content = string.Format("亲，您尚未绑定青创汇服务号！\r\n");
+                            responseMessage.Content += string.Format("已有青创汇账号？\r\n");
+                            responseMessage.Content += "<a href='" + urlBind + "'>请点击这里绑定</a>\r\n";
+                            responseMessage.Content += "What？你还没注册青创汇？\r\n";
+                            responseMessage.Content += "<a href='" + urlReg + "'>点击这里注册并绑定</a>\r\n";
                             log.Info(responseMessage.Content);
                             return responseMessage;
                         }
@@ -335,8 +345,13 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
                         }
                         else
                         {
-                            string url = OAuth.GetAuthorizeUrl(appId, "http://www.cn-qch.com/wxuser/reg", Nonce, OAuthScope.snsapi_userinfo);
-                            responseMessage.Content = "<a href='" + url + "'>请先绑定青创汇帐户</a>";
+                            string urlReg = OAuth.GetAuthorizeUrl(appId, "http://www.cn-qch.com/wxuser/reg", Nonce, OAuthScope.snsapi_userinfo);
+                            string urlBind = OAuth.GetAuthorizeUrl(appId, "http://www.cn-qch.com/wxuser/bind", Nonce, OAuthScope.snsapi_userinfo);
+                            responseMessage.Content = string.Format("亲，您尚未绑定青创汇服务号！\r\n");
+                            responseMessage.Content += string.Format("已有青创汇账号？\r\n");
+                            responseMessage.Content += "<a href='" + urlBind + "'>请点击这里绑定</a>\r\n";
+                            responseMessage.Content += "What？你还没注册青创汇？\r\n";
+                            responseMessage.Content += "<a href='" + urlReg + "'>点击这里注册并绑定</a>\r\n";
                             return responseMessage;
                         }
                     }

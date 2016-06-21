@@ -109,7 +109,7 @@
             var r = window.location.search.substr(1).match(reg);
             if (r != null) return unescape(r[2]); return null;
         }
-        var guid = GetUrlParam("Guid") || GetUrlParam("guid") || '35b6d02d-3f2d-4b45-bf4d-e54808561069';
+        var guid = GetUrlParam("Guid") || GetUrlParam("guid");
         $.ajax({
             type: 'get',
             cache: false,

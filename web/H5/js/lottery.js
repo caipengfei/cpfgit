@@ -121,6 +121,7 @@ var oTipBox = {
         b.textContent = text;
         if (index == 8) {
             this.tipBox.classList.add('pulling');
+            b.textContent = '';
         } else {
             this.tipBox.classList.remove('pulling');
         }

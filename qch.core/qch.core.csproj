@@ -30,8 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net">
-      <HintPath>..\packages\cpf\log4net.dll</HintPath>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\qch\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Maticsoft.Common">
       <HintPath>..\packages\qch\Maticsoft.Common.dll</HintPath>
@@ -136,6 +137,9 @@
     <Compile Include="Place\Repositories\T_Place_Order.cs" />
     <Compile Include="Place\Repositories\T_Place_Ordered.cs" />
     <Compile Include="Place\Repositories\T_Place_Style.cs" />
+    <Compile Include="Project\ProjectTeamModel.cs" />
+    <Compile Include="Project\Repositories\T_Project_Team.cs" />
+    <Compile Include="Project\SelectProjectTeam.cs" />
     <Compile Include="Roll\Repositories\RollRepository.cs" />
     <Compile Include="Roll\Repositories\T_Roll.cs" />
     <Compile Include="Roll\Repositories\T_Roll_Records.cs" />

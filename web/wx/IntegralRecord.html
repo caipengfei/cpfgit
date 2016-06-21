@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <link rel="dns-prefetch" href="//test.cn-qch.com/" />
+    <link rel="dns-prefetch" href="//www.cn-qch.com/" />
+    <link rel="stylesheet" href="/wx/css/public.css">
+    <link rel="stylesheet" href="/wx/css/IntegralRecord.css">
+    <title>积分记录</title>
+</head>
+
+<body>
+    <div class="container">
+        <ul class="toolsbox">
+            <li class="active"><a>全部</a></li>
+            <li><a>获得</a></li>
+            <li><a>消费</a></li>
+        </ul>
+        <table></table>
+        <div class="more loading"></div>
+        <p class="hide">暂无数据</p>
+    </div>
+    <script type="text/html" id="listTemplate">
+        <%var jfPlusImg="/wx/img/icon/huode2@2x.png"%>
+        <%var jfMinusImg="/wx/img/icon/xiaofei2@2x.png"%>
+        <%data.items.forEach(function(item,index){%>        
+            <tr>
+                <td>
+                    <%=formatDate(item.t_AddDate,'yyyy/MM/dd hh:mm')%><br>
+                    剩余积分: <%=item.t_UserIntegral_Reward%>
+                </td>
+                <td><img src="<%=item.isAdd?jfPlusImg:jfMinusImg%>"></td>
+                <td>
+                    <strong><%=item.addOrReduce%></strong><br>
+                    <span><%=item.t_Remark%></span>
+                </td>
+            </tr>
+        <%})%>
+    </script>
+    <script src="/h5/js/zepto.min.js"></script>
+    <script src="/wx/js/artTemplate.js"></script>
+    <script src="/h5/js/util.js"></script>
+    <script>
+        // api/integral/getall?page=1&pagesize=20&userguid=***&typeId=1/2/3
+        var guid = util.getUrlParam('UserGuid') || util.getUrlParam('userGuid');
+        var ajaxParam={ page:1, pagesize:20, userguid:guid,typeId:1 }
+        var isOk = false;
+        $(function () {
+            $('.toolsbox li').each(function () {
+                util.addTapEvent(this,function(el){
+                    $(window).unbind('scroll', loadItem).bind('scroll', loadItem);
+                    $('.container').removeClass('nodata').children('table').empty();
+                    $('.container>.more').addClass('loading').text('');
+                    $(el).addClass('active').siblings('li').removeClass('active');
+                    ajaxParam.typeId=$(el).index()+1;
+                    ajaxParam.page=1;
+                    getData(ajaxParam);
+                })
+            })
+            // 获取初始数据
+            getData(ajaxParam);
+        })
+        function getData(param,cb){
+            $.ajax({
+                url:'http://120.25.106.244:9001/api/integral/getall',
+                data:param,
+                cache:false,
+                success:function(res){
+                    if ((!res)||res.totalItems == 0) {
+                        $('.container').addClass('nodata');
+                        return;
+                    }
+                    if(res.items.length<param.pagesize){
+                        $('.container>.more').removeClass('loading').text('');
+                    }
+                    $('table').append(template('listTemplate',{data:res}));
+                    isOk = true;
+                    (typeof cb == 'function') && cb(res);
+                }
+            })
+        }
+        template.helper('formatDate',util.formatDate);
+        $(window).bind('scroll', loadItem);
+        function loadItem() {
+            var winHeight = $(window).height();
+            var sTop = $(window).scrollTop();
+            var boxHeight = $('table').height();
+            if ((winHeight + sTop >= boxHeight) && isOk) {
+                isOk = false;
+                ajaxParam.page++;
+                getData(ajaxParam, function (res) {
+                    if (ajaxParam.page >= res.totalPages) {
+                        $(window).unbind('scroll', loadItem);
+                        $('.container>.more').removeClass('loading').text('没有更多了');
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

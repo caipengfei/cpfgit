@@ -39,7 +39,7 @@ header h3 {
 }
 
 header h3 span {
-    margin: 0 1rem;
+    margin: 0 .4rem;
     font-size: .9rem;
 }
 
@@ -109,10 +109,6 @@ header h3 span {
     overflow: hidden;
 }
 
-.infobox{
-    border-bottom:.8rem solid #f3f3f3;;
-}
-
 .infobox>div{
     padding:.8rem 1.2rem;
 }
@@ -151,23 +147,27 @@ header h3 span {
     color: #1a1a1a;
 }
 .aboutbox ul li{
-    line-height: 3.4rem;
+    line-height: 3.6rem;
+    height: 3.4rem;
     padding-right: 1.2rem;
+    padding-left: 1.2rem;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    background: url(../img/icon/li_bg.png) no-repeat .3rem 50%;
+    background-size: .6rem 100%;
 }
 .fieldbox ul li ,
 .goodatbox ul li{
     float: left;
-    width: 25%;
     height:2.2rem;
     line-height: 2.2rem;
     border-radius: 1.1rem;
     border:1px solid #1a1a1a;
     text-align: center;
-    margin:0 6% .8rem 0;
+    margin:0 .8rem .8rem 0;
     font-size: 1.1rem;
+    padding: 0 .8rem;
 }
 
 footer {
@@ -192,4 +192,32 @@ footer a:nth-child(1) {
 footer a i{
     position: relative;
     top:2px;
+}
+.casebox h2{
+    line-height: 3rem;
+    background: #f3f3f3;
+    font-size: 1.1rem;
+    padding-left: 1.2rem;
+}
+.casebox li{
+    line-height: 3.4rem;
+    height: 3.4rem;
+    padding: .6rem 1.2rem;
+    box-sizing: content-box;
+}
+.casebox div{
+    float: left;
+}
+.casebox div img{
+    width: 3.4rem;
+    height: 3.4rem;
+    border-radius: 1.7rem;
+    float: left;
+    margin-right: .6rem;
+}
+.casebox span{
+    float: right;
+}
+#tzStyle.table li{
+    width: 50%;
 }

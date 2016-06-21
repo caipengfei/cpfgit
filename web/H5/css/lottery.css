@@ -140,8 +140,9 @@ body {
 .tipbox.pulling {
     background: url(../img/lottery/pulling.png) no-repeat 0 50%;
     background-size: 100% auto;
-    height: 10rem;
-    padding-top: 2.4rem;
+}
+.tipbox.pulling .ok{
+    margin-top:3.6rem;
 }
 .tipbox.pulling p i{
     display: none;

@@ -41,8 +41,8 @@ namespace qch.Repositories
         {
             try
             {
-                string sql = "select * from T_Style where Id in (@0) and t_DelState=0";
-                return rp.GetAll(sql, new object[] { ids });
+                string sql = "select * from T_Style where Id in (" + ids + ") and t_DelState=0";
+                return rp.GetAll(sql);
             }
             catch (Exception ex)
             {

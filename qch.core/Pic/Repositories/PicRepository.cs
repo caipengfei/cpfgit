@@ -24,7 +24,7 @@ namespace qch.Repositories
         {
             try
             {
-                string sql = "select * from T_Associate_Pic where t_DelState=0 and t_Associate_Guid=@0";
+                string sql = "select * from T_Associate_Pic where t_DelState=0 and t_Associate_Guid=@0 order by t_Pic_Url";
                 return rp.GetAll(sql, new object[] { Guid });
             }
             catch (Exception ex)

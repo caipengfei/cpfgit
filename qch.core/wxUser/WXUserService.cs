@@ -289,9 +289,22 @@ namespace qch.core
                 var m = GetByOpenId(model.OpenId, model.UnionId);
                 if (m != null)
                 {
-                    m.UserGuid = model.UserGuid;                    
+                    if (string.IsNullOrWhiteSpace(m.UserGuid))
+                    {
+                        m.UserGuid = model.UserGuid;
+                        return Save(m);
+                    }
+                    else
+                    {
+                        msg.Data = "绑定信息已存在";
+                        log.Info("已存在");
+                        return msg;
+                    }
                 }
-                return Save(m);
+                else
+                {
+                    return Save(model);
+                }
             }
             catch (Exception ex)
             {

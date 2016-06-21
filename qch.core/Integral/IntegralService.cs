@@ -16,6 +16,26 @@ namespace qch.core
         IntegralRepository rp = new IntegralRepository();
 
 
+
+        /// <summary>
+        /// 分页获取某用户的积分记录
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <param name="UserGuid"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<IntegralModel> GetAll(int page, int pagesize, string UserGuid, int typeId)
+        {
+            try
+            {
+                return rp.GetAll(page, pagesize, UserGuid, typeId);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
         /// <summary>
         /// 获取某人推荐会员的时候当时获取的积分奖励
         /// </summary>

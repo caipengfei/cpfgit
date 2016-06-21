@@ -37,95 +37,171 @@
         <%var imgUrl='http://www.cn-qch.com:8002/attach/images/'%>
         <%var avatorUrl='http://www.cn-qch.com:8002/attach/user/'%>
         <%var defaultAvatorUrl='img/avator.png'%>
-        <header>
-            <img src="<%=avatorUrl + data.userAvatar%>">
-            <h2><%=data.username%></h2>
-            <h3><span><%=data.company%></span></h3>
-        </header>
-        <ul class="table clear">
-            <li><span><%=data.city%></span><b>城市</b></li>
-            <li><span><%=data.numFollow%></span><b>关注</b></li>
-            <li><span><%=data.fans.length%></span><b>粉丝</b></li>
-        </ul>
-        <div class="dynamicbox">
-            <h2>Ta的动态</h2>
-            <ul>
-                <li class="clear">
-                    <img src="<%=avatorUrl + data.userAvatar%>">
-                    <div>
-                        <h3>思考网站架构！</h3>
-                        <p><span>03-15 21:36</span> 湖南省地区湖南省地区湖南省地区湖南省地区</p>
-                    </div>
-                </li>
+        <%if(data.t_User_Style=='2'){%>
+            <header>
+                <img src="<%=avatorUrl + data.t_User_Pic%>">
+                <h2><%=data.t_User_RealName%></h2>
+                <h3><span><%=data.PositionName%></span><span><%=data.t_User_Commpany%></span></h3>
+            </header>
+            <ul class="table clear" id="tzStyle">
+                <li><span><%=data.PCount%></span><b>关注</b></li>
+                <li><span><%=data.FCount%></span><b>粉丝</b></li>
             </ul>
-        </div>
-        <div class="projectbox">
-            <h2>Ta的项目</h2>
-            <ul>
-                <li class="clear">
-                    <img src="<%=avatorUrl + data.userAvatar%>">
-                    <h3>思考网站架构！</h3>
-                </li>
-            </ul>
-        </div>
-        <div class="infobox">
-            <h2>Ta的信息</h2>
-            <div>
-                <h3>个人描述</h3>
-                <p><%=data.description%></p>
+            <div class="infobox">
+                <h2>个人简历</h2>
+                <div>
+                    <p><%==data.t_User_Remark.replace(/===/g,'<br>')%></p>
+                </div>
             </div>
-        </div>
-        <div class="aboutbox">
-            <h2>个人简历</h2>
-            <ul>
-                <li>2015.01-2015.03 电脑组装员 上海达丰电子</li>
-                <li>2015.01-2015.03 电脑组装员 上海达丰电子</li>
+            <%if(data.InvestArea&&data.InvestArea.length){%>
+            <div class="infobox">
+                <h2>投资风格</h2>
+                    <div class="fieldbox">
+                    <h2>投资领域</h2>
+                    <ul class="clear">
+                        <%data.InvestArea.forEach(function(item,index){%>
+                            <li><%=item.InvestAreaName%></li>
+                        <%})%>
+                    </ul>
+                </div>
+                <%}%>
+                <%if(data.InvestPhase&&data.InvestPhase.length){%>
+                <div class="goodatbox">
+                    <h2>投资阶段</h2>
+                    <ul class="clear">
+                        <%data.InvestPhase.forEach(function(item,index){%>
+                            <li><%=item.InvestPhaseName%></li>
+                        <%})%>
+                    </ul>
+                </div>
+                <%}%>
+                <div class="goodatbox">
+                    <h2>投资金额</h2>
+                    <span><%=data.t_User_InvestMoney%></span>
+                </div>
+            </div>
+            <%if(data.InvestCase&&data.InvestCase.length){%>
+            <div class="casebox">
+                <h2>投资案例</h2>
+                <ul>
+                    <%data.InvestCase.forEach(function(item,index){%>
+                        <li class="clear">
+                            <div>
+                                <img src="<%=imgUrl+item.t_Invest_Pic%>" alt="">
+                                <%=item.t_Invest_Project%>
+                            </div>
+                            <span><%=item.InvestPhase[0].InvestPhaseName%> <%=formatDate(item.t_Invest_Date,'yyyy.MM')%></span>
+                        </li>
+                    <%})%>
+                </ul>
+            </div>
+            <%}%>
+            <footer>
+                <a class="talk" href="http://www.cn-qch.com/app"><i class="fa fa-user-plus"></i> 私信</a>
+                <a class="follow" href="http://www.cn-qch.com/app"><i class="fa fa-commenting"></i> 关注</a>
+            </footer>
+        <%}%>
+        <%if(data.t_User_Style=='3'){%>
+            <header>
+                <img src="<%=avatorUrl + data.t_User_Pic%>">
+                <h2><%=data.t_User_RealName%></h2>
+                <h3><span><%=data.PositionName%></span><span><%=data.t_User_Commpany%></span></h3>
+            </header>
+            <ul class="table clear">
+                <li><span><%=data.t_User_City%></span><b>城市</b></li>
+                <li><span><%=data.PCount%></span><b>关注</b></li>
+                <li><span><%=data.FCount%></span><b>粉丝</b></li>
             </ul>
-        </div>
-        <div class="fieldbox">
-            <h2>关注领域</h2>
-            <ul class="clear">
-                <li>汽车</li>
-                <li>金融</li>
-                <li>移动互联网</li>
-                <li>O2O</li>
-            </ul>
-        </div>
-        <div class="goodatbox">
-            <h2>我最擅长</h2>
-            <ul class="clear">
-                <li>产品</li>
-                <li>运营</li>
-                <li>推广策划</li>
-                <li>项目管理</li>
-            </ul>
-        </div>
-        <footer>
-            <a class="talk" href="http://www.cn-qch.com/app"><i class="fa fa-user-plus"></i> 私信</a>
-            <a class="follow" href="http://www.cn-qch.com/app"><i class="fa fa-commenting"></i> 关注</a>
-        </footer>
+            <%if(data.Topic&&data.Topic.length){%>
+            <div class="dynamicbox">
+                <h2>Ta的动态</h2>
+                <ul>
+                    <li class="clear">
+                        <img src="<%=imgUrl + data.Topic[0].pic[0].t_Pic_Url%>">
+                        <div>
+                            <h3><%=data.Topic[0].t_Topic_Contents.length>24?data.Topic[0].t_Topic_Contents.slice(0,24)+'...':data.Topic[0].t_Topic_Contents%></h3>
+                            <p><span><%=formatDate(data.Topic[0].t_Date,'MM-dd hh:mm')%></span> <%=data.Topic[0].t_Topic_Address%></p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <%}%>
+            <%if(data.UserProject&&data.UserProject.length){%>
+            <div class="projectbox">
+                <h2>Ta的项目</h2>
+                <ul>
+                    <li class="clear">
+                        <img src="<%=imgUrl + data.UserProject[0].t_Project_ConverPic%>">
+                        <h3><%=data.UserProject[0].ProjectName%></h3>
+                    </li>
+                </ul>
+            </div>
+            <%}%>
+            <div class="infobox">
+                <h2>Ta的信息</h2>
+                <div>
+                    <h3>个人描述</h3>
+                    <p><%=data.t_User_Remark.replace(/===/g,'<br>')||'该用户很懒，什么都没留下'%></p>
+                </div>
+            </div>
+            <%if(data.HistoryWork&&data.HistoryWork.length){%>
+            <div class="aboutbox">
+                <h2>个人简历</h2>
+                <ul>
+                    <%data.HistoryWork.forEach(function(item,index){%>
+                        <li><%=formatDate(item.t_sDate,'yyyy.MM')+'-'+(item.t_eDate?formatDate(item.t_eDate,'yyyy.MM'):'至今')%> <%=item.t_Position%> <%=item.t_Commpany%></li>
+                    <%})%>
+                </ul>
+            </div>
+            <%}%>
+            <%if(data.FoucsArea&&data.FoucsArea.length){%>
+            <div class="fieldbox">
+                <h2>关注领域</h2>
+                <ul class="clear">
+                    <%data.FoucsArea.forEach(function(item,index){%>
+                        <li><%=item.FoucsName%></li>
+                    <%})%>
+                </ul>
+            </div>
+            <%}%>
+            <%if(data.Best&&data.Best.length){%>
+            <div class="goodatbox">
+                <h2>我最擅长</h2>
+                <ul class="clear">
+                    <%data.Best.forEach(function(item,index){%>
+                        <li><%=item.BestName%></li>
+                    <%})%>
+                </ul>
+            </div>
+            <%}%>
+            <footer>
+                <a class="talk" href="http://www.cn-qch.com/app"><i class="fa fa-user-plus"></i> 私信</a>
+                <a class="follow" href="http://www.cn-qch.com/app"><i class="fa fa-commenting"></i> 关注</a>
+            </footer>
+        <%}%>
     </script>
     
-    <script src="js/jquery.min.js"></script>
-    <script src="js/artTemplate.js"></script>
+    <script src="/h5/js/zepto.min.js"></script>
+    <script src="/h5/js/artTemplate.js"></script>
+    <script src="/h5/js/util.js"></script>
     <script>
-        function GetUrlParam(name) {
-            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-            var r = window.location.search.substr(1).match(reg);
-            if (r != null) return unescape(r[2]); return null;
-        }
-        var guid = GetUrlParam("Guid") || GetUrlParam("guid") || '1424d5d1-cc48-4ff9-b6f6-820041f812b3';
+        var guid = util.getUrlParam("Guid");
+        var userguid = util.getUrlParam("UserGuid");
         $.ajax({
             type: 'get',
             cache: false,
             dataType: 'json',
-            url: 'http://120.25.106.244:9001/api/user/GetUser',
-            data: { guid: guid },
-            success: function (data) {
-                $('.container').html(template('contentTemplate', { data: data }));
+            url: 'http://120.25.106.244:9001/api/user/GetUserView',
+            data: { guid: guid ,userguid:userguid},
+            success: function (res) {
+                if(res){
+                    var data=JSON.parse(res)[0].result[0];
+                    $('.container').html(template('contentTemplate', { data: data }));
+                }
                 $('.container').removeClass('loading').siblings('.shade-div').remove();
             }
         })
+        template.helper('formatDate',util.formatDate);
     </script>
 </body>
 </html>

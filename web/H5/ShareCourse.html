@@ -84,8 +84,10 @@
                 <h2>讲师</h2>
                 <ul>
                     <li class="clear" data-guid="<%=data.t_Lecturer_Guid%>">
-                        <img class="lazy" data-src="<%=data.lecturerAvator||default_avator%>">
-                        <div>
+                        <div class="left">
+                            <img src="<%=data.lecturerAvator||default_avator%>">
+                        </div>
+                        <div class="right">
                             <h2><%=data.lecturerName%></h2>
                             <p><%=data.t_Course_OneWord%></p>
                         </div>

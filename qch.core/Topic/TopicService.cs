@@ -160,7 +160,7 @@ namespace qch.core
         /// <param name="lat"></param>
         /// <param name="scope"></param>
         /// <returns></returns>
-        public PetaPoco.Page<TopicModel> GetNearbySeller(int page, int pagesize, string lon, string lat, int scope)
+        public PetaPoco.Page<TopicModel> GetNearby(int page, int pagesize, string lon, string lat, int scope)
         {
             try
             {

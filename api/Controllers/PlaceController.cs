@@ -19,6 +19,19 @@ namespace api.Controllers
         PicService picService = new PicService();
         ActivityApplyService aaService = new ActivityApplyService();
 
+
+        public bool IsOrderToday(string UserGuid)
+        {
+            try
+            {
+                return service.IsOrderToday(UserGuid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return false;
+            }
+        }
         /// <summary>
         /// 获取某用户的服务信息
         /// </summary>

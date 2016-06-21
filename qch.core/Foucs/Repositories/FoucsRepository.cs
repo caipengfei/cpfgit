@@ -25,7 +25,7 @@ namespace qch.Repositories
         {
             try
             {
-                string sql = "select a.Guid,a.t_Focus_Guid,a.t_User_Guid as UserGuid,a.t_Date as FoucsDate,b.t_User_RealName as UserName,b.t_User_Pic as UserAvator from T_User_Foucs as a left join t_users as b on a.t_User_Guid=b.Guid where a.t_User_Guid=@0";
+                string sql = "select a.Guid,a.t_Focus_Guid,a.t_User_Guid as UserGuid,a.t_Date as FoucsDate,b.t_User_RealName as UserName,b.t_User_Pic as UserAvator from T_User_Foucs as a left join t_users as b on a.t_User_Guid=b.Guid where a.t_User_Guid=@0 and a.t_DelState=0";
                 return rp1.GetAll(sql, new object[] { Guid });
             }
             catch (Exception ex)
@@ -43,7 +43,7 @@ namespace qch.Repositories
         {
             try
             {
-                string sql = "select a.Guid,a.t_Focus_Guid,a.t_User_Guid as UserGuid,a.t_Date as FoucsDate,b.t_User_RealName as UserName,b.t_User_Pic as UserAvator from T_User_Foucs as a left join t_users as b on a.t_User_Guid=b.Guid where a.t_Focus_Guid=@0";
+                string sql = "select a.Guid,a.t_Focus_Guid,a.t_User_Guid as UserGuid,a.t_Date as FoucsDate,b.t_User_RealName as UserName,b.t_User_Pic as UserAvator from T_User_Foucs as a left join t_users as b on a.t_User_Guid=b.Guid where a.t_Focus_Guid=@0 and a.t_DelState=0";
                 return rp1.GetAll(sql, new object[] { Guid });
             }
             catch (Exception ex)

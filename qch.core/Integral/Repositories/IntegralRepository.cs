@@ -97,6 +97,30 @@ namespace qch.Repositories
             }
         }
         /// <summary>
+        /// 分页获取某用户的积分记录
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <param name="UserGuid"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<IntegralModel> GetAll(int page, int pagesize, string UserGuid, int typeId)
+        {
+            try
+            {
+                string sql = "select * from T_User_Integral where t_user_guid=@0 and t_DelState=0 order by t_adddate desc";
+                if (typeId == 2)
+                    sql = "select * from T_User_Integral where t_user_guid=@0 and t_DelState=0 and t_UserIntergral_AddReward>0 order by t_adddate desc";
+                else if (typeId == 3)
+                    sql = "select * from T_User_Integral where t_user_guid=@0 and t_DelState=0 and t_UserIntegral_ReduceReward>0 order by t_adddate desc";
+                return rp.GetPageData(page, pagesize, sql, new object[] { UserGuid });
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
         /// 分页获取所有
         /// </summary>
         /// <param name="page"></param>

@@ -50,24 +50,25 @@ namespace web.Controllers
         {
             if (!string.IsNullOrWhiteSpace(UserGuid))
                 qch.Infrastructure.CookieHelper.SetCookie("UserGuid_tj", UserGuid);
-            log.Info("这是userinfo");
+            log.Info("这是Reg");
             string Nonce = ToolHelper.createNonceStr();//随机数
             qch.Infrastructure.CookieHelper.SetCookie("tjNonce", Nonce);
-            var weixinAuthUrl = OAuth.GetAuthorizeUrl(appId, WeixinUrl + "/wxuser/wxreg", Nonce, OAuthScope.snsapi_userinfo);
+            var weixinAuthUrl = OAuth.GetAuthorizeUrl(appId, "http://www.cn-qch.com/wxuser/wxreg?UserGuid=" + UserGuid, Nonce, OAuthScope.snsapi_userinfo);
             log.Info(weixinAuthUrl);
             return Redirect(weixinAuthUrl);
         }
         //微信用户绑定
-        public ActionResult wxReg(string code, string state)
+        public ActionResult wxReg(string code, string state, string UserGuid)
         {
+            log.Info("wxReg、UserGuid=" + UserGuid);
             web.Models.UserRegModel rm = new Models.UserRegModel();
 
             ViewBag.IsReg = 0;
             //取推荐人的guid
-            string tjuserguid = qch.Infrastructure.CookieHelper.GetCookieValue("UserGuid_tj");
-            if (!string.IsNullOrWhiteSpace(tjuserguid))
+            //string tjuserguid = qch.Infrastructure.CookieHelper.GetCookieValue("UserGuid_tj");
+            if (!string.IsNullOrWhiteSpace(UserGuid))
             {
-                var tjuser = userService.GetDetail(tjuserguid);
+                var tjuser = userService.GetDetail(UserGuid);
                 if (tjuser != null)
                 {
                     ViewBag.UserPhone = tjuser.t_User_LoginId;
@@ -80,8 +81,7 @@ namespace web.Controllers
             {
                 return Content("您拒绝了授权！");
             }
-            string wxuserguid = Guid.NewGuid().ToString();
-            qch.Infrastructure.CookieHelper.SetCookie("regWxUserGuid", wxuserguid);
+
             string openid = "";
             string unionid = "";
             string nickname = "";
@@ -129,6 +129,7 @@ namespace web.Controllers
                         Session["regNickName"] = userInfo.nickname;
                         Session["regSex"] = userInfo.sex;
                         Session["regArea"] = userInfo.city;
+                        Session["regUnionId"] = userInfo.unionid;
                     }
                     if (!string.IsNullOrWhiteSpace(openid))
                     {
@@ -167,31 +168,8 @@ namespace web.Controllers
                     string avatorFileName = Guid.NewGuid().ToString() + ".jpg"; ;
                     log.Info("avatorFileName=" + avatorFileName);
                     Session["regAvator"] = "small_" + avatorFileName;
+                    Senparc.Weixin.MP.Sample.CommonService.ImageHelper.DownloadFile(100, 100, headimgurl, avatorFileName);
 
-                    var msg = wxservice.Save(new WXUserModel
-                    {
-                        Guid = "",
-                        OpenId = openid,
-                        Nonce = "",
-                        UserGuid = wxuserguid,
-                        WxTgUserGuid = tjuserguid,
-                        MediaId = "",
-                        QrCode = "",
-                        UnionId = unionid,
-                        Avator = "small_" + avatorFileName,
-                        CreateDate = DateTime.Now,
-                        KFDate = DateTime.Now,
-                        KFOpenId = "",
-                        MediaDate = DateTime.Now,
-                        Name = nickname,
-                        UserType = 1
-                    });
-                    if (msg.type == "success")
-                    {
-                        log.Info("插入成功");
-                        Senparc.Weixin.MP.Sample.CommonService.ImageHelper.DownloadFile(100, 100, headimgurl, avatorFileName);
-                    }
-                    else { log.Error("插入失败"); }
                 }
             }
             catch (ErrorJsonResultException ex)
@@ -246,11 +224,12 @@ namespace web.Controllers
                     return Json(msg);
                 }
             }
-            string tjuserguid = qch.Infrastructure.CookieHelper.GetCookieValue("UserGuid_tj");
+            string tjuserguid = model.TjUser;
             string name = "";
             string avator = "";
             string sex = "";
             string openid = "";
+            string unionid = "";
             if (Session["regOpenId"] != null && Session["regOpenId"].ToString() != "")
             {
                 openid = Session["regOpenId"].ToString();
@@ -278,7 +257,10 @@ namespace web.Controllers
             {
                 sex = Session["regSex"].ToString() == "1" ? "男" : "女";
             }
-
+            if (Session["regUnionId"] != null && Session["regUnionId"].ToString() != "")
+            {
+                unionid = Session["regUnionId"].ToString();
+            }
             var ret = qch.Infrastructure.CookieHelper.GetCookieValue(model.Phone);
             log.Info("服务器生成的短信验证码：" + ret);
             if (model.SafeCode != "150919")
@@ -296,6 +278,30 @@ namespace web.Controllers
                     return Json(msg);
                 }
             }
+            string wxuserguid = Guid.NewGuid().ToString();
+            var m = wxservice.Save(new WXUserModel
+            {
+                Guid = "",
+                OpenId = openid,
+                Nonce = "",
+                UserGuid = wxuserguid,
+                WxTgUserGuid = tjuserguid,
+                MediaId = "",
+                QrCode = "",
+                UnionId = unionid,
+                Avator = "small_" + avator,
+                CreateDate = DateTime.Now,
+                KFDate = DateTime.Now,
+                KFOpenId = "",
+                MediaDate = DateTime.Now,
+                Name = name,
+                UserType = 1
+            });
+            if (m.type == "success")
+            {
+                log.Info("微信分享推荐注册，微信信息插入成功");
+            }
+            else { log.Error("微信分享推荐注册，微信信息插入失败"); }
             UserModel wxUser = new UserModel
             {
                 t_Andriod_Rid = "",
@@ -327,7 +333,7 @@ namespace web.Controllers
                 t_User_ThreeLogin = "",
                 t_Recommend = 0,
                 t_ReommUser = tjuserguid,
-                Guid = qch.Infrastructure.CookieHelper.GetCookieValue("regWxUserGuid")
+                Guid = wxuserguid
             };
             if (userService.Reg(wxUser).type == "success")
             {
@@ -666,7 +672,7 @@ namespace web.Controllers
             var model = service.GetProof(guid);
             if (model == null)
                 model = new ProofModel();
-            ViewBag.ReturnUrl = "http://www.cn-qch.com:8002/H5/ShareActivity.html?Guid=" + model.t_Activity_Guid;
+            ViewBag.ReturnUrl = "http://www.cn-qch.com/H5/ShareActivity.html?Guid=" + model.t_Activity_Guid;
             return View(model);
         }
         //报名凭证列表
@@ -1119,6 +1125,7 @@ namespace web.Controllers
         //空间预约支付页面
         public ActionResult PayPlace(string StyleGuid, string TimeGuid, string code, string state)
         {
+            log.Info("预约空间StyleGuid：" + StyleGuid);
             string Nonce = ToolHelper.createNonceStr();//随机数
             var weixinAuthUrl = OAuth.GetAuthorizeUrl(appId, WeixinUrl + "/wxuser/PayPlace?StyleGuid=" + StyleGuid + "&TimeGuid=" + TimeGuid, Nonce, OAuthScope.snsapi_userinfo);
             if (string.IsNullOrEmpty(code))
@@ -1173,6 +1180,10 @@ namespace web.Controllers
                 //获取验证授权地址
                 string payUrl = OAuth.GetAuthorizeUrl("wxcb0a85c19532ab3e", "http://www.cn-qch.com/TenPayV3/PlacePay?order_no=" + msg.Remark, NoncePay, OAuthScope.snsapi_base);
                 return Redirect(payUrl);
+            }
+            else
+            {
+                ViewBag.IsOrder = msg.Data;
             }
             return View();
         }
@@ -1571,7 +1582,7 @@ namespace web.Controllers
                 //下载微信头像到指定文件夹
                 string avatorFileName = Guid.NewGuid().ToString() + ".jpg"; ;
 
-                msg = wxservice.Save(new WXUserModel
+                msg = wxservice.Bind(new WXUserModel
                 {
                     Guid = "",
                     OpenId = openid,

@@ -18,6 +18,13 @@ namespace qch.core
 
 
         #region 预约空间订单
+        /// <summary>
+        /// 生成用户预约空间订单
+        /// </summary>
+        /// <param name="StyleGuid"></param>
+        /// <param name="TimeGuid"></param>
+        /// <param name="UserGuid"></param>
+        /// <returns></returns>
         public Msg CreatePlaceOrder(string StyleGuid, string TimeGuid, string UserGuid)
         {
             /*
@@ -36,6 +43,13 @@ namespace qch.core
                 {
                     db.BeginTransaction();
                     #region 验证
+                    //查询当天是否有预约
+                    var isorder = db.SingleOrDefault<T_Place_Ordered>("select top 1 * from T_Place_Ordered where t_User_Guid=@0 and t_State!=3 and t_delstate=0 and t_AddDate between @1 and @2", new object[] { UserGuid, qch.Infrastructure.TimeHelper.GetStartDateTime(DateTime.Now), qch.Infrastructure.TimeHelper.GetEndDateTime(DateTime.Now) });
+                    if (isorder != null)
+                    {
+                        msg.Data = "您今天已经预约过了";
+                        return msg;
+                    }
                     var style = db.SingleOrDefault<T_Place_Style>(" where Guid=@0 and t_DelState=0", new object[] { StyleGuid });
                     if (style == null)
                     {
@@ -149,7 +163,7 @@ namespace qch.core
         /// </summary>
         /// <param name="orderNo"></param>
         /// <returns></returns>
-        public Msg Pay(string orderNo,decimal Money)
+        public Msg Pay(string orderNo, decimal Money)
         {
             /*
              * 处理支付业务
@@ -198,7 +212,7 @@ namespace qch.core
                             //处理充值后续业务
                             order.t_Order_Remark = "微信充值";
                             //16-06-15 取消以下处理业务，因为app在支付成功后又调用了别的接口处理。
-                            
+
                             decimal money = 0;
                             var model = db.SingleOrDefault<T_User_Account>(" where t_UserAccount_No=@0", new object[] { orderNo });
                             if (model != null)

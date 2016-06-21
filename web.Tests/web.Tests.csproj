@@ -85,8 +85,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\cpf\HtmlSanitizationLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\packages\cpf\log4net.dll</HintPath>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\qch\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Maticsoft.BLL, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

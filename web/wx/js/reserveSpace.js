@@ -27,6 +27,11 @@ var timePicker = {
     rTime: '',
     guid: '',
     open: function () {
+        if ($('.datelistbox li').length == 0) {
+            tipInfo('暂未开放预约');
+            return;
+        }
+
         $('.tp-shade').removeClass('hide');
         $('.timepicker').css({
             top: ($(window).height() - $('.timepicker').height()) / 2,
@@ -103,7 +108,7 @@ function bindEvent() {
         // 得到预约时间
         var time = timePicker.rTime;
         var timeGuid = timePicker.guid;
-        var spaceGuid = $('.typebox li.active a').data('guid');
+        var spaceGuid = $('.typebox a.active').data('guid');
         if (time == "") {
             tipInfo("请选择预约时间");
             return;

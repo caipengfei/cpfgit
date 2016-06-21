@@ -1,0 +1,107 @@
+.container {
+    max-width: 768px;
+    margin: auto;
+}
+/* 分类菜单 */
+.toolsbox {
+    width: 100%;
+    height: 3.4rem;
+    line-height: 3.4rem;
+    background: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+}
+.toolsbox li {
+    width: 33.33%;
+    height: 100%;
+    float: left;
+    text-align: center;
+}
+.toolsbox li a {
+    width: 60%;
+    height: 100%;
+    border-bottom: 2px solid #fff;
+    font-size: 1.1rem;
+    color: #999;
+}
+.toolsbox li.active a {
+    border-color: #6e96f5;
+    color: #6e96f5;
+}
+table {
+    width: 100%;
+    margin-top: 3.4rem;
+}
+table,td{
+    border-collapse: collapse;
+}
+table td {
+    height: 5rem;
+    border-bottom: 1px solid rgb(235, 235, 235);
+    font-size: .9rem;
+    line-height: 1.6em;
+}
+
+table td:nth-child(1) {
+    padding-left: 1rem;
+    color: #9e9e9e;
+    width: 10rem;
+}
+
+table td:nth-child(2) {
+    text-align: center;
+    width: 7rem;
+}
+
+table td:nth-child(3) {
+    padding-right: 1rem;
+}
+
+td img {
+    width: 3.46rem;
+    height: 3.46rem;
+    background: none;
+    display: block;
+    margin: auto;
+}
+table td strong{
+    color: #6e96f5;
+}
+.container.nodata {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    bottom: 0;
+    text-align: center;
+    padding-top: 14rem;
+}
+
+.container.nodata>p {
+    padding-top: 14.5rem;
+    background: url(/h5/img/icon/imgnodata.png) no-repeat 50% 0;
+    background-size: auto 14rem;
+    font-size: 1.2rem;
+    color: #999;
+    display: block !important;
+}
+
+.container.nodata .more {
+    display: none !important;
+}
+
+.container>.more {
+    text-align: center;
+    color: #666;
+    font-size: 1.1rem;
+    line-height: 2.4rem;
+    height: 2.4rem;
+}
+
+.container>.more.loading {
+    background: url(/h5/img/loading.gif) no-repeat 50% 50%;
+    background-size: auto 1.2rem;
+}

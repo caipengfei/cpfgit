@@ -52,6 +52,7 @@
     <script src="/h5/js/jquery.min.js"></script>
     <script src="/h5/js/register.js"></script>
     <script src="~/Scripts/jquery.form.js"></script>
+    <script src="~/H5/js/util.js"></script>
     <script type="text/javascript">
         var phone = $("#txtUserPhone").val();
         if (phone != '') {
@@ -81,13 +82,13 @@
                     //if (!bReference) return;
                 },
                 success: function (msg) {
-                    alert(msg.Data);
+                    util.msgBox(msg.Data);
                     if (msg.type == "success") {                        
                         location.href = '/voucher/index'
                     }
                 },
                 error: function (data, status, e) {
-                    alert('上传文件出错:' + e);
+                    util.msgBox('上传文件出错:' + e);
                 }
 
             });

@@ -135,11 +135,6 @@ header h2 {
     margin-left: 1.2rem;
 }
 
-.dynamic .tools a.right.like {
-    border-color: #a1c9f0;
-    color: #a1c9f0;
-}
-
 .dynamic .tools a.right.msg {
     line-height: 2.2rem;
 }

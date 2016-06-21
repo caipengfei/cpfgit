@@ -226,15 +226,20 @@ body.fixed .contentbox {
     font-size: 1.2rem;
 }
 
-.tutorbox li>img {
+.tutorbox li div.left{
     width: 4rem;
     height: 4rem;
     float: left;
     border-radius: 2rem;
     margin-right: 1rem;
+    overflow: hidden;
 }
 
-.tutorbox li div {
+.tutorbox li>img {
+    width: 100%;
+}
+
+.tutorbox li div.right {
     margin-left: 5rem;
 }
 

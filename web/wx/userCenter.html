@@ -20,8 +20,8 @@
         <div class="header">
             <img src="<%=imgUrl+data.avator%>">
             <h2><%=data.name%></h2>
-            <h3><%=data.phone.slice(0,3)+'****'+data.phone.slice(7)%></h3>
-            <p>注册时间：<%=formatDate(data.regDate,'yyyy/MM/dd hh:mm:ss')%></p>
+            <h3><%=data.phone%></h3>
+            
         </div>
         <ul class="listbox">
             <li class="clearfix">
@@ -37,7 +37,7 @@
                 </a>
             </li>
             <li class="clearfix">
-                <a>
+                <a href="/wx/IntegralRecord.html?UserGuid=<%=data.guid%>">
                     <label>积分</label>
                     <span><%=data.integral%></span>
                 </a>

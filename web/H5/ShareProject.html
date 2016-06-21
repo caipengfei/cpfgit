@@ -39,131 +39,159 @@
     <%var avatorUrl='http://www.cn-qch.com:8002/attach/user/'%>
     <%var defaultAvatorUrl='img/avator.png'%>
         <header>
-            <img src="<%=imgUrl + data.logo%>">
-            <h2><%=data.projectName%></h2>
-            <h3><%=data.projectDescription%></h3>
+            <img src="<%=imgUrl + data.t_Project_ConverPic%>">
+            <h2><%=data.t_Project_Name%></h2>
+            <h3><%=data.t_Project_OneWord%></h3>
         </header>
         <ul class="lists lists1">
-            <li><label>所在城市</label><span><%=data.city%></span></li>
-            <li><label>项目领域</label><span><%=data.projectField.t_Style_Name%></span></li>
-            <li><label>项目阶段</label><span><%=data.projectStage.t_Style_Name%></span></li>
+            <li><label>所在城市</label><span><%=data.t_Project_CityName%></span></li>
+            <li><label>项目领域</label><span><%=data.FiledName%></span></li>
+            <li><label>项目阶段</label><span><%=data.PhaseName%></span></li>
         </ul>
         <div class="detailsbox">
             <h2>项目描述</h2>
-            <p><%==data.aboutProject.replace(/===/g,'<br>')%></p>
+            <p><%==data.t_Project_Instruction.replace(/===/g,'<br>')%></p>
         </div>
+        <%if(data.t_Project_Perfer){%>
         <div class="detailsbox">
             <h2>项目优势</h2>
-            <p><%==data.aboutProject.replace(/===/g,'<br>')%></p>
+            <p><%==data.t_Project_Perfer.replace(/===/g,'<br>')%></p>
         </div>
+        <%}%>
         <div class="detailsbox">
             <h2>目标用户</h2>
-            <p><%==data.aboutProject.replace(/===/g,'<br>')%></p>
+            <p><%==data.t_Project_Client.replace(/===/g,'<br>')%></p>
         </div>
         <ul class="lists lists2">
-            <li><label>融资状态</label><span><%=data.financingState.t_Style_Name%></span></li>
+            <li><label>融资状态</label><span>仅投资人可见</span></li>
             <li><label>融资金额</label><span>仅投资人可见</span></li>
             <li><label>资金用途</label><span>仅投资人可见</span></li>
         </ul>
+        <%if(data.t_Project_ProfitWay){%>
         <div class="detailsbox">
             <h2>盈利途径</h2>
-            <p><%==data.aboutProject.replace(/===/g,'<br>')%></p>
+            <p><%==data.t_Project_ProfitWay.replace(/===/g,'<br>')%></p>
         </div>
+        <%}%>
         <div class="teambox">
             <h2>核心团队</h2>
-            <table cellpadding="0" cellspacing="0">
-                <tr>
-                    <td><img src="<%=imgUrl + data.logo%>"></td>
-                    <td>
-                        <h3>李阳</h3>
-                        <p>没有人看懂我，只因为我太能隐藏</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td><img src="<%=imgUrl + data.logo%>"></td>
-                    <td>
-                        <h3>李阳</h3>
-                        <p>没有人看懂我，只因为我太能隐藏</p>
-                    </td>
-                </tr>
-            </table>
+            <table cellpadding="0" cellspacing="0"></table>
         </div>
         <div class="showbox">
-            <h2>导师展示</h2>
+            <h2>产品展示</h2>
             <div class="banner">
                 <div class="frame">
                     <div class="box">
-                        <img src="<%=imgUrl+data.logo%>">
-                        <img src="<%=imgUrl+data.logo%>">
-                        <img src="<%=imgUrl+data.logo%>">
+                        <%data.Pic.forEach(function(item,index){%>
+                        <img src="<%=imgUrl+item.t_Pic_Url%>" alt="<%=item.t_Pic_Remark%>">
+                        <%})%>
                     </div>
                 </div>
                 <div class="tag">
-                    <span class="current"></span>
-                    <span></span>
-                    <span></span>
+                    <%for(var i=0,len=data.Pic.length;i<len;i++){%>
+                    <span <%if(i==0){%>class="current"<%}%> ></span>
+                    <%}%>
                 </div>
             </div>
         </div>
         <div class="linksbox">
             <h2>项目链接</h2>
             <div class="clear">
-                <a class="gw" href="">官网</a>
-                <a class="ct" href="">客户端</a>
-                <a class="wx" href="">微信公众号</a>
+                <a class="gw <%if(data.t_Project_Website){%>active<%}%>" <%if(data.t_Project_Website){%>href="http://<%=data.t_Project_Website%>"<%}%>>官网</a>
+                <a class="ct <%if(data.t_Project_Link){%>active<%}%>"  <%if(data.t_Project_Link){%>href="<%=data.t_Project_Link%>"<%}%>>客户端</a>
+                <a class="wx <%if(data.t_Project_Weixin){%>active<%}%>">微信公众号</a>
             </div>
         </div>
         <div class="demand">
             <h2 class="first">合作人需求</h2>
             <div class="clear">
-                <a><%=data.partnerDemand%></a>
+                <%data.ParterWant.forEach(function(item,index){%>
+                <a><%=item.ParterWant%></a>
+                <%})%>
             </div>
             <h2 class="last">评论</h2>
         </div>
-        <ul class="commentlist">
-            <li class="clear">
-                <a><img src="<%=imgUrl+data.logo%>"></a>
-                <div>
-                    <h3>你好<span>2015-03-03</span></h3>
-                    <p>还不辍的啊</p>
-                </div>
-            </li>
-            <li class="clear">
-                <a><img src="<%=imgUrl+data.logo%>"></a>
-                <div>
-                    <h3>你好<span>2015-03-03</span></h3>
-                    <p>还不辍的啊</p>
-                </div>
-            </li>
-            <p>暂无评论</p>
-        </ul>
+        <ul class="commentlist"></ul>
         <footer>
             <a href="http://www.cn-qch.com/app"><i class="fa fa-user-plus"></i> 私信</a>
             <a href="http://www.cn-qch.com/app"><i class="fa fa-commenting"></i> 关注</a>
             <a href="http://www.cn-qch.com/app"><i class="fa fa-commenting"></i> 评论</a>
         </footer>
     </script>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/artTemplate.js"></script>
-    <script src="js/shareProject.js"></script>
+    <script type="text/html" id="commentTemplate">
+        <%var avatorUrl='http://www.cn-qch.com:8002/attach/user/'%>
+        <%data.items.forEach(function(item,index){%>
+        <li class="clear">
+            <a><img src="<%=avatorUrl+item.userAvator%>"></a>
+            <div>
+                <h3><%=item.userName%><span><%=item.t_Talk_FromDate%></span></h3>
+                <p><%=item.t_Talk_FromContent.replace(/===/g,'<br>')%></p>
+            </div>
+        </li>
+        <%})%>
+        <%if(data.items.length==0){%>
+        <p>暂无评论</p>
+        <%}%>
+    </script>
+    <script type="text/html" id="teamTemplate">
+        <%var avatorUrl='http://www.cn-qch.com:8002/attach/user/'%>
+        <%data.forEach(function(item,index){%>
+            <tr>
+                <td><img src="<%=avatorUrl + item.userAvator%>"></td>
+                <td>
+                    <h3><%=item.userName%> <span><%=item.userPosition%></span></h3>
+                    <p><%=item.userRemark%></p>
+                </td>
+            </tr>
+        <%})%>
+    </script>
+    <script src="/h5/js/zepto.min.js"></script>
+    <script src="/h5/js/artTemplate.js"></script>
+    <script src="/h5/js/util.js"></script>
+    <script src="/h5/js/shareProject.js"></script>
     <script>
-        //获取Url中的参数
-        function GetUrlParam(name) {
-            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-            var r = window.location.search.substr(1).match(reg);
-            if (r != null) return unescape(r[2]); return null;
-        }
-        var guid = GetUrlParam("Guid") || GetUrlParam("guid") || '283737b7-f222-46c1-a9ee-3ed2cdb0533b';
+        var guid = util.getUrlParam("Guid");
+        var userGuid = util.getUrlParam("UserGuid");
         $.ajax({
-            type: 'get',
             cache: false,
             dataType: 'json',
-            url: 'http://120.25.106.244:9001/api/Project/GetProject',
-            data: { guid: guid },
-            success: function (data) {
-                $('.container').html(template('contentTemplate', { data: data }));
-                $('.container').removeClass('loading').siblings('.shade-div').remove();
-                $('.banner .box img').length && banner.init();
+            url: 'http://120.25.106.244:9001/api/project/GetProjectInfo',
+            data: { Guid: guid ,UserGuid:userGuid},
+            success: function (res1) {
+                if(res1){
+                    var data=JSON.parse(res1)[0].result[0];
+                    $('.container').html(template('contentTemplate', { data: data }));
+                    $.ajax({
+                        cache:false,
+                        dataType:'json',
+                        url:'http://120.25.106.244:9001/api/usertalk/getall',
+                        data:{guid:guid,page:1,pagesize:10},
+                        success:function(res2){
+                            if(res2){
+                                $('.commentlist').html(template('commentTemplate', { data: res2 }));
+                                $.ajax({
+                                    cache:false,
+                                    dataType:'json',
+                                    url:'http://120.25.106.244:9001/api/project/GetTeam',
+                                    data:{ProjectGuid:guid},
+                                    success:function(res3){
+                                        if(res3&&res3.length){
+                                            $('.teambox table').html(template('teamTemplate', { data: res3 }));
+                                        }else{
+                                            $('.teambox').remove();
+                                        }
+                                        $('.container').removeClass('loading').siblings('.shade-div').remove();
+                                        $('.commentlist img').each(function(){
+                                            var width=$(this).width();
+                                            $(this).css({height:width,borderRadius:width/2});
+                                        });
+                                        $('.banner .box img').length && banner.init();
+                                    }
+                                })
+                            }
+                        }
+                    })
+                }
             }
         })
     </script>

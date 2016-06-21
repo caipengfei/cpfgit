@@ -13,8 +13,20 @@ namespace api.Controllers
     {
         readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         UserTalkService service = new UserTalkService();
-         
 
+
+        public object GetAll(int page, int pagesize, string Guid)
+        {
+            try
+            {
+                return service.GetAll(page, pagesize, Guid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
         /// <summary>
         /// 
         /// </summary>

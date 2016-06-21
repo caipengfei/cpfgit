@@ -50,7 +50,7 @@
     <script type="text/html" id="activityTemplate">
         <%data.items.forEach(function(item,index){%>
             <li <%if(expire(item.activityDate)){%>class="expire"<%}%>>
-                <a class="clearfix" href="http://test.cn-qch.com//wxuser/ApplyProof?guid=<%=item.applyGuid%>">
+                <a class="clearfix" href="http://www.cn-qch.com//wxuser/ApplyProof?guid=<%=item.applyGuid%>">
                     <div class="boxleft">
                         <h2><%=item.activityName%></h2>
                         <p>主办方：<%=item.holder%></p>

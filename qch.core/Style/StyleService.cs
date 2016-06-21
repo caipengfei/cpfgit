@@ -61,7 +61,8 @@ namespace qch.core
                         {
                             value = value + item + ",";
                         }
-                        value = value.Substring(0, value.Length);
+                        log.Info(value);
+                        value = value.Substring(0, value.Length - 1);
                         log.Info("获取属性值的ids：" + value);
                         var model = rp.GetByIds(value);
                         if (model == null)
