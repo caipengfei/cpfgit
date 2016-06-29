@@ -13,6 +13,7 @@ namespace qch.Repositories
     {
         readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         Repository<StyleModel> rp = new Repository<StyleModel>();
+        Repository<SelectStyle> rp1 = new Repository<SelectStyle>();
 
         /// <summary>
         /// 
@@ -37,12 +38,12 @@ namespace qch.Repositories
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        public IEnumerable<StyleModel> GetByIds(string ids)
+        public IEnumerable<SelectStyle> GetByIds(string ids)
         {
             try
             {
-                string sql = "select * from T_Style where Id in (" + ids + ") and t_DelState=0";
-                return rp.GetAll(sql);
+                string sql = "select id,t_SortIndex,t_Style_Name,t_fId from T_Style where Id in (" + ids + ") and t_DelState=0 order by t_SortIndex";
+                return rp1.GetAll(sql);
             }
             catch (Exception ex)
             {
@@ -60,7 +61,7 @@ namespace qch.Repositories
         {
             try
             {
-                string sql = "select * from T_Style where t_DelState=0 order by t_AddDate desc";
+                string sql = "select id,t_SortIndex,t_Style_Name,t_fId from T_Style where t_DelState=0 order by t_AddDate desc";
                 return rp.GetPageData(page, pagesize, sql);
             }
             catch (Exception ex)
@@ -74,12 +75,12 @@ namespace qch.Repositories
         /// </summary>
         /// <param name="Guid"></param>
         /// <returns></returns>
-        public StyleModel GetById(int Id)
+        public SelectStyle GetById(int Id)
         {
             try
             {
-                string sql = "select * from T_Style where Id=@0";
-                return rp.Get(sql, new object[] { Id });
+                string sql = "select id,t_SortIndex,t_Style_Name,t_fId from T_Style where Id=@0";
+                return rp1.Get(sql, new object[] { Id });
             }
             catch (Exception ex)
             {

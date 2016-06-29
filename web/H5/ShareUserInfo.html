@@ -5,9 +5,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
     <meta name="renderer" content="webkit" />
+    <link rel="dns-prefetch" href="//test.cn-qch.com/" />
+    <link rel="dns-prefetch" href="//www.cn-qch.com/" />
     <title>用户分享</title>
     <link rel="stylesheet" href="css/public.css">
     <link rel="stylesheet" href="css/page3.css">
+    <!--<script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>-->
 </head>
 
 <body>
@@ -31,108 +34,109 @@
             <td><a href="http://www.cn-qch.com/app">立即下载</a></td>
         </tr>
     </table>
-    <div class="container loading"></div>
+    <div class="container loading">
+        <footer>
+            <a class="talk" href="http://www.cn-qch.com/app"><i class="fa fa-user-plus"></i> 私信</a>
+            <a class="follow" href="http://www.cn-qch.com/app"><i class="fa fa-commenting"></i> 关注</a>
+        </footer>
+    </div>
     <!-- 主内容模板 -->
     <script type="text/html" id="contentTemplate">
         <%var imgUrl='http://www.cn-qch.com:8002/attach/images/'%>
         <%var avatorUrl='http://www.cn-qch.com:8002/attach/user/'%>
-        <%var defaultAvatorUrl='img/avator.png'%>
         <%if(data.t_User_Style=='2'){%>
             <header>
                 <img src="<%=avatorUrl + data.t_User_Pic%>">
                 <h2><%=data.t_User_RealName%></h2>
-                <h3><span><%=data.PositionName%></span><span><%=data.t_User_Commpany%></span></h3>
+                <h3><span><%=data.t_User_Position[0].t_Style_Name%></span><span><%=data.t_User_Commpany%></span></h3>
             </header>
             <ul class="table clear" id="tzStyle">
-                <li><span><%=data.PCount%></span><b>关注</b></li>
-                <li><span><%=data.FCount%></span><b>粉丝</b></li>
+                <li><span><%=data.numFollow%></span><b>关注</b></li>
+                <li><span><%=data.fans%></span><b>粉丝</b></li>
             </ul>
             <div class="infobox">
-                <h2>个人简历</h2>
+                <h2>个人简介</h2>
                 <div>
-                    <p><%==data.t_User_Remark.replace(/===/g,'<br>')%></p>
+                    <p><%==data.t_User_Remark?data.t_User_Remark.replace(/===/g,'<br>'):'暂未添加'%></p>
                 </div>
             </div>
-            <%if(data.InvestArea&&data.InvestArea.length){%>
             <div class="infobox">
                 <h2>投资风格</h2>
-                    <div class="fieldbox">
+                <%if(data.t_User_InvestArea&&data.t_User_InvestArea.length){%>
+                <div class="fieldbox">
                     <h2>投资领域</h2>
                     <ul class="clear">
-                        <%data.InvestArea.forEach(function(item,index){%>
-                            <li><%=item.InvestAreaName%></li>
+                        <%data.t_User_InvestArea.forEach(function(item,index){%>
+                            <li><%=item.t_Style_Name%></li>
                         <%})%>
                     </ul>
                 </div>
                 <%}%>
-                <%if(data.InvestPhase&&data.InvestPhase.length){%>
+                <%if(data.t_User_InvestPhase&&data.t_User_InvestPhase.length){%>
                 <div class="goodatbox">
                     <h2>投资阶段</h2>
                     <ul class="clear">
-                        <%data.InvestPhase.forEach(function(item,index){%>
-                            <li><%=item.InvestPhaseName%></li>
+                        <%data.t_User_InvestPhase.forEach(function(item,index){%>
+                            <li><%=item.t_Style_Name%></li>
                         <%})%>
                     </ul>
                 </div>
                 <%}%>
                 <div class="goodatbox">
                     <h2>投资金额</h2>
-                    <span><%=data.t_User_InvestMoney%></span>
+                    <span><%=data.t_User_InvestMoney||'暂无'%></span>
                 </div>
             </div>
-            <%if(data.InvestCase&&data.InvestCase.length){%>
+            <%if(data.investCase&&data.investCase.length){%>
             <div class="casebox">
                 <h2>投资案例</h2>
                 <ul>
-                    <%data.InvestCase.forEach(function(item,index){%>
+                    <%data.investCase.forEach(function(item,index){%>
                         <li class="clear">
                             <div>
                                 <img src="<%=imgUrl+item.t_Invest_Pic%>" alt="">
-                                <%=item.t_Invest_Project%>
+                                <%=item.t_Invest_Project.length>8?item.t_Invest_Project.slice(0,6)+'...':item.t_Invest_Project%>
                             </div>
-                            <span><%=item.InvestPhase[0].InvestPhaseName%> <%=formatDate(item.t_Invest_Date,'yyyy.MM')%></span>
+                            <span><%=item.investPhase[0].t_Style_Name%> <%=formatDate(item.t_Invest_Date,'yyyy.MM')%></span>
                         </li>
                     <%})%>
                 </ul>
             </div>
             <%}%>
-            <footer>
-                <a class="talk" href="http://www.cn-qch.com/app"><i class="fa fa-user-plus"></i> 私信</a>
-                <a class="follow" href="http://www.cn-qch.com/app"><i class="fa fa-commenting"></i> 关注</a>
-            </footer>
         <%}%>
         <%if(data.t_User_Style=='3'){%>
             <header>
                 <img src="<%=avatorUrl + data.t_User_Pic%>">
                 <h2><%=data.t_User_RealName%></h2>
-                <h3><span><%=data.PositionName%></span><span><%=data.t_User_Commpany%></span></h3>
+                <h3><span><%=data.t_User_Position[0].t_Style_Name%></span><span><%=data.t_User_Commpany%></span></h3>
             </header>
             <ul class="table clear">
-                <li><span><%=data.t_User_City%></span><b>城市</b></li>
-                <li><span><%=data.PCount%></span><b>关注</b></li>
-                <li><span><%=data.FCount%></span><b>粉丝</b></li>
+                <li><span><%=data.t_User_City||''%></span><b>城市</b></li>
+                <li><span><%=data.numFollow||0%></span><b>关注</b></li>
+                <li><span><%=data.fans||0%></span><b>粉丝</b></li>
             </ul>
-            <%if(data.Topic&&data.Topic.length){%>
+            <%if(data.topic){%>
             <div class="dynamicbox">
                 <h2>Ta的动态</h2>
                 <ul>
                     <li class="clear">
-                        <img src="<%=imgUrl + data.Topic[0].pic[0].t_Pic_Url%>">
+                        <img src="<%=imgUrl + data.topic.pic%>">
                         <div>
-                            <h3><%=data.Topic[0].t_Topic_Contents.length>24?data.Topic[0].t_Topic_Contents.slice(0,24)+'...':data.Topic[0].t_Topic_Contents%></h3>
-                            <p><span><%=formatDate(data.Topic[0].t_Date,'MM-dd hh:mm')%></span> <%=data.Topic[0].t_Topic_Address%></p>
+                            <%var content=data.topic.contents?data.topic.contents.replace(/===/g,' '):''%>
+                            <h3><%=content.length>24?content.slice(0,22)+'...':content%></h3>
+                            <p><span><%=formatDate(data.topic.t_date,'MM-dd hh:mm')%></span> <%=data.topic.cityName||''%></p>
                         </div>
                     </li>
                 </ul>
             </div>
             <%}%>
-            <%if(data.UserProject&&data.UserProject.length){%>
+            <%if(data.project){%>
             <div class="projectbox">
                 <h2>Ta的项目</h2>
                 <ul>
                     <li class="clear">
-                        <img src="<%=imgUrl + data.UserProject[0].t_Project_ConverPic%>">
-                        <h3><%=data.UserProject[0].ProjectName%></h3>
+                        <img src="<%=imgUrl + data.project.pic%>">
+                        <h3><%=data.project.title%></h3>
                     </li>
                 </ul>
             </div>
@@ -141,62 +145,103 @@
                 <h2>Ta的信息</h2>
                 <div>
                     <h3>个人描述</h3>
-                    <p><%=data.t_User_Remark.replace(/===/g,'<br>')||'该用户很懒，什么都没留下'%></p>
+                    <p><%==data.t_User_Remark?data.t_User_Remark.replace(/===/g,'<br>'):'暂未添加'%></p>
                 </div>
             </div>
-            <%if(data.HistoryWork&&data.HistoryWork.length){%>
+            <%if(data.historyWork&&data.historyWork.length){%>
             <div class="aboutbox">
                 <h2>个人简历</h2>
                 <ul>
-                    <%data.HistoryWork.forEach(function(item,index){%>
-                        <li><%=formatDate(item.t_sDate,'yyyy.MM')+'-'+(item.t_eDate?formatDate(item.t_eDate,'yyyy.MM'):'至今')%> <%=item.t_Position%> <%=item.t_Commpany%></li>
+                    <%data.historyWork.forEach(function(item,index){%>
+                        <%var eDate=(item.eDate=='0001.01'||item.eDate=='')?'至今':item.eDate%>
+                        <li><%=item.sDate+'-'+eDate%> <%=item.t_Position%> <%=item.t_Commpany%></li>
                     <%})%>
                 </ul>
             </div>
             <%}%>
-            <%if(data.FoucsArea&&data.FoucsArea.length){%>
+            <%if(data.t_User_FocusArea&&data.t_User_FocusArea.length){%>
             <div class="fieldbox">
                 <h2>关注领域</h2>
                 <ul class="clear">
-                    <%data.FoucsArea.forEach(function(item,index){%>
-                        <li><%=item.FoucsName%></li>
+                    <%data.t_User_FocusArea.forEach(function(item,index){%>
+                        <li><%=item.t_Style_Name%></li>
                     <%})%>
                 </ul>
             </div>
             <%}%>
-            <%if(data.Best&&data.Best.length){%>
+            <%if(data.t_User_Best&&data.t_User_Best.length){%>
             <div class="goodatbox">
                 <h2>我最擅长</h2>
                 <ul class="clear">
-                    <%data.Best.forEach(function(item,index){%>
-                        <li><%=item.BestName%></li>
+                    <%data.t_User_Best.forEach(function(item,index){%>
+                        <li><%=item.t_Style_Name%></li>
                     <%})%>
                 </ul>
             </div>
             <%}%>
-            <footer>
-                <a class="talk" href="http://www.cn-qch.com/app"><i class="fa fa-user-plus"></i> 私信</a>
-                <a class="follow" href="http://www.cn-qch.com/app"><i class="fa fa-commenting"></i> 关注</a>
-            </footer>
+        <%}%>
+        <%if(data.t_User_Style=='1'||data.t_User_Style=='0'){%>
+            <header>
+                <img src="<%=avatorUrl + data.t_User_Pic%>">
+                <h2><%=data.t_User_RealName%></h2>
+                <h3><span><%=data.t_User_Position[0].t_Style_Name%></span><span><%=data.t_User_Commpany%></span></h3>
+            </header>
+            <ul class="table clear">
+                <li><span><%=data.t_User_City||''%></span><b>城市</b></li>
+                <li><span><%=data.numFollow||0%></span><b>关注</b></li>
+                <li><span><%=data.fans||0%></span><b>粉丝</b></li>
+            </ul>
+            <%if(data.topic){%>
+            <div class="dynamicbox">
+                <h2>Ta的动态</h2>
+                <ul>
+                    <li class="clear">
+                        <img src="<%=imgUrl + data.topic.pic%>">
+                        <div>
+                            <%var content=data.topic.contents?data.topic.contents.replace(/===/g,' '):''%>
+                            <h3><%=content.length>14?content.slice(0,12)+'...':content%></h3>
+                            <p><span><%=formatDate(data.topic.t_date,'MM-dd hh:mm')%></span> <%=data.topic.cityName||''%></p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <%}%>
+            <div class="nodata">
+                未认证身份，没有更多信息了
+            </div>
         <%}%>
     </script>
     
     <script src="/h5/js/zepto.min.js"></script>
     <script src="/h5/js/artTemplate.js"></script>
     <script src="/h5/js/util.js"></script>
+    <!--<script charset="gb2312" src="js/loader.js"></script>-->
     <script>
-        var guid = util.getUrlParam("Guid");
-        var userguid = util.getUrlParam("UserGuid");
+        var guid = util.getUrlParam("Guid")||'';
         $.ajax({
-            type: 'get',
             cache: false,
             dataType: 'json',
-            url: 'http://120.25.106.244:9001/api/user/GetUserView',
-            data: { guid: guid ,userguid:userguid},
+            url: 'http://120.25.106.244:9001/api/user/getuser',
+            data: { guid: guid },
             success: function (res) {
                 if(res){
-                    var data=JSON.parse(res)[0].result[0];
-                    $('.container').html(template('contentTemplate', { data: data }));
+                    $('.container').prepend(template('contentTemplate', { data: res }));
+                    /*var title,desc,imgUrl;
+                    imgUrl=$('header img').eq(0).attr('src');
+                    if(res.t_User_Style==2){
+                        title=res.t_User_RealName+'正在通过青创汇接收创业项目，快来提交吧！';
+                        desc='青创汇，这是一个高质的8090创业圈，这里有你创业路上所需的资源';
+                    }else if(res.t_User_Style==3){
+                        title=res.t_User_RealName+'在青创汇的个人主页，来看看，说不定是你合适的创业合伙人';
+                        desc=res.t_User_Remark?res.t_User_Remark:'';
+                        desc=desc.length>20?desc.slice(0,20)+'...':desc;
+                    }
+                    //console.log(title,desc,imgUrl)
+                    wxShare({
+                        title: title,
+                        desc: desc,
+                        imgUrl: imgUrl
+                    });*/
                 }
                 $('.container').removeClass('loading').siblings('.shade-div').remove();
             }

@@ -5,9 +5,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
     <meta name="renderer" content="webkit" />
+    <link rel="dns-prefetch" href="//test.cn-qch.com/" />
+    <link rel="dns-prefetch" href="//www.cn-qch.com/" />
     <title>动态详情</title>
     <link rel="stylesheet" href="css/public.css">
     <link rel="stylesheet" href="css/page5.css">
+    <!--<script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>-->
 </head>
 
 <body>
@@ -84,7 +87,6 @@
             <ul class="commentlist">
                 <%if(data.userTalk.items.length==0){%><li>暂无</li><%}%>
                 <%data.userTalk.items.forEach(function(item,index){%>
-                    
                     <li>
                         <a><img src="<%=item.userAvator?avatorUrl+item.userAvator:defaultAvatorUrl%>"></a>
                         <div>
@@ -96,12 +98,12 @@
             </ul>
         </div>
     </script>
-    <script src="js/jquery.min.js"></script>
+    <script src="js/zepto.min.js"></script>
     <script src="js/artTemplate.js"></script>
+    <!--<script charset="gb2312" src="js/loader.js"></script>-->
     <script>
-        var guid = GetUrlParam("Guid") || GetUrlParam("guid") || 'ecba17df-bb3c-4a48-aa03-0ae01cb00a8d';
+        var guid = GetUrlParam("Guid") || GetUrlParam("guid")||'';
         $.ajax({
-            type: 'get',
             cache: false,
             dataType: 'json',
             url: 'http://120.25.106.244:9001/api/Topic/TopicInfo',
@@ -109,16 +111,30 @@
                 guid: guid
             },
             success: function(data) {
-                $('.container').html(template('contentTemplate',{data:data}));
-                $('.dynamic .imgbox img').css({
-                    height:$('.dynamic .imgbox img').width(),
-                    marginBottom: $('.imgbox img').eq(1).css('margin-left')
-                });
-                $('.visitor img,.commentlist img').each(function(){
-                    var width=$(this).width();
-                    $(this).css({height:width,borderRadius:width/2});
-                })
+                if(data){
+                    $('.container').html(template('contentTemplate',{data:data}));
+                    $('.dynamic .imgbox img').css({
+                        height:$('.dynamic .imgbox img').width(),
+                        marginBottom: $('.imgbox img').eq(1).css('margin-left')
+                    });
+                    $('.visitor img,.commentlist img').each(function(){
+                        var width=$(this).width();
+                        $(this).css({height:width,borderRadius:width/2});
+                    })
+                    var s=data.dynamicText;
+                    var re = /(http:\/\/[\w.\/]+[\?\=\w\&]*)(?![^<]+>)/gi;
+                    $('.dynamic .black').html(s.replace(re, "<a href='$1'>$1</a>").replace(/===/g, '<br>'));
+                }
                 $('.container').removeClass('loading').siblings('.shade-div').remove();
+                /*var title=data.username;
+                var desc=data.dynamicText?data.dynamicText:'我刚在青创汇上发布了一条最新创业动态';
+                desc=desc.length>20?desc.slice(0,20)+'...':desc;
+                var imgUrl=$('.imgbox img').length?$('.imgbox img').eq(0).attr('src'):'http://www.cn-qch.com/h5/img/logo-.png'
+                wxShare({
+                    title: title,
+                    desc: desc,
+                    imgUrl: imgUrl
+                });*/
             }
         })
         function GetUrlParam(name) {

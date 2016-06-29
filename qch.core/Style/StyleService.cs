@@ -38,7 +38,7 @@ namespace qch.core
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        public IEnumerable<StyleModel> GetByIds(string ids)
+        public IEnumerable<SelectStyle> GetByIds(string ids)
         {
             try
             {
@@ -48,7 +48,7 @@ namespace qch.core
                 {
                     var model = rp.GetByIds(ids);
                     if (model == null)
-                        model = new List<StyleModel>();
+                        model = new List<SelectStyle>();
                     return model;
                 }
                 else
@@ -61,12 +61,10 @@ namespace qch.core
                         {
                             value = value + item + ",";
                         }
-                        log.Info(value);
                         value = value.Substring(0, value.Length - 1);
-                        log.Info("获取属性值的ids：" + value);
                         var model = rp.GetByIds(value);
                         if (model == null)
-                            model = new List<StyleModel>();
+                            model = new List<SelectStyle>();
                         return model;
                     }
                     return null;
@@ -101,7 +99,7 @@ namespace qch.core
         /// </summary>
         /// <param name="Guid"></param>
         /// <returns></returns>
-        public StyleModel GetById(int Id)
+        public SelectStyle GetById(int Id)
         {
             try
             {
@@ -163,21 +161,21 @@ namespace qch.core
         /// <param name="Guid"></param>
         /// <param name="DelState"></param>
         /// <returns></returns>
-        public bool EditStyle(int Id, int DelState)
-        {
-            try
-            {
-                var model = GetById(Id);
-                if (model == null)
-                    return false;
-                model.t_DelState = DelState;
-                return rp.Edit(model);
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex.Message);
-                return false;
-            }
-        }
+        //public bool EditStyle(int Id, int DelState)
+        //{
+        //    try
+        //    {
+        //        var model = GetById(Id);
+        //        if (model == null)
+        //            return false;
+        //        model.t_DelState = DelState;
+        //        return rp.Edit(model);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        log.Error(ex.Message);
+        //        return false;
+        //    }
+        //}
     }
 }

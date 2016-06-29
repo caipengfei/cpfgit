@@ -35,6 +35,35 @@ namespace qch.Repositories
             }
         }
         /// <summary>
+        /// 获取某人关注的所有东西
+        /// </summary>
+        /// <param name="UserGuid"></param>
+        /// <returns></returns>
+        public int GetMyFoucs(string UserGuid)
+        {
+            try
+            {
+                int xy = 0;
+                using (var db = new PetaPoco.Database(DbConfig.qch))
+                {
+                    string sql1 = "select count(1) from T_User_Foucs where t_User_Guid='" + UserGuid + "' and t_delstate=0";
+                    string sql2 = "select count(1) from T_Praise where t_User_Guid='" + UserGuid + "' and t_delstate=0 and t_Remark<>'创业圈动态关注'";
+                    var m1 = db.ExecuteScalar<object>(sql1);
+                    if (m1 != null)
+                        xy += Convert.ToInt32(m1);
+                    var m2 = db.ExecuteScalar<object>(sql2);
+                    if (m2 != null)
+                        xy += Convert.ToInt32(m2);
+                }
+                return xy;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return 0;
+            }
+        }
+        /// <summary>
         /// 获取某人的所有粉丝
         /// </summary>
         /// <param name="Guid"></param>

@@ -33,6 +33,19 @@ namespace qch.core
                 return null;
             }
         }
+
+        public SelectProject GetTop1(string Guid)
+        {
+            try
+            {
+                return rp.GetTop1(Guid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
         /// <summary>
         /// 分页获取所有项目
         /// </summary>

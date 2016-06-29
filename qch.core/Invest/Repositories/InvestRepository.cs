@@ -137,7 +137,7 @@ namespace qch.Repositories
         {
             try
             {
-                string sql = "select * from T_Invest_Case where t_DelState=0";
+                string sql = "select * from T_Invest_Place where t_DelState=0";
                 return placeRp.GetPageData(page, pagesize, sql);
             }
             catch (Exception ex)
@@ -155,7 +155,7 @@ namespace qch.Repositories
         {
             try
             {
-                string sql = "select * from T_Invest_Case where guid=@0";
+                string sql = "select * from T_Invest_Place where guid=@0";
                 return placeRp.Get(sql, new object[] { Guid });
             }
             catch (Exception ex)
@@ -227,7 +227,7 @@ namespace qch.Repositories
         {
             try
             {
-                string sql = "select a.guid as Guid,b.t_User_Pic as UserPic,b.t_User_RealName as UserName,b.Guid as UserGuid,c.t_Style_Name as UserPosition from T_InvestPlace_Case as a left join T_Users as b on a.t_Project_Guid=b.guid left join T_Style as c on b.t_User_Position=c.id where a.guid=@0";
+                string sql = "select a.guid as Guid,b.t_User_Pic as UserPic,b.t_User_RealName as UserName,b.Guid as UserGuid,c.t_Style_Name as UserPosition from T_InvestPlace_Member as a left join T_Users as b on a.t_User_Guid=b.guid left join T_Style as c on b.t_User_Position=c.id where a.[t_InvestPlace_Guid]=@0";
                 return placMemberRp.GetAll(sql, new object[] { Guid });
             }
             catch (Exception ex)
@@ -248,7 +248,7 @@ namespace qch.Repositories
         {
             try
             {
-                string sql = "select a.guid as Guid,b.t_Project_ConverPic as ProjectPic,b.t_Project_Name as ProjectName,b.Guid as ProjectGuid from T_InvestPlace_Case as a left join T_Project as b on a.t_Project_Guid=b.guid where a.guid=@0";
+                string sql = "select a.guid as Guid,b.t_Project_ConverPic as ProjectPic,b.t_Project_Name as ProjectName,b.Guid as ProjectGuid from T_InvestPlace_Case as a left join T_Project as b on a.t_Project_Guid=b.guid where a.[t_InvestPlace_Guid]=@0";
                 return placeCaseRp.GetAll(sql, new object[] { Guid });
             }
             catch (Exception ex)

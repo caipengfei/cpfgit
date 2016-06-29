@@ -10,8 +10,18 @@
     <title>青创汇--新闻资讯</title>
     <link rel="stylesheet" href="/content/css/public.css">
     <link rel="stylesheet" href="/content/css/news.css">
+    <!--[if lt IE 9]>
+        <style>
+            body.blockview .contentbox .listbox li {
+                border: 1px solid #dedede;
+            }
+            body.blockview .contentbox .listbox li:hover {
+                background-color:#f9f9f9;
+            }
+        </style>
+    <![endif]-->
 </head>
-
+<!-- listview blockview -->
 <body>
     <div class="header">
         <div class="headbox">
@@ -28,8 +38,12 @@
     </div>
 
     <div id="mainContainer">
+        <div class="banner"></div>
         <div class="contentbox">
-            <h2></h2>
+            <div class="toolsbox clear">
+                <div class="leftbox"></div>
+                <div class="rightbox"><a id="tbPic" class="active"><i></i></a><a id="tbText"><i></i></a></div>
+            </div>
         </div>
     </div>
 
@@ -94,27 +108,66 @@
     <div class="loading"></div>
     <!-- 主内容模板 -->
     <script type="text/html" id="contentTemplate">
-        <ul class="listbox">
+        <ul class="listbox clear">
             <%include('listTemplate')%>
         </ul>
         <div class="pagebox">
             <%include('pageTemplate')%>
         </div>
     </script>
+    <!-- 推荐模板 -->
+    <script type="text/html" id="recommandTemplate">
+        <%var imgUrl='http://www.cn-qch.com:8002/attach/images/'%>
+        <div class="frame">
+            <div class="box">
+                <%//data.forEach(function(item,index){%>
+                <%for(var i=0,len=data.length;i<len;i++){%>
+                    <%var item=data[i]%>
+                    <a target="_blank" href="/content/newsDetails.html?guid=<%=item.guid%>&id=<%=item.t_News_Style%>" data-h="<%=item.t_News_Title%>" data-p="<%=item.t_News_LimitContents+'...'%>" data-date="<%=item.t_News_Date%>">
+                        <img src="<%=imgUrl+item.t_News_Pic%>">
+                    </a>
+                <%}%>
+                <%//})%>
+            </div>
+        </div>
+        <div class="controls controls_1">
+            <%/*%>
+            <a class="prev"></a>
+            <a class="next"></a>
+            <%*/%>
+        </div>
+        <div class="controls controls_2">
+            <div class="ctrlsbox">
+                <%for(var i=0,len=data.length;i<len;i++){%>
+                <a <%if(i==0){%>class="active"<%}%>></a>
+                <%}%>
+            </div>
+        </div>
+        <div class="detailsbox">
+            <h2></h2>
+            <p></p>
+            <span></span>
+        </div>
+    </script>
     <!-- 列表模板 -->
     <script type="text/html" id="listTemplate">
         <%var imgUrl='http://www.cn-qch.com:8002/attach/images/'%>
-        <%data.items.forEach(function(item,index){%>
-            <li class="<%if(index==0){%>first<%}%>">
+        <%var defaultUrl='/content/image/avator.png'%>
+        <%//data.items.forEach(function(item,index){%>
+        <%for(var i=0,len=data.items.length;i<len;i++){%>
+            <%var item=data.items[i]%>
+            <li class="<%if(i==0){%>first<%}%> <%if(i%3==0){%>f2<%}%>">
                 <a class="clear" target="_blank" href="/content/newsDetails.html?guid=<%=item.guid%>&id=<%=item.t_News_Style%>">
-                    <img src="<%=imgUrl+item.t_News_Pic%>" class="left">
+                    <img src="<%=item.t_News_Pic?imgUrl+item.t_News_Pic:defaultUrl%>" class="left">
                     <div class="right">
-                        <h3><%=item.t_News_Title%><b><%=formatDate(item.t_News_Date,'yyyy-MM-dd')%></b></h3>
-                        <p><%=item.t_News_LimitContents.trim().slice(0,100)+'...'%></p>
+                        <%var title=item.t_News_Title%>
+                        <h3><%=title.length>32?(title.slice(0,32)+'...'):title%><b>更新日期: <%=formatDate(item.t_News_Date,'yyyy-MM-dd')%></b><b class="count">查看人数: <%=item.t_News_Counts%></b></h3>
+                        <p><%=item.t_News_LimitContents.slice(0,60)+'...'%></p>
                     </div>
                 </a>
             </li>
-        <%})%>
+        <%}%>
+        <%//})%>
     </script>
     <!-- 分页模板 -->
     <script type="text/html" id="pageTemplate">
@@ -146,12 +199,12 @@
     </script>
 
     <script src="/content/js/lib/jquery-1.12.2.min.js"></script>
+    <script src="/content/js/lib/jquery.xdomainrequest.min.js"></script>
     <script src="/content/js/lib/artTemplate.js"></script>
     <script src="/content/js/util.js"></script>
     <script src="/content/js/news.js"></script>
     <script>
-        var ajaxParam={pagesize:10};
-        //if(util.getUrlParam('id')) ajaxParam.typeId=util.getUrlParam('id');
+        var ajaxParam={pagesize:12};
         ajaxParam.page=util.getUrlParam('page')||1;
         $.ajax({
             url:'http://120.25.106.244:9001/api/news/GetNewsMenu',
@@ -163,19 +216,29 @@
                     for(var i=0,len=res.length;i<len;i++){
                         html+='<a href="/content/news.html?fid=39&id='+res[i].id+'" data-id='+res[i].id+'>'+res[i].t_Style_Name+'</a>'
                     }
-                    $('.contentbox>h2').html(html);
-                    $('.contentbox>h2 a').each(function(){
+                    $('.contentbox .toolsbox .leftbox').html(html);
+                    $('.contentbox .toolsbox .leftbox a').each(function(){
                         if($(this).data('id')==util.getUrlParam('id')){
                             $(this).addClass('active').removeAttr('href');
                         }
                     })
-                    if (!util.getUrlParam('id')) $('.contentbox>h2 a').eq(0).addClass('active').removeAttr('href');
-                    ajaxParam.typeId = util.getUrlParam('id') || $('.contentbox>h2 a').eq(0).data('id');
+                    if(!util.getUrlParam('id')) $('.contentbox .toolsbox .leftbox a').eq(0).addClass('active').removeAttr('href');
+                    ajaxParam.typeId=util.getUrlParam('id')||$('.contentbox .toolsbox .leftbox a').eq(0).data('id');
                     getData(ajaxParam);
                 }
             }
         })
-        function getData(param){
+        getRecommand();
+        function getRecommand(){
+            $.ajax({
+                url:'http://120.25.106.244:9001/api/news/GetAll',
+                cache:false,
+                success:function(res){
+                    $('.banner').html(template('recommandTemplate',{data:res}));
+                }
+            })
+        }
+        function getData(param,cb){
             $.ajax({
                 url:'http://120.25.106.244:9001/api/news/GetAll',
                 cache:false,
@@ -184,11 +247,42 @@
                     res.id=param.typeId||null;
                     res.page=parseInt(util.getUrlParam('page'))||1;
                     $('.contentbox').append(template('contentTemplate',{data:res}));
-                    $('.loading').hide();
+                    (typeof cb == 'function') && cb(res);
                 }
             })
         }
         template.helper('formatDate',util.formatDate);
+        $(document).on('click','.toolsbox .rightbox a',function(){
+            $(this).addClass('active').siblings().removeClass('active');
+            if(this.id=='tbPic'){
+                $('body').addClass('blockview').removeClass('listview');
+                window.sessionStorage&&sessionStorage.setItem('viewmode','blockview');
+            }else{
+                $('body').addClass('listview').removeClass('blockview');
+                window.sessionStorage&&sessionStorage.setItem('viewmode','listview');
+            }
+        })
+        .on('click','.detailsbox',function(){
+            window.open($(this).data('url'),Date.now())
+        })
+        $(function(){
+            var viewMode
+            if(window.sessionStorage){
+                viewMode=sessionStorage.getItem('viewmode')||'blockview';
+                $('body').addClass(viewMode);
+            }else{
+                $('body').addClass('blockview');
+            }
+            if(viewMode=='listview'){
+                $('.toolsbox .rightbox a#tbText').addClass('active').siblings().removeClass('active');
+            }else{
+                $('.toolsbox .rightbox a#tbPic').addClass('active').siblings().removeClass('active');
+            }
+        });
+        $(document).ajaxStop(function(){
+            $('.banner').length&&(banner.init('.banner'));
+            $('.loading').hide();
+        })
     </script>
 </body>
 

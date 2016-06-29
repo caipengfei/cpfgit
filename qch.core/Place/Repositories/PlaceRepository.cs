@@ -17,6 +17,26 @@ namespace qch.Repositories
         Repository<PlaceOrderTimeModel> potRp = new Repository<PlaceOrderTimeModel>();
         Repository<PlaceStyleModel> psRp = new Repository<PlaceStyleModel>();
         Repository<OrderedPlaceModel> orderedRp = new Repository<OrderedPlaceModel>();
+        Repository<PlaceCaseModel> pcRp = new Repository<PlaceCaseModel>();
+
+        /// <summary>
+        /// 获取某个空间的孵化案例
+        /// </summary>
+        /// <param name="Guid"></param>
+        /// <returns></returns>
+        public PlaceCaseModel GetPlaceCase(string Guid)
+        {
+            try
+            {
+                string sql = "select a.Guid,b.t_Project_Name as ProjectName,b.t_Project_ConverPic as ProjectImage from T_Place_Project as a left join T_Project as b on a.t_Project_Guid=b.guid where a.t_State=1 and a.t_Type=0 and a.t_Place_Guid=@0 and b.t_delstate=0 and b.t_Project_Audit=1";
+                return pcRp.Get(sql, new object[] { Guid });
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
 
         #region 用户预约过的空间资源
 
@@ -67,6 +87,24 @@ namespace qch.Repositories
         #endregion
 
         #region 空间信息
+        /// <summary>
+        /// 获取空间详情
+        /// </summary>
+        /// <param name="PlaceGuid"></param>
+        /// <returns></returns>
+        public PlaceModel GetPlaceInfo(string PlaceGuid)
+        {
+            try
+            {
+                string sql = "select * from T_Place where guid=@0 and t_DelState=0";
+                return rRp.Get(sql, new object[] { PlaceGuid });
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
         #endregion
 
         #region 能预约的空间
@@ -91,6 +129,24 @@ namespace qch.Repositories
         #endregion
 
         #region 空间能预约的时间
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Guid"></param>
+        /// <returns></returns>
+        public PlaceOrderTimeModel GetPlaceOrderTimeById(string Guid)
+        {
+            try
+            {
+                string sql = "select * from T_PlaceOrder_Time where guid=@0 and t_delstate=0";
+                return potRp.Get(sql, new object[] { Guid });
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
         /// <summary>
         /// 获取某个空间类型的预约时间信息（时间）
         /// </summary>

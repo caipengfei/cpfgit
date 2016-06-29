@@ -103,6 +103,14 @@ namespace web.Controllers
                     {
                         return Content("授权错误！请关闭后重新打开。");
                     }
+
+                    log.Info(result.errmsg);
+                    if (!string.IsNullOrWhiteSpace(result.errmsg) && result.errmsg.Contains("invalid code"))
+                    {
+                        string Nonce = ToolHelper.createNonceStr();//随机数
+                        var weixinAuthUrl = OAuth.GetAuthorizeUrl(appId, "http://www.cn-qch.com/wxuser/wxreg?UserGuid=" + UserGuid, Nonce, OAuthScope.snsapi_userinfo);
+                        return Redirect(weixinAuthUrl);
+                    }
                     Session["regAccountTokenResult"] = result;
                 }
                 OAuthUserInfo userInfo = null;
@@ -174,7 +182,10 @@ namespace web.Controllers
             }
             catch (ErrorJsonResultException ex)
             {
-                return Content(ex.Message);
+                log.Error(ex.Message);
+                string Nonce = ToolHelper.createNonceStr();//随机数
+                var weixinAuthUrl = OAuth.GetAuthorizeUrl(appId, "http://www.cn-qch.com/wxuser/wxreg?UserGuid=" + UserGuid, Nonce, OAuthScope.snsapi_userinfo);
+                return Redirect(weixinAuthUrl);
             }
             #endregion
             rm.SafeCode = "";
@@ -1352,17 +1363,25 @@ namespace web.Controllers
             }
             string userguid = "";
             OAuthAccessTokenResult result = null;
-            if (Session["AccountTokenResult"] != null)
-                result = (OAuthAccessTokenResult)Session["AccountTokenResult"];
-            else
+            try
             {
-                //通过，用code换取access_token
-                result = OAuth.GetAccessToken(appId, appSecret, code);
-                if (result == null || result.access_token == null)
+                if (Session["AccountTokenResult"] != null)
+                    result = (OAuthAccessTokenResult)Session["AccountTokenResult"];
+                else
                 {
-                    return Redirect(weixinAuthUrl);
+                    //通过，用code换取access_token
+                    result = OAuth.GetAccessToken(appId, appSecret, code);
+                    if (result == null || result.access_token == null)
+                    {
+                        return Redirect(weixinAuthUrl);
+                    }
+                    Session["AccountTokenResult"] = result;
                 }
-                Session["AccountTokenResult"] = result;
+            }
+            catch (ErrorJsonResultException ex)
+            {
+                log.Error("UserCenter" + ex.Message);
+                return Redirect(weixinAuthUrl);
             }
 
             //请求微信用户信息
@@ -1389,6 +1408,8 @@ namespace web.Controllers
                 }
                 userguid = user.Guid;
                 #region 赋于该会员授权
+                log.Info(userguid);
+                log.Info(user.t_User_LoginId);
                 userService.SetAuthCookie(new UserLoginModel
                 {
                     LoginName = user.t_User_LoginId,
@@ -1396,6 +1417,11 @@ namespace web.Controllers
                     SafeCode = ToolHelper.createNonceStr()
                 });
                 #endregion
+            }
+            else
+            {
+                var weixinAuthUrl1 = OAuth.GetAuthorizeUrl(appId, WeixinUrl + "/wxuser/Bind", Nonce, OAuthScope.snsapi_userinfo);
+                return Redirect(weixinAuthUrl1);
             }
             //ViewBag.UserGuid = userguid;
             return Redirect("/h5/userCenter.html?UserGuid=" + userguid);
@@ -1497,7 +1523,8 @@ namespace web.Controllers
             }
             catch (ErrorJsonResultException ex)
             {
-                return Content(ex.Message);
+                log.Error("Bind" + ex.Message);
+                return Redirect(weixinAuthUrl);
             }
             #endregion
             #region jsapi
@@ -1608,6 +1635,12 @@ namespace web.Controllers
                     string avatorFilePath = System.Web.HttpContext.Current.Server.MapPath("~/content/wxavator/" + avator);
                     bool isrewrite = true; // true=覆盖已存在的同名文件,false则反之
                     System.IO.File.Copy(avatorFilePath, "D:\\QCH2.0\\Attach\\User\\" + avator, isrewrite);
+                    userService.SetAuthCookie(new UserLoginModel
+                    {
+                        LoginName = user.t_User_LoginId,
+                        LoginPwd = ToolHelper.createNonceStr(),
+                        SafeCode = ToolHelper.createNonceStr()
+                    });
                 }
                 else { log.Error("插入失败"); }
             }

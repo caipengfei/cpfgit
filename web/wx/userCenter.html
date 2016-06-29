@@ -16,12 +16,12 @@
     <div class="shade-div"></div>
     <div class="container fixed"></div>
     <script type="text/html" id="infoTemplate">
-    <%var imgUrl='http://www.cn-qch.com:8002/attach/user/'%>
+        <%var imgUrl='http://www.cn-qch.com:8002/attach/user/'%>
         <div class="header">
             <img src="<%=imgUrl+data.avator%>">
             <h2><%=data.name%></h2>
             <h3><%=data.phone%></h3>
-            
+
         </div>
         <ul class="listbox">
             <li class="clearfix">
@@ -56,7 +56,7 @@
                 </td>
             </tr>
         </table>
-        <a class="btn-lookup" href="/invitation/list">查看直接邀请的人</a>
+        <a class="btn-lookup" href="/invitation/list?UserGuid=<%=data.guid%>">查看直接邀请的人</a>
     </script>
 
     <script src="/h5/js/zepto.min.js"></script>
@@ -65,16 +65,23 @@
     <script>
         var guid = util.getUrlParam('UserGuid') || util.getUrlParam('userGuid');
         $.ajax({
-            url:'http://120.25.106.244:9001/api/user/userinfo',
-            data:{userguid:guid},
-            cache:false,
+            url: 'http://120.25.106.244:9001/api/user/userinfo',
+            data: { userguid: guid },
+            cache: false,
             success: function (res) {
                 res.guid = guid;
-                $('.container').html(template('infoTemplate',{data:res}));
+                $('.container').html(template('infoTemplate', { data: res }));
                 $('.container').removeClass('fixed').siblings('.shade-div').remove();
+                //$(".btn-lookup").attr('href', '/invitation/list?UserGuid=' + guid);
             }
         })
-        template.helper('formatDate',util.formatDate);
+        //$.ajax({
+        //    url: 'http://120.25.106.244:9001/api/user/SetAuthCookie',
+        //    data: { userguid: guid },
+        //    cache: false,
+        //    success: function (res) { }
+        //})
+        template.helper('formatDate', util.formatDate);
     </script>
 </body>
 </html>

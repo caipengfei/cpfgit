@@ -43,15 +43,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\qch\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Maticsoft.BLL">
-      <HintPath>..\packages\qch\Maticsoft.BLL.dll</HintPath>
-    </Reference>
-    <Reference Include="Maticsoft.Common">
-      <HintPath>..\packages\qch\Maticsoft.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Maticsoft.Model">
-      <HintPath>..\packages\qch\Maticsoft.Model.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Senparc.Weixin, Version=1.6.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -229,164 +220,6 @@
     <Compile Include="Models\UserInfoModel_xsl.cs" />
     <Compile Include="Models\UserRegModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QCH_Activity\ActivityAddOrModify.aspx.cs">
-      <DependentUpon>ActivityAddOrModify.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="QCH_Activity\ActivityAddOrModify.aspx.designer.cs">
-      <DependentUpon>ActivityAddOrModify.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="QCH_Activity\ActivityApply.aspx.cs">
-      <DependentUpon>ActivityApply.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="QCH_Activity\ActivityApply.aspx.designer.cs">
-      <DependentUpon>ActivityApply.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="QCH_Activity\ActivityList.aspx.cs">
-      <DependentUpon>ActivityList.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="QCH_Activity\ActivityList.aspx.designer.cs">
-      <DependentUpon>ActivityList.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="QCH_Activity\ActivityMap.aspx.cs">
-      <DependentUpon>ActivityMap.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="QCH_Activity\ActivityMap.aspx.designer.cs">
-      <DependentUpon>ActivityMap.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="QCH_Activity\ActivityReply.aspx.cs">
-      <DependentUpon>ActivityReply.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="QCH_Activity\ActivityReply.aspx.designer.cs">
-      <DependentUpon>ActivityReply.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="QCH_Activity\ActivityView.aspx.cs">
-      <DependentUpon>ActivityView.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="QCH_Activity\ActivityView.aspx.designer.cs">
-      <DependentUpon>ActivityView.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="QCH_Activity\Ajax_Activity.ashx.cs">
-      <DependentUpon>Ajax_Activity.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="QCH_InvestPlace\Ajax_InvestPlace.ashx.cs">
-      <DependentUpon>Ajax_InvestPlace.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="QCH_InvestPlace\InvestPlaceAddOrModify.aspx.cs">
-      <DependentUpon>InvestPlaceAddOrModify.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="QCH_InvestPlace\InvestPlaceAddOrModify.aspx.designer.cs">
-      <DependentUpon>InvestPlaceAddOrModify.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="QCH_InvestPlace\InvestPlaceCase.aspx.cs">
-      <DependentUpon>InvestPlaceCase.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="QCH_InvestPlace\InvestPlaceCase.aspx.designer.cs">
-      <DependentUpon>InvestPlaceCase.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="QCH_InvestPlace\InvestPlaceList.aspx.cs">
-      <DependentUpon>InvestPlaceList.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="QCH_InvestPlace\InvestPlaceList.aspx.designer.cs">
-      <DependentUpon>InvestPlaceList.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="QCH_InvestPlace\InvestPlaceMember.aspx.cs">
-      <DependentUpon>InvestPlaceMember.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="QCH_InvestPlace\InvestPlaceMember.aspx.designer.cs">
-      <DependentUpon>InvestPlaceMember.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="QCH_InvestPlace\InvestPlaceView.aspx.cs">
-      <DependentUpon>InvestPlaceView.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="QCH_InvestPlace\InvestPlaceView.aspx.designer.cs">
-      <DependentUpon>InvestPlaceView.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="QCH_Project\Ajax_Project.ashx.cs">
-      <DependentUpon>Ajax_Project.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="QCH_Project\ProjectAddOrModify.aspx.cs">
-      <DependentUpon>ProjectAddOrModify.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="QCH_Project\ProjectAddOrModify.aspx.designer.cs">
-      <DependentUpon>ProjectAddOrModify.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="QCH_Project\ProjectList.aspx.cs">
-      <DependentUpon>ProjectList.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="QCH_Project\ProjectList.aspx.designer.cs">
-      <DependentUpon>ProjectList.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="QCH_Project\ProjectView.aspx.cs">
-      <DependentUpon>ProjectView.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="QCH_Project\ProjectView.aspx.designer.cs">
-      <DependentUpon>ProjectView.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="QCH_Style\Ajax_Style.ashx.cs">
-      <DependentUpon>Ajax_Style.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="QCH_Style\StyleAddOrModify.aspx.cs">
-      <DependentUpon>StyleAddOrModify.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="QCH_Style\StyleAddOrModify.aspx.designer.cs">
-      <DependentUpon>StyleAddOrModify.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="QCH_Style\StyleList.aspx.cs">
-      <DependentUpon>StyleList.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="QCH_Style\StyleList.aspx.designer.cs">
-      <DependentUpon>StyleList.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="QCH_Style\StyleView.aspx.cs">
-      <DependentUpon>StyleView.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="QCH_Style\StyleView.aspx.designer.cs">
-      <DependentUpon>StyleView.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="QCH_Topic\Ajax_Topic.ashx.cs">
-      <DependentUpon>Ajax_Topic.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="QCH_Topic\TopicList.aspx.cs">
-      <DependentUpon>TopicList.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="QCH_Topic\TopicList.aspx.designer.cs">
-      <DependentUpon>TopicList.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="QCH_Topic\TopicReprot.aspx.cs">
-      <DependentUpon>TopicReprot.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="QCH_Topic\TopicReprot.aspx.designer.cs">
-      <DependentUpon>TopicReprot.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="QCH_Topic\TopicView.aspx.cs">
-      <DependentUpon>TopicView.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="QCH_Topic\TopicView.aspx.designer.cs">
-      <DependentUpon>TopicView.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="QCH_User\Ajax_User.ashx.cs">
-      <DependentUpon>Ajax_User.ashx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="AppDown\css\comment.css" />
@@ -746,6 +579,7 @@
     <Content Include="Content\image\ad_login\or.png" />
     <Content Include="Content\image\api-qr2.png" />
     <Content Include="Content\image\autonavi.png" />
+    <Content Include="Content\image\avator.png" />
     <Content Include="Content\image\banner_2.jpg" />
     <Content Include="Content\image\captcha.jpg" />
     <Content Include="Content\image\check_yes.png" />
@@ -807,6 +641,7 @@
     <Content Include="Content\image\menu03_33.png" />
     <Content Include="Content\image\menu03_33_on.png" />
     <Content Include="Content\image\menu04_33.png" />
+    <Content Include="Content\image\news_nav.png" />
     <Content Include="Content\image\pop_remmind_yes.png" />
     <Content Include="Content\image\qrcode_for_gh_36e651bc226a_430.jpg" />
     <Content Include="Content\image\reg_success.png" />
@@ -820,6 +655,7 @@
     <Content Include="Content\image\shuXian.png" />
     <Content Include="Content\image\shuXian2.png" />
     <Content Include="Content\image\subinfo_pic_check.png" />
+    <Content Include="Content\image\t0171ca8f598efaea05.png" />
     <Content Include="Content\image\tan_13.png" />
     <Content Include="Content\image\tan_icon.png" />
     <Content Include="Content\image\time_icon3.png" />
@@ -832,6 +668,7 @@
     <Content Include="Content\js\lazyloadv3.js" />
     <Content Include="Content\js\lib\artTemplate.js" />
     <Content Include="Content\js\lib\jquery-1.12.2.min.js" />
+    <Content Include="Content\js\lib\jquery.xdomainrequest.min.js" />
     <Content Include="Content\js\lib\jquery_date.js" />
     <Content Include="Content\js\news.js" />
     <Content Include="Content\js\placeholder.js" />
@@ -1000,6 +837,7 @@
     <Content Include="H5\css\register.css" />
     <Content Include="H5\css\rule.css" />
     <Content Include="H5\css\shareCourse.css" />
+    <Content Include="H5\css\sharePlace.css" />
     <Content Include="H5\css\shareTutor.css" />
     <Content Include="H5\css\signUp.css" />
     <Content Include="H5\css\signUp2.css" />
@@ -1036,11 +874,14 @@
     <Content Include="H5\img\icon\heart.png" />
     <Content Include="H5\img\icon\huodong_wxz_btn%402x.png" />
     <Content Include="H5\img\icon\huodong_xz_btn%402x.png" />
+    <Content Include="H5\img\icon\icon-bottom.png" />
+    <Content Include="H5\img\icon\icon-top.png" />
     <Content Include="H5\img\icon\imgnodata.png" />
     <Content Include="H5\img\icon\inline.png" />
     <Content Include="H5\img\icon\li_bg.png" />
     <Content Include="H5\img\icon\logo_mob.png" />
     <Content Include="H5\img\icon\more_1.png" />
+    <Content Include="H5\img\icon\nodata.png" />
     <Content Include="H5\img\icon\paySuccess.jpg" />
     <Content Include="H5\img\icon\refresh.png" />
     <Content Include="H5\img\icon\right.png" />
@@ -1130,6 +971,7 @@
     <Content Include="H5\js\lottery.js" />
     <Content Include="H5\js\register.js" />
     <Content Include="H5\js\shareCourse.js" />
+    <Content Include="H5\js\sharePlace.js" />
     <Content Include="H5\js\shareProject.js" />
     <Content Include="H5\js\shareTutor.js" />
     <Content Include="H5\js\signUp2.js" />
@@ -1145,6 +987,7 @@
     <Content Include="H5\ShareCourse.html" />
     <Content Include="H5\ShareCrowdfunding.html" />
     <Content Include="H5\ShareInvestPlace.html" />
+    <Content Include="H5\SharePlace.html" />
     <Content Include="H5\ShareProject.html" />
     <Content Include="H5\ShareTopic.html" />
     <Content Include="H5\ShareTutor.html" />
@@ -1285,37 +1128,6 @@
     <Content Include="wx\reserveSpace.html" />
     <Content Include="wx\userCenter.html" />
     <None Include="Properties\PublishProfiles\qchweb.pubxml" />
-    <Content Include="QCH_Activity\Activity.js" />
-    <Content Include="QCH_Activity\ActivityAddOrModify.aspx" />
-    <Content Include="QCH_Activity\ActivityApply.aspx" />
-    <Content Include="QCH_Activity\ActivityList.aspx" />
-    <Content Include="QCH_Activity\ActivityMap.aspx" />
-    <Content Include="QCH_Activity\ActivityReply.aspx" />
-    <Content Include="QCH_Activity\ActivityView.aspx" />
-    <Content Include="QCH_InvestPlace\InvestPlace.js" />
-    <Content Include="QCH_InvestPlace\InvestPlaceAddOrModify.aspx" />
-    <Content Include="QCH_InvestPlace\InvestPlaceCase.aspx" />
-    <Content Include="QCH_InvestPlace\InvestPlaceList.aspx" />
-    <Content Include="QCH_InvestPlace\InvestPlaceMember.aspx" />
-    <Content Include="QCH_InvestPlace\InvestPlaceView.aspx" />
-    <Content Include="QCH_Project\Project.js" />
-    <Content Include="QCH_Project\ProjectAddOrModify.aspx" />
-    <Content Include="QCH_Project\ProjectList.aspx" />
-    <Content Include="QCH_Project\ProjectView.aspx" />
-    <Content Include="QCH_Style\Style.js" />
-    <Content Include="QCH_Style\StyleAddOrModify.aspx" />
-    <Content Include="QCH_Style\StyleList.aspx" />
-    <Content Include="QCH_Style\StyleView.aspx" />
-    <Content Include="QCH_Topic\Topic.js" />
-    <Content Include="QCH_Topic\TopicList.aspx" />
-    <Content Include="QCH_Topic\TopicReprot.aspx" />
-    <Content Include="QCH_Topic\TopicView.aspx" />
-    <Content Include="QCH_User\Ajax_User.ashx" />
-    <Content Include="QCH_Activity\Ajax_Activity.ashx" />
-    <Content Include="QCH_InvestPlace\Ajax_InvestPlace.ashx" />
-    <Content Include="QCH_Project\Ajax_Project.ashx" />
-    <Content Include="QCH_Style\Ajax_Style.ashx" />
-    <Content Include="QCH_Topic\Ajax_Topic.ashx" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />

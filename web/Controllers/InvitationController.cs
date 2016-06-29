@@ -1,6 +1,7 @@
 ﻿using qch.core;
 using qch.Infrastructure;
 using qch.Models;
+using Senparc.Weixin.MP.Sample.CommonService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -93,8 +94,21 @@ namespace web.Controllers
             return View();
         }
         //一级推荐人列表
-        public ActionResult List()
+        public ActionResult List(string UserGuid)
         {
+            if (!string.IsNullOrWhiteSpace(UserGuid))
+            {
+                var user = userService.GetDetail(UserGuid);
+                if (user != null)
+                {
+                    userService.SetAuthCookie(new UserLoginModel
+                    {
+                        LoginName = user.t_User_LoginId,
+                        LoginPwd = ToolHelper.createNonceStr(),
+                        SafeCode = ToolHelper.createNonceStr()
+                    });
+                }
+            }
             if (LoginUser != null)
             {
                 var list = userService.GetReferral1(1, 20, LoginUser.Guid);
@@ -131,7 +145,15 @@ namespace web.Controllers
             return View(model);
         }
 
-        public ActionResult Qiuyu(int? x,int? y)
+        [Senparc.Weixin.MP.Sample.Filters.WxAuthorization]
+        public ActionResult Test(string code, string state)
+        {
+            string xy = "asdf";
+            if (LoginUser != null)
+                xy = LoginUser.t_User_RealName;
+            return Content(xy);
+        }
+        public ActionResult Qiuyu(int? x, int? y)
         {
             var xy = x % y;
             ViewBag.XY2 = xy;

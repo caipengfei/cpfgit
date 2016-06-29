@@ -14,6 +14,7 @@ body {
 
 .container{
     margin:3.4rem 0;
+    overflow-x:hidden; 
 }
 
 header {
@@ -89,14 +90,14 @@ header h2 {
 .fieldbox ul li ,
 .stagebox ul li{
     float: left;
-    width: 25%;
-    height:2.2rem;
+    height: 2.2rem;
     line-height: 2.2rem;
     border-radius: 1.1rem;
-    border:1px solid #1a1a1a;
+    border: 1px solid #1a1a1a;
     text-align: center;
-    margin:0 6% .8rem 0;
+    margin: 0 .8rem .8rem 0;
     font-size: 1.1rem;
+    padding: 0 .8rem;
 }
 
 .aboutbox {
@@ -144,7 +145,7 @@ header h2 {
 .casebox .listbox li a {
     width: 75%;
     color: #1a1a1a;
-    font-size: 1.1rem;
+    font-size: 1rem;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
@@ -166,10 +167,15 @@ header h2 {
 }
 
 .member table {
-    padding:0 1.5rem;
     width: 100%;
+    margin-left:.9rem;
 }
-
+.member table,td{
+    border-collapse: collapse;
+}
+.member table td{
+    border-bottom:1px solid #eaeaea;
+}
 .member table td a,
 .member table td img {
     width: 100%;
@@ -178,7 +184,7 @@ header h2 {
 
 .member table td h3 {
     color: #1b1b1b;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     margin-bottom: .3rem;
 }
 
@@ -194,7 +200,7 @@ header h2 {
 
 .member table td:nth-child(1) {
     width: 5rem;
-    padding-right: .8rem;
+    padding:.9rem;
 }
 
 footer {

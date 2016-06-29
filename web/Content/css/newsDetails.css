@@ -1,6 +1,5 @@
 #mainContainer{
     padding-top: 70px;
-    background: #e5e5e5;
 }
 a{
     color: #000;
@@ -39,7 +38,8 @@ a{
     background: #fff;
     padding: 15px;
     border-radius: 6px;
-    box-shadow: #b5b5b5 0 0 5px;
+    box-shadow: #a9a9a9 0 0 8px;
+    border: 1px solid #dedede;
 }
 .contentbox .leftbox .content img{
     max-width: 100%;    
@@ -90,17 +90,25 @@ a{
 }
 #mainContainer>h2{
     width: 1180px;
-    margin: 40px auto;
-    color: #252525;
+    background: rgb(238,238,238);
+    margin:30px auto;
+    border: 1px solid rgb(228,228,228);
+    height: 50px;
+    line-height: 50px;
+    padding: 0 18px;
 }
 #mainContainer>h2 a{
     margin-right: 20px;
     color: #000;
-    border-bottom: 2px solid #e5e5e5;
     font-size: 16px;
-    padding-bottom: 4px;
+    line-height: 48px;
+    height: 48px;
+    float: left;
 }
-#mainContainer>h2 a:hover,#mainContainer>h2 a.active{
+#mainContainer>h2 a.active{
     color: rgb(64,138,213);
-    border-color:rgb(64,138,213);
+    background: url(../image/news_nav.png) no-repeat 50% 34px;
+}
+#mainContainer>h2 a:hover{
+    color: rgb(64,138,213);
 }

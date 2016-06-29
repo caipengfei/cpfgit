@@ -36,7 +36,7 @@ namespace qch.core
             }
         }
         /// <summary>
-        /// 获取某用户的中奖几率
+        /// 获取某用户的中奖记录
         /// </summary>
         /// <param name="UserGuid"></param>
         /// <returns></returns>
@@ -111,7 +111,8 @@ namespace qch.core
                     //抽奖计算
                     var xy = (from x in Enumerable.Range(0, 1000000)  //最多随机100万次
                               let sjcp = roll.ToList()[Rnd.Next(roll.ToList().Count())]
-                              let zgz = Rnd.Next(0, 1000)  //概率按照千分之几计算
+                              //let zgz = Rnd.Next(0, 1000)  //概率按照千分之几计算
+                              let zgz = Rnd.Next(0, 10000)  //概率按照万分之几计算，06-22修改
                               where zgz < sjcp.t_Roll_Probability
                               select sjcp).First();
                     msg.Result = xy;

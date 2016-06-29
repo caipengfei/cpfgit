@@ -281,16 +281,15 @@ header h3 {
 }
 
 .demand div a {
-    margin: 0 .5rem;
-    margin-bottom: .5rem;
-    line-height: 2.4rem;
     float: left;
-    text-align: center;
-    font-size: 1rem;
-    color: #1a1a1a;
+    height: 2.2rem;
+    line-height: 2.2rem;
+    border-radius: 1.1rem;
     border: 1px solid #1a1a1a;
-    border-radius: 1.2rem;
-    padding: 0 1.2rem;
+    text-align: center;
+    margin: 0 .8rem .8rem 0;
+    font-size: 1.1rem;
+    padding: 0 .8rem;
 }
 
 .commentlist {
@@ -385,4 +384,49 @@ i.fa {
 .teambox table td h3 span{
     font-size: 1rem;
     color: #999;
+}
+.wxbox{
+    position: fixed;
+    z-index: 1000;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 0 1.2rem;
+}
+.wxbox>div{
+    border-radius: 6px;
+    overflow: hidden;
+}
+.wxbox .box1{
+    background: #fff;
+    margin-bottom: .6rem;
+}
+.wxbox .box2{
+    background: #fff;
+    margin-bottom: .4rem;
+}
+.wxbox p,.wxbox .copy,.wxbox .cancel{
+    width: 100%;
+    height: 3rem;
+    line-height: 3rem;
+    text-align: center;
+}
+.wxbox p{
+    color: #666;
+    border-bottom: 1px solid #d2d2d2;
+}
+.wxbox .copy{
+    color: #4a90e2;
+}
+.wxbox .cancel{
+    color: #4a90e2;
+}
+.shade{
+    position: fixed;
+    z-index: 999;
+    bottom: 0;
+    left: 0;
+    top: 0;
+    right: 0;
+    background: rgba(0,0,0,.5);
 }

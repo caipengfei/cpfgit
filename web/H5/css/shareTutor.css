@@ -28,26 +28,27 @@ header .aboutbox {
     padding: 0 1.4rem;
     text-align: center;
     position: relative;
-    top: -4rem;
-    margin-bottom: -2rem;
+    top: -3rem;
+    margin-bottom: -1rem;
 }
 
 header .aboutbox img {
-    width: 8rem;
-    height: 8rem;
-    border-radius: 4rem;
+    width: 6rem;
+    height: 6rem;
+    border-radius: 3rem;
     border: .3rem solid #fff;
-    box-shadow: #999 0 0 1px;
+    box-shadow: #888 0 0 2px;
 }
 
 header .aboutbox h2 {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     margin: .6em 0;
-    font-weight: bold;
 }
 
 header .aboutbox b {
     font-size: 1rem;
+    line-height: 1.6em;
+    font-weight: normal;
 }
 
 header .aboutbox h3 {
@@ -55,12 +56,14 @@ header .aboutbox h3 {
     color: rgb(153, 153, 153);
     margin: 1.2em 0;
     line-height: 1.6em;
+    text-align: left;
 }
 
 header .aboutbox p {
     font-size: 1rem;
     line-height: 1.6em;
     color: rgb(153, 153, 153);
+    text-align: left;
 }
 
 
@@ -68,10 +71,10 @@ header .aboutbox p {
 
 .showbox>h2,
 .recommendbox>h2 {
-    line-height: 3.5rem;
+    line-height: 3rem;
     background: rgb(242, 242, 242);
     padding: 0 1.4rem;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 }
 
 .banner {
@@ -149,6 +152,6 @@ header .aboutbox p {
 
 .recommendbox li>div p {
     line-height: 1.6em;
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: rgb(153, 153, 153);
 }

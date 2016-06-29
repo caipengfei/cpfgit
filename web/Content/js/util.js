@@ -102,24 +102,3 @@ util.getUrlParam = function(name) {
         if (r != null) return unescape(r[2]);
         return null;
     }
-    // 移动端代替click事件 解决300ms延迟问题
-util.addTapEvent = function(el, cb) {
-    el.addEventListener('touchstart', function(e) {
-        var touch = e.targetTouches[0];
-        this.endX = this.startX = touch.clientX;
-        this.endY = this.startY = touch.clientY;
-    })
-    el.addEventListener('touchmove', function(e) {
-        var touch = e.targetTouches[0];
-        this.endX = touch.clientX;
-        this.endY = touch.clientY;
-    })
-    el.addEventListener('touchend', function(e) {
-        e.preventDefault();
-        var x = Math.abs(this.endX - this.startX);
-        var y = Math.abs(this.endY - this.startY);
-        if (x <= 5 && y <= 5) {
-            (typeof cb == 'function') && cb(this);
-        }
-    })
-}

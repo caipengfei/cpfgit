@@ -116,7 +116,7 @@
             var r = window.location.search.substr(1).match(reg);
             if (r != null) return unescape(r[2]); return null;
         }
-        var guid = GetUrlParam("Guid") || GetUrlParam("guid") || '406c0819-b33d-4a7a-92b7-199781eb7440';
+        var guid = GetUrlParam("Guid") || GetUrlParam("guid");
         //获取活动详情
         $.ajax({
             type: 'get',
@@ -126,7 +126,9 @@
             data: { guid: guid },
             success: function (data) {
                 if (data) {
-                    data.guid=guid;
+                    data.guid = guid;
+                    var re = /(http:\/\/[\w.\/]+[\?\=\w\&]*)(?![^<]+>)/gi;
+                    data.activityDetails = data.activityDetails.replace(re, "<a href='$1'>$1</a>").replace(/===/g, '<br>');
                     $('.container').html(template('contentTemplate', { data: data }));
                     $('.detailsbox .text1 img').each(function () {
                         var index = $(this).attr('src').indexOf('http://');
@@ -141,6 +143,7 @@
                         var width=$(this).width();
                         $(this).css({height:width,borderRadius:width/2});
                     })
+                    
                     $('.container').removeClass('loading').siblings('.shade-div').remove();
                     //initCommentForm();
                     wxShare({

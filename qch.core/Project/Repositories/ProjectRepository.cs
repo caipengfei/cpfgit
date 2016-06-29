@@ -13,6 +13,7 @@ namespace qch.Repositories
     {
         readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         Repository<ProjectModel> rp = new Repository<ProjectModel>();
+        Repository<SelectProject> rps = new Repository<SelectProject>();
         Repository<SelectProjectTeam> rp1 = new Repository<SelectProjectTeam>();
 
         /// <summary>
@@ -24,8 +25,22 @@ namespace qch.Repositories
         {
             try
             {
-                string sql = "select a.guid,a.t_Project_Guid,a.t_User_Guid,b.t_User_RealName as UserName,b.t_User_Pic as UserAvator,b.t_User_Remark as UserRemark,c.t_Style_Name as UserPosition from T_Project_Team as a left join t_users as b on a.t_User_Guid=b.guid left join T_Style as c on b.t_User_Position=c.Id where a.t_Project_Guid=@0";
+                string sql = "select a.guid,a.t_Project_Guid,a.t_User_Guid,b.t_User_RealName as UserName,b.t_User_Pic as UserAvator,b.t_User_Remark as UserRemark,c.t_Style_Name as UserPosition from T_Project_Team as a left join t_users as b on a.t_User_Guid=b.guid left join T_Style as c on b.t_User_Position=c.Id where a.t_Project_Guid=@0 and a.t_Audit=1";
                 return rp1.GetAll(sql, new Object[] { ProjectGuid });
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+
+        public SelectProject GetTop1(string Guid)
+        {
+            try
+            {
+                string sql = "select top 1 Guid,t_Project_ConverPic as Pic,t_Project_Name as Title,t_Project_OneWord as Contents from [T_Project] where [t_User_Guid]=@0 and [t_DelState]=0 order by [t_AddDate] desc";
+                return rps.Get(sql, new object[] { Guid });
             }
             catch (Exception ex)
             {

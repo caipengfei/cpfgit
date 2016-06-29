@@ -14,8 +14,8 @@ namespace qch.core
     public class JPushService
     {
         static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        string ApiKey = "c5769e566eca15eac9f5bbc3";//Android ApiKey
-        string APIMasterSecret = "db5d2b8984d337584f343c56";//Android密码
+        //string ApiKey = "c5769e566eca15eac9f5bbc3";//Android ApiKey
+        //string APIMasterSecret = "db5d2b8984d337584f343c56";//Android密码
 
         public static void push(string rid, string content)
         {

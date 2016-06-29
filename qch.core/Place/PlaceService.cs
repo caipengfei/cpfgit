@@ -15,6 +15,24 @@ namespace qch.core
         readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         PlaceRepository rp = new PlaceRepository();
 
+        /// <summary>
+        /// 获取某个空间的孵化案例
+        /// </summary>
+        /// <param name="Guid"></param>
+        /// <returns></returns>
+        public PlaceCaseModel GetPlaceCase(string Guid)
+        {
+            try
+            {
+                return rp.GetPlaceCase(Guid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+
         #region 用户预约过的空间业务
         public bool IsOrderToday(string UserGuid)
         {
@@ -50,6 +68,23 @@ namespace qch.core
         #endregion
 
         #region 空间信息
+        /// <summary>
+        /// 获取空间详情
+        /// </summary>
+        /// <param name="PlaceGuid"></param>
+        /// <returns></returns>
+        public PlaceModel GetPlaceInfo(string PlaceGuid)
+        {
+            try
+            {
+                return rp.GetPlaceInfo(PlaceGuid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
         #endregion
 
         #region 能预约的空间时间信息（日期）

@@ -76,6 +76,11 @@ header h2 {
     line-height: 1.6em;
     padding: 0 .3rem;
 }
+.dynamic > p.black a{
+    word-wrap: break-word;
+    display: block;
+    color: #4a90e2;
+}
 .dynamic .imgbox{
     padding:0 .3rem;
 }

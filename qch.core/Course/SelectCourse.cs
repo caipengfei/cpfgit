@@ -212,5 +212,7 @@ namespace qch.Models
         /// </summary>
         public string LecturerAvator { get; set; }
 
+        public string LecturerRemark { get; set; }
+
     }
 }

@@ -7,13 +7,13 @@ using System.Text;
 namespace qch.Repositories
 {
     /// <summary>
-    /// 文章资源层
+    /// 动态资源层
     /// </summary>
     public class TopicRepository
     {
         readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         Repository<TopicModel> rp = new Repository<TopicModel>();
-
+        Repository<SelectTopic> rps = new Repository<SelectTopic>();
         /// <summary>
         /// 获取附近活动
         /// </summary>
@@ -83,6 +83,24 @@ namespace qch.Repositories
             {
                 string sql = "select * from T_Topic where guid=@0";
                 return rp.Get(sql, new object[] { Guid });
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
+        /// 获取某人的第一条动态（app转发的微信，获取详情用到）
+        /// </summary>
+        /// <param name="Guid"></param>
+        /// <returns></returns>
+        public SelectTopic GetTop1(string Guid)
+        {
+            try
+            {
+                string sql = "select top 1 a.Guid,left(a.t_topic_contents,20) as Contents,a.t_topic_city as CityName,a.t_date,b.[t_Pic_Url] as Pic from t_topic as a left join [T_Associate_Pic] as b on a.guid=b.t_Associate_Guid where t_user_guid=@0 order by a.t_date desc,b.t_Pic_Url";
+                return rps.Get(sql, new object[] { Guid });
             }
             catch (Exception ex)
             {

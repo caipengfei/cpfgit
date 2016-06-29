@@ -1,9 +1,11 @@
 var cache = null;
+var guid = getUrlParam('Guid') || '7d2d5371-b96d-4a8d-8629-4e29932101b4';
 $(function () {
     // t_PlaceOder_Ordered 0可预约 1不可
     $.ajax({
         url: 'http://120.25.106.244:9001/api/Place/GetPlaceStyle',
         cache: false,
+        data: { placeGuid: guid },
         success: function (res) {
             $('.container').html(template('contentTemplate', { data: res }));
             bindEvent();
@@ -21,6 +23,12 @@ $(function () {
         }
     })
 })
+function getUrlParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]);
+    return null;
+}
 // 时间选择对象
 var timePicker = {
     rDate: '',

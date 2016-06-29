@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
     <meta name="renderer" content="webkit" />
+    <link rel="dns-prefetch" href="//test.cn-qch.com/" />
+    <link rel="dns-prefetch" href="//www.cn-qch.com/" />
     <title>众筹分享</title>
     <link rel="stylesheet" href="css/public.css">
     <link rel="stylesheet" href="css/shareCourse.css">
@@ -68,7 +70,7 @@
                     </tr>
                 </table>
                 <div class="clear">
-                    <strong>￥<%=data.t_PayMoney_Online.toFixed(2)%></strong>
+                    <strong>￥<%=data.t_PayMoney_Offline.toFixed(2)%></strong>
                     <%if(data.t_FundCourse_State){%>
                             <a style="color: #aaa; padding: 0 2em;">众筹已完结</a>
                     <%}else{%>
@@ -86,16 +88,10 @@
         </header>
         <div class="contentbox">
             <div class="detailsbox clear">
-                <%var instruction=data.t_FundCourse_Info.replace(/===/g,'<br>')%>
-                <%var show_limit=90%>
+                <%var instruction=data.t_FundCourse_Info.trim().replace(/===/g,'<br>')%>
+                <%var lecturerInfo=data.lecturerInfo.trim().replace(/===/g,' ')%>
                 <h2>详情</h2>
-                <p>
-                    <%==instruction.slice(0,show_limit)%> 
-                    <%if(instruction.length>=show_limit){%><span class="hide"><%==instruction.slice(show_limit)%></span><%}%>
-                </p>
-                <%if(instruction.length>=show_limit){%>
-                <a class="slideup">展开</a>
-                <%}%>
+                <p><%==instruction%></p>
             </div>
             <div class="tutorbox">
                 <h2>讲师</h2>
@@ -106,7 +102,7 @@
                         </div>
                         <div class="right">
                             <h2><%=data.lecturerName%></h2>
-                            <p><%==data.lecturerInfo.replace(/===/g,'').slice(0,33)%></p>
+                            <p><%==lecturerInfo.length>32?lecturerInfo.slice(0,30)+'...':lecturerInfo%></p>
                         </div>
                     </li>
                 </ul>

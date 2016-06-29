@@ -35,7 +35,7 @@ header {
 }
 
 header>h2 {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     padding: 1.4rem;
     line-height: 1.5em;
     position: relative;
@@ -124,13 +124,13 @@ header .morebox {
 
 header .morebox .more {
     width: 100%;
-    height: 2.8rem;
-    line-height: 2.8rem;
+    height: 2.6rem;
+    line-height: 2.6rem;
     background: rgb(242, 242, 242);
-    border-radius: 1.4rem;
+    border-radius: 1.3rem;
     text-align: center;
     color: #999;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
 }
 
 header .morebox .more span {
@@ -141,8 +141,8 @@ header .morebox .more span {
 }
 
 .menunav {
-    padding: .7rem 1.4rem;
-    height: 3.5rem;
+    padding: .45rem 1.4rem;
+    height: 3rem;
     line-height: 2.1rem;
 }
 
@@ -154,7 +154,7 @@ body.fixed .menunav {
 }
 
 body.fixed .contentbox {
-    margin-top: 3.5rem;
+    margin-top: 3rem;
 }
 
 .menunav a {
@@ -166,7 +166,7 @@ body.fixed .contentbox {
     text-align: center;
     margin-left: 6.66%;
     color: #000;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
@@ -181,10 +181,10 @@ body.fixed .contentbox {
 }
 
 .contentbox>div>h2 {
-    line-height: 3.5rem;
+    line-height: 3rem;
     padding: 0 1.4rem;
     background: rgb(242, 242, 242);
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 }
 
 .detailsbox {
@@ -192,11 +192,10 @@ body.fixed .contentbox {
 }
 
 .detailsbox p {
-    padding: 1.4rem;
+    padding: 1rem;
     line-height: 1.6rem;
     color: rgb(153, 153, 153);
-    font-size: 1.2rem;
-    text-indent: 2em;
+    font-size: 1rem;
     overflow: hidden;
 }
 .detailsbox p span{
@@ -222,8 +221,7 @@ body.fixed .contentbox {
     border-top: 1px solid rgb(242, 242, 242);
     background: url(../img/icon/right.png) no-repeat right 50%;
     background-origin: content-box;
-    background-size: 1rem auto;
-    font-size: 1.2rem;
+    background-size: .8rem auto;
 }
 
 .tutorbox li div.left{
@@ -244,7 +242,7 @@ body.fixed .contentbox {
 }
 
 .tutorbox li h2 {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     margin-bottom: .8rem;
 }
 
@@ -252,6 +250,7 @@ body.fixed .contentbox {
     padding-right: 1rem;
     line-height: 1.6rem;
     color: rgb(153, 153, 153);
+    font-size: 1rem;
 }
 
 .recommendbox li {
@@ -276,47 +275,49 @@ body.fixed .contentbox {
 
 .recommendbox li>div p {
     line-height: 1.6em;
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: rgb(153, 153, 153);
 }
 
 .commentbox li {
-    padding: 1.4rem;
+    padding: 1rem;
     border-top: 1px solid rgb(242, 242, 242);
     font-size: 1.2rem;
 }
 
 .commentbox li>img {
-    width: 4rem;
-    height: 4rem;
+    width: 3rem;
+    height: 3rem;
     float: left;
     border-radius: 2rem;
     margin-right: 1rem;
 }
 
 .commentbox li div {
-    margin-left: 5rem;
+    margin-left: 4rem;
 }
 
 .commentbox li h2 {
-    font-size: 1.2rem;
-    margin-bottom: .8rem;
+    font-size: 1.1rem;
+    margin-bottom: .6rem;
 }
 
 .commentbox li h2 span {
     color: rgb(153, 153, 153);
     float: right;
+    font-size: .9rem;
 }
 
 .commentbox li p {
     line-height: 1.6rem;
     color: rgb(153, 153, 153);
+    font-size: 1rem;
 }
 
 footer {
     width: 100%;
-    height: 3.5rem;
-    line-height: 3.5rem;
+    height: 3.4rem;
+    line-height: 3.4rem;
     text-align: center;
     position: fixed;
     bottom: 0;
@@ -357,12 +358,12 @@ footer a {
 
 .progressbox table {
     width: 100%;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
 .progressbox table td {
     color: rgb(153, 153, 153);
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     line-height: 1.8em;
 }
 
@@ -388,12 +389,12 @@ footer a {
 }
 
 .progressbox>div {
-    height: 3rem;
+    height: 2.6rem;
 }
 
 .progressbox>div strong {
     color: rgb(247, 80, 80);
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     line-height: 3rem;
 }
 
@@ -404,7 +405,7 @@ footer a {
     border: .2rem solid rgb(243, 152, 0);
     color: rgb(243, 152, 0);
     border-radius: 1.8rem;
-    padding: 0 3em;
+    padding: 0 2em;
     font-weight: bold;
-    line-height: 2.6rem;
+    line-height: 2.4rem;
 }

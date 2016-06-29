@@ -61,7 +61,7 @@ namespace qch.Repositories
         {
             try
             {
-                string sql = "select a.*,b.T_Lecturer_Name as LecturerName,b.T_Lecturer_Pic as LecturerAvator from T_Course as a left join T_Lecturer as b on a.t_Lecturer_Guid=b.Guid where a.guid=@0";
+                string sql = "select a.*,b.T_Lecturer_Name as LecturerName,b.T_Lecturer_Pic as LecturerAvator,b.T_Lecturer_Intor as LecturerRemark from T_Course as a left join T_Lecturer as b on a.t_Lecturer_Guid=b.Guid where a.guid=@0";
                 return rp1.Get(sql, new object[] { Guid });
             }
             catch (Exception ex)

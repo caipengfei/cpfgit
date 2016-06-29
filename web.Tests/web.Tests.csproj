@@ -87,18 +87,7 @@
     </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\qch\log4net.dll</HintPath>
-    </Reference>
-    <Reference Include="Maticsoft.BLL, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\qch\Maticsoft.BLL.dll</HintPath>
-    </Reference>
-    <Reference Include="Maticsoft.Common">
-      <HintPath>..\packages\qch\Maticsoft.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Maticsoft.Model, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\qch\Maticsoft.Model.dll</HintPath>
+      <HintPath>..\packages\cpf\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />

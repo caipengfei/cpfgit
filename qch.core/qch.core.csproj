@@ -95,6 +95,10 @@
     <Compile Include="FundCourse\Repositories\FundCourseRepository.cs" />
     <Compile Include="FundCourse\Repositories\T_FundCourse.cs" />
     <Compile Include="FundCourse\SelectFundCourse.cs" />
+    <Compile Include="HistoryWork\HistoryWorkModel.cs" />
+    <Compile Include="HistoryWork\HistoryWorkService.cs" />
+    <Compile Include="HistoryWork\Repositories\HistoryWorkRepository.cs" />
+    <Compile Include="HistoryWork\Repositories\T_HistoryWork.cs" />
     <Compile Include="IDependency.cs" />
     <Compile Include="Integral\IntegralModel.cs" />
     <Compile Include="Integral\IntegralService.cs" />
@@ -125,6 +129,7 @@
     <Compile Include="Logs\Repositories\T_Logs.cs" />
     <Compile Include="Order\Repositories\T_UserOrder_Good.cs" />
     <Compile Include="Place\OrderedPlaceModel.cs" />
+    <Compile Include="Place\PlaceCaseModel.cs" />
     <Compile Include="Place\PlaceModel.cs" />
     <Compile Include="Place\PlaceOrderedModel.cs" />
     <Compile Include="Place\PlaceOrderModel.cs" />
@@ -136,9 +141,11 @@
     <Compile Include="Place\Repositories\T_PlaceOrder_Time.cs" />
     <Compile Include="Place\Repositories\T_Place_Order.cs" />
     <Compile Include="Place\Repositories\T_Place_Ordered.cs" />
+    <Compile Include="Place\Repositories\T_Place_Project.cs" />
     <Compile Include="Place\Repositories\T_Place_Style.cs" />
     <Compile Include="Project\ProjectTeamModel.cs" />
     <Compile Include="Project\Repositories\T_Project_Team.cs" />
+    <Compile Include="Project\SelectProject.cs" />
     <Compile Include="Project\SelectProjectTeam.cs" />
     <Compile Include="Roll\Repositories\RollRepository.cs" />
     <Compile Include="Roll\Repositories\T_Roll.cs" />
@@ -149,6 +156,8 @@
     <Compile Include="SignIn\Repositories\T_User_SignIn.cs" />
     <Compile Include="SignIn\SignInModel.cs" />
     <Compile Include="SignIn\SignInService.cs" />
+    <Compile Include="Style\SelectStyle.cs" />
+    <Compile Include="Topic\SelectTopic.cs" />
     <Compile Include="Voucher\Repositories\T_Voucher.cs" />
     <Compile Include="Order\OrderModel.cs" />
     <Compile Include="Order\OrderService.cs" />

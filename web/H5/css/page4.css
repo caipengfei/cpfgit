@@ -27,6 +27,7 @@ header h2 {
 
 .container {
     margin-bottom: 5rem;
+    overflow-x:hidden;
 }
 
 .image img {
@@ -76,6 +77,7 @@ header h2 {
 .details ul li b {
     color: #1a1a1a;
     font-weight: normal;
+    display: inline-block;
 }
 
 .details ul li a:link {
@@ -137,6 +139,14 @@ header h2 {
 
 .detailsbox .text1 p {
     line-height: 2em;
+}
+.detailsbox .text1 span{
+    display: inline;
+}
+.detailsbox .text1 a{
+    word-wrap: break-word;
+    display: block;
+    color: #4a90e2;
 }
 
 .commentbox > h2,.detailsbox>h2 {
@@ -233,7 +243,6 @@ footer {
     background: #4a90e2;
     overflow: hidden;
 }
-
 footer nav:after {
     content: '';
     display: block;
@@ -259,8 +268,6 @@ footer nav a:nth-child(1){
 footer nav{
     height: 100%;
 }
-
-
 .shade-blur {
     position: fixed;
     bottom: 0;

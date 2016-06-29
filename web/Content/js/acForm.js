@@ -380,7 +380,7 @@ function postForm() {
         t_Activity_Tel: _phone, // 咨询电话
         t_Activity_Fee: _payPrice, // 活动费用
         t_Activity_LimitPerson: _perlim, // 人数上限
-        t_Activity_FeeType: '免费',
+        t_Activity_FeeType: (_isPay == '0' ? '免费' : '付费'),
         t_Activity_Province: $('#provId').val(),
         t_Activity_City: $('#cityId').val(),
         t_Activity_District: $('#quId').val()
@@ -416,6 +416,8 @@ function postForm() {
             }
             tipInfo(res.Data);
             loadbox.hide();
+            $(window).scrollTop(0);
+            location.reload()
         }
     })
     //$.post('/activity/publish', $(param).serialize(), function (res) {

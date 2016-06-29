@@ -11,7 +11,23 @@ namespace qch.Models
     /// </summary>
     public class NewsModel : T_News
     {
-        
+        StyleRepository srp = new StyleRepository();
+        public string t_Style_Name
+        {
+            get
+            {
+                if (t_News_Style > 0)
+                {
+                    var m = srp.GetById(t_News_Style);
+                    if (m != null)
+                        return m.t_Style_Name;
+                    else
+                        return "";
+                }
+                else
+                    return "";
+            }
+        }
         /// <summary>
         /// 是否推荐
         /// </summary>

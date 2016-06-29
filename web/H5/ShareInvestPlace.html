@@ -5,9 +5,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
     <meta name="renderer" content="webkit" />
+    <link rel="dns-prefetch" href="//test.cn-qch.com/" />
+    <link rel="dns-prefetch" href="//www.cn-qch.com/" />
     <title>投资机构</title>
     <link rel="stylesheet" href="css/public.css">
     <link rel="stylesheet" href="css/page2.css">
+    <!--<script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>-->
 </head>
 
 <body>
@@ -36,91 +39,94 @@
     <script type="text/html" id="contentTemplate">
         <%var imgUrl='http://www.cn-qch.com:8002/attach/images/'%>
         <%var avatorUrl='http://www.cn-qch.com:8002/attach/user/'%>
-        <%var defaultAvatorUrl='img/avator.png'%>
         <header>
-            <img src="">
-            <h2>高通</h2>
+            <img src="<%=imgUrl+data.t_InvestPlace_ConverPic%>">
+            <h2><%=data.t_InvestPlace_Title%></h2>
         </header>
         <ul class="table clear">
-            <li><span>50</span><b>接收项目</b></li>
-            <li><span>100</span><b>入驻成员</b></li>
+            <li><span><%=data.count||0%></span><b>接收项目</b></li>
+            <li><span><%=data.memberCount||0%></span><b>入驻成员</b></li>
         </ul>
+        <%if(data.t_InvestPlace_Phase&&data.t_InvestPlace_Phase.length){%>
         <div class="stagebox">
             <h2>投资阶段</h2>
             <ul class="clear">
-                <li>汽车</li>
-                <li>金融</li>
-                <li>战略投资</li>
-                <li>O2O</li>
+                <%data.t_InvestPlace_Phase.forEach(function(item,index){%>
+                <li><%=item.t_Style_Name%></li>
+                <%})%>
             </ul>
         </div>
+        <%}%>
+        <%if(data.t_InvestPlace_Area&&data.t_InvestPlace_Area.length){%>
         <div class="fieldbox">
             <h2>投资领域</h2>
             <ul class="clear">
-                <li>汽车</li>
-                <li>金融</li>
-                <li>战略投资</li>
-                <li>O2O</li>
+                <%data.t_InvestPlace_Area.forEach(function(item,index){%>
+                <li><%=item.t_Style_Name%></li>
+                <%})%>
             </ul>
         </div>
+        <%}%>
         <div class="moneybox">
             <h2>投资金额</h2>
-            <span>10万-1000万</span>
+            <span><%=data.t_InvestPlace_Money||'暂无投资'%></span>
         </div>
         <div class="aboutbox">
             <h2>详细介绍</h2>
-            <p>
-                免费入驻：只针对大学生创业，需提交项目计划书，毕业证，身份证，公司营业执照副本。 提交审核通过后，可免费入驻半年。免费入驻：只针对大学生创业，需提交项目计划书， 毕业证，身份证，公司营业执照副本。提交审核通过后，可免费入驻半年。
-            </p>
+            <p><%==data.t_InvestPlace_Instruction?data.t_InvestPlace_Instruction.replace(/===/g,'<br>'):'暂未添加'%></p>
         </div>
+        <%if(data.caseList&&data.caseList.length){%>
         <div class="casebox">
             <h2>孵化案例</h2>
             <ul class="listbox clear">
-                <li><a><img src="">房客米窝</a></li>
-                <li><a><img src="">途客集</a></li>
-                <li><a><img src="">阅庭书院</a></li>
-                <li><a><img src="">亲自萌</a></li>
-                <li><a><img src="">阅庭书院</a></li>
+                <%data.caseList.forEach(function(item,index){%>
+                    <%var projectName=item.projectName||''%>
+                    <li><a><img src="<%=imgUrl+item.projectPic%>"><%=projectName.length>4?projectName.slice(0,3)+'...':projectName%></a></li>
+                <%})%>
             </ul>
         </div>
+        <%}%>
+        <%if(data.memberList&&data.memberList.length){%>
         <div class="member">
             <h2>入驻成员</h2>
             <table>
+                <%data.memberList.forEach(function(item,index){%>
                 <tr>
                     <td>
-                        <a><img src=""></a>
+                        <a><img src="<%=avatorUrl+item.userPic%>"></a>
                     </td>
                     <td>
-                        <h3>杨凯</h3>
-                        <p>陈兴资本，是中国最早从事早期风险投资的企业</p>
+                        <h3><%=item.userName%></h3>
+                        <p><%=item.userPosition||''%></p>
                     </td>
                 </tr>
+                <%})%>
             </table>
         </div>
+        <%}%>
         <footer>
             <a href="http://www.cn-qch.com/app">提交项目</a>
         </footer>
     </script>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/artTemplate.js"></script>
+    <script src="/h5/js/zepto.min.js"></script>
+    <script src="/h5/js/artTemplate.js"></script>
+    <script src="/h5/js/util.js"></script>
+    <!--<script charset="gb2312" src="js/loader.js"></script>-->
     <script type="text/javascript">
-        function GetUrlParam(name) {
-            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-            var r = window.location.search.substr(1).match(reg);
-            if (r != null) return unescape(r[2]); return null;
-        }
-        var guid = GetUrlParam("Guid") || GetUrlParam("guid");
+        var guid = util.getUrlParam("Guid");
         $.ajax({
             type: 'get',
             cache: false,
             dataType: 'json',
             url: 'http://120.25.106.244:9001/api/Invest/GetInvestPlace',
             data: { guid: guid },
-            success: function (data) {
-                $('.container').html(template('contentTemplate', { data: data }));
-                $('.listbox img,.member img').each(function(){
-                    $(this).css({height:$(this).width(),borderRadius:$(this).width()/2});
-                })
+            success: function (res) {
+                if(res){
+                    $('.container').html(template('contentTemplate', { data: res }));
+                    $('.listbox img,.member img').each(function(){
+                        $(this).css({height:$(this).width(),borderRadius:$(this).width()/2});
+                    })
+                }
                 $('.container').removeClass('loading').siblings('.shade-div').remove();
             }
         })

@@ -151,6 +151,24 @@ namespace qch.core
             }
         }
         #endregion
+
+        /// <summary>
+        /// 获取某人的第一条动态（app转发的微信，获取详情用到）
+        /// </summary>
+        /// <param name="Guid"></param>
+        /// <returns></returns>
+        public SelectTopic GetTop1(string Guid)
+        {
+            try
+            {
+                return rp.GetTop1(Guid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
         /// <summary>
         /// 附近活动
         /// </summary>

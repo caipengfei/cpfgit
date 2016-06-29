@@ -77,18 +77,18 @@ namespace Senparc.Weixin.MP.Sample.Filters
                     string url = filterContext.HttpContext.Request.Url.ToString();
                     HttpContext.Current.Session["ReturnUrl"] = url;
                     log.Info("授权请求url=" + url);
-                    string openid = CookieHelper.GetCookieValue("OpenId");
+                    string openid = CookieHelper.GetCookieValue("AuthOpenId");
                     log.Info("从cookie中取到的openid=" + openid);
                     if (openid == "")
                     {
                         #region  没有经过授权页面的访问，如果没有登录，就去请求微信授权
                         string Nonce = ToolHelper.createNonceStr();//随机数
-                        CookieHelper.SetCookie("Nonce", Nonce);
+                        CookieHelper.SetCookie("AuthNonce", Nonce);
                         log.Info("请求微信授权时生成的随机数为：" + Nonce);
                         string appId = System.Configuration.ConfigurationManager.AppSettings["TenPayV3_AppId"].ToString();
                         log.Info("appid=" + appId);
                         log.Info("WeixinUrl=" + WeixinUrl);
-                        var weixinAuthUrl = OAuth.GetAuthorizeUrl(appId, WeixinUrl + "/auth/index", Nonce, OAuthScope.snsapi_userinfo);
+                        var weixinAuthUrl = OAuth.GetAuthorizeUrl(appId, WeixinUrl + "/auth/index", Nonce, OAuthScope.snsapi_base);
                         log.Info("生成的授权链接为=" + weixinAuthUrl);
                         #endregion
 
@@ -100,9 +100,9 @@ namespace Senparc.Weixin.MP.Sample.Filters
                         //通过授权页的访问，用openid获取绑定人信息
                         //如果己绑定，赋于该会员的会员授权
                         //如果未绑定，跳转到会员绑定页面
-                        string DeOpenId = qch.Infrastructure.DESEncrypt.Decrypt(openid);
-                        var bindInfo = wxService.GetByOpenId(DeOpenId);
-                        log.Info("解密后的openid=" + DeOpenId);
+
+                        var bindInfo = wxService.GetByOpenId(openid);
+
                         string wxtguid = "";
                         if (bindInfo != null)
                             wxtguid = bindInfo.WxTgUserGuid;
@@ -114,25 +114,25 @@ namespace Senparc.Weixin.MP.Sample.Filters
                             log.Info("当前微信用户还没有与会员绑定，跳转到绑定页面");
                             string Nonce = ToolHelper.createNonceStr();//随机数
 
-                            var msg = wxService.Save(new qch.Models.WXUserModel
-                            {
-                                CreateDate = DateTime.Now,
-                                MediaDate = DateTime.Now,
-                                MediaId = "",
-                                Nonce = Nonce, //每个用户随机数与openid在一起存放数据库中
-                                OpenId = DeOpenId,
-                                QrCode = "",
-                                UserGuid = "",
-                                WxTgUserGuid = wxtguid,
-                                Guid = Guid.NewGuid().ToString()
-                            });
-                            if (msg.type == "success")
-                                log.Info("微信用户添加成功，OpenId=" + DeOpenId);
-                            else
-                                log.Error("微信用户添加失败，OpenId=" + DeOpenId);
+                            //var msg = wxService.Save(new qch.Models.WXUserModel
+                            //{
+                            //    CreateDate = DateTime.Now,
+                            //    MediaDate = DateTime.Now,
+                            //    MediaId = "",
+                            //    Nonce = Nonce, //每个用户随机数与openid在一起存放数据库中
+                            //    OpenId = openid,
+                            //    QrCode = "",
+                            //    UserGuid = "",
+                            //    WxTgUserGuid = wxtguid,
+                            //    Guid = Guid.NewGuid().ToString()
+                            //});
+                            //if (msg.type == "success")
+                            //    log.Info("微信用户添加成功，OpenId=" + openid);
+                            //else
+                            //    log.Error("微信用户添加失败，OpenId=" + openid);
                             string appId = System.Configuration.ConfigurationManager.AppSettings["TenPayV3_AppId"].ToString();
                             log.Info("ReturnUrl=" + ReturnUrl);
-                            var weixinAuthUrl = OAuth.GetAuthorizeUrl(appId, WeixinUrl + "/wxuser/reg", Nonce, OAuthScope.snsapi_userinfo);
+                            var weixinAuthUrl = OAuth.GetAuthorizeUrl(appId, WeixinUrl + "/wxuser/bind", Nonce, OAuthScope.snsapi_userinfo);
                             #endregion
                             filterContext.Result = new RedirectResult(weixinAuthUrl);
                             log.Info("当前微信用户还没有与会员绑定，跳转到绑定页面" + weixinAuthUrl);

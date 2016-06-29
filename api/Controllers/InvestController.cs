@@ -45,16 +45,16 @@ namespace api.Controllers
                     xy2 = member.Count();
                 var target = new
                 {
-                    logo = model.t_InvestPlace_ConverPic,
-                    name = model.t_InvestPlace_Title,
-                    count = xy,
-                    memberCount = xy2,
-                    stage = styleService.GetByIds(model.t_InvestPlace_Phase),
-                    field = styleService.GetByIds(model.t_InvestPlace_Area),
-                    money = model.t_InvestPlace_Money,
-                    description = model.t_InvestPlace_Instruction,
-                    caseList = case1,
-                    memberList = member
+                    t_InvestPlace_ConverPic = model.t_InvestPlace_ConverPic,  //logo
+                    t_InvestPlace_Title = model.t_InvestPlace_Title,  //标题
+                    count = xy,//接收项目
+                    memberCount = xy2,//入驻成员
+                    t_InvestPlace_Phase = styleService.GetByIds(model.t_InvestPlace_Phase),//投资阶段
+                    t_InvestPlace_Area = styleService.GetByIds(model.t_InvestPlace_Area),//投资领域
+                    t_InvestPlace_Money = model.t_InvestPlace_Money,//投资金额
+                    t_InvestPlace_Instruction = model.t_InvestPlace_Instruction,//详细介绍
+                    caseList = case1,//接收项目数量
+                    memberList = member//入驻成员数量
                 };
                 return target;
             }

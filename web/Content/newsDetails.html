@@ -103,6 +103,7 @@
         <div class="content"><%==data.t_News_Contents%></div>
     </script>
     <script src="/content/js/lib/jquery-1.12.2.min.js"></script>
+    <script src="/content/js/lib/jquery.xdomainrequest.min.js"></script>
     <script src="/content/js/lib/artTemplate.js"></script>
     <script src="/content/js/util.js"></script>
     <script src="/content/js/news.js"></script>
@@ -123,9 +124,12 @@
                             $(this).addClass('active');
                         }
                     })
-                    getData();
                 }
             }
+        })
+        getData();
+        $(document).ajaxStop(function(){
+            $('.loading').hide();
         })
         function getData(){
             $.ajax({
@@ -134,9 +138,8 @@
                 data:{guid:util.getUrlParam('guid')},
                 success:function(res){
                     if(res){
-                        $('title').text('资讯详情--'+res.t_News_Title);
+                        document.title='资讯详情--'+res.t_News_Title;
                         $('.contentbox .leftbox').html(template('detailsTemplate',{data:res}));
-                        $('.loading').hide();
                        /* $.ajax({
                             url:'http://120.25.106.244:9001/api/news/GetAll',
                             cache:false,

@@ -195,6 +195,13 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
                             if (target != null)
                             {
                                 log.Info("己取到这个微信用户数据");
+                                //设置登录票证
+                                userService.SetAuthCookie(new UserLoginModel
+                                {
+                                    LoginName = target.t_User_LoginId,
+                                    LoginPwd = ToolHelper.createNonceStr(),
+                                    SafeCode = ToolHelper.createNonceStr()
+                                });
                                 var account = accountService.GetBalance(target.Guid);
                                 var integral = integralService.GetIntegral(target.Guid);
                                 var voucher = voucherService.GetAlluvByUser(1, 9999, target.Guid);

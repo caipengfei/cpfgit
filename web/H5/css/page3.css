@@ -45,6 +45,7 @@ header h3 span {
 
 .table {
     padding: .5rem 0;
+    border-bottom:1px solid #c5c5c5;
 }
 
 .table li {
@@ -80,9 +81,9 @@ header h3 span {
 .dynamicbox ul li,
 .projectbox ul li{
     background: url(../img/icon/right.png) no-repeat right 50%;
-    background-size: auto 1.6rem;
-    background-origin: content-box;
-    padding:.8rem 1.6rem .8rem .8rem;
+    background-size: .7rem auto;
+    padding: .8rem;
+    margin-right: .8rem;
 }
 
 .dynamicbox ul li img,
@@ -220,4 +221,13 @@ footer a i{
 }
 #tzStyle.table li{
     width: 50%;
+}
+.nodata{
+    color: #b1b1b1;
+    background:#f3f3f3 url(../img/icon/nodata.png) no-repeat 50% 2rem;
+    background-size: 11rem 11rem;
+    padding-top: 14rem;
+    padding-bottom: 2rem;
+    text-align: center;
+    font-size: 1.1rem;
 }

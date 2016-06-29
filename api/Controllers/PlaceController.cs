@@ -18,8 +18,44 @@ namespace api.Controllers
         PlaceService service = new PlaceService();
         PicService picService = new PicService();
         ActivityApplyService aaService = new ActivityApplyService();
+        StyleService styleService = new StyleService();
 
-
+        /// <summary>
+        /// 获取空间详情
+        /// </summary>
+        /// <param name="PlaceGuid"></param>
+        /// <returns></returns>
+        /// 
+        [HttpGet]
+        public object GetPlaceInfo(string PlaceGuid)
+        {
+            try
+            {
+                var model = service.GetPlaceInfo(PlaceGuid);
+                if (model == null)
+                    return null;
+                var img = picService.GetByGuid(model.Guid);
+                var pcase = service.GetPlaceCase(model.Guid);
+                var target = new
+                {
+                    t_Place_Name = model.t_Place_Name,  //空间名称
+                    t_Place_OneWord = model.t_Place_OneWord, //一句话说明
+                    t_Place_Tips = styleService.GetByIds(model.t_Place_Tips),  //标签
+                    t_Place_Street = model.t_Place_Street,  //街道信息
+                    t_Place_Instruction = model.t_Place_Instruction,  //详细介绍
+                    t_Place_ProvideService = styleService.GetByIds(model.t_Place_ProvideService),  //提供服务
+                    pic = img,//轮播图
+                    t_Place_Policy = model.t_Place_Policy,  // 政策扶持
+                    placeCase = pcase  //孵化案例
+                };
+                return target;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
         public bool IsOrderToday(string UserGuid)
         {
             try
@@ -69,11 +105,13 @@ namespace api.Controllers
         /// 获取可预约的空间类型（青创汇）
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<PlaceStyleModel> GetPlaceStyle()
+        public IEnumerable<PlaceStyleModel> GetPlaceStyle(string PlaceGuid)
         {
             try
             {
-                return service.GetPlaceStyle("7d2d5371-b96d-4a8d-8629-4e29932101b4");
+                //if (string.IsNullOrWhiteSpace(PlaceGuid))
+                //    PlaceGuid = "7d2d5371-b96d-4a8d-8629-4e29932101b4";
+                return service.GetPlaceStyle(PlaceGuid);
             }
             catch (Exception ex)
             {

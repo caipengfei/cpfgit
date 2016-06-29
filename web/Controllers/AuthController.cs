@@ -14,10 +14,11 @@ namespace Senparc.Weixin.MP.Sample.Controllers
         string appId = System.Configuration.ConfigurationManager.AppSettings["TenPayV3_AppId"].ToString();
         string secret = System.Configuration.ConfigurationManager.AppSettings["TenPayV3_AppSecret"].ToString();
         readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        string Nonce = CookieHelper.GetCookieValue("Nonce");
+        
         public ActionResult Index(string code, string state)
         {
             log.Info("Auth/Index");
+            string Nonce = CookieHelper.GetCookieValue("AuthNonce");
             try
             {
                 if (string.IsNullOrEmpty(code))
@@ -46,15 +47,15 @@ namespace Senparc.Weixin.MP.Sample.Controllers
                 Session["OAuthAccessToken"] = result;
 
                 //因为这里还不确定用户是否关注本微信，所以只能试探性地获取一下
-                OAuthUserInfo userInfo = null;
+                //OAuthUserInfo userInfo = null;
 
                 //已关注，可以得到详细信息
-                userInfo = OAuth.GetUserInfo(result.access_token, result.openid);
+                //userInfo = OAuth.GetUserInfo(result.access_token, result.openid);
                 // ViewData["ByBase"] = true;
                 //return View("UserInfoCallback", userInfo);
 
                 //得到OPenId,保存后，跳转到授权前的页面
-                CookieHelper.SetCookie("OpenId", qch.Infrastructure.DESEncrypt.Encrypt(userInfo.openid));
+                CookieHelper.SetCookie("AuthOpenId", result.openid);
 
                 return Redirect(Session["ReturnUrl"].ToString());
             }

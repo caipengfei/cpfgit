@@ -15,5 +15,8 @@ namespace qch.Models
         /// 距离
         /// </summary>
         public string Distance { get; set; }
+
+        public string Contents { get; set; }
+        public string Pic { get; set; }
     }
 }
