@@ -10,7 +10,7 @@
     <title>投资机构</title>
     <link rel="stylesheet" href="css/public.css">
     <link rel="stylesheet" href="css/page2.css">
-    <!--<script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>-->
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
 </head>
 
 <body>
@@ -110,10 +110,10 @@
     </script>
     <script src="/h5/js/zepto.min.js"></script>
     <script src="/h5/js/artTemplate.js"></script>
+    <script charset="gb2312" src="js/loader.js"></script>
     <script src="/h5/js/util.js"></script>
-    <!--<script charset="gb2312" src="js/loader.js"></script>-->
     <script type="text/javascript">
-        var guid = util.getUrlParam("Guid");
+        var guid = util.getUrlParam("Guid")||'';
         $.ajax({
             type: 'get',
             cache: false,
@@ -126,6 +126,12 @@
                     $('.listbox img,.member img').each(function(){
                         $(this).css({height:$(this).width(),borderRadius:$(this).width()/2});
                     })
+                    var title,desc,imgUrl;
+                    imgUrl='http://www.cn-qch.com:8002/attach/images/'+res.t_InvestPlace_ConverPic;
+                    title='青创汇入驻投资机构推荐: '+res.t_InvestPlace_Title;
+                    desc='关注'+res.t_InvestPlace_Area[0].t_Style_Name+'创业项目，投资金额'+res.t_InvestPlace_Money+'，快来提交吧';
+                    wxShare({ title: title, desc: desc, imgUrl: imgUrl});
+                    //console.log(title,desc,imgUrl)
                 }
                 $('.container').removeClass('loading').siblings('.shade-div').remove();
             }

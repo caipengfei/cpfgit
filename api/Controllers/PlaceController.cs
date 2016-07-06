@@ -35,7 +35,7 @@ namespace api.Controllers
                 if (model == null)
                     return null;
                 var img = picService.GetByGuid(model.Guid);
-                var pcase = service.GetPlaceCase(model.Guid);
+                var pcase = service.GetPlaceCaseAll(model.Guid);
                 var target = new
                 {
                     t_Place_Name = model.t_Place_Name,  //空间名称

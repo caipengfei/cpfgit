@@ -10,6 +10,7 @@
     <title>课程分享</title>
     <link rel="stylesheet" href="css/public.css">
     <link rel="stylesheet" href="css/shareCourse.css">
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
 </head>
 
 <body>
@@ -131,6 +132,7 @@
     </script>
     <script src="js/jquery.min.js"></script>
     <script src="js/artTemplate.js"></script>
+    <script charset="gb2312" src="js/loader.js"></script>
     <script src="js/shareCourse.js"></script>
     <script>
         var guid = GetUrlParam("Guid") || GetUrlParam("guid") || '';
@@ -139,22 +141,21 @@
             cache: false,
             dataType: 'json',
             url: 'http://120.25.106.244:9001/api/course/getbyid',
-            data: {
-                guid: guid
-            },
+            data: { guid: guid },
             success: function(res) {
                 if(!res) return;
-                $('.container').html(template('contentTemplate', {
-                    data: res
-                }));
+                $('.container').html(template('contentTemplate', { data: res }));
                 $.get('http://120.25.106.244:9001/api/course/GetRecommendCourse', {
                     page: 1,
                     pagesize: 5
-                }, function(res) {
-                    $('.recommendbox').html(template('recommendTemplate', {
-                        data: res
-                    }));
+                }, function(res2) {
+                    $('.recommendbox').html(template('recommendTemplate', { data: res2 }));
                     initpage();
+                    var title=res.t_Course_Title;
+                    var desc=$('.detailsbox>p').text()||'';
+                    var imgUrl=res.t_Course_Pic;
+                    wxShare({ title: title, desc: desc,imgUrl: imgUrl});
+                    //console.log(title,desc,imgUrl)
                 })
             }
         })

@@ -21,7 +21,7 @@ namespace qch.Repositories
         /// <param name="UserGuid"></param>
         /// <param name="Pinyin"></param>
         /// <returns></returns>
-        public PetaPoco.Page<UserModel> GetReferral1(int page,int pagesize,string UserGuid)
+        public PetaPoco.Page<UserModel> GetReferral1(int page, int pagesize, string UserGuid)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace qch.Repositories
                 return 0;
             }
         }
-        
+
         /// <summary>
         /// 获取某用户的所有二级推荐人(数量)
         /// </summary>
@@ -130,7 +130,7 @@ namespace qch.Repositories
         {
             try
             {
-                string sql = "select * from T_Users where (t_User_LoginId=@0 or Guid=@1) and t_User_LoginId is not null and t_User_LoginId != ''";
+                string sql = "select * from T_Users where (t_User_LoginId=@0 or Guid=@1) and t_User_LoginId is not null and t_User_LoginId != '' and t_delstate=0";
                 return rp.Get(sql, new object[] { LoginName, LoginName, LoginName });
             }
             catch (Exception ex)

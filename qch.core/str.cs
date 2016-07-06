@@ -39,5 +39,17 @@ namespace qch.core
             }
             return str;
         }
+        //创建随机字符串  
+        public static string createNonceStr(int length)
+        {
+            string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            string str = "";
+            Random rad = new Random();
+            for (int i = 0; i < length; i++)
+            {
+                str += chars.Substring(rad.Next(0, chars.Length - 1), 1);
+            }
+            return str;
+        }
     }
 }

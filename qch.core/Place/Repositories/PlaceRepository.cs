@@ -37,6 +37,19 @@ namespace qch.Repositories
                 return null;
             }
         }
+        public IEnumerable<PlaceCaseModel> GetPlaceCaseAll(string Guid)
+        {
+            try
+            {
+                string sql = "select a.Guid,b.t_Project_Name as ProjectName,b.t_Project_ConverPic as ProjectImage from T_Place_Project as a left join T_Project as b on a.t_Project_Guid=b.guid where a.t_State=1 and a.t_Type=0 and a.t_Place_Guid=@0 and b.t_delstate=0 and b.t_Project_Audit=1";
+                return pcRp.GetAll(sql, new object[] { Guid });
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
 
         #region 用户预约过的空间资源
 

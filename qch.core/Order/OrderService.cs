@@ -245,6 +245,7 @@ namespace qch.core
                         #region 其它业务
                         else
                         {
+                            #region 活动支付订单
                             //表示活动订单，处理活动支付后续业务
                             //处理生成活动报名信息
                             //do
@@ -257,6 +258,8 @@ namespace qch.core
                                     db.Save(apply);
                                 }
                             }
+                            #endregion
+                            #region 空间预约订单
                             //空间预约订单
                             if (order.t_Order_OrderType == 5)
                             {
@@ -275,6 +278,71 @@ namespace qch.core
                                     db.Save(time);
                                 }
                             }
+                            #region 发放返佣 推荐返佣的有效期于2016-07-06由运营订为12个月
+                            if (!string.IsNullOrWhiteSpace(user.t_ReommUser) && user.t_User_Date.AddMonths(12) > DateTime.Now)
+                            {
+                                //获取直接推荐人
+                                var tjuser1 = db.SingleOrDefault<T_Users>(" where guid=@0 and t_delstate=0", new object[] { user.t_ReommUser });
+                                if (tjuser1 != null)
+                                {
+                                    //给直接推荐人发放返佣
+                                    decimal money1 = 0;
+                                    decimal yongjin1 = order.t_Order_Money * 0.02m;
+                                    //获取用户流水
+                                    var account1 = db.SingleOrDefault<T_User_Account>("select Top 1 * from T_User_Account where t_User_Guid=@0 order by t_AddDate desc", new object[] { tjuser1.Guid });
+                                    if (account1 != null)
+                                    {
+                                        money1 = account1.t_UserAccount_Reward;
+                                    }
+                                    AccountModel m = new AccountModel()
+                                    {
+                                        t_AddDate = DateTime.Now,
+                                        Guid = Guid.NewGuid().ToString(),
+                                        t_DelState = 0,
+                                        t_Remark = "空间预约返佣",
+                                        t_User_Guid = tjuser1.Guid,
+                                        t_UserAccount_AddReward = yongjin1,
+                                        t_UserAccount_No = order.t_Order_No,
+                                        t_UserAccount_ReduceReward = 0,
+                                        t_UserAccount_Reward = money1 + yongjin1
+                                    };
+                                    //保存流水
+                                    db.Insert(m);
+                                    if (!string.IsNullOrWhiteSpace(tjuser1.t_ReommUser) && tjuser1.t_User_Date.AddMonths(12) > DateTime.Now)
+                                    {
+                                        //获取简介推荐人
+                                        var tjuser2 = db.SingleOrDefault<T_Users>(" where guid=@0 and t_delstate=0", new object[] { tjuser1.t_ReommUser });
+                                        if (tjuser2 != null)
+                                        {
+                                            //给简介推荐人发放返佣
+                                            decimal money2 = 0;
+                                            decimal yongjin2 = order.t_Order_Money * 0.01m;
+                                            //获取用户流水
+                                            var account2 = db.SingleOrDefault<T_User_Account>("select Top 1 * from T_User_Account where t_User_Guid=@0 order by t_AddDate desc", new object[] { tjuser2.Guid });
+                                            if (account2 != null)
+                                            {
+                                                money2 = account2.t_UserAccount_Reward;
+                                            }
+                                            AccountModel m2 = new AccountModel()
+                                            {
+                                                t_AddDate = DateTime.Now,
+                                                Guid = Guid.NewGuid().ToString(),
+                                                t_DelState = 0,
+                                                t_Remark = "空间预约返佣",
+                                                t_User_Guid = tjuser2.Guid,
+                                                t_UserAccount_AddReward = yongjin2,
+                                                t_UserAccount_No = order.t_Order_No,
+                                                t_UserAccount_ReduceReward = 0,
+                                                t_UserAccount_Reward = money2 + yongjin2
+                                            };
+                                            //保存流水
+                                            db.Insert(m);
+                                        }
+                                    }
+                                }
+                            }
+                            #endregion
+                            #endregion
                         }
                         #endregion
                         //更新订单

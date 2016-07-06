@@ -1,0 +1,59 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CheckIDCard</title>
+</head>
+<body>
+    <div>
+        <span>身份证号：</span><input type="text" id="txtIdentity" />
+        <br />
+        <span>姓名：</span><input type="text" id="txtName" />
+        <input type="button" onclick="check()" value="检测" />
+        <br />
+        <input type="button" onclick="cenn()" value="cnee" />
+    </div>
+    <script src="~/Content/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        function check() {
+            var identity = $("#txtIdentity").val();
+            var name = $("#txtName").val();
+            $.post('/qch/CheckIDCard', { identity: identity, name: name }, function (msg) {
+                if (msg) {
+                    alert(msg.Data);
+                }
+            })
+        }
+        function cenn() {
+            $.ajax({
+                type: 'post',
+                cache: false,
+                dataType: 'json',
+                url: 'http://120.25.106.244:9001/api/cnee/SetDefault?userguid=1&cneeguid=111',
+                data: {
+                    Guid: '',
+                    t_User_Guid: '0c799012-8fa2-44d1-bd96-b57690d36873',
+                    t_Cnee_Name: '蔡鹏飞',
+                    t_Cnee_Phone: '13849043305',
+                    t_Cnee_Addr: '河南省郑州市金水区东风南路绿地之窗',
+                    t_IsDefault: 0,
+                    t_DelState: 0
+                },
+                success: function (res) {
+                    alert(res);
+                }
+            })
+            //$.post('http://www.cn-qch.com:9001/api/cnee/SetDefault', { UserGuid: 'asdf', CennGuid: '123456' }, function (msg) {
+            //    if (msg) {
+            //        alert(msg.Data);
+            //    }
+            //})
+        }
+    </script>
+</body>
+</html>

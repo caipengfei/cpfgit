@@ -150,6 +150,8 @@ namespace api.Controllers
                     numFollow = xy, //关注
                     fans = xy2,  //粉丝
                     dynamicThumbnail = "",
+                    t_User_NowNeed = styleService.GetByIds(model.t_User_NowNeed),  //现阶段需求
+                    t_User_Intention = styleService.GetByIds(model.t_User_Intention), //创业意向
                     t_User_Date = model.t_User_Date,  //注册日期
                     t_User_Remark = model.t_User_Remark,  //一句话描述
                     t_User_InvestArea = styleService.GetByIds(model.t_User_InvestArea),  //投资领域

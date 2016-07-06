@@ -24,7 +24,7 @@ namespace qch.Repositories
         {
             try
             {
-                string sql = "select a.guid as Guid,a.t_Date,b.t_User_Pic as UserAvator,b.t_User_RealName as UserName from T_Praise as a left join t_users as b on a.t_User_Guid=b.guid where a.t_Associate_Guid=@0";
+                string sql = "select a.guid as Guid,a.t_Date,b.t_User_Pic as UserAvator,b.t_User_RealName as UserName from T_Praise as a left join t_users as b on a.t_User_Guid=b.guid where a.t_Associate_Guid=@0 and a.t_DelState=0";
                 return rp1.GetAll(sql, new object[] { Guid });
             }
             catch (Exception ex)

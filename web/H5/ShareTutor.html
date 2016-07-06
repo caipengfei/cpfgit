@@ -10,6 +10,7 @@
     <title>导师分享</title>
     <link rel="stylesheet" href="css/public.css">
     <link rel="stylesheet" href="css/shareTutor.css">
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
 </head>
 
 <body>
@@ -46,12 +47,12 @@
             <div class="aboutbox">
                 <img src="<%=data.t_Lecturer_Pic%>">
                 <h2><%=data.t_Lecturer_Name%></h2>
-                <b><%==data.t_Lecturer_Position.replace(/===/g,'<br>')%></b>
+                <b><%==data.t_Lecturer_Position.trim().replace(/===/g,'<br>')%></b>
                 <h3>
-                    教授方向：<%==data.t_Lecturer_Subject.replace(/===/g,'<br>')%> 
+                    教授方向：<%==data.t_Lecturer_Subject.trim().replace(/===/g,'<br>')%> 
                     <!--课程：<%=data.T_Lecturer_Count||0%>-->
                 </h3>
-                <p><%==data.t_Lecturer_Intor.replace(/===/g,'<br>')%></p>
+                <p><%==data.t_Lecturer_Intor.trim().replace(/===/g,'<br>')%></p>
             </div>
         </header>
         <div class="showbox">
@@ -92,9 +93,10 @@
     </script>
     <script src="js/jquery.min.js"></script>
     <script src="js/artTemplate.js"></script>
+    <script charset="gb2312" src="js/loader.js"></script>
     <script src="js/shareTutor.js"></script>
     <script>
-        var guid = GetUrlParam("guid") || GetUrlParam("Guid") || '5e12fa68-bf63-4032-bebd-890ee116c9b7';
+        var guid = GetUrlParam("guid") || GetUrlParam("Guid") || '';
         $.ajax({
             cache: false,
             dataType: 'json',
@@ -103,17 +105,18 @@
                 guid: guid
             },
             success: function(res) {
-                $('.container').html(template('contentTemplate', {
-                    data: res
-                }));
+                $('.container').html(template('contentTemplate', { data: res }));
                 $.get('http://120.25.106.244:9001/api/course/GetRecommendCourse', {
                     page: 1,
                     pagesize: 5
-                }, function(res) {
-                    $('.container .recommendbox').html(template('recommendTemplate', {
-                        data: res
-                    }));
+                }, function(res2) {
+                    $('.container .recommendbox').html(template('recommendTemplate', { data: res2 }));
                     initpage();
+                    var title=res.t_Lecturer_Name;
+                    var desc=$('.aboutbox>p').text()||'';
+                    var imgUrl=res.t_Lecturer_Pic;
+                    wxShare({ title: title, desc: desc,imgUrl: imgUrl});
+                    //console.log(title,desc,imgUrl)
                 })
             }
         })

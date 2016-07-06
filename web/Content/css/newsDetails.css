@@ -50,6 +50,9 @@ a{
 .contentbox .leftbox .content span{
     display: inline;
 }
+.contentbox .leftbox .content p{
+    line-height: 1.8em;
+}
 .contentbox .rightbox>h2{
     font-size: 18px;
     padding: 15px;

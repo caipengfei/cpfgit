@@ -16,7 +16,7 @@ namespace web.Controllers
     /// 用户推荐关系
     /// 必须登录才能访问该控制器
     /// </summary>
-    [UserAuthorization]
+    //[UserAuthorization]
     public class InvitationController : Controller
     {
         readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);

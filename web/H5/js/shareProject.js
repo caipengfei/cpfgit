@@ -23,7 +23,7 @@ var banner = {
         this.timer();
     },
     onTouchstart: function (e) {
-        e.preventDefault();
+        //e.preventDefault();
         banner.stopTimer();
         this.classList.remove('trans');
         if (banner.tid) {
@@ -37,7 +37,7 @@ var banner = {
         banner.startTime = Date.now();
     },
     onTouchmove: function (e) {
-        e.preventDefault();
+        //e.preventDefault();
         var touch = e.targetTouches[0];
         banner.endX = touch.clientX;
         this.style.left = banner.posX + banner.endX - banner.startX + 'px';

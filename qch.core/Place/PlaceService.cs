@@ -32,6 +32,18 @@ namespace qch.core
                 return null;
             }
         }
+        public IEnumerable<PlaceCaseModel> GetPlaceCaseAll(string Guid)
+        {
+            try
+            {
+                return rp.GetPlaceCaseAll(Guid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
 
         #region 用户预约过的空间业务
         public bool IsOrderToday(string UserGuid)

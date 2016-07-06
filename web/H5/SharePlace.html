@@ -34,7 +34,7 @@
                 </div>
                 <div class="tag">
                     <%for(var i=0,len=data.pic.length;i<len;i++){%>
-                    <span <%if(i==0){%>class="current"<%}%> ></span>
+                    <span <%if(i==0){%>class="current"<%}%>  ></span>
                     <%}%>
                 </div>
             </div>
@@ -74,7 +74,7 @@
                     <%data.placeCase.forEach(function(item,index){%>
                         <a>
                             <img src="<%=imgUrl+item.projectImage%>">
-                            <%=item.projectName%>
+                            <%=item.projectName.length>5?item.projectName.slice(0,4)+'...':item.projectName%>
                         </a>
                     <%})%>
                 </div>
@@ -87,8 +87,7 @@
     <script charset="gb2312" src="js/loader.js"></script>
     <script src="/h5/js/sharePlace.js"></script>
     <script>
-        // http://120.25.106.244:9001/api/Place/GetPlaceInfo?PlaceGuid=
-        var guid = util.getUrlParam("Guid");
+        var guid = util.getUrlParam("Guid")||'';
         $(function () {
             $.ajax({
                 url: "http://120.25.106.244:9001/api/Place/GetPlaceInfo",
@@ -97,11 +96,19 @@
                 success: function (res) {
                     if(res){
                         $('.container').html(template('contentTemplate',{data:res}));
+                        $('.banner .tag span').length==1&&$('.banner .tag').addClass('hide');
                         document.title='空间详情 - - '+res.t_Place_Name;
+                        $('.case img').each(function(){
+                            $(this).css({
+                                height:$(this).width(),
+                                borderRadius:$(this).width()/2
+                            })
+                        })
                         bindEvent();
                         banner.init();
-                        var text = $('.about p').text().trim();
-                        var desc = text.length > 140 ? text.slice(0, 138) + '...' : text;
+                        var title='青创汇平台入驻创客空间推荐: '+ res.t_Place_Name;
+                        var text=$('.about p').text().trim();
+                        var desc=res.t_Place_Name+',坐落于'+res.t_Place_Street+'，'+text;
                         var imgUrl;
                         if(res.pic){
                             if(res.pic.length){
@@ -112,11 +119,8 @@
                         }else{
                             imgUrl='http://www.cn-qch.com/h5/img/logo-.png';
                         }
-                        wxShare({
-                            title: res.t_Place_Name+'—'+res.t_Place_OneWord,
-                            desc: desc,
-                            imgUrl:imgUrl
-                        });
+                        wxShare({title:title, desc: desc, imgUrl:imgUrl});
+                        //console.log(title,desc,imgUrl)
                     }
                     $('.loading').remove();
                 }
@@ -134,11 +138,11 @@
             return text.slice(1);
         })
         function bindEvent(){
-            $('.about').each(function (i) {
-                util.addTapEvent($(this).find('p')[0], function (el) {
+            $('.about').each(function(i){
+                util.addTapEvent($(this).find('p')[0],function(el){
                     $(el).parent().toggleClass('active');
                 })
-                util.addTapEvent($(this).find('i')[0], function (el) {
+                util.addTapEvent($(this).find('i')[0],function(el){
                     $(el).parent().toggleClass('active');
                 })
             })

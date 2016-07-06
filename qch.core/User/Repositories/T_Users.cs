@@ -169,5 +169,15 @@ namespace qch.Repositories
         /// </summary>
         [Column]
         public string t_ReommUser { get; set; }
+        /// <summary>
+        /// 现阶段需求
+        /// </summary>
+        [Column]
+        public string t_User_NowNeed { get; set; }
+        /// <summary>
+        /// 创业意向
+        /// </summary>
+        [Column]
+        public string t_User_Intention { get; set; }
     }
 }

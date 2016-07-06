@@ -1,0 +1,248 @@
+/* 全局样式 */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+a {
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+}
+span {
+    display: inline-block;
+}
+li {
+    list-style: none;
+}
+h1,
+h2,
+h3,
+h4 {
+    font-weight: normal;
+}
+body {
+    font-family: "Microsoft YaHei";
+    font-size: 13px;
+    min-width: 430px;
+    overflow: hidden;
+    background: url(../image/login/beiijing.jpg) no-repeat 50% 50%;
+}
+.hide {
+    display: none;
+}
+.clearfix:after ,.clearfix:before{
+    content: '';
+    display: block;
+    clear: both;
+}
+/* 头部 */
+.header{
+    background: rgb(51,51,51);
+    height: 70px;
+    text-align: center;
+}
+.header>a{
+    background: url(../image/login/logo1.png) no-repeat 50% 50%;
+    width: 162px;
+    height: 100%;
+}
+/* 表单 */
+.container {
+    width: 410px;
+    background: rgb(69,67,61);
+    margin: 0 auto;
+    position: relative;
+    padding: 12px 40px 20px 40px;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: #000 0 0 15px;
+}
+.title {
+    margin-bottom: 6px;
+    color: #fff;
+    text-align: center;
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+.registerbox .form-group {
+    position: relative;
+    margin-bottom: 12px;
+}
+
+.registerbox .form-group [type=text],.registerbox .form-group [type=password] {
+    width: 100%;
+    height: 40px;
+    border: 1px solid #fff;
+    outline: none;
+    font-size: 13px;
+    background: none;
+    border-radius: 23px;
+    color: #fff;
+    line-height: 38px;
+    padding-left: 22px;
+}
+.registerbox .form-group label{
+    color: #cecece;
+    padding-left: 20px;
+    margin-bottom: 12px;
+    display: block;
+}
+.registerbox .form-group .subbox{
+    height: 40px;
+    position: relative;
+}
+.registerbox .form-group.group2 [type=text] {
+    width: 60%;
+    float: left;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    border-right:0;
+}
+
+.registerbox .form-group.group2 .btn-getcode {
+    width: 40%;
+    height: 40px;
+    line-height: 40px;
+    background: #cacaca;
+    border-radius: 23px;
+    text-align: center;
+    float: right;
+    font-size: 12px;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    color: #949494;
+    letter-spacing: 1px;
+    cursor: default;
+}
+.registerbox .form-group.group2 .btn-getcode.enabled{
+    background: #fff;
+    cursor: pointer;
+}
+.registerbox .form-group.group2 .imgcode {
+    width: 40%;
+    height: 40px;
+    line-height: 40px;
+    float: right;
+    position: relative;
+}
+.registerbox .form-group.group2 .imgcode img{
+    width: 100%;
+    height: 100%;
+    border-radius: 23px;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+.registerbox .form-group.group2 .imgcode .reload{
+    background: url(../image/login/shuaxin.png) no-repeat 50% 50%;
+    width: 36px;
+    height: 36px;
+    position: absolute;
+    top: 5px;
+    right: -36px;
+}
+.registerbox .form-group.group2 .imgcode .reload:hover{
+    opacity: .6;
+    filter: alpha(opacity=60);
+}
+
+.registerbox .form-group.group2 .btn-getcode.enabled:hover {
+    opacity: .8;
+    filter: alpha(opacity=80);
+}
+
+.registerbox .form-group .btn-submit {
+    width: 100%;
+    height: 46px;
+    line-height: 46px;
+    text-align: center;
+    border-radius: 23px;
+    letter-spacing: 1px;
+    color: rgb(69,67,61);
+    background-color: rgb(253, 208, 0);
+    font-size: 15px;
+}
+
+.registerbox .form-group .btn-submit:hover {
+    opacity: .8;
+    filter: alpha(opacity=80);
+}
+
+.container>.gologin {
+    position: absolute;
+    top: 18px;
+    right: 42px;
+    color: #fff;
+    font-size: 12px;
+}
+
+.container>.gologin a {
+    color: rgb(253, 208, 0);
+}
+
+.form-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    line-height: 42px;
+    text-align: center;
+    font-size: 12px;
+    color: #2D2D2D;
+}
+
+.form-footer a {
+    color: #2D2D2D;
+    margin-left: 32px;
+}
+
+.registerbox .checkbox{
+    background:url(../image/login/xuanze2.png) no-repeat 15px 50%;
+    height: 20px;
+    line-height: 20px;
+    padding-left: 45px;
+    color: #cecece;
+}
+.registerbox .checkbox:hover{
+    color: rgb(253, 208, 0);
+}
+a.back{
+    background:url(../image/login/fanhui.png) no-repeat 50% 50%;
+    width: 54px;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+a.back:hover{
+    background-color: rgb(59,57,51);
+}
+.registerbox .help{
+    height: 30px;
+    line-height: 30px;
+    border-radius: 18px;
+    margin-bottom: 6px;
+    color: #f00;
+    padding-left: 48px;
+    background:#fff url(../image/login/tishi.png) no-repeat 14px 50%;
+}
+.registerbox .help.hidden{
+    visibility: hidden;
+}
+.registerbox .form-group .eye{
+    background: url(../image/login/xianshi.png) no-repeat 50% 50%;
+    width: 36px;
+    height: 100%;
+    position: absolute;
+    right: 20px;
+    top: 0;
+    cursor: pointer;
+}
+.registerbox .form-group .eye.visible{
+    background-image: url(../image/login/yinchang.png);
+}
+.registerbox .form-group .eye:hover{
+    opacity: .8;
+    filter:alpha(opacity=80);
+}

@@ -89,7 +89,7 @@ namespace qch.core
                         t_UserIntergral_AddReward = integral
                     };
                     db.Insert(userIntegral);
-                    msg.Remark = string.Format("您已连续签到{0}天，获得积分{1}\r\n额外奖励积分：{2}", value1, integral, extra);
+                    msg.Remark = string.Format("您已连续签到{0}天，获得积分{1}\r\n含额外奖励积分：{2}", value1, integral, extra);
                     //生成签到信息
                     T_User_SignIn us = new T_User_SignIn
                     {

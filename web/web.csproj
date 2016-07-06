@@ -200,9 +200,11 @@
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\GoodsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvitationController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\qchController.cs" />
     <Compile Include="Controllers\TenPayV3Controller.cs" />
     <Compile Include="Controllers\VoucherController.cs" />
     <Compile Include="Controllers\WeixinController.cs" />
@@ -560,9 +562,12 @@
     <Content Include="Content\css\activityForm.css" />
     <Content Include="Content\css\admin_login.css" />
     <Content Include="Content\css\index.css" />
+    <Content Include="Content\css\login.css" />
     <Content Include="Content\css\news.css" />
     <Content Include="Content\css\newsDetails.css" />
     <Content Include="Content\css\public.css" />
+    <Content Include="Content\css\register.css" />
+    <Content Include="Content\css\repassword.css" />
     <Content Include="Content\css\wxlogin.css" />
     <Content Include="Content\image\01458111537058_party0.png" />
     <Content Include="Content\image\21450926416545_party2.png" />
@@ -624,6 +629,20 @@
     <Content Include="Content\image\loading.gif" />
     <Content Include="Content\image\loading2.gif" />
     <Content Include="Content\image\loadingBj.png" />
+    <Content Include="Content\image\login\beiijing.jpg" />
+    <Content Include="Content\image\login\diannao.png" />
+    <Content Include="Content\image\login\fanhui.png" />
+    <Content Include="Content\image\login\logo1.png" />
+    <Content Include="Content\image\login\mima.png" />
+    <Content Include="Content\image\login\qrcode.png" />
+    <Content Include="Content\image\login\quxiao.png" />
+    <Content Include="Content\image\login\shuaxin.png" />
+    <Content Include="Content\image\login\tishi.png" />
+    <Content Include="Content\image\login\weixin.png" />
+    <Content Include="Content\image\login\xianshi.png" />
+    <Content Include="Content\image\login\xuanze2.png" />
+    <Content Include="Content\image\login\yinchang.png" />
+    <Content Include="Content\image\login\zhanghao.png" />
     <Content Include="Content\image\logo1.png" />
     <Content Include="Content\image\logo_5.png" />
     <Content Include="Content\image\ma01.jpg" />
@@ -670,10 +689,13 @@
     <Content Include="Content\js\lib\jquery-1.12.2.min.js" />
     <Content Include="Content\js\lib\jquery.xdomainrequest.min.js" />
     <Content Include="Content\js\lib\jquery_date.js" />
+    <Content Include="Content\js\login.js" />
     <Content Include="Content\js\news.js" />
     <Content Include="Content\js\placeholder.js" />
     <Content Include="Content\js\liandong.js" />
     <Content Include="Content\js\common.js" />
+    <Content Include="Content\js\register.js" />
+    <Content Include="Content\js\repassword.js" />
     <Content Include="Content\js\util.js" />
     <Content Include="Content\media\qch.mp4" />
     <Content Include="Content\news.html" />
@@ -842,6 +864,7 @@
     <Content Include="H5\css\signUp.css" />
     <Content Include="H5\css\signUp2.css" />
     <Content Include="H5\css\signUpList.css" />
+    <Content Include="H5\css\swiper.min.css" />
     <Content Include="H5\img\avator.png" />
     <Content Include="H5\img\bg_down.jpg" />
     <Content Include="H5\img\coupon\img%402x.png" />
@@ -976,6 +999,7 @@
     <Content Include="H5\js\shareTutor.js" />
     <Content Include="H5\js\signUp2.js" />
     <Content Include="H5\js\stats.min.js" />
+    <Content Include="H5\js\swiper.min.js" />
     <Content Include="H5\js\util.js" />
     <Content Include="H5\js\zepto.min.js" />
     <Content Include="H5\lottery.html" />
@@ -1236,6 +1260,11 @@
     <Content Include="Views\Invitation\Qiuyu.cshtml" />
     <Content Include="Views\TenPayV3\QR_Code.cshtml" />
     <Content Include="Views\Home\Test1.cshtml" />
+    <Content Include="Views\qch\Login.cshtml" />
+    <Content Include="Views\qch\QrCodeLogin.cshtml" />
+    <Content Include="Views\qch\RePassword.cshtml" />
+    <Content Include="Views\qch\Reg.cshtml" />
+    <Content Include="Views\qch\CheckIDCard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AppDown\unpackage\" />

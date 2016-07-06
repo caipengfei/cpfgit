@@ -7,7 +7,7 @@ using System.Text;
 namespace qch.Repositories
 {
     /// <summary>
-    /// 优惠券基础信息映射表
+    /// 积分基础信息映射表
     /// </summary>
     [TableName("T_IntegralManger")]
     [PrimaryKey("Guid", autoIncrement = false)]

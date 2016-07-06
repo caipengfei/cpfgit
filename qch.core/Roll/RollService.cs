@@ -56,6 +56,11 @@ namespace qch.core
                 return null;
             }
         }
+        /// <summary>
+        /// 转盘抽奖
+        /// </summary>
+        /// <param name="UserGuid"></param>
+        /// <returns></returns>
         public Msg zp(string UserGuid)
         {
             Msg msg = new Msg();
@@ -69,13 +74,13 @@ namespace qch.core
                     var integral = db.SingleOrDefault<T_User_Integral>("select top 1 * from t_user_integral where t_User_Guid=@0 and t_DelState=0 order by t_AddDate desc", new object[] { UserGuid });
                     if (integral == null)
                     {
-                        msg.Data = "积分信息异常";
+                        msg.Data = "您还没有积分呢,快去赚积分吧~";
                         log.Info("转盘抽奖时未能获取到用户的积分信息，UserGuid：" + UserGuid);
                         return msg;
                     }
                     if (integral.t_UserIntegral_Reward < NeedIntegral)
                     {
-                        msg.Data = "积分不足";
+                        msg.Data = "积分不足:-(";
                         log.Info("转盘抽奖时用户积分不足，UserGuid：" + UserGuid + "，用户积分余额：" + integral.t_UserIntegral_Reward);
                         return msg;
                     }
@@ -83,7 +88,7 @@ namespace qch.core
                     var roll = db.Query<T_Roll>(" where t_DelState=0 order by t_Roll_Reward");
                     if (roll == null || roll.Count() <= 0)
                     {
-                        msg.Data = "系统异常";
+                        msg.Data = "奖品君消失了...";
                         log.Info("转盘抽奖时未能获取到奖品信息，UserGuid：" + UserGuid);
                         return msg;
                     }
@@ -118,58 +123,69 @@ namespace qch.core
                     msg.Result = xy;
 
                     //处理是否中奖
-                    if (xy.t_Roll_Reward == 8)
+                    //如果抽中实物
+                    if (xy.t_Roll_Type == 3)
                     {
-                        //未中奖
+                        if (xy.t_Roll_Reward == 1)
+                        { 
+                            //如果抽中一等奖，查询数据库一等奖已存在多少个，如果有1个了，重新抽奖
+
+                        }
                     }
-                    else
+                    //2016-07-06 取消空奖，最低5积分
+                    //if (xy.t_Roll_Reward == 8)
+                    //{
+                    //    //未中奖
+                    //}
+                    //else
+                    //{    
+                    
+                    //中奖，生成用户中奖记录
+                    T_Roll_Records trr = new T_Roll_Records
                     {
-                        //中奖，生成用户中奖记录
-                        T_Roll_Records trr = new T_Roll_Records
+                        Guid = Guid.NewGuid().ToString(),
+                        t_AddDate = DateTime.Now,
+                        t_DelState = 0,
+                        t_Roll_Guid = xy.Guid,
+                        t_User_Guid = UserGuid
+                    };
+                    db.Insert(trr);
+                    if (xy.t_Roll_Type == 1)
+                    {
+                        //抽中优惠券
+                        T_User_Voucher tuv = new T_User_Voucher
                         {
+                            Guid = Guid.NewGuid().ToString(),
+                            T_DelState = 0,
+                            T_GetDate = DateTime.Now,
+                            T_User_Guid = UserGuid,
+                            T_Voucher_Guid = xy.t_Voucher_Guid,
+                            T_Voucher_Pwd = createNonceStr(8),
+                            T_Voucher_State = 0
+                        };
+                        db.Insert(tuv);
+                    }
+                    else if (xy.t_Roll_Type == 2)
+                    {
+                        msg.Remark = (userintegral - NeedIntegral + xy.t_Integral).ToString();
+                        //用户抽中积分
+                        //生成用户积分增加记录
+                        T_User_Integral tui = new T_User_Integral
+                        {
+                            t_UserIntegral_Reward = userintegral - NeedIntegral + xy.t_Integral,
                             Guid = Guid.NewGuid().ToString(),
                             t_AddDate = DateTime.Now,
                             t_DelState = 0,
-                            t_Roll_Guid = xy.Guid,
-                            t_User_Guid = UserGuid
+                            t_IntegralManager_Guid = "",
+                            t_IntegralManager_PinYin = "choujiangzengjia",
+                            t_Remark = "抽奖增加",
+                            t_User_Guid = UserGuid,
+                            t_UserIntegral_ReduceReward = 0,
+                            t_UserIntergral_AddReward = xy.t_Integral
                         };
-                        db.Insert(trr);
-                        if (xy.t_Roll_Type == 1)
-                        {
-                            //抽中优惠券
-                            T_User_Voucher tuv = new T_User_Voucher
-                            {
-                                Guid = Guid.NewGuid().ToString(),
-                                T_DelState = 0,
-                                T_GetDate = DateTime.Now,
-                                T_User_Guid = UserGuid,
-                                T_Voucher_Guid = xy.t_Voucher_Guid,
-                                T_Voucher_Pwd = createNonceStr(8),
-                                T_Voucher_State = 0
-                            };
-                            db.Insert(tuv);
-                        }
-                        else if (xy.t_Roll_Type == 2)
-                        {
-                            msg.Remark = (userintegral - NeedIntegral + xy.t_Integral).ToString();
-                            //用户抽中积分
-                            //生成用户积分增加记录
-                            T_User_Integral tui = new T_User_Integral
-                            {
-                                t_UserIntegral_Reward = userintegral - NeedIntegral + xy.t_Integral,
-                                Guid = Guid.NewGuid().ToString(),
-                                t_AddDate = DateTime.Now,
-                                t_DelState = 0,
-                                t_IntegralManager_Guid = "",
-                                t_IntegralManager_PinYin = "choujiangzengjia",
-                                t_Remark = "抽奖增加",
-                                t_User_Guid = UserGuid,
-                                t_UserIntegral_ReduceReward = 0,
-                                t_UserIntergral_AddReward = xy.t_Integral
-                            };
-                            db.Insert(tui);
-                        }
+                        db.Insert(tui);
                     }
+                    //}
                     db.CompleteTransaction();
                 }
                 msg.type = "success";

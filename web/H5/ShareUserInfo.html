@@ -10,7 +10,7 @@
     <title>用户分享</title>
     <link rel="stylesheet" href="css/public.css">
     <link rel="stylesheet" href="css/page3.css">
-    <!--<script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>-->
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
 </head>
 
 <body>
@@ -44,6 +44,7 @@
     <script type="text/html" id="contentTemplate">
         <%var imgUrl='http://www.cn-qch.com:8002/attach/images/'%>
         <%var avatorUrl='http://www.cn-qch.com:8002/attach/user/'%>
+        <%var defaultAvatorUrl='/h5/img/avator.png'%>
         <%if(data.t_User_Style=='2'){%>
             <header>
                 <img src="<%=avatorUrl + data.t_User_Pic%>">
@@ -119,13 +120,17 @@
             <div class="dynamicbox">
                 <h2>Ta的动态</h2>
                 <ul>
-                    <li class="clear">
-                        <img src="<%=imgUrl + data.topic.pic%>">
-                        <div>
-                            <%var content=data.topic.contents?data.topic.contents.replace(/===/g,' '):''%>
-                            <h3><%=content.length>24?content.slice(0,22)+'...':content%></h3>
-                            <p><span><%=formatDate(data.topic.t_date,'MM-dd hh:mm')%></span> <%=data.topic.cityName||''%></p>
-                        </div>
+                    <li>
+                        <a href="/h5/ShareTopic.html?Guid=<%=data.topic.guid%>" class="clear" style="display:block;color:#000;">
+                            <div class="image">
+                                <img src="<%=data.topic.pic?imgUrl + data.topic.pic:defaultAvatorUrl%>">
+                            </div>
+                            <div>
+                                <%var content=data.topic.contents?data.topic.contents.replace(/===/g,' '):''%>
+                                <h3><%=content.length>14?content.slice(0,12)+'...':content%></h3>
+                                <p><span><%=formatDate(data.topic.t_date,'MM-dd hh:mm')%></span> <%=data.topic.cityName||''%></p>
+                            </div>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -135,8 +140,12 @@
                 <h2>Ta的项目</h2>
                 <ul>
                     <li class="clear">
-                        <img src="<%=imgUrl + data.project.pic%>">
-                        <h3><%=data.project.title%></h3>
+                        <a href="/h5/ShareProject.html?Guid=<%=data.project.guid%>" class="clear" style="display:block;color:#000;">
+                            <div class="image">
+                                <img src="<%=imgUrl + data.project.pic%>">
+                            </div>
+                            <h3><%=data.project.title%></h3>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -155,6 +164,16 @@
                     <%data.historyWork.forEach(function(item,index){%>
                         <%var eDate=(item.eDate=='0001.01'||item.eDate=='')?'至今':item.eDate%>
                         <li><%=item.sDate+'-'+eDate%> <%=item.t_Position%> <%=item.t_Commpany%></li>
+                    <%})%>
+                </ul>
+            </div>
+            <%}%>
+            <%if(data.t_User_Intention&&data.t_User_Intention.length){%>
+            <div class="fieldbox">
+                <h2>创业意向</h2>
+                <ul class="clear">
+                    <%data.t_User_Intention.forEach(function(item,index){%>
+                        <li><%=item.t_Style_Name%></li>
                     <%})%>
                 </ul>
             </div>
@@ -179,6 +198,16 @@
                 </ul>
             </div>
             <%}%>
+            <%if(data.t_User_NowNeed&&data.t_User_NowNeed.length){%>
+            <div class="goodatbox">
+                <h2>现阶段需求</h2>
+                <ul class="clear">
+                    <%data.t_User_NowNeed.forEach(function(item,index){%>
+                        <li><%=item.t_Style_Name%></li>
+                    <%})%>
+                </ul>
+            </div>
+            <%}%>
         <%}%>
         <%if(data.t_User_Style=='1'||data.t_User_Style=='0'){%>
             <header>
@@ -195,13 +224,17 @@
             <div class="dynamicbox">
                 <h2>Ta的动态</h2>
                 <ul>
-                    <li class="clear">
-                        <img src="<%=imgUrl + data.topic.pic%>">
-                        <div>
-                            <%var content=data.topic.contents?data.topic.contents.replace(/===/g,' '):''%>
-                            <h3><%=content.length>14?content.slice(0,12)+'...':content%></h3>
-                            <p><span><%=formatDate(data.topic.t_date,'MM-dd hh:mm')%></span> <%=data.topic.cityName||''%></p>
-                        </div>
+                    <li>
+                        <a href="/h5/ShareTopic.html?Guid=<%=data.topic.guid%>" class="clear" style="display:block;color:#000;">
+                            <div>
+                                <img src="<%=data.topic.pic?imgUrl + data.topic.pic:defaultAvatorUrl%>">
+                            </div>
+                            <div>
+                                <%var content=data.topic.contents?data.topic.contents.replace(/===/g,' '):''%>
+                                <h3><%=content.length>14?content.slice(0,12)+'...':content%></h3>
+                                <p><span><%=formatDate(data.topic.t_date,'MM-dd hh:mm')%></span> <%=data.topic.cityName||''%></p>
+                            </div>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -214,9 +247,11 @@
     
     <script src="/h5/js/zepto.min.js"></script>
     <script src="/h5/js/artTemplate.js"></script>
+    <script charset="gb2312" src="js/loader.js"></script>
     <script src="/h5/js/util.js"></script>
-    <!--<script charset="gb2312" src="js/loader.js"></script>-->
     <script>
+        // 合伙人 t_User_Style==3
+        // 投资人 t_User_Style==2
         var guid = util.getUrlParam("Guid")||'';
         $.ajax({
             cache: false,
@@ -226,22 +261,23 @@
             success: function (res) {
                 if(res){
                     $('.container').prepend(template('contentTemplate', { data: res }));
-                    /*var title,desc,imgUrl;
-                    imgUrl=$('header img').eq(0).attr('src');
-                    if(res.t_User_Style==2){
-                        title=res.t_User_RealName+'正在通过青创汇接收创业项目，快来提交吧！';
-                        desc='青创汇，这是一个高质的8090创业圈，这里有你创业路上所需的资源';
-                    }else if(res.t_User_Style==3){
-                        title=res.t_User_RealName+'在青创汇的个人主页，来看看，说不定是你合适的创业合伙人';
-                        desc=res.t_User_Remark?res.t_User_Remark:'';
-                        desc=desc.length>20?desc.slice(0,20)+'...':desc;
+                    var title,desc,imgUrl;
+                    var intention;
+                    if(res.t_User_Intention&&res.t_User_Intention.length){
+                        intention='，目前'+res.t_User_Intention[0].t_Style_Name;
+                    }else{
+                        intention='';
                     }
+                    imgUrl='http://www.cn-qch.com:8002/attach/user/'+res.t_User_Pic;
+                    if(res.t_User_Style==2){
+                        title='青创汇创业投资人推荐: '+res.t_User_RealName;
+                        desc=res.t_User_Commpany+res.t_User_Position[0].t_Style_Name+'，正在寻找'+res.t_User_InvestArea[0].t_Style_Name+'好项目 ，快来提交吧！';
+                    }else if(res.t_User_Style==3){
+                        title='青创汇创业合伙人推荐: '+res.t_User_RealName;
+                        desc=res.t_User_Commpany+res.t_User_Position[0].t_Style_Name+intention+'，希望在'+res.t_User_FocusArea[0].t_Style_Name+'大展拳脚';
+                    }
+                    wxShare({ title: title,desc: desc,imgUrl: imgUrl});
                     //console.log(title,desc,imgUrl)
-                    wxShare({
-                        title: title,
-                        desc: desc,
-                        imgUrl: imgUrl
-                    });*/
                 }
                 $('.container').removeClass('loading').siblings('.shade-div').remove();
             }

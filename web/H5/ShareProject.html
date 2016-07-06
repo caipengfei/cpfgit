@@ -8,9 +8,10 @@
     <link rel="dns-prefetch" href="//test.cn-qch.com/" />
     <link rel="dns-prefetch" href="//www.cn-qch.com/" />
     <title>项目分享</title>
+    <link rel="stylesheet" href="css/swiper.min.css">
     <link rel="stylesheet" href="css/public.css">
     <link rel="stylesheet" href="css/page1.css">
-    <!--<script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>-->
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
 </head>
 <body>
     <div class="shade-div"></div>
@@ -102,19 +103,23 @@
         <%if(data.images.length){%>
         <div class="showbox">
             <h2>产品展示</h2>
-            <div class="banner">
-                <div class="frame">
-                    <div class="box">
-                        <%data.images.forEach(function(item,index){%>
-                        <img src="<%=imgUrl+item.t_Pic_Url%>" alt="<%=item.t_Pic_Remark%>">
-                        <%})%>
-                    </div>
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <%data.images.forEach(function(item,index){%>
+                        <img class="swiper-slide" src="<%=imgUrl+item.t_Pic_Url%>" alt="<%=item.t_Pic_Remark%>">
+                    <%})%>
                 </div>
-                <div class="tag">
-                    <%for(var i=0,len=data.images.length;i<len;i++){%>
-                    <span <%if(i==0){%>class="current"<%}%> ></span>
-                    <%}%>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+        <div class="hidebox">
+            <div class="swiper-container2">
+                <div class="swiper-wrapper">
+                    <%data.images.forEach(function(item,index){%>
+                        <img class="swiper-slide" src="<%=imgUrl+item.t_Pic_Url%>" alt="<%=item.t_Pic_Remark%>">
+                    <%})%>
                 </div>
+                <div class="swiper-pagination"></div>
             </div>
         </div>
         <%}%>
@@ -123,7 +128,7 @@
             <div class="clear">
                 <a class="gw <%if(data.t_Project_Website){%>active<%}%>" <%if(data.t_Project_Website){%>href="<%=data.t_Project_Website.indexOf('http://')==0?data.t_Project_Website:('http://'+data.t_Project_Website)%>"<%}%>>官网</a>
                 <a class="ct <%if(data.t_Project_Link){%>active<%}%>"  <%if(data.t_Project_Link){%>href="<%=data.t_Project_Link.indexOf('http://')==0?data.t_Project_Link:('http://'+data.t_Project_Link)%>"<%}%>>客户端</a>
-                <a class="wx <%if(data.t_Project_Weixin){%>active<%}%>" data-wx="<%=data.t_Project_Weixin%>" href="http://www.cn-qch.com/app">微信公众号</a>
+                <a class="wx <%if(data.t_Project_Weixin){%>active<%}%>" data-wx="<%=data.t_Project_Weixin%>">微信公众号</a>
             </div>
         </div>
         <div class="demand">
@@ -170,13 +175,14 @@
             </tr>
         <%})%>
     </script>
-    <script src="/h5/js/zepto.min.js"></script>
+    <script src="/h5/js/jquery.min.js"></script>
     <script src="/h5/js/artTemplate.js"></script>
     <script src="/h5/js/util.js"></script>
-    <script src="/h5/js/shareProject.js"></script>
-    <!--<script charset="gb2312" src="js/loader.js"></script>-->
+    <script src="/h5/js/swiper.min.js"></script>
+    <script charset="gb2312" src="js/loader.js"></script>
     <script>
         var guid = util.getUrlParam("Guid")||'';
+        var swiper,swiper2;
         $.ajax({
             cache:false,
             dataType:'json',
@@ -185,25 +191,58 @@
             success:function(res){
                 if(res){
                     $('.container').prepend(template('contentTemplate', { data: res }));
-                    bindEvent();
                     if(res.t_Project_Weixin){
                         $('.wxbox .box1 p span').text(res.t_Project_Weixin);
                     }
-                    /*var title=res.t_Project_Name;
-                    var desc=res.t_Project_OneWord;
+                    var title=res.t_Project_Name;
+                    var desc=res.t_Project_OneWord||'';
                     var imgUrl=$('header img').eq(0).attr('src');
-                    wxShare({
-                        title: title,
-                        desc: desc,
-                        imgUrl: imgUrl
-                    });*/
+                    wxShare({ title: title, desc: desc,imgUrl: imgUrl});
+                    //console.log(title,desc,imgUrl)
                 }
                 $('.container').removeClass('loading').siblings('.shade-div').remove();
                 $('.commentlist img').each(function(){
                     var width=$(this).width();
                     $(this).css({height:width,borderRadius:width/2});
                 });
-                $('.banner .box img').length && banner.init();
+                if($('.showbox img').length){
+                    $('.hidebox').css({ left:$(window).width() })
+                    swiper = new Swiper('.swiper-container', {
+                        pagination: '.swiper-pagination',
+                        slidesPerView: 1,
+                        paginationClickable: true,
+                        spaceBetween: 0,
+                        loop: true,
+                        autoplay: 2500,
+                        autoHeight: true,
+                        centeredSlides: true,
+                        autoplayDisableOnInteraction: false,
+                        onTap:function(sw){
+                            $('.hidebox').css({left:0});
+                            sw.stopAutoplay();
+                        }
+                    });
+                    swiper2 = new Swiper('.swiper-container2', {
+                        pagination: '.swiper-pagination',
+                        slidesPerView: 1,
+                        paginationClickable: true,
+                        spaceBetween: 0,
+                        loop: true,
+                        onInit:function(sw){
+                            $(sw.container).find('img').each(function(){
+                                util.addTapEvent(this,function(){
+                                    $(sw.container).parent('.hidebox').css({left:$(window).width()});
+                                    swiper.startAutoplay();
+                                })
+                            })
+                        }
+                    });
+                    imgLoad('.swiper-container2 img');
+                    $('.hidebox')[0].addEventListener('touchmove',function(e){
+                        e.preventDefault();
+                    })
+                }
+                bindEvent();
             }
         })
         function bindEvent(){
@@ -211,7 +250,6 @@
                 if(!$(el).data('wx')) {
                     util.msgBox('项目方尚未添加微信公众号');
                 }else{
-                    //$('.wxbox,.shade').removeClass('hide');
                     location.href='http://www.cn-qch.com/app';
                 }
             })
@@ -232,12 +270,28 @@
             util.addTapEvent($('a.copy')[0],function(el){
                 var txt=$(el).siblings('p').children('span').text();
                 $('.wxbox,.shade').addClass('hide');
-                //util.msgBox('拷贝成功，请到微信中搜索公众号！');
                 util.msgBox('暂不支持拷贝操作');
             })
             util.addTapEvent($('a.cancel')[0],function(el){
                 $('.wxbox,.shade').addClass('hide');
             })
+        }
+        function imgLoad(selector) {
+            var winHeight=$(window).height();
+            $img=$(selector);
+            var len = $img.length;
+            for (var i = 0; i < len; i++) {
+                (function (index) {
+                    var image = new Image();
+                    image.onerror = image.onload = function (e) {
+                        var thisHeight=$img.eq(index).height();
+                        $img.eq(index).css({
+                            marginTop:(winHeight-thisHeight)/2
+                        });
+                    }
+                    image.src = $img[index].src;
+                })(i);
+            }
         }
     </script>
 </body>

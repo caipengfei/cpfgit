@@ -32,6 +32,11 @@ namespace qch.core
             return str;
         }
 
+        /// <summary>
+        /// 用户注册
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public Msg Reg(UserModel model)
         {
             Msg msg = new Msg();
@@ -80,7 +85,7 @@ namespace qch.core
                     //如果有推荐人
                     if (!string.IsNullOrWhiteSpace(model.t_ReommUser))
                     {
-                        //给推荐人赠送积分
+                        //给推荐人赠送积分、优惠券
                         var tjuser = db.SingleOrDefault<T_Users>(" where guid=@0 and t_DelState=0", new object[] { model.t_ReommUser });
                         if (tjuser != null)
                         {

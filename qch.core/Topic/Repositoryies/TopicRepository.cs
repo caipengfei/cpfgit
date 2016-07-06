@@ -99,7 +99,7 @@ namespace qch.Repositories
         {
             try
             {
-                string sql = "select top 1 a.Guid,left(a.t_topic_contents,20) as Contents,a.t_topic_city as CityName,a.t_date,b.[t_Pic_Url] as Pic from t_topic as a left join [T_Associate_Pic] as b on a.guid=b.t_Associate_Guid where t_user_guid=@0 order by a.t_date desc,b.t_Pic_Url";
+                string sql = "select top 1 a.Guid,left(a.t_topic_contents,20) as Contents,a.t_topic_city as CityName,a.t_date,b.[t_Pic_Url] as Pic from t_topic as a left join [T_Associate_Pic] as b on a.guid=b.t_Associate_Guid where a.t_user_guid=@0 and a.t_delstate=0 order by a.t_date desc,b.t_Pic_Url";
                 return rps.Get(sql, new object[] { Guid });
             }
             catch (Exception ex)

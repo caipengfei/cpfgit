@@ -75,6 +75,10 @@
     <Compile Include="Area\Repositories\CityRepository.cs" />
     <Compile Include="Area\Repositories\DistrictRepository.cs" />
     <Compile Include="Area\Repositories\ProvinceRepository.cs" />
+    <Compile Include="Convert\GoodsService.cs" />
+    <Compile Include="Convert\Repositories\GoodsRepository.cs" />
+    <Compile Include="Convert\Repositories\T_Goods_Convert.cs" />
+    <Compile Include="Convert\Repositories\T_Goods_Convert_List.cs" />
     <Compile Include="Course\CourseModel.cs" />
     <Compile Include="Course\CourseService.cs" />
     <Compile Include="Course\Repositories\CourseRepository.cs" />
@@ -99,6 +103,7 @@
     <Compile Include="HistoryWork\HistoryWorkService.cs" />
     <Compile Include="HistoryWork\Repositories\HistoryWorkRepository.cs" />
     <Compile Include="HistoryWork\Repositories\T_HistoryWork.cs" />
+    <Compile Include="Identity\IdentityService.cs" />
     <Compile Include="IDependency.cs" />
     <Compile Include="Integral\IntegralModel.cs" />
     <Compile Include="Integral\IntegralService.cs" />
@@ -158,6 +163,10 @@
     <Compile Include="SignIn\SignInService.cs" />
     <Compile Include="Style\SelectStyle.cs" />
     <Compile Include="Topic\SelectTopic.cs" />
+    <Compile Include="UserAddr\CneeModel.cs" />
+    <Compile Include="UserAddr\CneeService.cs" />
+    <Compile Include="UserAddr\Repositories\CneeRepository.cs" />
+    <Compile Include="UserAddr\Repositories\t_User_Cnee.cs" />
     <Compile Include="Voucher\Repositories\T_Voucher.cs" />
     <Compile Include="Order\OrderModel.cs" />
     <Compile Include="Order\OrderService.cs" />

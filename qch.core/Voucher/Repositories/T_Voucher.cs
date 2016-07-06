@@ -75,6 +75,11 @@ namespace qch.Repositories
         [Column]
         public int T_Voucher_Audit { get; set; }
         /// <summary>
+        /// 优惠券有效期（天）
+        /// </summary>
+        [Column]
+        public int T_Voucher_LimitDay { get; set; }
+        /// <summary>
         /// 删除状态
         /// </summary>
         [Column]

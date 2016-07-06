@@ -10,7 +10,8 @@
     <title>动态详情</title>
     <link rel="stylesheet" href="css/public.css">
     <link rel="stylesheet" href="css/page5.css">
-    <!--<script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>-->
+    <link rel="stylesheet" href="css/swiper.min.css">
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
 </head>
 
 <body>
@@ -50,26 +51,41 @@
                     <td>
                         <h2><%=data.username%></h2>
                         <h3><%=data.usertype + ' ' + data.company%></h3>
+                        <%if(data.t_User_Best&&data.t_User_Best.length){%>
+                            <p> <span></span> Ta擅长: <%=tips(data.t_User_Best)%></p>
+                        <%}%>
+                        <%if(data.t_User_NowNeed&&data.t_User_NowNeed.length){%>
+                            <p> <span></span> Ta需要: <%=tips(data.t_User_NowNeed)%></p>
+                        <%}%>
                     </td>
                 </tr>
             </table>
             <p class="black"><%==data.dynamicText.replace(/===/g,'<br>')%></p>
-            <div class="imgbox">
-                <%var len=data.dynamicThumbnailList.length%>
-                <%var width=(len==1)?'100%':(len==2)?'49%':'32%'%>
-                <%data.dynamicThumbnailList.forEach(function(item,index){%>
-                    <img <%if(index%3==0){%>class="first"<%}%> src="<%=imgUrl+item.t_Pic_Url%>" style="width:<%=width%>">
-                <%})%>
-            </div>
-            <%if(data.currentPosition){%>
-                <p class="position"><%=data.currentPosition%></p>
+            <%if(data.dynamicThumbnailList&&data.dynamicThumbnailList.length){%>
+                <div class="imgbox">
+                    <%var len=data.dynamicThumbnailList.length%>
+                    <%var width=(len==1)?'100%':(len==2)?'49%':'32%'%>
+                    <%data.dynamicThumbnailList.forEach(function(item,index){%>
+                        <img <%if(index%3==0){%>class="first"<%}%> src="<%=imgUrl+item.t_Pic_Url%>" style="width:<%=width%>">
+                    <%})%>
+                </div>
+                <div class="hidebox">
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <%data.dynamicThumbnailList.forEach(function(item,index){%>
+                                <img class="swiper-slide" src="<%=imgUrl+item.t_Pic_Url%>">
+                            <%})%>
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
             <%}%>
-            <div class="tools">
-                <a class="left" href="http://www.cn-qch.com/app"><i class="fa fa-share"></i></a>
-                <a class="right msg" href="http://www.cn-qch.com/app"><i class="fa fa-comment"></i></a>
-                <a class="right like" href="http://www.cn-qch.com/app"><i class="fa fa-heart"></i></a>
-            </div>
             <p class="date"><%=data.date%></p>
+            <div class="tools">
+                <a href="http://www.cn-qch.com/app"><i class="fa fa-share">分享</i></a>
+                <a href="http://www.cn-qch.com/app"><i class="fa fa-heart">赞</i></a>
+                <a href="http://www.cn-qch.com/app"><i class="fa fa-comment">评论</i></a>
+            </div>
         </div>
         <div class="visitor">
             <div class="box">
@@ -98,11 +114,13 @@
             </ul>
         </div>
     </script>
-    <script src="js/zepto.min.js"></script>
-    <script src="js/artTemplate.js"></script>
-    <!--<script charset="gb2312" src="js/loader.js"></script>-->
+    <script src="/h5/js/jquery.min.js"></script>
+    <script src="/h5/js/swiper.min.js"></script>
+    <script src="/h5/js/artTemplate.js"></script>
+    <script src="/h5/js/util.js"></script>
+    <script charset="gb2312" src="js/loader.js"></script>
     <script>
-        var guid = GetUrlParam("Guid") || GetUrlParam("guid")||'';
+        var guid = util.getUrlParam("Guid") || util.getUrlParam("guid")||'';
         $.ajax({
             cache: false,
             dataType: 'json',
@@ -123,26 +141,65 @@
                     })
                     var s=data.dynamicText;
                     var re = /(http:\/\/[\w.\/]+[\?\=\w\&]*)(?![^<]+>)/gi;
-                    $('.dynamic .black').html(s.replace(re, "<a href='$1'>$1</a>").replace(/===/g, '<br>'));
+                    $('.dynamic .black').html(s.replace(re,"<a href='$1'>$1</a>").replace(/===/g,'<br>'));
+                    if($('.imgbox img').length){
+                        $('.hidebox').css({ left:$(window).width() })
+                        swiper = new Swiper('.swiper-container', {
+                            slidesPerView: 1,
+                            spaceBetween: 0,
+                            onInit:function(sw){
+                                $(sw.container).find('img').each(function(){
+                                    util.addTapEvent(this,function(){
+                                        $(sw.container).parent('.hidebox').css({left:$(window).width()});
+                                    })
+                                })
+                            }
+                        });
+                        $('.imgbox img').each(function(){
+                            util.addTapEvent(this,function(el){
+                                $('.hidebox').css({left:0});
+                                swiper.slideTo($(el).index(),0);
+                            })
+                        })
+                        imgLoad('.swiper-container img');
+                        $('.hidebox')[0].addEventListener('touchmove',function(e){
+                            e.preventDefault();
+                        })
+                    }
+                    var title=data.username+'的动态';
+                    var desc='我刚在青创汇上发布了一条最新动态，大家快来围观';
+                    var imgUrl=$('.imgbox img').length?$('.imgbox img').eq(0).attr('src'):'http://www.cn-qch.com/h5/img/logo-.png'
+                    wxShare({ title: title,desc: desc,imgUrl: imgUrl});
                 }
                 $('.container').removeClass('loading').siblings('.shade-div').remove();
-                /*var title=data.username;
-                var desc=data.dynamicText?data.dynamicText:'我刚在青创汇上发布了一条最新创业动态';
-                desc=desc.length>20?desc.slice(0,20)+'...':desc;
-                var imgUrl=$('.imgbox img').length?$('.imgbox img').eq(0).attr('src'):'http://www.cn-qch.com/h5/img/logo-.png'
-                wxShare({
-                    title: title,
-                    desc: desc,
-                    imgUrl: imgUrl
-                });*/
+                //console.log(title,desc,imgUrl)
             }
         })
-        function GetUrlParam(name) {
-            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-            var r = window.location.search.substr(1).match(reg);
-            if (r != null) return unescape(r[2]);
-            return null;
+        function imgLoad(selector) {
+            var winHeight=$(window).height();
+            $img=$(selector);
+            var len = $img.length;
+            for (var i = 0; i < len; i++) {
+                (function (index) {
+                    var image = new Image();
+                    image.onerror = image.onload = function (e) {
+                        var thisHeight=$img.eq(index).height();
+                        $img.eq(index).css({
+                            marginTop:(winHeight-thisHeight)/2,
+                            marginBottom:(winHeight-thisHeight)/2
+                        });
+                    }
+                    image.src = $img[index].src;
+                })(i);
+            }
         }
+        template.helper('tips',function(value){
+            var text='';
+            value.forEach(function(item,index){
+                text+='/'+item.t_Style_Name;
+            })
+            return text.slice(1);
+        })
     </script>
 </body>
 </html>

@@ -20,6 +20,7 @@ namespace api.Controllers
         TopicService service = new TopicService();
         PraiseService praiseService = new PraiseService();
         PicService picService = new PicService();
+        StyleService styleService = new StyleService();
 
         /// <summary>
         /// 动态详情
@@ -58,6 +59,8 @@ namespace api.Controllers
                         username = user.t_User_RealName,
                         usertype = user.UserTypeText,
                         company = user.t_User_Commpany,
+                        t_User_Best = styleService.GetByIds(user.t_User_Best),  //我最擅长
+                        t_User_NowNeed = styleService.GetByIds(user.t_User_NowNeed),  //现阶段需求
                         dynamicText = model.t_Topic_Contents,
                         currentPosition = model.t_Topic_City,
                         date = model.t_Date,
