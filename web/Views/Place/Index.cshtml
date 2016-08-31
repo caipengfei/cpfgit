@@ -1,0 +1,130 @@
+﻿@{
+    ViewBag.Title = "青创汇-创客空间";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+@model PetaPoco.Page<qch.Models.SelectPlace>
+@section css{
+    <link rel="stylesheet" href="/Content/qch/css/bootstrappage.css">
+    <link rel="stylesheet" href="/Content/css/spacePublic.css">
+    <link rel="stylesheet" href="/Content/css/spaceList.css">
+}
+
+<div id="tabImg">
+    <div class="wrap box">
+        <img src="/Content/image/beijing.png" alt="">
+        <div class="cover" id='cover'></div>
+        <p>创客空间&nbsp;创业者的梦想实验田</p>
+        <div class="shenqing" id="shenqing"><a href="javascript:void(0);">申请入驻</a></div>
+    </div>
+</div>
+<div id='content'>
+    <div class="index wrap">
+        <p>青创汇&nbsp;&nbsp;<span>></span>&nbsp;&nbsp;创客空间</p>
+    </div>
+    <div class='city wrap' id="city">
+        <div class='diqu'><span>地&nbsp;&nbsp;&nbsp;区:</span></div>
+        <div class="citys" id='citys'>
+            <a href="javascript:void(0);"><span>全国</span></a>
+            <a href="javascript:void(0);"><span>北京</span></a>
+            <a href="javascript:void(0);"><span>上海</span></a>
+            <a href="javascript:void(0);"><span>天津</span></a>
+            <a href="javascript:void(0);"><span>上海</span></a>
+            <a href="javascript:void(0);"><span>广州</span></a>
+            <a href="javascript:void(0);"><span>深圳</span></a>
+            <a href="javascript:void(0);" class="active"><span>郑州</span></a>
+            <a href="javascript:void(0);"><span>重庆</span></a>
+            <a href="javascript:void(0);"><span>南京</span></a>
+            <a href="javascript:void(0);"><span>长沙</span></a>
+            <a href="javascript:void(0);"><span>全国</span></a>
+            <a href="javascript:void(0);"><span>北京</span></a>
+            <a href="javascript:void(0);"><span>上海</span></a>
+            <a href="javascript:void(0);"><span>天津</span></a>
+            <a href="javascript:void(0);"><span>上海</span></a>
+            <a href="javascript:void(0);"><span>广州</span></a>
+            <a href="javascript:void(0);"><span>深圳</span></a>
+            <a href="javascript:void(0);"><span>重庆</span></a>
+            <a href="javascript:void(0);"><span>南京</span></a>
+            <a href="javascript:void(0);"><span>长沙</span></a>
+            <a href="javascript:void(0);"><span>全国</span></a>
+            <a href="javascript:void(0);"><span>北京</span></a>
+            <a href="javascript:void(0);"><span>上海</span></a>
+            <a href="javascript:void(0);"><span>天津</span></a>
+            <a href="javascript:void(0);"><span>上海</span></a>
+            <a href="javascript:void(0);"><span>广州</span></a>
+            <a href="javascript:void(0);"><span>深圳</span></a>
+            <a href="javascript:void(0);"><span>重庆</span></a>
+            <a href="javascript:void(0);"><span>南京</span></a>
+            <a href="javascript:void(0);"><span>长沙</span></a>
+        </div>
+        <div class="more">
+            <a href="javascript:void(0);" id="more">更多
+                <img src="/Content/image/more.png" alt="" style="position: absolute; right: 15px; top: 15px" id="moreImg">
+            </a>
+        </div>
+    </div>
+    <div class="wrap box">
+        <ul>
+            @if (Model != null && Model.Items != null && Model.Items.Count > 0)
+            {
+                foreach (var item in Model.Items)
+                {
+                <li onclick="goInfo('@item.Guid')">
+                    <img src="@item.PlaceImage" alt="">
+                    <div class="box1">
+                        <h2>@item.PlaceName</h2>
+                        <p>价格:<span>200</span>元/月/工位</p>
+                        <p>地址:@item.PlaceAddr</p>
+                        <p>电话:1234567890</p>
+                        <p>标签:⊙设备完善&nbsp;&nbsp;</p>
+                    </div>
+                    <div class='hengxian'></div>
+                </li>
+                }
+            }
+        </ul>
+    </div>
+    <div align="center">
+        <ul id="page">
+        </ul>
+    </div>
+    <div class="flow">
+    </div>
+</div>
+@section js{
+    <script src="~/Content/qch/js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="/Content/qch/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/Content/qch/js/bootstrap-paginator.js"></script>
+    <script src="/Content/js/spaceList.js"></script>
+    <script type="text/javascript">
+        function goInfo(id){
+            location.href='/place/Info?Guid='+id;
+        }
+        $(document).ready(function(){
+            var element = $("#page");
+            var options = {
+                bootstrapMajorVersion: 3,//版本
+                currentPage: @Convert.ToInt64(ViewData["Page"]),  //当前页数
+                numberOfPages: 5,//设置显示的页码数
+                totalPages: @Convert.ToInt64(ViewData["TotalPage"]), //总页数
+                itemTexts: function (type, page, current) {
+                    switch (type) {
+                        case "first":
+                            return "首页";
+                        case "prev":
+                            return "上一页";
+                        case "next":
+                            return "下一页";
+                        case "last":
+                            return "末页";
+                        case "page":
+                            return page;
+                    }
+                },
+                pageUrl: function (type, page, current) {                  
+                    return "/Place/Index?page=" + page ;
+                }
+            }
+            element.bootstrapPaginator(options);
+        }); 
+    </script>
+}

@@ -8,7 +8,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="format-detection" content="telephone=no" /> 
+    <meta name="format-detection" content="telephone=no" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
     <meta name="renderer" content="webkit" />
@@ -37,13 +37,14 @@
             </tr>
         </table>
         <div class="seedetailsbox">
-            <a href="/invitation/list">查看直接邀请的人</a>
+            <a href="/invitation/list">查看直接邀请的人</a><br />
+            <a href="/wx/invitRule.html">查看邀请奖励规则</a>
         </div>
         <div class="codebox">
             <p><span>我的邀请码</span><b>@ViewBag.Phone</b></p>
             <a href="javascript:" id="btn-invite">立即邀请</a>
         </div>
-        <img src="/h5/img/invitation/shade.png" id="shadeImg" style="display:none;opacity:0;position: fixed;top: 0;left: 0;bottom:0;right:0;z-index: 3;background-image:none;transform:translate3d(0,0,0);">
+        <img src="/h5/img/invitation/shade.png" id="shadeImg" style="display: none; opacity: 0; position: fixed; top: 0; left: 0; bottom: 0; right: 0; z-index: 3; background-image: none; transform: translate3d(0,0,0);">
     </div>
     <script src="~/H5/js/jquery.min.js"></script>
     <script>
@@ -110,67 +111,67 @@
                 );
         });
 
-        wx.error(function (res) {
-            //alert(res.errMsg);
-        });
-        function hideImg(){
-            var shadeImg = document.getElementById('shadeImg');
-            shadeImg.style.opacity = 0;
-            shadeImg.style.display = 'none';
-        }
-        function addTapEvent(el, cb) {
-            el.addEventListener('touchstart', function (e) {
-                var touch = e.targetTouches[0];
-                this.endX = this.startX = touch.clientX;
-                this.endY = this.startY = touch.clientY;
-            })
-            el.addEventListener('touchmove', function (e) {
-                var touch = e.targetTouches[0];
-                this.endX = touch.clientX;
-                this.endY = touch.clientY;
-            })
-            el.addEventListener('touchend', function (e) {
-                var x = Math.abs(this.endX - this.startX);
-                var y = Math.abs(this.endY - this.startY);
-                if (x <= 5 && y <= 5) {
-                    (typeof cb == 'function') && cb(this);
-                }
-            })
-        }
-        window.onload = function () {
-            var shadeImg = document.getElementById('shadeImg');
-            var btnInvite = document.getElementById('btn-invite');
-            shadeImg.style.width=(window.outerWidth||window.innerWidth)+'px';
-            shadeImg.style.height=(window.outerHeight||window.innerHeight)+'px';
-            shadeImg.aniFrame = null;
-            addTapEvent(btnInvite, function (el) {
-                shadeImg.style.display = 'block';
-                var alpha = 0;
-                (function () {
-                    shadeImg.aniFrame = requestAnimationFrame(arguments.callee);
-                    alpha += .08;
-                    shadeImg.style.opacity = alpha;
-                    if (alpha >= 1) {
-                        shadeImg.style.opacity = 1;
-                        cancelAnimationFrame(shadeImg.aniFrame);
-                    }
-                })();
+            wx.error(function (res) {
+                //alert(res.errMsg);
             });
-            addTapEvent(shadeImg, function (el) {
-                cancelAnimationFrame(shadeImg.aniFrame);
-                var alpha = 1;
-                (function () {
-                    shadeImg.aniFrame = requestAnimationFrame(arguments.callee);
-                    alpha -= .08;
-                    shadeImg.style.opacity = alpha;
-                    if (alpha <= 0) {
-                        shadeImg.style.opacity = 0;
-                        shadeImg.style.display = 'none';
-                        cancelAnimationFrame(shadeImg.aniFrame);
+            function hideImg(){
+                var shadeImg = document.getElementById('shadeImg');
+                shadeImg.style.opacity = 0;
+                shadeImg.style.display = 'none';
+            }
+            function addTapEvent(el, cb) {
+                el.addEventListener('touchstart', function (e) {
+                    var touch = e.targetTouches[0];
+                    this.endX = this.startX = touch.clientX;
+                    this.endY = this.startY = touch.clientY;
+                })
+                el.addEventListener('touchmove', function (e) {
+                    var touch = e.targetTouches[0];
+                    this.endX = touch.clientX;
+                    this.endY = touch.clientY;
+                })
+                el.addEventListener('touchend', function (e) {
+                    var x = Math.abs(this.endX - this.startX);
+                    var y = Math.abs(this.endY - this.startY);
+                    if (x <= 5 && y <= 5) {
+                        (typeof cb == 'function') && cb(this);
                     }
-                })();
-            });
-        }
+                })
+            }
+            window.onload = function () {
+                var shadeImg = document.getElementById('shadeImg');
+                var btnInvite = document.getElementById('btn-invite');
+                shadeImg.style.width=(window.outerWidth||window.innerWidth)+'px';
+                shadeImg.style.height=(window.outerHeight||window.innerHeight)+'px';
+                shadeImg.aniFrame = null;
+                addTapEvent(btnInvite, function (el) {
+                    shadeImg.style.display = 'block';
+                    var alpha = 0;
+                    (function () {
+                        shadeImg.aniFrame = requestAnimationFrame(arguments.callee);
+                        alpha += .08;
+                        shadeImg.style.opacity = alpha;
+                        if (alpha >= 1) {
+                            shadeImg.style.opacity = 1;
+                            cancelAnimationFrame(shadeImg.aniFrame);
+                        }
+                    })();
+                });
+                addTapEvent(shadeImg, function (el) {
+                    cancelAnimationFrame(shadeImg.aniFrame);
+                    var alpha = 1;
+                    (function () {
+                        shadeImg.aniFrame = requestAnimationFrame(arguments.callee);
+                        alpha -= .08;
+                        shadeImg.style.opacity = alpha;
+                        if (alpha <= 0) {
+                            shadeImg.style.opacity = 0;
+                            shadeImg.style.display = 'none';
+                            cancelAnimationFrame(shadeImg.aniFrame);
+                        }
+                    })();
+                });
+            }
     </script>
 </body>
 

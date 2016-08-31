@@ -1,4 +1,5 @@
-﻿using qch.core;
+﻿using api.Models;
+using qch.core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,26 @@ namespace api.Controllers
         GoodsService service = new GoodsService();
 
         /// <summary>
+        /// 保存兑换记录
+        /// </summary>
+        /// <param name="CneeGuid"></param>
+        /// <param name="OrderNo"></param>
+        /// <returns></returns>
+        /// 
+        [HttpGet]
+        public bool SaveRecord(string CneeGuid, string OrderNo)
+        {
+            try
+            {
+                return service.SaveRecord(CneeGuid, OrderNo);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return false;
+            }
+        }
+        /// <summary>
         /// 验签
         /// </summary>
         /// <param name="UserGuid"></param>
@@ -28,18 +49,18 @@ namespace api.Controllers
         {
             if (string.IsNullOrWhiteSpace(UserGuid))
             {
-                return "UserGuid为空";
+                return "0";
             }
             string s = qch.Infrastructure.Encrypt.MD5Encrypt(UserGuid + "150919", true);
             if (Sign == s)
             {
                 //签名正确
-                return "签名OK";
+                return "1";
             }
             else
             {
                 //签名错误
-                return "签名错误：请从正规渠道进入！";
+                return "0";
             }
         }
         /// <summary>
@@ -99,6 +120,27 @@ namespace api.Controllers
             }
         }
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <param name="UserGuid"></param>
+        /// <returns></returns>
+        /// 
+        [HttpGet]
+        public object GetList(int page, int pagesize,string type, string UserGuid)
+        {
+            try
+            {
+                return service.GetList1(page, pagesize,type, UserGuid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
         /// 商品兑换
         /// </summary>
         /// <param name="UserGuid"></param>
@@ -107,12 +149,35 @@ namespace api.Controllers
         /// <returns></returns>
         /// 
         [HttpPost]
-        public Msg CreateRecord([FromBody]string UserGuid, [FromBody]string GoodsCode, [FromBody]string Cnee)
+        public Msg CreateRecord([FromBody]ConvertModel model)
         {
             try
             {
-                var msg = service.CreateRecord(UserGuid, GoodsCode, Cnee);
+                if (model == null)
+                    return null;
+                var msg = service.CreateRecord(model.UserGuid, model.GoodsCode, model.Cnee);
                 return msg;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <param name="UserGuid"></param>
+        /// <returns></returns>
+        /// 
+        [HttpGet]
+        public object GetById(string Guid)
+        {
+            try
+            {
+                return service.GetById1(Guid);
             }
             catch (Exception ex)
             {

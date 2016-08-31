@@ -22,6 +22,7 @@ namespace web.Controllers
         readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         UserService userService = new UserService();
         IntegralService integralService = new IntegralService();
+        UserBankService ubService = new UserBankService();
 
         UserModel _loginUser;
         UserModel LoginUser
@@ -130,16 +131,20 @@ namespace web.Controllers
         public ActionResult Info(string UserGuid)
         {
             var model = userService.GetById(UserGuid);
+
             int x = 0;
-            if (model != null)
-            {
-                if (!string.IsNullOrWhiteSpace(model.t_ReommUser))
-                {
-                    x = integralService.GetTJIntegral(model.t_ReommUser, model.t_User_Date);
-                }
-            }
-            else
-                model = new UserModel();
+            var m = ubService.Get(UserGuid);
+            if (m != null)
+                x = 3;
+            //if (model != null)
+            //{
+            //    if (!string.IsNullOrWhiteSpace(model.t_ReommUser))
+            //    {
+            //        x = integralService.GetTJIntegral(model.t_ReommUser, model.t_User_Date);
+            //    }
+            //}
+            //else
+            //    model = new UserModel();
             ViewBag.TjIntegral = x;
             ViewBag.tuijian = userService.GetReferral1(UserGuid);
             return View(model);

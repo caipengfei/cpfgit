@@ -25,6 +25,11 @@ namespace qch.Repositories
         private string _t_logistics_waybillno;
         private int? _t_logistics_status;
         private int? _t_delstate;
+        private string _t_goods_name;
+        private string _t_goods_pic;
+        private string _t_cnee_name;
+        private string _t_cnee_phone;
+        private string _t_cnee_addr;
         /// <summary>
         /// 
         /// </summary>
@@ -111,6 +116,8 @@ namespace qch.Repositories
         /// 1：已发货；
         /// 2：已签收
         /// </summary>
+        /// 
+        [Column]
         public int? t_Logistics_Status
         {
             set { _t_logistics_status = value; }
@@ -119,10 +126,63 @@ namespace qch.Repositories
         /// <summary>
         /// 删除状态
         /// </summary>
+        /// 
+        [Column]
         public int? t_DelState
         {
             set { _t_delstate = value; }
             get { return _t_delstate; }
+        }
+        /// <summary>
+        /// 类型
+        /// 1：积分兑换；
+        /// 2：转盘抽奖
+        /// </summary>
+        [Column]
+        public int t_List_Type { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string t_Goods_Name
+        {
+            set { _t_goods_name = value; }
+            get { return _t_goods_name; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// 
+        public string t_Goods_Pic
+        {
+            set { _t_goods_pic = value; }
+            get { return _t_goods_pic; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// 
+        public string t_Cnee_Name
+        {
+            set { _t_cnee_name = value; }
+            get { return _t_cnee_name; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// 
+        public string t_Cnee_Phone
+        {
+            set { _t_cnee_phone = value; }
+            get { return _t_cnee_phone; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// 
+        public string t_Cnee_Addr
+        {
+            set { _t_cnee_addr = value; }
+            get { return _t_cnee_addr; }
         }
         #endregion Model
     }

@@ -48,6 +48,19 @@ namespace qch.Repositories
                 return null;
             }
         }
+        public SelectProject GetTop1ForPC(string Guid)
+        {
+            try
+            {
+                string sql = "select top 1 a.Guid,a.t_Project_ConverPic as Pic,a.t_Project_Name as Title,a.t_Project_OneWord as Contents,a.t_Project_Field,a.t_Project_FinancePhase,b.t_User_RealName from [T_Project] as a left join t_users as b on a.t_User_Guid=b.guid where a.[t_User_Guid]=@0 and a.[t_DelState]=0 order by a.[t_AddDate] desc";
+                return rps.Get(sql, new object[] { Guid });
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
         /// <summary>
         /// 分页获取所有项目
         /// </summary>

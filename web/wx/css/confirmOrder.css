@@ -1,0 +1,82 @@
+.orderList li{
+    background: #fff;
+    padding:.6rem 1rem;
+    margin-bottom: .6rem;
+    border-bottom: 1px solid rgb(235,235,235);
+}
+.orderList .image{
+    width: 7rem;
+    height: 5rem;
+    float: left;
+    margin-right: .6rem;
+}
+.orderList .image img{
+    height: 100%;
+}
+.orderList h3{
+    font-size: 1.1rem;
+}
+.btn-submit{
+    width: 93.75%;
+    display: block;
+    border-radius: 1.7rem;
+    height: 3.4rem;
+    line-height: 3.4rem;
+    text-align: center;
+    font-size: 16px;
+    color: #fff;
+    border: 1px solid #f23030;
+    background: #f23030;
+    margin: auto;
+    margin-top: 3.4rem;
+}
+.btn-submit:active{
+    background: #d42020;
+    border-color:#d42020;
+}
+/* 收货地址 */
+.addressbox{
+    background-color: rgb(247, 247, 247);
+    padding: 1rem;
+}
+.addressbox div{
+    background: url(../img/icon/pos.png) no-repeat 0 50%,url(../img/icon/icon-right2.png) no-repeat right 50%;
+    background-size: auto 1rem;
+    padding: 0 1.2rem;
+}
+.addressbox h2{
+    font-size: 1.1rem;
+    margin-bottom: .6rem;
+}
+.addressbox p{
+    font-size: 1rem;
+    line-height: 1.6rem;
+}
+.addressbox .btn-add{
+    display: block;
+    color: #000;
+    text-align: center;
+    font-size: 1.2rem;
+    height: 3.4rem;
+    line-height: 3.4rem;
+    border-radius: 6px;
+}
+.addressbox .btn-add b{
+    font-size: 1.6rem;
+    position: relative;
+    top: 2px;
+    color: #14ca24;
+    font-weight: normal;
+}
+.addressbox .btn-add:active{
+    background: rgb(222,222,222);
+}
+.loading {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background:#fff url(/wx/img/icon/loading.gif) no-repeat 50% 50%;
+    background-size: 2rem auto;
+}

@@ -1,0 +1,1148 @@
+.header {
+    width: 100%;
+    background: #333;
+}
+
+.wrap {
+    width: 1179px;
+    margin: 0 auto;
+}
+
+.header .wrap {
+    height: 38px;
+}
+
+    .header .wrap span {
+        color: #fff;
+        float: left;
+        margin-right: 32px;
+        font-size: 14px;
+        line-height: 38px;
+        vertical-align: middle;
+        cursor: pointer;
+    }
+
+        .header .wrap span.weixin {
+            background: url(../image/weixin.png) no-repeat 0 5px;
+            width: 38px;
+            height: 38px;
+        }
+
+    .header .wrap ul {
+        float: right;
+    }
+
+        .header .wrap ul li {
+            color: #8f8f8f;
+            cursor: pointer;
+            float: left;
+            margin: 10px 0;
+            font-size: 14px;
+            padding: 0 21px;
+            border-right: 1px solid #767676;
+        }
+
+            .header .wrap ul li:hover a {
+                color: #f0c603;
+            }
+
+            .header .wrap ul li:last-child {
+                border: none;
+                padding-right: 0;
+            }
+
+            .header .wrap ul li i {
+                color: #f0c603;
+                font-style: normal;
+            }
+
+            .header .wrap ul li.active {
+                color: #fff;
+            }
+
+
+.nav .wrap {
+    height: 100px;
+}
+
+    .nav .wrap .logo {
+        float: left;
+        height: 35px;
+        width: 140px;
+        background: url(../image/logo.png) no-repeat 0 0;
+        background-size: 140px 35px;
+        margin: 32px 0;
+        cursor: pointer;
+    }
+
+    .nav .wrap ul {
+        float: right;
+    }
+
+        .nav .wrap ul li {
+            cursor: pointer;
+            float: left;
+            font-size: 17px;
+            line-height: 100px;
+            color: #000;
+            margin-right: 51px;
+        }
+
+            .nav .wrap ul li:hover a {
+                color: #f0c603;
+            }
+
+            .nav .wrap ul li:last-child {
+                margin: 0;
+            }
+
+            .nav .wrap ul li.active {
+                color: #f0c603;
+            }
+
+            .nav .wrap ul li span {
+                font-size: 0;
+                display: inline-block;
+                width: 40px;
+                height: 40px;
+                margin-right: 9px;
+                background: url(../image/headimg.png) no-repeat 0 0;
+                vertical-align: middle;
+            }
+
+.content .wrap .head {
+    height: 130px;
+    background: url(../image/img.png) no-repeat 0 0;
+    margin-bottom: 12px;
+}
+
+    .content .wrap .head .headimg {
+        width: 78px;
+        height: 78px;
+        margin: 14px 46px 31px 57px;
+        background: url(../image/headimg.png) no-repeat 0 0;
+        background-size: cover;
+        border: 3px solid #dbdbdbd;
+        float: left;
+    }
+
+    .content .wrap .head .ziliao {
+        float: left;
+    }
+
+        .content .wrap .head .ziliao p {
+            font-size: 14px;
+            color: #fff;
+        }
+
+            .content .wrap .head .ziliao p span {
+                color: #fff;
+            }
+
+            .content .wrap .head .ziliao p var {
+                color: #fff;
+            }
+
+            .content .wrap .head .ziliao p:first-child {
+                margin: 20px 0 0;
+            }
+
+            .content .wrap .head .ziliao p:nth-child(2) {
+                margin: 20px 0 17px;
+            }
+
+                .content .wrap .head .ziliao p:nth-child(2) span {
+                    display: inline-block;
+                    height: 6px;
+                    width: 70px;
+                    border: 1px solid #fff;
+                    border-radius: 3px;
+                    background: url(../image/bai.png) no-repeat 0 0;
+                    background-size: 28px 6px;
+                }
+
+                .content .wrap .head .ziliao p:nth-child(2) a {
+                    color: #fcce00;
+                }
+
+            .content .wrap .head .ziliao p:last-child span {
+                display: inline-block;
+                width: 17px;
+                height: 17px;
+                background: url(../image/duigou.png) no-repeat 0 0;
+                vertical-align: -20%;
+            }
+
+    .content .wrap .head .time {
+        float: right;
+        margin: 20px 36px;
+        color: #fff;
+        font-size: 14px;
+    }
+
+        .content .wrap .head .time span {
+            color: #fff;
+        }
+
+.content .wrap .left {
+    float: left;
+    width: 178px;
+    /*height: 473px;*/
+    background: #000;
+}
+
+    .content .wrap .left ul {
+        padding: 11px 0;
+    }
+
+        .content .wrap .left ul li {
+            font-size: 14px;
+            line-height: 50px;
+            color: #fff;
+            cursor: pointer;
+            width: 178px;
+            box-sizing: border-box;
+        }
+
+            .content .wrap .left ul li.active {
+                background: #fff;
+                color: #000;
+            }
+
+        .content .wrap .left ul .active1 {
+            background: #fff;
+            color: #000;
+        }
+
+        .content .wrap .left ul li span {
+            vertical-align: middle;
+            height: 50px;
+        }
+
+        .content .wrap .left ul li img {
+            vertical-align: middle;
+            margin: 0 30px 0 25px;
+        }
+
+.content .wrap .right {
+    float: right;
+    width: 988px;
+    margin-bottom: 100px;
+}
+
+    .content .wrap .right .info:not(:first-child) {
+        display: none;
+    }
+/*空间管理*/
+/*空间的头部*/
+.content .spaceHead {
+    width: 988px;
+    height: 50px;
+    background: #eee;
+    font-size: 16px;
+    line-height: 50px;
+    position: relative;
+    cursor: pointer;
+}
+
+    .content .spaceHead .havePass {
+        margin-left: 30px;
+        margin-right: 40px;
+        color: #000;
+    }
+
+        .content .spaceHead .havePass img {
+            position: absolute;
+            bottom: 0px;
+            left: 25px;
+        }
+
+    .content .spaceHead .noPass img {
+        position: absolute;
+        bottom: 0px;
+        left: 116px;
+        display: none;
+    }
+
+    .content .spaceHead .shenqing {
+        position: absolute;
+        right: 20px;
+        top: 10px;
+        width: 98px;
+        height: 28px;
+        line-height: 28px;
+        border: 1px solid #e14a0f;
+        border-radius: 20px;
+        color: #e14a0f;
+        text-align: center;
+    }
+/*没有空间的时候的内容部分*/
+.content .spaceBlank {
+    width: 988px;
+    height: 500px;
+    position: relative;
+}
+
+    .content .spaceBlank img {
+        position: absolute;
+        left: 439px;
+        top: 150px;
+    }
+
+    .content .spaceBlank p {
+        position: absolute;
+        left: 425px;
+        top: 300px;
+        font-size: 14px;
+        letter-spacing: 1px;
+    }
+
+        .content .spaceBlank p a {
+            color: #e14a0f;
+        }
+
+/*已审核空间有内容的时候的展示*/
+.content .HavespaceContent .spaceLi {
+    width: 320px;
+    height: 400px;
+    border: 1px solid #eee;
+    margin-right: 11px;
+    margin-top: 12px;
+    position: relative;
+    float: left;
+}
+
+    .content .HavespaceContent .spaceLi img {
+        width: 320px;
+        height: 210px;
+    }
+
+    .content .HavespaceContent .spaceLi p {
+        font-size: 14px;
+        color: #000;
+        margin-top: 10px;
+        margin-left: 20px;
+    }
+
+    .content .HavespaceContent .spaceLi .shenhe {
+        height: 24px;
+        line-height: 24px;
+        padding-left: 20px;
+        padding-right: 20px;
+        border-radius: 10px;
+        background: #000;
+        opacity: 0.8;
+        color: #fff;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        margin-top: 0;
+    }
+
+    .content .HavespaceContent .spaceLi .imgBg {
+        width: 320px;
+        height: 40px;
+        background: #000;
+        opacity: 0.8;
+        position: absolute;
+        top: 170px;
+        left: 0;
+        margin-top: 0;
+    }
+
+    .content .HavespaceContent .spaceLi .summary {
+        font-size: 16px;
+        color: #fff;
+        position: absolute;
+        left: 20px;
+        top: 180px;
+        margin-top: 0;
+    }
+
+    .content .HavespaceContent .spaceLi .hengxian {
+        width: 180px;
+        position: absolute;
+        bottom: 55px;
+        height: 1px;
+        left: 50px;
+        background: #dcdcdc;
+    }
+
+    .content .HavespaceContent .spaceLi a {
+        font-size: 16px;
+        width: 320px;
+        height: 55px;
+        color: #fdd000;
+        text-align: center;
+        line-height: 55px;
+        background: #fff;
+        display: block;
+        position: absolute;
+        bottom: 0;
+    }
+
+        .content .HavespaceContent .spaceLi a:hover {
+            background: #fdd000;
+            color: #000;
+        }
+/*最右侧没有margin-right*/
+.content .HavespaceContent .right {
+    margin-right: 0;
+}
+
+
+
+
+
+/*未审核空间有内容的时候的展示*/
+.content .NospaceContent .spaceLi {
+    width: 320px;
+    height: 345px;
+    border: 1px solid #eee;
+    margin-right: 11px;
+    margin-top: 12px;
+    position: relative;
+    float: left;
+}
+
+    .content .NospaceContent .spaceLi img {
+        width: 320px;
+        height: 210px;
+    }
+
+    .content .NospaceContent .spaceLi p {
+        font-size: 14px;
+        color: #000;
+        margin-top: 10px;
+        margin-left: 20px;
+    }
+
+    .content .NospaceContent .spaceLi .shenhe {
+        height: 24px;
+        line-height: 24px;
+        padding-left: 20px;
+        padding-right: 20px;
+        border-radius: 10px;
+        background: #000;
+        opacity: 0.8;
+        color: #fff;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        margin-top: 0;
+    }
+
+    .content .NospaceContent .spaceLi .imgBg {
+        width: 320px;
+        height: 40px;
+        background: #000;
+        opacity: 0.8;
+        position: absolute;
+        top: 170px;
+        left: 0;
+        margin-top: 0;
+    }
+
+    .content .NospaceContent .spaceLi .summary {
+        font-size: 16px;
+        color: #fff;
+        position: absolute;
+        left: 20px;
+        top: 180px;
+        margin-top: 0;
+    }
+/*最右侧没有margin-right*/
+.content .NospaceContent .right {
+    margin-right: 0;
+}
+
+
+/*房间的具体内容*/
+/*房间头部*/
+.content .houseHead {
+    width: 988px;
+    height: 50px;
+    background: #eee;
+    font-size: 16px;
+    line-height: 50px;
+    position: relative;
+    cursor: pointer;
+}
+
+    .content .houseHead .name {
+        margin-left: 15px;
+        color: #000;
+    }
+
+    .content .houseHead .addHouse {
+        position: absolute;
+        right: 20px;
+        top: 10px;
+        width: 98px;
+        height: 28px;
+        line-height: 28px;
+        border: 1px solid #e14a0f;
+        border-radius: 20px;
+        color: #e14a0f;
+        text-align: center;
+    }
+
+
+/*没有房间的时候的内容部分*/
+.content .houseBlank {
+    width: 988px;
+    height: 500px;
+    position: relative;
+}
+
+    .content .houseBlank img {
+        position: absolute;
+        left: 439px;
+        top: 150px;
+    }
+
+    .content .houseBlank p {
+        position: absolute;
+        left: 427px;
+        top: 300px;
+        font-size: 14px;
+        letter-spacing: 1px;
+    }
+
+        .content .houseBlank p a {
+            color: #e14a0f;
+        }
+
+
+
+/*房间列表*/
+.content .houseList {
+    width: 988px;
+    height: 1100px;
+}
+
+    .content .houseList .houseLi {
+        width: 968px;
+        height: 230px;
+        border: 1px solid #eeeeee;
+        margin-top: 12px;
+        padding: 9px;
+        position: relative;
+    }
+
+        .content .houseList .houseLi img {
+            width: 350px;
+            height: 230px;
+        }
+
+        .content .houseList .houseLi .houseContent {
+            width: 570px;
+            margin-left: 370px;
+            position: absolute;
+            left: 10px;
+            top: 9px;
+        }
+
+            .content .houseList .houseLi .houseContent p {
+                font-size: 14px;
+                color: #000;
+                line-height: 20px;
+                margin-bottom: 20px;
+                letter-spacing: 1px;
+            }
+
+/*房间的具体信息*/
+.contentHead {
+    width: 988px;
+    height: 410px;
+    box-sizing: border-box;
+    border: 1px solid #dcdcdc;
+    margin-top: 14px;
+}
+
+.contentLeft {
+    width: 515px;
+    height: 410px;
+    float: left;
+    padding: 18px;
+    box-sizing: border-box;
+}
+
+    .contentLeft .bigImg {
+        width: 515px;
+        height: 300px;
+    }
+
+        .contentLeft .bigImg img {
+            width: 515px;
+            height: 300px;
+        }
+
+        .contentLeft .bigImg li {
+            display: none;
+        }
+
+        .contentLeft .bigImg .active {
+            display: block;
+        }
+
+    .contentLeft .smallImg {
+        width: 515px;
+    }
+
+        .contentLeft .smallImg li {
+            margin-left: 2px;
+            float: left;
+            margin-top: 5px;
+        }
+
+        .contentLeft .smallImg .active {
+            border: 1px solid #fdd000;
+        }
+
+        .contentLeft .smallImg img {
+            width: 100px;
+            height: 60px;
+        }
+/*contentRight*/
+.contentRight {
+    width: 470px;
+    height: 410px;
+    float: right;
+    padding: 50px;
+    box-sizing: border-box;
+}
+
+    .contentRight h1 {
+        margin-bottom: 30px;
+        font-size: 18px;
+        margin-left: 15px;
+    }
+
+    .contentRight ul li {
+        list-style: disc;
+        font-size: 16px;
+        line-height: 30px;
+        color: #888888;
+        margin-left: 30px;
+    }
+
+        .contentRight ul li span {
+            color: red;
+        }
+/*detail*/
+.detail {
+    width: 988px;
+    height: 800px;
+    clear: both;
+    box-sizing: border-box;
+    padding-top: 20px;
+    color:;
+}
+
+    .detail .head1 span {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .detail .head1 {
+        font-size: 18px;
+        line-height: 40px;
+    }
+
+    .detail .details {
+        font-size: 14px;
+        color: #888;
+        line-height: 22px;
+        letter-spacing: 0.5px;
+    }
+
+/*添加房间*/
+/*房间背景*/
+.cover {
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.9;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+}
+/*房间的具体内容*/
+.houseAdd {
+    width: 750px;
+    height: 1000px;
+    position: absolute;
+    left: 50%;
+    margin-left: -400px;
+    top: 100px;
+    z-index: 1000;
+    background: #fff;
+    padding-left: 50px;
+    font-size: 16px;
+    color: #000;
+    padding-top: 20px;
+}
+    /*houseAdd*/
+    .houseAdd p span {
+        color: #ff0000;
+        padding-left: 5px;
+    }
+
+    .houseAdd .box1 {
+        width: 498px;
+        height: 38px;
+        border: 1px solid #dedede;
+        border-radius: 5px;
+        color: #000;
+        padding: 16px 26px;
+        box-sizing: border-box;
+        margin: 11px 0;
+        clear: both;
+        font-size: 12px;
+    }
+
+    .houseAdd .box2 {
+        width: 598px;
+        height: 178px;
+        border: 1px solid #dedede;
+        border-radius: 5px;
+        color: #000;
+        padding: 16px 26px;
+        box-sizing: border-box;
+        margin: 11px 0;
+        clear: both;
+        font-size: 12px;
+    }
+
+    .houseAdd .houseMoney1 {
+        width: 223px;
+        height: 38px;
+        border: 1px solid #dedede;
+        border-radius: 5px;
+        color: #000;
+        padding: 16px 26px;
+        box-sizing: border-box;
+        margin: 22px 0;
+        font-size: 12px;
+    }
+
+    .houseAdd .houseMoney > span {
+        font-size: 14px;
+        color: #000;
+    }
+
+    .houseAdd .houseImage {
+        position: relative;
+        margin-bottom: 100px;
+    }
+
+        .houseAdd .houseImage .upload > p {
+            margin-bottom: 20px;
+        }
+
+        .houseAdd .houseImage .information {
+            position: absolute;
+            left: 170px;
+            top: 55px;
+            font-size: 16px;
+            width: 500px;
+        }
+
+.houseImage1 {
+    position: absolute;
+    left: 170px;
+    top: 100px;
+    width: 200px;
+    height: 38px;
+}
+
+.houseImage > p {
+    margin-bottom: 25px;
+}
+
+.houseAdd .reset {
+    width: 143px;
+    height: 43px;
+    background: #eaeaea;
+    margin-left: 20px;
+    margin-right: 76px;
+    border-radius: 20px;
+    margin-top: 100px;
+}
+
+.houseAdd .submit {
+    width: 143px;
+    height: 43px;
+    background: #fdd000;
+    border-radius: 20px;
+    margin-top: 100px;
+}
+
+.houseAdd .r_text {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+/*houseType*/
+.houseType {
+    position: relative;
+}
+
+.houseTypeBg {
+    padding: 5px 0;
+}
+
+.houseTypeInfor {
+    font-size: 14px;
+    position: absolute;
+    left: 150px;
+    top: 7px;
+    display: none;
+}
+/*houseMoney*/
+.houseMoney {
+    position: relative;
+}
+
+.houseMoneyBg {
+    padding: 5px 0;
+}
+
+.houseMoneyInfor {
+    font-size: 14px;
+    position: absolute;
+    left: 150px;
+    top: 7px;
+    display: none;
+}
+/*houseDetail*/
+.houseDetail {
+    position: relative;
+}
+
+.houseDetailBg {
+    padding: 5px 0;
+}
+
+.houseDetailInfor {
+    font-size: 14px;
+    position: absolute;
+    left: 150px;
+    top: 7px;
+    display: none;
+}
+/*houseRemark*/
+.houseRemark {
+    position: relative;
+}
+
+.houseRemarkBg {
+    padding: 5px 0;
+}
+
+.houseRemarkInfor {
+    font-size: 14px;
+    position: absolute;
+    left: 150px;
+    top: 7px;
+    display: none;
+}
+
+.houseAdd .up_left {
+    float: left;
+}
+
+.houseAdd .up_right {
+    float: left;
+    margin-left: 20px;
+}
+/*下拉菜单*/
+.selectBox {
+    width: 120px;
+    position: relative;
+    font-size: 12px;
+    float: left;
+    margin-right: 50px;
+    margin-top: 21px;
+}
+
+    .selectBox input {
+        width: 100%;
+        height: 36px;
+        line-height: 25px;
+        cursor: pointer;
+        border: 1px solid #dedede;
+        padding-left: 10px;
+        padding-right: 20px;
+        background: url(../image/more.png) no-repeat 130px center;
+        border-radius: 5px;
+    }
+
+    .selectBox ul {
+        width: 150px;
+        position: absolute;
+        left: 0;
+        top: 38px;
+        border: 1px solid #dedede;
+        overflow: hidden;
+        display: none;
+        background: #fff;
+        z-index: 9999;
+        border-radius: 5px;
+    }
+
+        .selectBox ul li {
+            display: block;
+            height: 30px;
+            line-height: 30px;
+            padding-left: 20px;
+            width: 100%;
+            cursor: pointer;
+        }
+
+.hover {
+    background: #ccc;
+}
+
+
+/*-----------空间申请入驻页面*/
+.spaceManage .spaceApply {
+    background: #ffffff;
+    padding-left: 20px;
+    font-size: 16px;
+}
+
+    .spaceManage .spaceApply p span {
+        color: #ff0000;
+        padding-left: 5px;
+    }
+
+    .spaceManage .spaceApply .box1 {
+        width: 498px;
+        height: 38px;
+        border: 1px solid #dedede;
+        border-radius: 5px;
+        color: #000;
+        padding: 16px 26px;
+        box-sizing: border-box;
+        margin: 11px 0;
+        clear: both;
+        font-size: 12px;
+    }
+
+    .spaceManage .spaceApply .box2 {
+        width: 798px;
+        height: 178px;
+        border: 1px solid #dedede;
+        border-radius: 5px;
+        color: #000;
+        padding: 16px 26px;
+        box-sizing: border-box;
+        margin: 11px 0;
+        clear: both;
+        font-size: 12px;
+    }
+
+    .spaceManage .spaceApply .upload {
+        width: 1180px;
+        height: 140px;
+        margin: 5px auto;
+    }
+
+        .spaceManage .spaceApply .upload > p {
+            margin-bottom: 10px;
+        }
+
+        .spaceManage .spaceApply .upload .up_left {
+            float: left;
+        }
+
+        .spaceManage .spaceApply .upload .up_right {
+            float: left;
+            margin-left: 20px;
+        }
+
+            .spaceManage .spaceApply .upload .up_right .r_text {
+                font-size: 14px;
+                margin-bottom: 40px;
+            }
+    /*group*/
+    .spaceManage .spaceApply .group {
+        clear: both;
+        position: relative;
+        margin-top: 20px;
+    }
+
+        .spaceManage .spaceApply .group .groupBg {
+            padding: 5px 0;
+        }
+
+    .spaceManage .spaceApply .groupInfor {
+        font-size: 14px;
+        position: absolute;
+        left: 200px;
+        top: 8px;
+        display: none;
+    }
+    /*name*/
+    .spaceManage .spaceApply .name {
+        position: relative;
+    }
+
+        .spaceManage .spaceApply .name .nameBg {
+            padding: 5px 0;
+        }
+
+    .spaceManage .spaceApply .nameInfor {
+        font-size: 14px;
+        position: absolute;
+        left: 200px;
+        top: 8px;
+        display: none;
+    }
+    /*city*/
+    .spaceManage .spaceApply .city .box3 {
+        margin: 16px 26px 0px 0;
+    }
+
+        .spaceManage .spaceApply .city .box3 .selectBox {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+    /*address*/
+    .spaceManage .spaceApply .address {
+        width: 748px;
+        position: relative;
+        clear: both;
+    }
+
+        .spaceManage .spaceApply .address .addressBg {
+            padding: 5px 0;
+            width: 1060px;
+            box-sizing: border-box;
+        }
+
+        .spaceManage .spaceApply .address .addressInfor {
+            font-size: 14px;
+            position: absolute;
+            left: 200px;
+            top: 5px;
+            display: none;
+        }
+    /*summary*/
+    .spaceManage .spaceApply .summary {
+        position: relative;
+    }
+
+        .spaceManage .spaceApply .summary .summaryBg {
+            padding: 5px 0;
+        }
+
+        .spaceManage .spaceApply .summary .summaryInfor {
+            font-size: 14px;
+            position: absolute;
+            left: 200px;
+            top: 7px;
+            display: none;
+        }
+    /*service*/
+    .spaceManage .spaceApply .service {
+        position: relative;
+    }
+
+        .spaceManage .spaceApply .service .serviceBg {
+            padding: 5px 0;
+        }
+
+        .spaceManage .spaceApply .service .serviceInfor {
+            font-size: 14px;
+            position: absolute;
+            left: 200px;
+            top: 7px;
+            display: none;
+        }
+    /*introduce*/
+    .spaceManage .spaceApply .introduce {
+        position: relative;
+    }
+
+        .spaceManage .spaceApply .introduce .introduceBg {
+            padding: 5px 0;
+        }
+
+        .spaceManage .spaceApply .introduce .introduceInfor {
+            font-size: 14px;
+            position: absolute;
+            left: 200px;
+            top: 7px;
+            display: none;
+        }
+    /*label*/
+    .spaceManage .spaceApply .label {
+        position: relative;
+        margin-bottom: 5px;
+    }
+
+        .spaceManage .spaceApply .label .labelBg {
+            padding: 5px 0;
+        }
+
+        .spaceManage .spaceApply .label .labelInfor {
+            font-size: 14px;
+            position: absolute;
+            left: 200px;
+            top: 7px;
+            display: none;
+        }
+
+
+    /*yn*/
+    .spaceManage .spaceApply .yn {
+        margin-bottom: 50px;
+    }
+
+        .spaceManage .spaceApply .yn p {
+            display: inline;
+        }
+
+        .spaceManage .spaceApply .yn .yn1 {
+            width: 146px;
+            height: 36px;
+            text-align: center;
+            border: 1px solid #dedede;
+            border-radius: 5px;
+        }
+    /*house*/
+    .spaceManage .spaceApply .house {
+        margin-bottom: 50px;
+    }
+
+        .spaceManage .spaceApply .house .house1 {
+            color: #fdd000;
+            font-size: 22px;
+            background: #fff;
+            margin-top: 0;
+        }
+    /*button*/
+    .spaceManage .spaceApply .button {
+        height: 47px;
+        width: 100%;
+        clear: both;
+        text-align: center;
+    }
+
+        .spaceManage .spaceApply .button .button1 {
+            width: 255px;
+            height: 47px;
+            background-color: #fdd000;
+            color: #fff9dd;
+            border-radius: 40px;
+            font-size: 18px;
+        }
+/*---------空间申请入驻页面*/
+.footer {
+    margin-top: 116px;
+    background: #333;
+    height: 207px;
+}

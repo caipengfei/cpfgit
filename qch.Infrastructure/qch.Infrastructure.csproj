@@ -137,6 +137,7 @@
     <Compile Include="Task\IntervalTask.cs" />
     <Compile Include="Task\TimerInfo.cs" />
     <Compile Include="TimeHelper.cs" />
+    <Compile Include="UrlHelper.cs" />
     <Compile Include="XmlHelper.cs" />
   </ItemGroup>
   <ItemGroup>

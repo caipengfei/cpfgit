@@ -1,0 +1,118 @@
+﻿@{
+    ViewBag.Title = "部门员工信息";
+    Layout = "~/Areas/Admin/Views/Shared/_ligerUI.cshtml";
+}
+
+@section css{
+    <script type="text/javascript">
+        $(function () {
+            $("form").ligerForm();
+        });
+        $(f_initGrid);
+        var manager, g;
+        function f_initGrid() {
+            g = manager = $("#maingrid").ligerGrid({
+                columns: [
+                { display: '编号', name: 'Guid', width: 80, type: 'int', frozen: true },
+                { display: '部门名称', name: 'BranchName' },
+                { display: '员工姓名', name: 'UserName', minWidth: 60 },
+                { display: '员工手机号', name: 'UserPhone', minWidth: 60 },
+                { display: '编辑人', name: 'Editor', minWidth: 60 },
+                { display: '添加时间', name: 'CreateDate', type: 'date', editor: { type: "date" } }
+                ],
+                toolbar: {
+                    items: [
+                   { text: '增加', click: add, icon: 'add' },
+                   { line: true },
+                   { text: '修改', click: update, icon: 'modify' },
+                   { line: true },
+                   { text: '删除', click: del, img: '/Content/admin/lib/ligerUI/skins/icons/delete.gif' }
+                    ]
+                },
+                onSelectRow: function (rowdata, rowindex) {
+                    $("#txtrowindex").val(rowindex);
+                },
+                //onAfterShowData: function (currentData) {
+                //    $("#sum").html(currentData.Sum);
+                //},
+                enabledEdit: true,
+                clickToEdit: false,
+                isScroll: false,
+                url: "@Url.Action("Index","Branch")" + "?BranchGuid=@ViewData["BranchGuid"]",
+                dataAction: "server",
+                pageSize: 30,
+                pageSizeOptions: [30, 40, 50],
+                width: '100%',
+                data: "gywm",
+            });
+        }
+
+        //添加按钮事件
+        function add(item) {
+            location.href = "@Url.Action("Save")";
+        }
+        //修改按钮事件
+        function update(item) {
+            var row = manager.getSelectedRow();
+            if (!row) { $.ligerDialog.warn('请点击要操作的数据'); return; }
+
+            location.href = "@Url.Action("Save")" + "/" + row.Guid;
+        }
+        //删除按钮事件
+        function del(item) {
+            var row = manager.getSelectedRow();
+            if (!row) { $.ligerDialog.warn('请点击要操作的数据'); return; }
+
+            $.ligerDialog.confirm('你确定要删除此记录吗?', function (yes) {
+                if (yes) {
+                    $.post("@Url.Action("Del")" + "/" + row.Guid, function (msg) {
+                        if (msg.type == "success") {
+                            manager.loadData();
+                            $.ligerDialog.success(msg.Data);
+
+                        } else {
+                            $.ligerDialog.error(msg.Data);
+                        }
+
+                    });
+                }
+            });
+        }
+
+
+
+    </script>
+    <style type="text/css">
+        .l-case-title {
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+}
+<div style="margin: 10px 0 -10px 5px;">
+    <label>请选择部门:</label>
+@Html.DropDownList("Branch",ViewData["Branchs"] as SelectList, "--请选择部门--", new { @id="txtBranchGuid" })
+    
+    <input type="button" onclick="search()" value="查询" />
+</div>
+
+<div class="l-clear"></div>
+<div id="maingrid" style="margin-top: 20px"></div>
+@section js{
+    <script>
+        function search() {
+            var BranchGuid = $("#txtBranchGuid").val();
+            if (BranchGuid == "") {
+                alert("请输入部门编号");
+                return;
+            }
+            location.href = "/admin/Branch/Index?BranchGuid=" + BranchGuid;
+        }
+    </script>
+}

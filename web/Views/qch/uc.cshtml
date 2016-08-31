@@ -1,0 +1,55 @@
+﻿@{
+    Layout = null;
+}
+<div class="head">
+    <div class="headimg"></div>
+    <div class="ziliao">
+        <p>hi~，<span>@ViewBag.UserName</span>，感觉你比昨天又好看了呢！</p>
+        <p>个人资料完善度&nbsp;&nbsp;<span></span>&nbsp;&nbsp;&nbsp;&nbsp;<var>40%</var>，低&nbsp;&nbsp;<a href="javascript:">[提升]</a></p>
+        <p><span></span>&nbsp;&nbsp;@qch.core.StyleService.GetPosition(ViewBag.UserPosition)</p>
+    </div>
+    <div class="time">
+        上次登陆时间：<span>@DateTime.Now.ToShortDateString()&nbsp;&nbsp;@DateTime.Now.ToShortTimeString()</span>
+    </div>
+
+</div>
+<div class="left">
+    <ul>
+        <a href="javascript:void(0)">
+            <li class="active1" id="userInfo"><span></span>
+                <img src="/Content/image/gerenxinxi.png">个人信息</li>
+        </a>
+        <a href="javascript:">
+            <li id="myOrder"><span></span>
+                <img src="/Content/image/gerendingdan.png" />我的订单</li>
+        </a>
+        <a href="javascript:">
+            <li id="myProject"><span></span>
+                <img src="/Content/image/wodexiangmu.png" />我的项目</li>
+        </a>
+        <a href="javascript:">
+            <li id="activityMamage"><span></span>
+                <img src="/Content/image/huodongguanli.png" />活动管理</li>
+        </a>
+        <a href="/place/ucplace">
+            <li id="spaceManage"><span></span>
+                <img src="/Content/image/kongjianguanli.png" />空间管理</li>
+        </a>
+        <a href="javascript:">
+            <li><span></span>
+                <img src="/Content/image/yuyue.png" />我的预约</li>
+        </a>
+        <a href="javascript:">
+            <li><span></span>
+                <img src="/Content/image/yaoqingyoujiang.png" />邀请有奖</li>
+        </a>
+        <a href="javascript:">
+            <li><span></span>
+                <img src="/Content/image/xiaoxi.png" />消息通知</li>
+        </a>
+        <a href="javascript:">
+            <li><span></span>
+                <img src="/Content/image/zhanghushezhi.png" />账户设置</li>
+        </a>
+    </ul>
+</div>

@@ -19,7 +19,33 @@ namespace api.Controllers
         ActivityService activityService = new ActivityService();
         UserTalkService talkService = new UserTalkService();
 
-
+        /// <summary>
+        /// 活动弹出
+        /// </summary>
+        /// <returns></returns>
+        /// 
+        [HttpGet]
+        public object GetActivity()
+        {
+            try
+            {
+                var m = new
+                {
+                    codeMsg = "0001",
+                    title = "",
+                    content = "",
+                    imageUrl = "http://www.cn-qch.com/h5/img/activity.jpg",
+                    returnUrl = "http://www.cn-qch.com/h5/activity.html?UserGuid=",
+                    remark = ""
+                };
+                return m;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
         /// <summary>
         /// 获取所有活动，按照推荐和开始日期排序
         /// </summary>

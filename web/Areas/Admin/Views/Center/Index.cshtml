@@ -99,6 +99,38 @@
                     f_addTab(tabid, node.data.text, node.data.url);
                 }
             });
+            $("#tree5").ligerTree({
+                data: indexdata5,
+                checkbox: false,
+                slide: false,
+                nodeWidth: 120,
+                attribute: ['nodename', 'url'],
+                onSelect: function (node) {
+                    if (!node.data.url) return;
+                    var tabid = $(node.target).attr("tabid");
+                    if (!tabid) {
+                        tabid = new Date().getTime();
+                        $(node.target).attr("tabid", tabid)
+                    }
+                    f_addTab(tabid, node.data.text, node.data.url);
+                }
+            });
+            $("#tree6").ligerTree({
+                data: indexdata6,
+                checkbox: false,
+                slide: false,
+                nodeWidth: 120,
+                attribute: ['nodename', 'url'],
+                onSelect: function (node) {
+                    if (!node.data.url) return;
+                    var tabid = $(node.target).attr("tabid");
+                    if (!tabid) {
+                        tabid = new Date().getTime();
+                        $(node.target).attr("tabid", tabid)
+                    }
+                    f_addTab(tabid, node.data.text, node.data.url);
+                }
+            });
 
             tab = $("#framecenter").ligerGetTabManager();
             accordion = $("#accordion1").ligerGetAccordionManager();
@@ -233,16 +265,22 @@
     <div id="layout1" style="width: 99.2%; margin: 0 auto; margin-top: 4px;">
         <div position="left" title="管理菜单" id="accordion1">
             <div title="用户管理" class="l-scroll">
-                <ul id="tree1" style="margin-top: 3px;">
+                <ul id="tree1" style="margin-top: 3px;" />
             </div>
             <div title="评论管理" class="l-scroll">
-                <ul id="tree2" style="margin-top: 3px;">
+                <ul id="tree2" style="margin-top: 3px;" />
             </div>
             <div title="活动管理" class="l-scroll">
-                <ul id="tree3" style="margin-top: 3px;">
+                <ul id="tree3" style="margin-top: 3px;" />
             </div>
              <div title="文章管理" class="l-scroll">
-                <ul id="tree4" style="margin-top: 3px;">
+                <ul id="tree4" style="margin-top: 3px;" />
+            </div>
+            <div title="部门管理" class="l-scroll">
+                <ul id="tree5" style="margin-top: 3px;" />
+            </div>
+            <div title="业绩查询" class="l-scroll">
+                <ul id="tree6" style="margin-top: 3px;" />
             </div>
         </div>
         <div position="center" id="framecenter">

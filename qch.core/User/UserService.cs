@@ -32,6 +32,80 @@ namespace qch.core
             return str;
         }
 
+
+        public bool CheckReommuser(string UserGuid)
+        {
+            try
+            {
+                string shangxiaoying = "daab6404-0d70-46cf-98e7-d9699f4634de";//异地推||尚晓英
+                string ReommUser = "";
+                using (var db = new PetaPoco.Database(DbConfig.qch))
+                {
+                    string sql = " where guid=@0 and t_delstate=0";
+                    var user = db.SingleOrDefault<T_Users>(sql, new object[] { UserGuid });
+                    if (user == null)
+                        return false;
+                    for (int i = 0; i < 10; i++)
+                    {
+                        if (!string.IsNullOrWhiteSpace(user.t_ReommUser))
+                        {
+                            ReommUser = user.t_ReommUser;
+                            user = db.SingleOrDefault<T_Users>(sql, new object[] { ReommUser });
+                            if (user.Guid == shangxiaoying)
+                                return false;
+                        }
+                    }
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return false;
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <param name="UserGuid"></param>
+        /// <param name="b"></param>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<TuijianInfo> GetReferral(int page, int pagesize, string UserGuid, DateTime? b, DateTime? e)
+        {
+            try
+            {
+                DateTime begin = b == null ? Convert.ToDateTime("1990-01-01") : qch.Infrastructure.TimeHelper.GetStartDateTime(Convert.ToDateTime(b));
+                DateTime end = e == null ? DateTime.Now : qch.Infrastructure.TimeHelper.GetEndDateTime(Convert.ToDateTime(e));
+                return rp.GetReferral(page, pagesize, UserGuid, begin, end);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
+        /// 获取某用户的审核状态
+        /// </summary>
+        /// <param name="UserGuid"></param>
+        /// <returns></returns>
+        public object GetUserStyleAudit(string UserGuid)
+        {
+            try
+            {
+                return rp.GetUserStyleAudit(UserGuid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return 0;
+            }
+        }
         /// <summary>
         /// 用户注册
         /// </summary>
@@ -147,29 +221,29 @@ namespace qch.core
                             //    }
                             //}
                             #endregion
-                            #region 给推荐人赠送优惠券
+                            #region 给推荐人赠送优惠券 (已取消 2016-07-07)
                             //给推荐人赠送优惠券
                             //查询优惠券信息
-                            var tjvoucher = db.SingleOrDefault<T_Voucher>(" where T_Voucher_Scope='zhijietuijian' and T_DelState=0");
-                            if (tjvoucher == null)
-                            {
-                                log.Info("用户注册时未能获取到需要赠送给推荐人的优惠券信息");
-                            }
-                            else
-                            {
-                                //为用户生成优惠券信息
-                                T_User_Voucher uv = new T_User_Voucher
-                                {
-                                    Guid = Guid.NewGuid().ToString(),
-                                    T_DelState = 0,
-                                    T_GetDate = DateTime.Now,
-                                    T_User_Guid = tjuser.Guid,
-                                    T_Voucher_Guid = tjvoucher.Guid,
-                                    T_Voucher_Pwd = createNonceStr(8),
-                                    T_Voucher_State = 0
-                                };
-                                db.Insert(uv);
-                            }
+                            //var tjvoucher = db.SingleOrDefault<T_Voucher>(" where T_Voucher_Scope='zhijietuijian' and T_DelState=0");
+                            //if (tjvoucher == null)
+                            //{
+                            //    log.Info("用户注册时未能获取到需要赠送给推荐人的优惠券信息");
+                            //}
+                            //else
+                            //{
+                            //    //为用户生成优惠券信息
+                            //    T_User_Voucher uv = new T_User_Voucher
+                            //    {
+                            //        Guid = Guid.NewGuid().ToString(),
+                            //        T_DelState = 0,
+                            //        T_GetDate = DateTime.Now,
+                            //        T_User_Guid = tjuser.Guid,
+                            //        T_Voucher_Guid = tjvoucher.Guid,
+                            //        T_Voucher_Pwd = createNonceStr(8),
+                            //        T_Voucher_State = 0
+                            //    };
+                            //    db.Insert(uv);
+                            //}
                             #endregion
                         }
                         else
@@ -189,7 +263,7 @@ namespace qch.core
                 return msg;
             }
         }
-        
+
         /// <summary>
         /// 获取某用户的所有一级推荐人
         /// </summary>
@@ -226,7 +300,7 @@ namespace qch.core
                 return 0;
             }
         }
-        
+
         /// <summary>
         /// 获取某用户的所有二级推荐人(数量)
         /// </summary>
@@ -238,6 +312,47 @@ namespace qch.core
             try
             {
                 return rp.GetReferral2(UserGuid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return 0;
+            }
+        }
+        /// <summary>
+        /// 获取某用户的所有一级推荐人(数量)
+        /// </summary>
+        /// <param name="UserGuid"></param>
+        /// <param name="Pinyin"></param>
+        /// <returns></returns>
+        public int GetReferral1(string UserGuid, DateTime? b, DateTime? e)
+        {
+            try
+            {
+                DateTime begin = b == null ? Convert.ToDateTime("1990-01-01") : qch.Infrastructure.TimeHelper.GetStartDateTime(Convert.ToDateTime(b));
+                DateTime end = e == null ? DateTime.Now : qch.Infrastructure.TimeHelper.GetEndDateTime(Convert.ToDateTime(e));
+                return rp.GetReferral1(UserGuid, begin, end);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// 获取某用户的所有二级推荐人(数量)
+        /// </summary>
+        /// <param name="UserGuid"></param>
+        /// <param name="Pinyin"></param>
+        /// <returns></returns>
+        public int GetReferral2(string UserGuid, DateTime? b, DateTime? e)
+        {
+            try
+            {
+                DateTime begin = b == null ? Convert.ToDateTime("1990-01-01") : qch.Infrastructure.TimeHelper.GetStartDateTime(Convert.ToDateTime(b));
+                DateTime end = e == null ? DateTime.Now : qch.Infrastructure.TimeHelper.GetEndDateTime(Convert.ToDateTime(e));
+                return rp.GetReferral2(UserGuid, begin, end);
             }
             catch (Exception ex)
             {
@@ -302,6 +417,7 @@ namespace qch.core
                 var user1 = rp.Login(model.LoginName, model.LoginPwd);
                 if (user1 != null)
                 {
+                    model.UserName = user1.t_User_RealName;
                     SetAuthCookie(model);
                     msg.type = "success";
                     msg.Data = "登录成功";
@@ -422,6 +538,27 @@ namespace qch.core
             try
             {
                 return rp.GetAll(page, pagesize);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
+        /// 分页获取所有用户
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<UserModel> GetAll(int page, int pagesize, string phone)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(phone))
+                    return rp.GetAll(page, pagesize);
+                else
+                    return rp.GetAll(page, pagesize, phone);
             }
             catch (Exception ex)
             {

@@ -1,0 +1,98 @@
+﻿@{
+    ViewBag.Title = "青创汇-合伙人团队";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+@model PetaPoco.Page<qch.Models.UserModel>
+@section css{
+    <link rel="stylesheet" href="/Content/qch/css/bootstrappage.css">
+    <link rel="stylesheet" href="/Content/css/Partner.css">
+}
+<div id="container">
+    <div class="tabImg">
+        <img src="/Content/image/Partner/hhrBg.png" alt="" style="width: 1180px; height: 250px;">
+        <div class="cover"></div>
+        <div class="team">
+            <p class="team1">合伙人团队</p>
+            <p class="team2">PARTNER</p>
+        </div>
+    </div>
+    <div class="allPartner">
+        <!--row1-->
+        @if (Model != null && Model.Items != null)
+        {
+            foreach (var item in Model.Items)
+            {
+                if ((Model.Items.ToList().IndexOf(item) + 1) % 3 == 0)
+                {
+            <div class="partner right">
+                <div class="touxiang">
+                    <img src="http://www.cn-qch.com:8002/attach/user/@item.t_User_Pic" alt="">
+                </div>
+                <div class="name">
+                    <p>@item.t_User_RealName&nbsp;&nbsp;| &nbsp;&nbsp;@qch.core.StyleService.GetPosition(item.t_User_Position)</p>
+                </div>
+                <div class="summary">
+                    <p>@item.t_User_Remark</p>
+                </div>
+            </div>
+                }
+                else
+                {
+            <div class="partner">
+                <div class="touxiang">
+                    <img src="http://www.cn-qch.com:8002/attach/user/@item.t_User_Pic" alt="">
+                </div>
+                <div class="name">
+                    <p>@item.t_User_RealName&nbsp;&nbsp;| &nbsp;&nbsp;@qch.core.StyleService.GetPosition(item.t_User_Position)</p>
+                </div>
+                <div class="summary">
+                    <p>@item.t_User_Remark</p>
+                </div>
+            </div>
+                }
+            }
+        }
+    </div>
+    <div class="clear"></div>
+    <div align="center">
+        <ul id="page">
+        </ul>
+    </div>
+</div>
+<div id="backTop">
+    <img src="/Content/image/ding.png" alt="">
+</div>
+@section js{
+    <script src="~/Content/qch/js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="/Content/qch/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/Content/qch/js/bootstrap-paginator.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var element = $("#page");
+            var options = {
+                bootstrapMajorVersion: 3,//版本
+                currentPage: @Convert.ToInt64(ViewData["Page"]),  //当前页数
+                numberOfPages: 5,//设置显示的页码数
+                totalPages: @Convert.ToInt64(ViewData["TotalPage"]), //总页数
+                itemTexts: function (type, page, current) {
+                    switch (type) {
+                        case "first":
+                            return "首页";
+                        case "prev":
+                            return "上一页";
+                        case "next":
+                            return "下一页";
+                        case "last":
+                            return "末页";
+                        case "page":
+                            return page;
+                    }
+                },
+                pageUrl: function (type, page, current) {                  
+                    return "/Place/Index?page=" + page ;
+                }
+            }
+            element.bootstrapPaginator(options);
+        }); 
+    </script>
+}

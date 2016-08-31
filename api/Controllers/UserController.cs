@@ -26,6 +26,89 @@ namespace api.Controllers
         HistoryWorkService historyWork = new HistoryWorkService();
         ProjectService projectService = new ProjectService();
 
+
+        [HttpGet]
+        public Msg CheckIDCard(string IDCard)
+        {
+            Msg msg = new Msg();
+            msg.type = "error";
+            msg.Data = "验证失败";
+            try
+            {
+                IdentityService idservice = new IdentityService();
+                using (var db = new PetaPoco.Database("qch"))
+                {
+                    string sql = "select count(1) from T_User_Bank where t_Bank_OpenUserNo=@0 and t_DelState=0";
+                    var m = db.ExecuteScalar<object>(sql, new object[] { IDCard });
+                    if (m != null)
+                    {
+                        if (Convert.ToInt32(m) > 0)
+                        {
+                            msg.Data = "该身份证已被绑定";
+                            return msg;
+                        }
+                    }
+                }
+                if (!idservice.CheckIDCard(IDCard))
+                {
+                    msg.type = "error";
+                    msg.Data = "身份证号错误";
+                }
+                else
+                {
+                    msg.type = "success";
+                    msg.Data = "验证通过";
+                }
+                return msg;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return msg;
+            }
+        }
+        [HttpGet]
+        public bool CheckReommuser(string UserGuid)
+        {
+            try
+            {
+                log.Info("-----------------------验证开始-------------------------------");
+                string shangxiaoying = "daab6404-0d70-46cf-98e7-d9699f4634de";//异地推||尚晓英
+                string ReommUser = "";
+                using (var db = new PetaPoco.Database("qch"))
+                {
+                    string sql1 = " where (guid=@0 or t_user_loginid=@1) and t_delstate=0";
+                    string sql = " where guid=@0 and t_delstate=0";
+                    var user = db.SingleOrDefault<qch.Repositories.T_Users>(sql1, new object[] { UserGuid, UserGuid });
+                    if (user == null)
+                        return false;
+                    log.Info("注册用户：" + user.Guid + "----" + user.t_User_RealName);
+                    for (int i = 0; i < 10; i++)
+                    {
+                        if (!string.IsNullOrWhiteSpace(user.t_ReommUser))
+                        {
+                            ReommUser = user.t_ReommUser;
+                            user = db.SingleOrDefault<qch.Repositories.T_Users>(sql, new object[] { ReommUser });
+                            if (user == null)
+                                return false;
+                            log.Info(i + 1 + "级推荐人：" + user.Guid + "----" + user.t_User_RealName);
+                            if (user.Guid == shangxiaoying)
+                            {
+                                log.Info("-----------------------验证结束：未通过-------------------------------");
+                                return false;
+                            }
+                        }
+                    }
+                }
+                log.Info("-----------------------验证结束：通过-------------------------------");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return false;
+            }
+        }
         /// <summary>
         /// 设置用户登录票证
         /// </summary>

@@ -1,0 +1,12 @@
+#header{width: 100%;height: 70px;background: #333;text-align: center;}
+#container{width: 100%;text-align: center;}
+#container img{width: 130px;height: 130px;border-radius: 65px;margin-top: 130px;margin-bottom:40px;display: block;
+position: absolute;left: 50%;margin-left: -65px;}
+#container h1{margin-bottom: 65px;position: absolute;left: 50%;top:370px;font-size: 20px;margin-left: -30px;}
+#container p{margin-bottom: 70px;position: absolute;left: 50%;top:420px;font-size: 14px;margin-left: -70px;}
+#container .have{width:360px;height: 40px;background: #fdd000;border-radius: 50px;
+	display: block;line-height: 40px;font-size: 14px;color: #000;position: absolute;left: 50%;top:480px;margin-left: -180px;}
+#container .have:hover{background: #edb509}
+#container .new{width:358px;height: 38px;border-radius: 50px;display: block;border: 1px solid #fdd000;color: #fdd000;
+	display: block;line-height: 38px;font-size:14px;position: absolute;left: 50%;top:550px;margin-left: -180px; }
+#container .new:hover{border: 1px solid #edb509;color: #edb509}

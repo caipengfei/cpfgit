@@ -1,0 +1,97 @@
+﻿@model qch.Models.BranchUserModel
+@{
+    ViewBag.Title = "部门员工添加";
+    Layout = "~/Areas/Admin/Views/Shared/_ligerUI.cshtml";
+}
+
+@section css{
+    <script type="text/javascript">
+        $(function () {
+            $("form").ligerForm();
+        });
+    </script>
+    <style type="text/css">
+        .l-table-edit {
+        }
+
+        .l-table-edit-td {
+            padding: 4px;
+        }
+
+        .l-button-submit, .l-button-reset {
+            width: 80px;
+            float: left;
+            margin-left: 10px;
+            padding-bottom: 2px;
+        }
+    </style>
+
+}
+
+
+@using (Ajax.BeginForm("Save", "Branch", new AjaxOptions { HttpMethod = "post", OnSuccess = "onSuccess" }))
+{ 
+    <table cellpadding="0" cellspacing="0" class="l-table-edit">
+        <tr>
+            <td align="right" class="l-table-edit-td">编号:</td>
+            <td align="left" class="l-table-edit-td">@Html.TextBoxFor(o => o.Guid, new { @readonly = true })
+            </td>
+            <td align="left" style="color: red"></td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td">部门编号:</td>
+            <td align="left" class="l-table-edit-td">@if (Model != null)
+                                                     {
+                @Html.DropDownListFor(o => o.t_Branch_Guid, ViewData["Branchs"] as SelectList, "--请选择部门--", new { @selectedValue = Model.t_Branch_Guid })
+                                                     }
+                                                     else
+                                                     {
+                @Html.DropDownListFor(o => o.t_Branch_Guid, ViewData["Branchs"] as SelectList, "--请选择部门--")
+                                                     }
+            </td>
+            <td align="left" style="color: red">@Html.ValidationMessageFor(o => o.t_Branch_Guid)</td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td">用户手机号:</td>
+            <td align="left" class="l-table-edit-td">@Html.TextBoxFor(o => o.t_User_Phone)
+            </td>
+            <td align="left" style="color: red">@Html.ValidationMessageFor(o => o.t_User_Phone)</td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td">添加人 :</td>
+            <td align="left" class="l-table-edit-td">
+                @Html.TextBoxFor(o => o.t_Editor, new { ltype = "text", @readonly = "readonly" })
+            </td>
+            <td align="left">@Html.ValidationMessageFor(o => o.t_Editor)</td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td">添加时间 :</td>
+            <td align="left" class="l-table-edit-td">
+                @Html.TextBoxFor(o => o.t_CreateDate, new { ltype = "text", @readonly = "readonly" })
+            </td>
+            <td align="left">@Html.ValidationMessageFor(o => o.t_CreateDate)</td>
+        </tr>
+
+    </table>
+    <br />
+    <input type="submit" value="提交" id="btnSave" class="l-button l-button-submit" />
+    <input type="reset" value="重置" class="l-button l-button-reset" />
+
+}
+@section js{
+    <script src="/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="/Scripts/jquery.validate.min.js"></script>
+    <script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript">
+        if ($("#valueId")) {
+            $("#txtId").val($("#valueId").val());
+        }
+        function onSuccess(msg) {
+            if (msg.type == "success") {
+                $.ligerDialog.success(msg.Data);
+            } else {
+                $.ligerDialog.error(msg.Data);
+            }
+        }
+    </script>
+}

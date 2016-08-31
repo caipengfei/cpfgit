@@ -55,6 +55,11 @@ namespace qch.Repositories
         [Column]
         public DateTime t_AddDate { get; set; }
         /// <summary>
+        /// 0：减少，1:后台充值2：创业币充值3：推荐获得4：订单返佣
+        /// </summary>
+        [Column]
+        public int t_UserAccount_Type { get; set; }
+        /// <summary>
         /// 删除状态
         /// </summary>
         [Column]

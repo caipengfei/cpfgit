@@ -4,7 +4,7 @@ $(function () {
     $('body').css({
         height: $(window).height()
     });
-    $('.btn-submit').click(signUpHandler);
+    //$('.btn-submit').click(signUpHandler);
     $('.getvalidcode.enabled').click(getvalidcode);
     $('.phone,.validcode').keyup(banNaN);
 })
@@ -13,12 +13,12 @@ $(function () {
 function validField($input, reg, helpText1, helpText2) {
     var value = $.trim($input[0].value);
     if (!value) {
-        tipInfo(helpText1);
+        util.msgBox(helpText1);
         $input[0].value='';
         return false;
     } else {
         if (reg && !reg.test(value)) {
-            tipInfo(helpText2);
+            util.msgBox(helpText2);
             return false;
         }
     }
@@ -80,12 +80,20 @@ function signUpHandler() {
 //发送验证码
 function sendsms(phone) {
     if (phone == "") {
-        tipInfo("手机号不能为空");
+        util.msgBox("手机号不能为空");
         return false;
     }
-    $.post('/home/SendSMS', { phone: phone }, function (msg) {
-        tipInfo(msg.Data);
+    $.post('/wxUser/CheckPhone', { Phone: phone }, function (msg) {
+        if (msg.type == "error") {
+            util.msgBox("手机号已被注册");
+            return false;
+        } else {
+            $.post('/home/SendSMS', { phone: phone }, function (msg) {
+                util.msgBox(msg.Data);
+            })
+        }
     })
+    
 }
 // 获取验证码
 var waitTime;

@@ -1,6 +1,6 @@
 body {
     overflow-x: hidden;
-    height: 57.77em;
+    height: 79.7em;
 }
 .container{
     max-width: 480px;
@@ -64,15 +64,19 @@ body {
 /* 查看中奖记录 */
 .lookup{
     text-align: center;
-    height: 3.85rem;
+    height: 3rem;
+    line-height: 3rem;
     width: 100%;
 }
 .lookup a{
     height: 100%;
-    width: 11.69rem;
-    background:  url(../img/lottery/chakan@2x.png);
-    background-size: 100% 100%;
+    width: 18rem;
+    background:  #fff;
+    border-radius: 1.9rem;
+    color: rgb(110,151,245);
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    font-size: 1.1rem;
+    box-shadow: rgb(110,151,245) 0 0 1rem;
 }
 .lookup a:active{
     opacity: .8;
@@ -80,17 +84,17 @@ body {
 /* 规则 */
 .rulebox{
     height: 12rem;
-    width: 90%;
+    width: 100%;
     margin: auto;
-    background:  url(../img/lottery/huodongguize@2x.png);
-    background-size: 100% 100%;
+    background:  url(../img/lottery/guize@2x.png) no-repeat 50% 0;
+    background-size: auto 2.23rem;
     padding-top: 3.6rem;
     padding-left: 3rem;
 }
 .rulebox p{
-    font-size: .8rem;
-    line-height: 1.4rem;
-    
+    font-size: .9rem;
+    line-height: 1.6rem;
+    color: rgb(93,104,130);
 }
 /* 提示盒子 */
 .tipbox {
@@ -124,31 +128,18 @@ body {
 }
 .tipbox .ok {
     font-size: 1.1rem;
-    width: 50%;
-    color: #fff;
-    background: #6d97f4;
-    height: 2.4rem;
+    width: 75%;
+    color: #6d97f4;
+    border: #6d97f4 2px solid;
+    height: 2.8rem;
     line-height: 2.4rem;
-    border-radius: 1.2rem;
+    border-radius: 1.4rem;
     text-align: center;
-    margin-top: 1.5rem;
+    margin-top: 1.8rem;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 .tipbox .ok:active {
     opacity: .8;
-}
-.tipbox.pulling {
-    background: url(../img/lottery/pulling.png) no-repeat 0 50%;
-    background-size: 100% auto;
-}
-.tipbox.pulling .ok{
-    margin-top:3.6rem;
-}
-.tipbox.pulling p i{
-    display: none;
-}
-.tipbox.pulling p b{
-    font-size: 2rem;
 }
 .shade {
     position: fixed;
@@ -169,4 +160,83 @@ body {
     right: 0;
     left: 0;
     z-index: 10;
+}
+.winningbox{
+    width: 100%;
+    position: absolute;
+    text-align: center;
+}
+.winningbox table{
+    width: 70%;
+    overflow: hidden;
+    background: #fff;
+    margin: auto;
+    display: block;
+    border-radius: .5rem;
+}
+.winningbox caption{
+    height: 2.4rem;
+    line-height: 2.4rem;
+    background: rgb(109,151,244);
+    color: #fff;
+    font-size: 1.1rem;
+    display: block;
+}
+.winningbox thead{
+    display: block;
+}
+.winningbox tbody{
+    max-height: 15rem;
+    overflow:hidden; 
+    display: block;
+    transform: translateZ(0);
+    backface-visibility:hidden;
+    perspective:1000;
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility:hidden;
+    -webkit-perspective:1000;
+    transform-origin:50% 50%;
+}
+.winningbox tr{
+    display: block;
+    height: 2.4rem;
+}
+.winningbox table th,.winningbox table td{
+    text-align: center;
+    color: #999;
+    font-size: 1rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    height: 2.4rem;
+    color: #999;
+    border-bottom: 1px solid rgb(235,235,235);
+    display: block;
+    float: left;
+    width: 42%;
+    line-height: 1.6rem;
+    padding: .4rem 0;
+    font-weight: normal;
+}
+.winningbox table th:nth-child(1),.winningbox table td:nth-child(1){
+    width: 16%;
+}
+.winningbox td img{
+    width: 1.6rem;
+    height: 100%;
+    border-radius: 1rem;
+}
+.btn-winlist{
+    height: 2rem;
+    line-height: 2rem;
+    margin-top: 1.6rem;
+}
+.btn-winlist a{
+    color: rgb(109,151,244);
+    background: url(../img/lottery/zhankai@2x.png) no-repeat right 50%;
+    background-size: 1.5rem auto;
+    padding-right: 1.5rem;
+    padding-top: 2px;
+    font-size: 1rem;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }

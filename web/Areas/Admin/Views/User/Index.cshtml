@@ -1,0 +1,85 @@
+﻿@{
+    ViewBag.Title = "文章列表";
+    Layout = "~/Areas/admin/Views/Shared/_ligerUI.cshtml";
+}
+
+@section css{
+    <script type="text/javascript">
+
+        var seData = [{ IsActive: 0, text: '否' }, { IsActive: 1, text: '是' }];
+        $(f_initGrid);
+        var manager, g;
+        function f_initGrid() {
+            g = manager = $("#maingrid").ligerGrid({
+                columns: [
+                { display: '编号', name: 'Guid', width: 50, type: 'int', frozen: true },
+                { display: '姓名', name: 't_User_RealName', editor: { type: 'text' } },
+                { display: '手机号', name: 't_User_LoginId', editor: { type: 'text' } },
+                { display: '用户类型', name: 't_User_Style', editor: { type: 'text' } },
+                { display: '性别', name: 't_User_Sex', editor: { type: 'text' } },
+                { display: '公司', name: 't_User_Commpany', editor: { type: 'text' } },
+                { display: '城市', name: 't_User_RealName', editor: { type: 'text' } },
+                { display: '备注', name: 't_User_RealName', editor: { type: 'text' } },
+                { display: '日期', name: 't_User_Date', type: 'date', editor: { type: "date" } }
+                ],
+                toolbar: {
+                    items: [
+                    { line: true },
+                    { text: '查看用户角色', click: selectRole, icon: 'modify' },
+                    { line: true }
+                    ]
+                },
+                onSelectRow: function (rowdata, rowindex) {
+                    $("#txtrowindex").val(rowindex);
+                },
+                enabledEdit: true,
+                clickToEdit: false,
+                isScroll: false,
+                url: "@Url.Action("Index", "User")" + "?phone=@ViewBag.phone",
+                dataAction: "server",
+                pageSize: 30,
+                pageSizeOptions: [30, 40, 50],
+                dateFormat: "yyyy-MM-dd hh:mm:ss",
+                width: '100%'
+            });
+        }
+
+
+
+
+        //查看用户角色
+        function selectRole(item) {
+            var row = manager.getSelectedRow();
+            if (!row) { $.ligerDialog.warn('请点击要操作的数据'); return; }
+            location.href = "@Url.Action("SelectRole")" + "/" + row.Guid;
+        }
+
+    </script>
+}
+
+
+<table cellpadding="0" cellspacing="0" class="l-table-edit">
+    <tr>
+        <td align="right" class="l-table-edit-td">手机号查询:</td>
+        <td align="left" class="l-table-edit-td">
+            <input name="txtDate" type="text" id="txtKey" ltype="text" />
+        </td>
+        <td align="left" class="l-table-edit-td">
+            <input type="button" value="查 询" class="l-button" onclick="search()" />
+        </td>
+    </tr>
+</table>
+
+<div id="maingrid" style="margin-top: 20px"></div>
+<br />
+@section js{
+    <script type="text/javascript">
+        function search() {
+            if ($("#txtKey").val() == "") {
+                alert("请输入手机号");
+                return false;
+            }
+            location.href = "/admin/User/Index?phone=" + $("#txtKey").val();
+        }
+    </script>
+}

@@ -50,9 +50,10 @@
         </div>
     </form>
     <script src="/h5/js/jquery.min.js"></script>
+    <script src="~/H5/js/util.js"></script>
     <script src="/h5/js/register.js"></script>
     <script src="~/Scripts/jquery.form.js"></script>
-    <script src="~/H5/js/util.js"></script>
+    
     <script type="text/javascript">
         var phone = $("#txtUserPhone").val();
         if (phone != '') {
@@ -73,11 +74,11 @@
                     var bReference = ($reference.val().trim() && validField($reference, regPhone, '', '推荐人手机号格式不正确！')) || true;
 
                     // 用户手机号验证
-                    if (!validField($phone, regPhone, '手机号不能为空！', '用户手机号格式不正确！')) return;
+                    if (!validField($phone, regPhone, '手机号不能为空！', '用户手机号格式不正确！')) return false;
                     // 密码验证
-                    if (!validField($password, regPassword, '密码不能为空！', '密码格式不正确！')) return;
+                    if (!validField($password, regPassword, '密码不能为空！', '密码格式不正确！')) return false;
                     // 验证码验证
-                    if (!validField($validcode, null, '验证码不能为空！')) return;
+                    if (!validField($validcode, null, '验证码不能为空！')) return false;
                     // 推荐人验证
                     //if (!bReference) return;
                 },

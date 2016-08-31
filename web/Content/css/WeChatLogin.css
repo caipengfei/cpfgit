@@ -1,0 +1,16 @@
+#header{width: 100%;height: 70px;background: #333;text-align: center;}
+#container{width: 100%;text-align: center;}
+#container img{width: 130px;height: 130px;border-radius: 65px;margin-top: 130px;margin-bottom:40px;display: block;
+position: absolute;left: 50%;margin-left: -65px;}
+#container .number{width:340px;height: 38px;border: 1px solid #9c9c9c;position: absolute;left: 50%;top:370px;
+	font-size: 14px;margin-left:-180px;border-radius: 50px;padding-left:18px;line-height: 38px;}
+#container .code{width: 200px;height: 38px;position: absolute;left: 50%;top:440px;font-size: 14px;
+	border: 1px solid #9c9c9c;border-radius: 50px;margin-left: -180px;padding-left:18px;line-height: 38px;}
+#container .button{width: 100px;height: 40px;line-height: 40px;font-size: 14px;text-align: center;border-radius: 50px;
+	background: #333333;color: #fff;position: absolute;left: 50%;top:440px;margin-left: 80px;}
+#container .button:hover{background: #101010}
+#container .login{width:360px;height: 40px;border-radius: 50px;display: block;background:#fdd000;color: #000;
+	display: block;line-height: 40px;font-size: 14px;position: absolute;left: 50%;top:520px;margin-left: -180px; }
+#container .login:hover{background: #edb509}
+#container .concat{font-size: 14px;color: #fdd000;position: absolute;top:590px;left: 50%;margin-left: -35px;}
+#container .concat:hover{color: #edb509}

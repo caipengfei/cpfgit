@@ -71,7 +71,10 @@ namespace qch.core
         {
             try
             {
-                return rp.GetAlluvByUser(page, pagesize, Guid, typeId);
+                var model =  rp.GetAlluvByUser(page, pagesize, Guid, typeId);
+                if (model != null && model.Items != null)
+                    model.Items.OrderByDescending(o => o.EndDate);
+                return model;
             }
             catch (Exception ex)
             {

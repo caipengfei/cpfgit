@@ -16,6 +16,24 @@ namespace qch.core
         PraiseRepository rp = new PraiseRepository();
 
         /// <summary>
+        /// 查询某用户是否点赞某条动态
+        /// </summary>
+        /// <param name="UserGuid"></param>
+        /// <param name="TopicGuid"></param>
+        /// <returns></returns>
+        public bool IsPraise(string UserGuid, string TopicGuid)
+        {
+            try
+            {
+                return rp.IsPraise(UserGuid, TopicGuid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return false;
+            }
+        }
+        /// <summary>
         /// 获取点赞用户信息
         /// </summary>
         /// <param name="Guid"></param>
@@ -25,6 +43,23 @@ namespace qch.core
             try
             {
                 return rp.GetAllByTopicGuid(Guid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
+        /// 创业圈点赞用户信息
+        /// </summary>
+        /// <param name="Guid"></param>
+        /// <returns></returns>
+        public IEnumerable<UserPraise> GetAllByTopicGuid2(string Guid)
+        {
+            try
+            {
+                return rp.GetAllByTopicGuid2(Guid);
             }
             catch (Exception ex)
             {

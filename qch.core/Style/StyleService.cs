@@ -42,8 +42,8 @@ namespace qch.core
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(ids))
-                    return null;
+                if (string.IsNullOrWhiteSpace(ids) || ids == "NULL" || ids == "Null" || ids == "null")
+                    return new List<SelectStyle>();
                 if (ids.IndexOf(';') <= 0)
                 {
                     var model = rp.GetByIds(ids);
@@ -67,14 +67,29 @@ namespace qch.core
                             model = new List<SelectStyle>();
                         return model;
                     }
-                    return null;
+                    return new List<SelectStyle>();
                 }
             }
             catch (Exception ex)
             {
+                //数据库里有null这样的字符串
+                log.Error("--------------" + ids);
                 log.Error(ex.Message);
-                return null;
+                return new List<SelectStyle>();
             }
+        }
+        public static string GetPosition(string Position)
+        {
+            string xy = "";
+            var list = new StyleService().GetByIds(Position);
+            if (list != null)
+            {
+                foreach (var item in list)
+                {
+                    xy += item.t_Style_Name + " ";
+                }
+            }
+            return xy;
         }
         /// <summary>
         /// 分页获取所有

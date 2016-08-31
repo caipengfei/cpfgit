@@ -1,0 +1,183 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <link rel="dns-prefetch" href="//test.cn-qch.com/" />
+    <link rel="dns-prefetch" href="//www.cn-qch.com/" />
+    <title>积分商城</title>
+    <link rel="stylesheet" href="/wx/css/public.css">
+    <style>
+        .shoplist li{
+            border: 1px solid rgb(235,235,235);
+            border-top: none;
+            width: 50%;
+            float: left;
+            padding: 1rem;
+        }
+        .shoplist li.first{
+            border-right: none;
+            border-left: none;
+        }
+        .shoplist .jifen{
+            background: url(/wx/img/icon/jifen.png) no-repeat 0 50%;
+            background-size: 1.2rem auto;
+            padding-left: 1.3rem;
+            color: #ffa30b;
+            float: right;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        .shoplist .box{
+            margin-top: .6rem;
+            margin-bottom: .6rem;
+        }
+        .shoplist .box h3{
+            font-size: 1.1rem;
+            margin-bottom: .6rem;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        .shoplist .box .image{
+            height: 8rem;
+        }
+        .shoplist .box .image img{
+            height: 100%;
+        }
+        .shoplist .btn-convert{
+            color: #f76a14;
+            border: 1px solid #f76a14;
+            height: 2rem;
+            line-height: 2rem;
+            text-align: center;
+            padding: 0 1rem;
+            float: right;
+            font-size: 1rem;
+            border-radius: 1rem;
+        }
+        .shoplist .btn-convert:active{
+            background-color: rgb(222,222,222);
+        }
+        .loading {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background:#fff url(/wx/img/icon/loading.gif) no-repeat 50% 50%;
+            background-size: 2rem auto;
+        }
+        .cur-jf{
+            background:rgb(247,247,247);
+            height:2rem;
+            line-height:2rem;
+            padding-left:1rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width:100%;
+        }
+        .cur-jf b{
+            color:rgb(56,121,217);
+        }
+        .shoplist{
+            padding-top:2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <p class="cur-jf">您当前可用积分:<b></b> </p>
+        <ul class="shoplist clearfix"></ul>
+    </div>
+    <div class="loading"></div>
+    <script type="text/html" id="shoplistTemplate">
+        <%var imgUrl='http://www.cn-qch.com:8002/attach/images/'%>
+        <%data.forEach(function(item,index){%>
+            <%var name=item.t_Goods_Name?item.t_Goods_Name.trim():''%>
+            <%var img_url=item.t_Goods_Pic?imgUrl+item.t_Goods_Pic:'/h5/img/avator.png'%>
+            <li <%if(index%2==0){%>class="first"<%}%>>
+                <span class="jifen"><%=item.t_Need_Integral%></span>
+                <i class="clearfix"></i>
+                <div class="box">
+                    <h3><%=name%></h3>
+                    <div class="image">
+                        <img src="<%=img_url%>" alt="<%=name%>">
+                    </div>
+                </div>
+                <a class="btn-convert" data-guid="<%=item.guid%>" data-jf='<%=item.t_Need_Integral%>' data-src="<%=img_url%>" data-name="<%=name%>" data-href="/wx/confirmOrder.html">立即兑换</a>
+            </li>
+        <%})%>
+    </script>
+    <script src="/h5/js/jquery.min.js"></script>
+    <script src="/wx/js/jquery.mobile-events.min.js"></script>
+    <script src="/wx/js/artTemplate.js"></script>
+    <script src="/h5/js/util.js"></script>
+    <script>
+        // 在进入商品列表页面之后首先调用验证签名的接口：api/convert/checksign?uesrguid=***&sign=***根据返回的值觉得用户是否从正规渠道进入。
+        var userguid=util.getUrlParam('UserGuid');
+        var sign=util.getUrlParam('sign')||'';
+        // 用户guid加入会话
+        sessionStorage.setItem('userguid',userguid);
+        sessionStorage.setItem('typeid',1);
+        // 用户积分
+        var userJf;
+        // 验证签名
+        $.ajax({
+            url: 'http://120.25.106.244:9001/api/convert/checksign',
+            data: { 
+                userguid: userguid,
+                sign:sign
+                },
+            success: function(res) {
+                if(res=='0'){
+                    // 获取所有商品
+                    $.ajax({
+                        url: 'http://120.25.106.244:9001/api/convert/GetAll',
+                        cache:false,
+                        success: function (res) {
+                            if(res&&res.length){
+                                $('.shoplist').html(template('shoplistTemplate',{data:res}));
+                            }
+                        }
+                    })
+                    // 获取用户积分
+                    $.ajax({
+                        url: 'http://120.25.106.244:9001/api/Integral/GetIntegral',
+                        data: { UserGuid: userguid },
+                        success: function(res) {
+                            $('.cur-jf b').text(res);
+                            userJf=res;
+                        }
+                    })
+                }else{
+                    document.body.innerHTML='';
+                    util.msgBox('签名错误：请从正规渠道进入！');
+                }
+                // 移除加载中。。。
+                $(document).ajaxStop(function(){
+                    $('.loading').remove();
+                })
+            }
+        })
+        $(function(){
+            // 兑换商品
+            $('body').on('tap','.btn-convert',function(){
+                var jf=$(this).data('jf');
+                if(userJf>=jf){
+                    sessionStorage.setItem('shopsrc',$(this).data('src'));
+                    sessionStorage.setItem('shopname',$(this).data('name'));
+                    sessionStorage.setItem('shopguid',$(this).data('guid'));
+                    location.href=$(this).data('href');
+                }else{
+                    util.msgBox('积分余额不足');
+                }
+            })
+        })
+    </script>
+</body>
+</html>

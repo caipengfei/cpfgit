@@ -1,0 +1,49 @@
+﻿@{
+    Layout = null;
+}
+@model PetaPoco.Page<qch.Models.SelectTopic>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0" />
+    <title>青创汇-点赞</title>
+    <link rel="stylesheet" href="/Content/css/good.css">
+</head>
+<body>
+    <div class="content">
+        <div class="head">
+            <img src="/Content/image/goodBgHead.png" alt="">
+        </div>
+        <div class="box">
+            <div class="headBox">
+                <span class='toux'>头像</span>
+                <span class="user">用户名</span>
+                <span class="good">点赞数</span>
+            </div>
+        </div>
+        <div class="contentBox">
+            <ul>
+                @if (Model != null && Model.Items != null && Model.Items.Count > 0)
+                {
+                    foreach (var item in Model.Items)
+                    {
+                    <li>
+                        <span>
+                            <img src="http://www.cn-qch.com:8002/attach/user/@item.Pic" alt=""></span>
+                        <span class="name">@item.UserName</span>
+                        <span class="number">@item.Parises</span>
+                    </li>
+                    }
+                }
+            </ul>
+        </div>
+        <div class="foot">
+            <a href="/wx/pariseList.html">
+                <img src="/Content/image/foot_01.jpg" alt="" style="width: 100%; display: block"></a>
+            <img src="/Content/image/foot_02.jpg" alt="" style="width: 100%; display: block">
+        </div>
+    </div>
+    <script src="/Content/js/good.js"></script>
+</body>
+</html>

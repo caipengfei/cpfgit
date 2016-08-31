@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "UploadRoom";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+@section css{
+    <link rel="stylesheet" type="text/css" href="/content/css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="/content/css/userinfo.css" />
+}
+<div class="content">
+    <div class="wrap clearfix">
+        @Html.Action("uc", "qch")
+        <form id="form0" class="form-horizontal" method="post" action="/qch/bind" novalidate="novalidate">
+            @*@Html.AntiForgeryToken()*@
+            @Html.ValidationSummary(true)
+
+        </form>
+    </div>
+</div>
+

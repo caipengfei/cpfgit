@@ -90,6 +90,17 @@ namespace qch.Repositories
             get { return _t_place_remark; }
         }
         /// <summary>
+        /// 房间出租类型：
+        /// 0：默认值（小于一天）；
+        /// 1：按天出租；
+        /// 2：按周出租；
+        /// 3：按月出租；
+        /// 4：按季度出租
+        /// </summary>
+        /// 
+        [Column]
+        public int t_Place_Type { get; set; }
+        /// <summary>
         /// 费用
         /// </summary>
         /// 

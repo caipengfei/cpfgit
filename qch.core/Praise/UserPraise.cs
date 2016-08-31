@@ -30,5 +30,17 @@ namespace qch.Models
         /// 点赞时间
         /// </summary>
         public DateTime t_Date { get; set; }
+        /// <summary>
+        /// 发布人类型
+        /// </summary>
+        public int t_User_Style { get; set; }
+        /// <summary>
+        /// 审核状态
+        /// </summary>
+        public int t_UserStyleAudit { get; set; }
+        /// <summary>
+        /// 点赞人Guid
+        /// </summary>
+        public string t_User_Guid { get; set; }
     }
 }

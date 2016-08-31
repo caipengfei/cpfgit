@@ -26,7 +26,7 @@ namespace qch.Repositories
         {
             try
             {
-                string sql = "select * from T_User_Account where t_User_Guid=@0 and t_DelState=0";
+                string sql = "select * from T_User_Account where t_User_Guid=@0 and t_DelState=0 order by t_AddDate desc";
                 return rp.GetPageData(page, pagesize, sql, new object[] { Guid });
             }
             catch (Exception ex)

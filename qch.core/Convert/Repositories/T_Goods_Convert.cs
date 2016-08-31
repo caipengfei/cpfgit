@@ -186,6 +186,14 @@ namespace qch.Repositories
         [Column]
         public int t_Convert_Count { get; set; }
         /// <summary>
+        /// 商品类型
+        /// 0：全部；
+        /// 1：积分兑换商品；
+        /// 2：转盘抽奖商品
+        /// </summary>
+        [Column]
+        public int t_Goods_Type { get; set; }
+        /// <summary>
         /// 删除状态
         /// </summary>
         /// 

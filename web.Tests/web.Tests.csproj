@@ -202,6 +202,7 @@
     <Compile Include="Controllers\HomeControllerTest.cs" />
     <Compile Include="QRcodeTest.cs" />
     <Compile Include="strTest.cs" />
+    <Compile Include="UnitTest1.cs" />
     <Compile Include="wxUserControllerTest.cs" />
   </ItemGroup>
   <ItemGroup>

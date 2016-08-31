@@ -22,7 +22,21 @@
             <img src="/h5/img/lottery/zhuanpan2@2x.png" />
             <div class="pointer"></div>
         </div>
-        <div class="lookup"><a></a></div>
+        <div class="lookup"><a>查看我的中奖记录</a></div>
+        <div class="winningbox">
+            <table cellpadding="0" cellspacing="0">
+                <caption>中奖名单</caption>
+                <thead>
+                    <tr>
+                        <th>头像</th>
+                        <th>用户名</th>
+                        <th>奖品</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div class="btn-winlist"><a href="/wx/winningList.html">查看中奖名单</a></div>
+        </div>
         <div class="rulebox">
             <p>1,每次抽奖使用10积分，抽奖次数不限;</p>
             <p>2,抽中的奖品我们客服人员将于24小时内与您电话确认;</p>
@@ -40,7 +54,18 @@
         <img src="/h5/img/lottery/tipbox.png">
         <img src="/h5/img/lottery/pulling.png">
     </div>
+    <script type="text/html" id="listTemplate">
+        <%var avatorUrl='http://www.cn-qch.com:8002/attach/user/'%>
+        <%data.items.forEach(function(item,index){%>
+            <tr>
+                <td><img src="<%=avatorUrl+item.userPic%>"></td>
+                <td><%=item.userName%></td>
+                <td><%=item.goodsName%></td>
+            </tr>
+        <%})%>
+    </script>
     <script src="/h5/js/zepto.min.js"></script>
+    <script src="/h5/js/artTemplate.js"></script>
     <script src="/h5/js/util.js"></script>
     <script src="/h5/js/lottery.js"></script>
 </body>

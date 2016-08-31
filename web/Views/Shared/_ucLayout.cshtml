@@ -1,0 +1,38 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>@ViewBag.title</title>
+    <link rel="stylesheet" href="/Content/css/PersonPublic.css">
+    <style type="text/css">
+        .nav_p a {
+            display: inline-block;
+        }
+        .clear { clear: both; }
+    </style>
+    @RenderSection("css", false)
+</head>
+<body>
+    <!--header-->
+    @Html.Partial("_NewHeader")
+    <!--header-->
+    @RenderBody()
+    <!--clear-->
+    <div class="clear"></div>
+    <!--底部-->
+    @Html.Partial("_footer")
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    @RenderSection("js", false)
+</body>
+</html>
+
+
+
+
+
+
+

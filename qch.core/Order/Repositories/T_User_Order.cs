@@ -60,6 +60,11 @@ namespace qch.Repositories
         [Column]
         public decimal t_Order_Money { get; set; }
         /// <summary>
+        /// 实际支付金额
+        /// </summary>
+        [Column]
+        public decimal t_Order_PayMoney { get; set; }
+        /// <summary>
         /// 订单名称
         /// </summary>
         [Column]

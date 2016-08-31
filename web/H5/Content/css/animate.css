@@ -1,0 +1,60 @@
+.animated{-webkit-animation-duration:1s;-moz-animation-duration:1s;-ms-animation-duration:1s;-o-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:both;-moz-animation-fill-mode:both;-ms-animation-fill-mode:both;-o-animation-fill-mode:both;animation-fill-mode:both;}
+@-webkit-keyframes bounceIn{
+0%{opacity:0;-webkit-transform:scale(.1);}
+50%{opacity:0;-webkit-transform:scale(.6);}
+70%{-webkit-transform:scale(.5);}
+100%{-webkit-transform:scale(1);}
+}
+@-moz-keyframes bounceIn{
+0%{opacity:0;-moz-transform:scale(.1);}
+50%{opacity:0;-moz-transform:scale(.6);}
+70%{-moz-transform:scale(.5);}
+100%{-moz-transform:scale(1);}
+}
+@-ms-keyframes bounceIn{
+0%{opacity:0;-ms-transform:scale(.1);}
+50%{opacity:0;-ms-transform:scale(.6);}
+70%{-ms-transform:scale(.5);}
+100%{-ms-transform:scale(1);}
+}
+@-o-keyframes bounceIn{
+0%{opacity:0;-o-transform:scale(.1);}
+50%{opacity:0;-o-transform:scale(.6);}
+70%{-o-transform:scale(.5);}
+100%{-o-transform:scale(1);}
+}
+@keyframes bounceIn{
+0%{opacity:0;transform:scale(.1);}
+50%{opacity:0;transform:scale(.6);}
+70%{transform:scale(.5);}
+100%{transform:scale(1);}
+}
+.bounceIn{-webkit-animation-name:bounceIn;-moz-animation-name:bounceIn;-ms-animation-name:bounceIn;-o-animation-name:bounceIn;animation-name:bounceIn;}
+
+@-webkit-keyframes bounceOut{
+0%{-webkit-transform:scale(1);}
+25%{-webkit-transform:scale(.95);}
+50%{opacity:0;-webkit-transform:scale(1.1);}
+100%{opacity:0;-webkit-transform:scale(.3);}
+}
+@-moz-keyframes bounceOut{0%{-moz-transform:scale(1);}
+25%{-moz-transform:scale(.95);}
+50%{opacity:0;-moz-transform:scale(1.1);}
+100%{opacity:0;-moz-transform:scale(.3);}
+}
+@-ms-keyframes bounceOut{0%{-ms-transform:scale(1);}
+25%{-ms-transform:scale(.95);}
+50%{opacity:0;-ms-transform:scale(1.1);}
+100%{opacity:0;-ms-transform:scale(.3);}
+}
+@-o-keyframes bounceOut{0%{-o-transform:scale(1);}
+25%{-o-transform:scale(.95);}
+50%{opacity:0;-o-transform:scale(1.1);}
+100%{opacity:0;-o-transform:scale(.3);}
+}
+@keyframes bounceOut{0%{transform:scale(1);}
+25%{transform:scale(.95);}
+50%{opacity:0;transform:scale(1.1);}
+100%{opacity:0;transform:scale(.3);}
+}
+.bounceOut{-webkit-animation-name:bounceOut;-moz-animation-name:bounceOut;-ms-animation-name:bounceOut;-o-animation-name:bounceOut;animation-name:bounceOut;}

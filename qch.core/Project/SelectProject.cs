@@ -14,5 +14,8 @@ namespace qch.Models
         public string Title { get; set; }
         public string Pic { get; set; }
         public string Contents { get; set; }
+        public string t_User_RealName { get; set; }
+        public string t_Project_Field { get; set; }
+        public string t_Project_FinancePhase { get; set; }
     }
 }

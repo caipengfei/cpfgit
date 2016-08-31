@@ -10,7 +10,7 @@ using qch.Models;
 
 namespace web.Filters
 {
-    
+
     public class UserAuthorization : ActionFilterAttribute
     {
         readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -35,19 +35,22 @@ namespace web.Filters
                 {
                     FormsAuthenticationTicket Ticket = FormsAuthentication.Decrypt(authCookie.Value);//解密 
                     var user = SerializeHelper.Instance.JsonDeserialize<UserLoginModel>(Ticket.UserData);//反序列化  
-                    if(user!=null)
-                    loginUser=userService.GetDetail(user.LoginName);
+                    if (user != null)
+                        loginUser = userService.GetDetail(user.LoginName);
                 }
-            } 
+            }
             catch (Exception ex)
             {
                 log.Error(ex.Message);
             }
-            if (loginUser==null)
+            if (loginUser == null || string.IsNullOrWhiteSpace(loginUser.Guid))
             {
-                filterContext.Result = new RedirectResult("/User/login");
+                string url = "/qch/login";
+                if (!string.IsNullOrWhiteSpace(ReturnUrl))
+                    url = url + "?ReturnUrl=" + ReturnUrl;
+                filterContext.Result = new RedirectResult(url);
             }
-             
+
             base.OnActionExecuting(filterContext);
         }
 

@@ -1,4 +1,5 @@
-﻿using qch.core;
+﻿using api.Models;
+using qch.core;
 using qch.Models;
 using System;
 using System.Collections.Generic;
@@ -46,15 +47,17 @@ namespace api.Controllers
         /// <returns></returns>
         /// 
         [HttpPost]
-        public bool SetDefault([FromBody]string UserGuid, [FromBody]string CennGuid)
+        public bool SetDefault(SetDefaultModel model)
         {
             try
             {
-                return service.SetDefault(UserGuid, CennGuid);
+                if (model == null)
+                    return false;
+                return service.SetDefault(model.UserGuid, model.CennGuid);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                log.Error(ex.Message);
                 return false;
             }
         }
@@ -116,6 +119,24 @@ namespace api.Controllers
             {
 
                 return null;
+            }
+        }
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="Guid"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public bool Del(string Guid)
+        {
+            try
+            {
+                return service.Del(Guid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return false;
             }
         }
 

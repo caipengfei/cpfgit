@@ -80,6 +80,7 @@ function getvalidcode() {
     $(this).removeClass('enabled');
     var that = this;
     waitTime = 60;
+    sendsms($('.phone').val());
     $(this).text(waitTime + 's后重新获取');
     window.td = setInterval(function() {
         waitTime--;
@@ -91,4 +92,22 @@ function getvalidcode() {
         }
         $(that).text(waitTime + 's后重新获取');
     }, 1000)
+}
+//发送验证码
+function sendsms(phone) {
+    if (phone == "") {
+        util.msgBox("手机号不能为空");
+        return false;
+    }
+    $.post('/wxUser/CheckPhone', { Phone: phone }, function (msg) {
+        if (msg.type == "error") {
+            util.msgBox("手机号已被注册");
+            return false;
+        } else {
+            $.post('/home/SendSMS', { phone: phone }, function (msg) {
+                util.msgBox(msg.Data);
+            })
+        }
+    })
+
 }

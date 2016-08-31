@@ -1,0 +1,108 @@
+﻿@{
+    ViewBag.Title = "查看用户角色";
+    Layout = "~/Areas/Admin/Views/Shared/_ligerUI.cshtml";
+}
+@model web.Areas.Admin.Models.UserRoleViewModel
+
+@section css{
+     <script type="text/javascript">
+         $(function () {
+             $("form").ligerForm();
+         });
+    </script>
+    <style type="text/css">
+        .l-table-edit {
+        }
+
+        .l-table-edit-td {
+            padding: 4px;
+        }
+
+        .l-button-submit, .l-button-reset {
+            width: 80px;
+            float: left;
+            margin-left: 10px;
+            padding-bottom: 2px;
+        }
+    </style>
+    
+}
+
+
+@using (Ajax.BeginForm("SelectRole", "User", new AjaxOptions { HttpMethod = "post", OnSuccess = "onSuccess" }))
+{
+     
+<div>
+</div>
+        <table cellpadding="0" cellspacing="0" class="l-table-edit" >
+           
+    
+        <tr>
+            <td>
+                <div class="l-checkbox-wrapper">
+                    用户编号：
+                </div>
+            </td>
+            <td>
+                <input type="text"  value="@Model.UserGuid" name="UserGuid" readonly="true"/></td>
+        </tr>
+        <tr>
+            <td>
+                <div class="l-checkbox-wrapper">
+                    用户名：
+                </div>
+            </td>
+            <td>@Model.UserName</td>
+        </tr>
+        @if (Model != null && Model.Roles != null)
+        {
+            foreach (var item in Model.Roles)
+            {
+            <tr>
+                <td>
+                    <div class="l-checkbox-wrapper">
+                       
+                        
+                    </div>
+                </td>
+                <td> @if (Model.UserRoles.Contains(item.RoleName))
+                        {
+                         <input type="checkbox" checked="checked" name="@item.RoleName"  />
+                        }
+                        else
+                        {
+                          <input type="checkbox"  name="@item.RoleName"  />
+                        }
+                    @item.RoleName @item.Remark</td>
+            </tr>
+            }
+        }
+
+
+     
+</table>
+ <br />
+<input type="submit" value="保存" id="Button1" class="l-button l-button-submit" /> 
+
+}
+
+@section js{
+    <script src="/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="/Scripts/jquery.validate.min.js"></script>
+    <script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        function onSuccess(msg) {
+            if (msg.type == "success") {
+                $.ligerDialog.success(msg.Data);
+            } else {
+                $.ligerDialog.error(msg.Data);
+            }
+        }
+
+    </script>
+    }
+
+
+
+
+ 

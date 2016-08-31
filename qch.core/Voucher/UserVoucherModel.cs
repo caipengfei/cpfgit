@@ -24,5 +24,14 @@ namespace qch.Models
                     return new T_Voucher();
             }
         }
+        public DateTime EndDate
+        {
+            get {
+                if (VoucherInfo.T_sDate != null)
+                    return VoucherInfo.T_sDate.AddDays(90);
+                else
+                    return DateTime.Now;
+            }
+        }
     }
 }

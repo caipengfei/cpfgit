@@ -1,0 +1,116 @@
+/* 分类菜单 */
+.header .tipbox{
+    background: rgb(109,151,244);
+    padding: 1rem;
+}
+.header .tipbox .tip{
+    border: 1px solid #fff;
+    line-height: 1.6rem;
+    font-size: .8rem;
+    color: #fff;
+    padding: .5rem 1.2rem;
+    border-radius: .5rem;
+}
+.subbox>li{
+    margin-bottom: .5rem;
+    display: block !important;
+    height: 100%;
+    color: #000;
+    padding-top: 1rem;
+    padding-left: 1rem;
+    background: #fff;
+}
+.subbox .image{
+    width: 20%;
+    height: 6rem;
+    overflow: hidden;
+    border: 1px solid rgb(235,235,235);
+    float: left;
+}
+.subbox .image img{
+    width: 100%;
+    height: 100%;
+}
+.subbox .right{
+    float: right;
+    width: 80%;
+    padding: 0 1rem;
+}
+.subbox .right li{
+    line-height: 3rem;
+    height: 3rem;
+    border-top:1px solid rgb(235,235,235);
+}
+.subbox h2{
+    background: rgb(158,158,158);
+    height: 2.4rem;
+    line-height: 2.4rem;
+    color: #fff;
+    margin-right: 1rem;
+}
+.subbox h2 p{
+    width: 75%;
+    float: right;
+    font-size: 1rem;
+}
+.subbox .right li:nth-child(1){
+    border-top:none;
+    line-height: inherit;
+}
+.subbox .right.info li{
+    line-height: 3rem !important;
+}
+.subbox .right.info li:last-child{
+    line-height: 1.6rem !important;
+    padding: .8rem 0;
+    height: auto;
+}
+.subbox .right li *{
+    color: rgb(141,141,141);
+    font-size: 1rem;
+}
+.subbox li label{
+    float: left;
+}
+.subbox li label.title{
+    color: #000;
+    font-size: 1.1rem;
+    padding-top: .5rem;
+}
+.subbox li span{
+    float: right;
+    max-width: 14rem;
+    word-break: break-all;
+}
+.subbox li span.btn{
+    color: #6e96f5;
+    border:1px solid #6e96f5;
+    height: 2rem;
+    line-height: 2rem;
+    padding: 0 1rem;
+    border-radius: 1rem;
+}
+.subbox li span.fblue{
+    color: #6e96f5;
+}
+.btn-add{
+    display: block;
+    border-radius: 1.5rem;
+    height: 3rem;
+    line-height: 3rem;
+    text-align: center;
+    font-size: 1.1rem;
+    color: #6e96f5;
+    border: 1px solid #6e96f5;
+    margin-right: 1rem;
+    clear: both;
+}
+.loading {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background:#fff url(/wx/img/icon/loading.gif) no-repeat 50% 50%;
+    background-size: 2rem auto;
+}

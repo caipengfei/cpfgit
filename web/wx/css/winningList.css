@@ -1,0 +1,81 @@
+table{
+    width: 100%;
+}
+table th,table td{
+    text-align: center;
+}
+thead{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: block;
+    background: rgb(109,151,244);
+    height: 3.4rem;
+    line-height: 3.4rem;
+}
+thead tr{
+    width: 100%;
+    display: block;
+}
+th{
+    height:100%;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: normal;
+    width: 33.33%;
+    display: block;
+    float: left;
+}
+th:nth-child(1){
+    width: 33.33%;
+}
+th:nth-child(2),th:nth-child(3){
+    width: 33.33%;
+}
+td{
+    height: 4rem;
+    color: #999;
+    font-size: 1rem;
+    border-bottom: 1px solid rgb(235,235,235);
+    width: 33.33%;
+}
+td img{
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 1.2rem;
+}
+.container{
+    padding-top: 3.4rem;
+}
+.container.nodata {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    bottom: 0;
+    text-align: center;
+    padding-top: 14rem;
+}
+.container.nodata>p {
+    padding-top: 14.5rem;
+    background: url(/wx/img/icon/imgnodata.png) no-repeat 50% 0;
+    background-size: auto 14rem;
+    font-size: 1.2rem;
+    color: #999;
+    display: block !important;
+}
+.container.nodata .more {
+    display: none !important;
+}
+.container>.more {
+    text-align: center;
+    color: #666;
+    font-size: 1.1rem;
+    line-height: 2.4rem;
+    height: 2.4rem;
+}
+.container>.more.loading {
+    background: url(/wx/img/icon/loading.gif) no-repeat 50% 50%;
+    background-size: auto 1.2rem;
+}

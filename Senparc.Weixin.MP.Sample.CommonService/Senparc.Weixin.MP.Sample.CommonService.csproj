@@ -53,15 +53,6 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="xftwl.Common">
-      <HintPath>..\..\packages\xftwl\xftwl.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="xftwl.OAuth.Client">
-      <HintPath>..\..\packages\xftwl\xftwl.OAuth.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="xftwl.Shopping.Core">
-      <HintPath>..\..\packages\xftwl\xftwl.Shopping.Core.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ImageHelper.cs" />

@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>青创汇-注册</title>
+    <meta name="keywords" content="创业O2O平台,众创空间,梦想演播厅,演播厅,青创汇,深圳青创汇,孵化器,项目孵化器">
+    <meta name="Description" content="青创汇，中国首款O2O创业生态社交软件、创客管理云系统，是专为“双创”量身定制的一站式创业资源对接平台。">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <link rel="dns-prefetch" href="//www.cn-qch.com/" />
+    <link rel="stylesheet" href="/content/css/register.css">
+</head>
+
+<body>
+    <div class="header"><a href="/"></a></div>
+    <div class="container hide">
+        <div class="registerbox">
+            <h2 class="title">注册</h2>
+            <div class="help hidden">手机号不能为空</div>
+            <div class="form-group">
+                <label>手机号码</label>
+                <input type="text" class="phone" placeholder="请输入手机号" maxlength="11">
+            </div>
+            <div class="form-group group2 clearfix">
+                <label>验证码</label>
+                <input type="text" class="validcode" placeholder="请输入验证码" maxlength="6">
+                <a class="btn-getcode enabled">发送验证码</a>
+            </div>
+            <div class="form-group">
+                <label>设置密码</label>
+                <div class="subbox">
+                    <input type="password" class="password" placeholder="请输入6-16位，字母，数字或常用字符" maxlength="16">
+                    <a class="eye"></a>
+                </div>
+            </div>
+            <div class="form-group group2 clearfix">
+                <label>图片验证码</label>
+                <input type="text" class="imgvalidcode" placeholder="请输入右侧图片验证码" maxlength="20">
+                <a class="imgcode enabled">
+                    <img id="ImgCode" onclick="reload()" src="/home/GetValidateCode" /><span onclick="reload()" class="reload"></span></a>
+            </div>
+            <div class="form-group">
+                <a class="checkbox">青创汇用户协议</a>
+            </div>
+            <div class="form-group">
+                <a class="btn-submit">注册</a>
+            </div>
+        </div>
+        <span class="gologin">已有账号，<a href="/content/login.html">立即登录</a></span>
+        <a class="back"></a>
+    </div>
+    <script src="/content/js/lib/jquery-1.12.2.min.js"></script>
+    <!--[if lt IE 9]>
+        <script src="/content/js/placeholder.js"></script>
+    <![endif]-->
+    <script src="/content/js/register.js"></script>
+    <script type="text/javascript">
+        function reload() {
+            $("#ImgCode").attr("src", "/home/GetValidateCode?t=" + Date.now());
+        }
+    </script>
+</body>
+
+</html>

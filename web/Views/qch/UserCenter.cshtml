@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = "青创汇-个人中心";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+@model qch.Models.SelectProject
+@section css{
+    <link rel="stylesheet" type="text/css" href="/content/css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="/content/css/userinfo.css" />
+}
+<div class="content">
+    <div class="wrap clearfix">
+        
+        @Html.Action("uc", "qch")
+        <div class="right">
+            <!--个人信息-->
+            <div class="info">
+                <div class="account bd">
+                    <div class="top">
+                        <span class="fl">账户总览</span>
+                        <span class="fr">查看明细<img src="/content/image/arrow-right.png" alt="" /></span>
+                    </div>
+                    <div class="bottom">
+                        <div class="currency item">
+                            <div>
+                                <var>@ViewBag.Balance</var>
+                            </div>
+                            <p>创业币 / 元</p>
+                            <span class="on">充值</span>
+                        </div>
+                        <div class="coupon item">
+                            <div>
+                                <var>@ViewBag.VoucherCount</var>
+                            </div>
+                            <p>优惠券 / 张</p>
+                        </div>
+                        <div class="bonus item">
+                            <div>
+                                <var>@ViewBag.Integral</var>
+                            </div>
+                            <p>积分</p>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="clearfix">
+                    @Html.Action("activity", "qch")
+                    <div class="project bd">
+                        <div class="top">
+                            <span class="fl">我的项目</span>
+                            <span class="fr">详情<img src="/content/image/arrow-right.png" alt="" /></span>
+                        </div>
+                        <div class="mypro">
+                            @if (string.IsNullOrWhiteSpace(Model.Guid))
+                            {
+                                <p>&nbsp;</p>
+                                <span>您暂无审核通过的项目信息！</span>
+                            }
+                            else
+                            { 
+                                <img src="http://www.cn-qch.com:8002/Attach/Images/@Model.Pic" />
+                                <p>@Model.Title</p>
+                                <p>发起人：@Model.t_User_RealName</p>
+                                <p>@Model.Contents</p>
+                                <p>项目领域：@qch.core.StyleService.GetPosition(Model.t_Project_Field)</p>
+                                <p>融资阶段：@qch.core.StyleService.GetPosition(Model.t_Project_FinancePhase)</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+@section js{
+    <script src="~/Content/js/jquery.min.js"></script>
+    <script src="/content/js/userinfo.js" type="text/javascript"></script>
+}

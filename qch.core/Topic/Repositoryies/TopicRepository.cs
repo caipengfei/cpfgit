@@ -14,6 +14,115 @@ namespace qch.Repositories
         readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         Repository<TopicModel> rp = new Repository<TopicModel>();
         Repository<SelectTopic> rps = new Repository<SelectTopic>();
+        Repository<TopicsModel> rp2 = new Repository<TopicsModel>();
+
+        /// <summary>
+        /// 动态圈积攒列表
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<SelectTopic> GetPariseList(int page, int pagesize)
+        {
+            try
+            {
+                string sql = "select b.t_user_realname as UserName,b.t_user_pic as Pic,Count(c.Guid) as Parises from t_topic as a left join t_users as b on a.t_user_guid=b.guid left join T_Praise as c on a.guid=c.t_Associate_Guid and c.t_DelState=0 where a.t_Topic_Top=999 and a.t_delstate=0 and c.t_Date<'2016-08-18 17:05:00' group by b.t_user_realname,b.t_user_pic order by Count(c.Guid) desc";
+                return rps.GetPageData(page, pagesize, sql);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        public IEnumerable<SelectTopic> GetPariseList()
+        {
+            try
+            {
+                string sql = "select top 20 b.t_user_realname as UserName,b.t_user_pic as Pic,Count(c.Guid) as Parises from t_topic as a left join t_users as b on a.t_user_guid=b.guid left join T_Praise as c on a.guid=c.t_Associate_Guid and c.t_DelState=0 where a.t_Topic_Top=999 and a.t_delstate=0 and c.t_Date<'2016-08-18 17:05:00' group by b.t_user_realname,b.t_user_pic order by Count(c.Guid) desc";
+                return rps.GetAll(sql);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
+        /// 获取某个用户的所有动态
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <param name="UserGuid"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<TopicsModel> MyTopics(int page, int pagesize, string UserGuid)
+        {
+            try
+            {
+                string sql = "select a.Guid,a.t_Date,a.t_Topic_Contents,a.t_Topic_City,a.t_Topic_Address,a.t_Topic_Top,b.guid as t_User_Guid,b.t_User_Style,b.t_UserStyleAudit,b.t_User_RealName,b.t_User_Pic,b.t_User_Intention,b.t_User_NowNeed,b.t_User_Best,b.t_User_Position, b.t_User_Commpany from T_Topic as a left join t_users as b on a.t_user_guid=b.guid where a.t_delstate=0 and a.t_user_guid=@0 order by a.t_date desc";
+                return rp2.GetPageData(page, pagesize, sql, new object[] { UserGuid });
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
+        /// 动态圈
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<TopicsModel> GetTopics(int page, int pagesize, string CityName)
+        {
+            try
+            {
+                string sql = "select a.Guid,a.t_Date,a.t_Topic_Contents,a.t_Topic_City,a.t_Topic_Address,a.t_Topic_Top,b.guid as t_User_Guid,b.t_User_Style,b.t_UserStyleAudit,b.t_User_RealName,b.t_User_Pic,b.t_User_Intention,b.t_User_NowNeed,b.t_User_Best,b.t_User_Position, b.t_User_Commpany from T_Topic as a left join t_users as b on a.t_user_guid=b.guid where a.t_delstate=0 ";
+                if (!string.IsNullOrWhiteSpace(CityName))
+                {
+                    sql += " and a.t_Topic_City=@0 ";
+                }
+                sql += " order by a.t_date desc";
+                return rp2.GetPageData(page, pagesize, sql, new object[] { CityName });
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        public PetaPoco.Page<TopicsModel> GetTopics(int page, int pagesize, string CityName, string UserGuid)
+        {
+            try
+            {
+                string sql = "select a.Guid,a.t_Date,a.t_Topic_Contents,a.t_Topic_City,a.t_Topic_Address,a.t_Topic_Top,b.guid as t_User_Guid,b.t_User_Style,b.t_UserStyleAudit,b.t_User_RealName,b.t_User_Pic,b.t_User_Intention,b.t_User_NowNeed,b.t_User_Best,b.t_User_Position, b.t_User_Commpany from T_Topic as a left join t_users as b on a.t_user_guid=b.guid left join T_User_Foucs as c on a.t_User_Guid=c.t_Focus_Guid where c.t_User_Guid=@0 and a.t_delstate=0 and c.t_delstate=0";
+                if (!string.IsNullOrWhiteSpace(CityName))
+                {
+                    sql += " and a.t_Topic_City=@1 ";
+                }
+                sql += " order by a.t_date desc";
+                return rp2.GetPageData(page, pagesize, sql, new object[] { UserGuid, CityName });
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        public TopicsModel GetTopicsModel(string Guid)
+        {
+            try
+            {
+                string sql = "select a.Guid,a.t_Date,a.t_Topic_Contents,a.t_Topic_City,a.t_Topic_Address,a.t_Topic_Top,b.guid as t_User_Guid,b.t_User_Style,b.t_User_RealName,b.t_User_Pic,b.t_User_Intention,b.t_User_NowNeed,b.t_User_Best,b.t_User_Position, b.t_User_Commpany from T_Topic as a left join t_users as b on a.t_user_guid=b.guid where a.t_delstate=0  and a.Guid=@0";
+                return rp2.Get(sql, new object[] { Guid });
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
         /// <summary>
         /// 获取附近活动
         /// </summary>

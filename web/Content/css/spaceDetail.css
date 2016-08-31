@@ -1,0 +1,28 @@
+/*content*/
+body{background: #fff}
+/*index*/
+#content .index{height: 40px;font-size: 18px;line-height: 40px;}
+#content .index span{color: #929292}
+/*contenHead*/
+#content .contentHead{width:1180px;height: 500px;box-sizing:border-box;border:1px solid #dcdcdc;}
+#content .contentLeft{width:688px;height: 500px;float: left;padding:18px;box-sizing:border-box;}
+#content .contentLeft .bigImg{width:648px;height: 400px;}
+#content .contentLeft .bigImg img{width:648px;height: 400px;}
+#content .contentLeft .bigImg li{display:none }
+#content .contentLeft .bigImg .active{display: block}
+#content .contentLeft .smallImg li{margin-left: 7px;float: left;margin-top:5px;}
+#content .contentLeft .smallImg .active{border:3px solid #fdd000;}
+#content .contentLeft .smallImg img{width:110px;height: 65px; }
+/*contentRight*/
+#content .contentRight{width:490px;height: 500px;float:right;padding: 50px;box-sizing:border-box;}
+#content .contentRight h1{margin-bottom: 30px;}
+#content .contentRight ul li{list-style:disc;font-size: 16px;line-height: 30px;color: #888888;margin-left: 30px;}
+#content .contentRight ul li span{color:red}
+/*detail*/
+#content .detail{width:1180px;height: 1000px;clear:both;box-sizing:border-box;padding-top: 40px;color: }
+#content .detail .head span{font-size: 16px;font-weight: bold;}
+#content .detail .head{font-size: 18px;line-height: 50px;}
+#content .detail .details{font-size: 14px;color: #888;line-height: 22px;letter-spacing:0.5px}
+/*foot*/
+#foot{width: 100%;height:207px;background: url(../image/foot.png) no-repeat center center}
+

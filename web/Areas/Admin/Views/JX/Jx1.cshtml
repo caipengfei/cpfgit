@@ -1,0 +1,102 @@
+﻿@{
+    ViewBag.Title = "员工绩效查询";
+    Layout = "~/Areas/admin/Views/Shared/_ligerUI.cshtml";
+}
+
+@section css{
+    <script type="text/javascript">
+        $(function () {
+            $("form").ligerForm();
+        });
+        var seData = [{ IsActive: 0, text: '否' }, { IsActive: 1, text: '是' }];
+        $(f_initGrid);
+        var manager, g;
+        function f_initGrid() {
+            g = manager = $("#maingrid").ligerGrid({
+                columns: [
+                { display: '姓名', name: 'UserName', editor: { type: 'text' } },
+                { display: '手机号', name: 'UserPhone', editor: { type: 'text' } },
+                { display: '所在部门', name: 'BranchName', editor: { type: 'text' } },
+                { display: '直推人数', name: 'Tuijian1', editor: { type: 'text' } },
+                { display: '间推人数', name: 'Tuijian2', editor: { type: 'text' } },
+                { display: '直推实名认证', name: 'Certification1', editor: { type: 'text' } },
+                { display: '间推实名认证', name: 'Certification2', editor: { type: 'text' } },
+                {
+                    display: '操作', isAllowHide: false,
+                    render: function (row) {
+                        var html = '<a href="/admin/Jx/index?phone=' + row.UserPhone + '">直推明细</a>';
+                        return html;
+                    }
+                }
+                ],
+                toolbar: {
+                    items: [
+                    { line: true },
+                    { text: '查看详情', click: selectRole, icon: 'modify' },
+                    { line: true }
+                    ]
+                },
+                onSelectRow: function (rowdata, rowindex) {
+                    $("#txtrowindex").val(rowindex);
+                },
+                enabledEdit: true,
+                clickToEdit: false,
+                isScroll: false,
+                url: "@Url.Action("Jx1", "JX")" + "?phone=@ViewBag.phone&begin=@ViewBag.BeginTime&end=@ViewBag.EndTime",
+                dataAction: "server",
+                pageSize: 30,
+                pageSizeOptions: [30, 40, 50],
+                dateFormat: "yyyy-MM-dd hh:mm:ss",
+                width: '100%'
+            });
+        }
+        //查看用户角色
+        function selectRole(item) {
+
+        }
+    </script>
+}
+
+<form name="form1" method="post" id="form1">
+    <table cellpadding="0" cellspacing="0" class="l-table-edit">
+
+        <tr>
+            <td align="right" class="l-table-edit-td">开始日期:</td>
+            <td align="left" class="l-table-edit-td">
+                <input name="txtDate" type="text" id="start" ltype="date" />
+            </td>
+            <td align="left"></td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td">结束日期:</td>
+            <td align="left" class="l-table-edit-td">
+                <input name="txtDate" type="text" id="end" ltype="date" />
+            </td>
+            <td align="left"></td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td">请输入手机号:</td>
+            <td align="left" class="l-table-edit-td">
+                <input name="txtDate" type="text" id="txtKey" ltype="text" />
+            </td>
+            <td align="left" class="l-table-edit-td">
+                <input type="button" value="查 询" class="l-button" onclick="search()" />
+            </td>
+        </tr>
+    </table>
+</form>
+<div id="maingrid" style="margin-top: 20px"></div>
+<br />
+@section js{
+    <script type="text/javascript">
+        function search() {
+            if ($("#txtKey").val() == "") {
+                alert("请输入手机号");
+                return false;
+            }
+            var begin = $("#start").val();
+            var end = $("#end").val();
+            location.href = "/admin/JX/jx1?phone=" + $("#txtKey").val() + "&begin=" + begin + "&end=" + end;
+        }
+    </script>
+}

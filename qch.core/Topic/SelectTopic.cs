@@ -15,5 +15,7 @@ namespace qch.Models
         public string Pic { get; set; }
         public string CityName { get; set; }
         public DateTime t_date { get; set; }
+        public string UserName { get; set; }
+        public int Parises { get; set; }
     }
 }

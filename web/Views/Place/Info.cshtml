@@ -1,0 +1,94 @@
+﻿@{
+    ViewBag.Title = "空间详情";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+@model qch.Models.PlaceModel
+@section css{
+    <link rel="stylesheet" href="/Content/css/spacePublic.css">
+    <link rel="stylesheet" href="/Content/css/spaceDetail.css">
+}
+<div id="tabImg">
+    <div class="wrap box">
+        <img src="/Content/image/beijing.png" alt="">
+        <div class="cover" id='cover'></div>
+        <p>创客空间&nbsp;创业者的梦想实验田</p>
+        <div class="shenqing" id="shenqing"><a href="javascript:void(0);">申请入驻</a></div>
+    </div>
+</div>
+<div id="content">
+    <div class="index wrap">
+        <p>@Model.t_Place_Name&nbsp;&nbsp;<span>></span>&nbsp;&nbsp;创客空间&nbsp;&nbsp;<span>></span>&nbsp;&nbsp;空间详情</p>
+    </div>
+    <div class="contentHead wrap">
+        <div class="contentLeft">
+            <ul class="bigImg" id="bigImg">
+                @if (Model != null && Model.Pics != null)
+                {
+                    foreach (var item in Model.Pics)
+                    {
+                    <li class="active">
+                        <img src="http://www.cn-qch.com:8002/Attach/Images/@item.t_Pic_Url" alt="">
+                    </li>
+                    }
+                }
+            </ul>
+            <ul class="smallImg" id="smallImg">
+                @if (Model != null && Model.Pics != null)
+                {
+                    foreach (var item in Model.Pics)
+                    {
+                    <li class="active">
+                        <img src="http://www.cn-qch.com:8002/Attach/Images/@item.t_Pic_Url" alt="">
+                    </li>
+                    }
+                }
+            </ul>
+        </div>
+        <div class='contentRight'>
+            <h1>@Model.t_Place_Name</h1>
+            <ul>
+                <li>@Model.t_Place_Name</li>
+                <li>@if (Model.t_Place_IfIn == 0)
+                    {<text>不允许入驻项目</text>}
+                    else
+                    {<text>允许入驻项目</text>}
+                </li>
+                <li>@Model.t_Place_Policy</li>
+                <li>价格:<span>**</span>元/月/工位</li>
+            </ul>
+        </div>
+    </div>
+    <div class="wrap detail">
+        <p class="head"><span>|</span>&nbsp;&nbsp;&nbsp;详细地址</p>
+        <p class="details">@Model.t_Place_Street</p>
+        <br />
+        <br />
+        @*<p class="head"><span>|</span>&nbsp;&nbsp;&nbsp;服务电话</p>
+        <p class="details">400-169-0999</p>
+        <br />
+        <br />*@
+        <p class="head"><span>|</span>&nbsp;&nbsp;&nbsp;一句话简介</p>
+        <p class="details">@Model.t_Place_OneWord</p>
+        <br />
+        <br />
+        <p class="head"><span>|</span>&nbsp;&nbsp;&nbsp;提供服务</p>
+        <p class="details">@qch.core.StyleService.GetPosition(Model.t_Place_ProvideService)</p>
+        <br />
+        <br />
+        <p class="head"><span>|</span>&nbsp;&nbsp;&nbsp;详细介绍</p>
+        <p class="details">@Model.t_Place_Instruction</p>
+        <br />
+        <br />
+        <p class="head"><span>|</span>&nbsp;&nbsp;&nbsp;入驻条件</p>
+        <p class="details">@Model.t_Place_CheckIn</p>
+        <br />
+        <br />
+        <p class="head"><span>|</span>&nbsp;&nbsp;&nbsp;政策支持</p>
+        <p class="details">@Model.t_Place_Policy</p>
+        <br />
+        <br />
+    </div>
+</div>
+@section js{
+    <script src="/Content/js/spaceDetail.js"></script>
+}

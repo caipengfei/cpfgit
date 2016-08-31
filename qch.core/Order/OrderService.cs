@@ -204,10 +204,11 @@ namespace qch.core
                         //更改订单状态
                         order.t_Order_State = 1;
                         order.t_Order_PayType = "微信支付";
-                        order.t_Order_Money = Money;
+                        order.t_Order_PayMoney = Money;
                         #region 创业币充值业务
                         if (order.t_Order_OrderType == 1)
                         {
+                            order.t_Order_PayType = "微信支付 创业币充值";
                             //表示充值订单
                             //处理充值后续业务
                             order.t_Order_Remark = "微信充值";
@@ -233,13 +234,40 @@ namespace qch.core
                                 t_DelState = 0,
                                 t_Remark = "微信充值",
                                 t_User_Guid = order.t_User_Guid,
-                                t_UserAccount_AddReward = order.t_Order_Money,
+                                t_UserAccount_AddReward = Money,
                                 t_UserAccount_No = order.t_Order_No,
                                 t_UserAccount_ReduceReward = 0,
-                                t_UserAccount_Reward = money + order.t_Order_Money
+                                t_UserAccount_Reward = money + order.t_Order_Money,
+                                t_UserAccount_Type = 2
                             };
                             //保存用户流水
                             db.Insert(m);
+                            //获取用户资金信息
+                            var usermoney = db.SingleOrDefault<T_User_Money>(" where t_User_Guid=@0", new object[] { order.t_User_Guid });
+                            if (usermoney == null)
+                            {
+                                T_User_Money um = new T_User_Money
+                                {
+                                    Guid = Guid.NewGuid().ToString(),
+                                    t_Date = DateTime.Now,
+                                    t_User_AppMoney = Money,
+                                    t_User_BackMoney = 0,
+                                    t_User_BackReduceMoney = 0,
+                                    t_User_CanMoney = Money,
+                                    t_User_Guid = order.t_User_Guid,
+                                    t_User_LockMoney = 0,
+                                    t_User_Money = Money,
+                                    t_User_UsedMoney = 0
+                                };
+                                db.Insert(um);
+                            }
+                            else
+                            {
+                                usermoney.t_User_AppMoney = Money;
+                                usermoney.t_User_Money += Money;
+                                usermoney.t_User_CanMoney += Money;
+                                db.Save(usermoney);
+                            }
                         }
                         #endregion
                         #region 其它业务
@@ -251,6 +279,7 @@ namespace qch.core
                             //do
                             if (order.t_Order_OrderType == 2)
                             {
+                                order.t_Order_PayType = "微信支付 活动报名";
                                 var apply = db.SingleOrDefault<T_Activity_Apply>(" where guid=@0 and t_DelState=1", new object[] { order.t_Order_Remark });
                                 if (apply != null)
                                 {
@@ -263,6 +292,7 @@ namespace qch.core
                             //空间预约订单
                             if (order.t_Order_OrderType == 5)
                             {
+                                order.t_Order_PayType = "微信支付 空间预约";
                                 var ordered = db.SingleOrDefault<T_Place_Ordered>(" where guid=@0 and t_delstate=1", new object[] { order.t_Order_Remark });
                                 if (ordered != null)
                                 {
@@ -277,71 +307,130 @@ namespace qch.core
                                     time.t_PlaceOder_Ordered = 1;
                                     db.Save(time);
                                 }
-                            }
-                            #region 发放返佣 推荐返佣的有效期于2016-07-06由运营订为12个月
-                            if (!string.IsNullOrWhiteSpace(user.t_ReommUser) && user.t_User_Date.AddMonths(12) > DateTime.Now)
-                            {
-                                //获取直接推荐人
-                                var tjuser1 = db.SingleOrDefault<T_Users>(" where guid=@0 and t_delstate=0", new object[] { user.t_ReommUser });
-                                if (tjuser1 != null)
+                                #region 发放返佣 推荐返佣的有效期于2016-07-06由运营订为12个月
+                                log.Info("-------------------------------------------微信支付 空间预约 返佣业务开始------------------------");
+                                DateTime s = qch.Infrastructure.TimeHelper.GetStartDateTime(Convert.ToDateTime("2016-07-11"));
+                                DateTime e = qch.Infrastructure.TimeHelper.GetEndDateTime(Convert.ToDateTime("2016-08-11"));
+                                if (!string.IsNullOrWhiteSpace(user.t_ReommUser) && user.t_User_Date.AddMonths(12) > DateTime.Now && (user.t_User_Date > s && user.t_User_Date < e))
                                 {
-                                    //给直接推荐人发放返佣
-                                    decimal money1 = 0;
-                                    decimal yongjin1 = order.t_Order_Money * 0.02m;
-                                    //获取用户流水
-                                    var account1 = db.SingleOrDefault<T_User_Account>("select Top 1 * from T_User_Account where t_User_Guid=@0 order by t_AddDate desc", new object[] { tjuser1.Guid });
-                                    if (account1 != null)
+                                    //获取直接推荐人(B)
+                                    var tjuser1 = db.SingleOrDefault<T_Users>(" where guid=@0 and t_delstate=0", new object[] { user.t_ReommUser });
+                                    if (tjuser1 != null)
                                     {
-                                        money1 = account1.t_UserAccount_Reward;
-                                    }
-                                    AccountModel m = new AccountModel()
-                                    {
-                                        t_AddDate = DateTime.Now,
-                                        Guid = Guid.NewGuid().ToString(),
-                                        t_DelState = 0,
-                                        t_Remark = "空间预约返佣",
-                                        t_User_Guid = tjuser1.Guid,
-                                        t_UserAccount_AddReward = yongjin1,
-                                        t_UserAccount_No = order.t_Order_No,
-                                        t_UserAccount_ReduceReward = 0,
-                                        t_UserAccount_Reward = money1 + yongjin1
-                                    };
-                                    //保存流水
-                                    db.Insert(m);
-                                    if (!string.IsNullOrWhiteSpace(tjuser1.t_ReommUser) && tjuser1.t_User_Date.AddMonths(12) > DateTime.Now)
-                                    {
-                                        //获取简介推荐人
-                                        var tjuser2 = db.SingleOrDefault<T_Users>(" where guid=@0 and t_delstate=0", new object[] { tjuser1.t_ReommUser });
-                                        if (tjuser2 != null)
+                                        //给直接推荐人发放返佣
+                                        decimal money1 = 0;
+                                        //decimal yongjin1 = order.t_Order_Money * 0.02m;   2016-07-15 由运营觉得返佣比例调整为 20%、10%
+                                        decimal yongjin1 = order.t_Order_Money * 0.2m;
+                                        log.Info(string.Format("消费者：{0}，订单金额：{1}，支付金额：{2}，预约空间：{3}，直接推荐人：{4}，订单号：{5}，直接返佣：{6}", user.t_User_RealName, order.t_Order_Money, Money, order.t_Order_Name, tjuser1.t_User_RealName, order.t_Order_No, yongjin1));
+                                        //获取用户流水
+                                        var account1 = db.SingleOrDefault<T_User_Account>("select Top 1 * from T_User_Account where t_User_Guid=@0 order by t_AddDate desc", new object[] { tjuser1.Guid });
+                                        if (account1 != null)
                                         {
-                                            //给简介推荐人发放返佣
-                                            decimal money2 = 0;
-                                            decimal yongjin2 = order.t_Order_Money * 0.01m;
-                                            //获取用户流水
-                                            var account2 = db.SingleOrDefault<T_User_Account>("select Top 1 * from T_User_Account where t_User_Guid=@0 order by t_AddDate desc", new object[] { tjuser2.Guid });
-                                            if (account2 != null)
+                                            money1 = account1.t_UserAccount_Reward;
+                                        }
+                                        AccountModel m = new AccountModel()
+                                        {
+                                            t_AddDate = DateTime.Now,
+                                            Guid = Guid.NewGuid().ToString(),
+                                            t_DelState = 0,
+                                            t_Remark = "直接订单返佣",
+                                            t_User_Guid = tjuser1.Guid,
+                                            t_UserAccount_AddReward = yongjin1,
+                                            t_UserAccount_No = order.t_Order_No,
+                                            t_UserAccount_ReduceReward = 0,
+                                            t_UserAccount_Reward = money1 + yongjin1,
+                                            t_UserAccount_Type = 4
+                                        };
+                                        //保存流水
+                                        db.Insert(m);
+                                        //获取用户资金信息
+                                        var usermoney1 = db.SingleOrDefault<T_User_Money>(" where t_User_Guid=@0", new object[] { tjuser1.Guid });
+                                        if (usermoney1 == null)
+                                        {
+                                            T_User_Money um = new T_User_Money
                                             {
-                                                money2 = account2.t_UserAccount_Reward;
-                                            }
-                                            AccountModel m2 = new AccountModel()
-                                            {
-                                                t_AddDate = DateTime.Now,
                                                 Guid = Guid.NewGuid().ToString(),
-                                                t_DelState = 0,
-                                                t_Remark = "空间预约返佣",
-                                                t_User_Guid = tjuser2.Guid,
-                                                t_UserAccount_AddReward = yongjin2,
-                                                t_UserAccount_No = order.t_Order_No,
-                                                t_UserAccount_ReduceReward = 0,
-                                                t_UserAccount_Reward = money2 + yongjin2
+                                                t_Date = DateTime.Now,
+                                                t_User_AppMoney = 0,
+                                                t_User_BackMoney = 0,
+                                                t_User_BackReduceMoney = 0,
+                                                t_User_CanMoney = yongjin1,
+                                                t_User_Guid = tjuser1.Guid,
+                                                t_User_LockMoney = 0,
+                                                t_User_Money = yongjin1,
+                                                t_User_UsedMoney = 0
                                             };
-                                            //保存流水
-                                            db.Insert(m);
+                                            db.Insert(um);
+                                        }
+                                        else
+                                        {
+                                            usermoney1.t_User_Money += yongjin1;
+                                            usermoney1.t_User_CanMoney += yongjin1;
+                                            db.Save(usermoney1);
+                                        }
+                                        if (!string.IsNullOrWhiteSpace(tjuser1.t_ReommUser) && tjuser1.t_User_Date.AddMonths(12) > DateTime.Now && (tjuser1.t_User_Date > s && tjuser1.t_User_Date < e))
+                                        {
+                                            //获取简介推荐人(A)
+                                            var tjuser2 = db.SingleOrDefault<T_Users>(" where guid=@0 and t_delstate=0", new object[] { tjuser1.t_ReommUser });
+                                            if (tjuser2 != null)
+                                            {
+                                                //给简介推荐人发放返佣
+                                                decimal money2 = 0;
+                                                decimal yongjin2 = order.t_Order_Money * 0.1m;
+                                                log.Info(string.Format("消费者：{0}，订单金额：{1}，支付金额：{2}，预约空间：{3}，间接推荐人：{4}，订单号：{5}，间接返佣：{6}", user.t_User_RealName, order.t_Order_Money, Money, order.t_Order_Name, tjuser2.t_User_RealName, order.t_Order_No, yongjin2));
+                                                //获取用户流水
+                                                var account2 = db.SingleOrDefault<T_User_Account>("select Top 1 * from T_User_Account where t_User_Guid=@0 order by t_AddDate desc", new object[] { tjuser2.Guid });
+                                                if (account2 != null)
+                                                {
+                                                    money2 = account2.t_UserAccount_Reward;
+                                                }
+                                                AccountModel m2 = new AccountModel()
+                                                {
+                                                    t_AddDate = DateTime.Now,
+                                                    Guid = Guid.NewGuid().ToString(),
+                                                    t_DelState = 0,
+                                                    t_Remark = "间接订单返佣",
+                                                    t_User_Guid = tjuser2.Guid,
+                                                    t_UserAccount_AddReward = yongjin2,
+                                                    t_UserAccount_No = order.t_Order_No,
+                                                    t_UserAccount_ReduceReward = 0,
+                                                    t_UserAccount_Reward = money2 + yongjin2,
+                                                    t_UserAccount_Type = 4
+                                                };
+                                                //保存流水
+                                                db.Insert(m2);
+                                                //获取用户资金信息
+                                                var usermoney2 = db.SingleOrDefault<T_User_Money>(" where t_User_Guid=@0", new object[] { tjuser2.Guid });
+                                                if (usermoney2 == null)
+                                                {
+                                                    T_User_Money um = new T_User_Money
+                                                    {
+                                                        Guid = Guid.NewGuid().ToString(),
+                                                        t_Date = DateTime.Now,
+                                                        t_User_AppMoney = 0,
+                                                        t_User_BackMoney = 0,
+                                                        t_User_BackReduceMoney = 0,
+                                                        t_User_CanMoney = yongjin2,
+                                                        t_User_Guid = tjuser2.Guid,
+                                                        t_User_LockMoney = 0,
+                                                        t_User_Money = yongjin2,
+                                                        t_User_UsedMoney = 0
+                                                    };
+                                                    db.Insert(um);
+                                                }
+                                                else
+                                                {
+                                                    usermoney2.t_User_Money += yongjin2;
+                                                    usermoney2.t_User_CanMoney += yongjin2;
+                                                    db.Save(usermoney2);
+                                                }
+                                            }
                                         }
                                     }
                                 }
+                                log.Info("-------------------------------------------微信支付 空间预约 返佣业务结束------------------------");
+                                #endregion
                             }
-                            #endregion
                             #endregion
                         }
                         #endregion

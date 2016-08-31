@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0" />
+    <title>青创汇-点赞</title>
+    <link rel="stylesheet" href="/Content/css/good.css">
+</head>
+<body>
+    <div class="content">
+        <div class="head">
+            <img src="/Content/image/goodBgHead.png" alt="">
+        </div>
+        <div class="box">
+            <div class="headBox">
+                <span class='toux'>头像</span>
+                <span class="user">用户名</span>
+                <span class="good">点赞数</span>
+            </div>
+        </div>
+        <div class="contentBox">
+            <ul id="uldata">
+                <div style="background:#d83258;padding-left:35%;">
+                 <img src="/Content/image/loading.gif" alt="" id="s-load" />
+                </div>
+            </ul>
+        </div>
+        <div class="foot">
+            <a href="/wx/pariseList.html">
+                <img src="/Content/image/foot_01.jpg" alt="" style="width: 100%; display: block"></a>
+            <img src="/Content/image/foot_02.jpg" alt="" style="width: 100%; display: block">
+        </div>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="/Content/js/good.js"></script>
+    <script type="text/javascript">
+        $.ajax({
+            type: 'get',
+            url: 'http://120.25.106.244:9001/api/Topic/GetPariseList',
+            cache: false,
+            success: function (res) {
+                if ((!res)) {
+                    $('.container').addClass('nodata');
+                    return;
+                }
+                for (var i = 0; i < 20; i++) {
+                    var m = res;
+                    var url = 'http://www.cn-qch.com:8002/attach/user/' + m[i].pic;
+                    var a = '<li><span><img src=' + url + ' alt=""></span><span class="name">' + m[i].userName + '</span><span class="number">' + m[i].parises + '</span></li>';
+                    $("#uldata").append(a);
+                    $("#s-load").css("display", "none");
+                }
+            }
+        })
+    </script>
+</body>
+</html>

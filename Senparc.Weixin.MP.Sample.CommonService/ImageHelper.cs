@@ -15,7 +15,7 @@ namespace Senparc.Weixin.MP.Sample.CommonService
     public class ImageHelper
     {
         readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        xftwl.Common.Card.CardWeixinService cardweixinService = new xftwl.Common.Card.CardWeixinService();
+        //xftwl.Common.Card.CardWeixinService cardweixinService = new xftwl.Common.Card.CardWeixinService();
 
         /// <summary>
         /// 图片保存路径
@@ -80,21 +80,21 @@ namespace Senparc.Weixin.MP.Sample.CommonService
                     if (media != null && !string.IsNullOrWhiteSpace(media.media_id))
                     {
                         //保存用户二维码信息到数据库
-                        var bindInfo = cardweixinService.Get(UserId);
-                        if (bindInfo != null)
-                        {
-                            bindInfo.MediaDate = DateTime.Now;
-                            bindInfo.MediaId = media.media_id;
-                            bindInfo.QrCode = targetFilePath;
-                            if (!cardweixinService.Save(bindInfo))
-                            {
-                            }
-                        }
-                        else
-                        {
-                            log.Error("上传生成的水印图到微信服务器成功，但是获取用户绑定信息失败");
-                            return "";
-                        }
+                        //var bindInfo = cardweixinService.Get(UserId);
+                        //if (bindInfo != null)
+                        //{
+                        //    bindInfo.MediaDate = DateTime.Now;
+                        //    bindInfo.MediaId = media.media_id;
+                        //    bindInfo.QrCode = targetFilePath;
+                        //    if (!cardweixinService.Save(bindInfo))
+                        //    {
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    log.Error("上传生成的水印图到微信服务器成功，但是获取用户绑定信息失败");
+                        //    return "";
+                        //}
                         //删除下载的头像和二维码
                         System.IO.File.Delete(qrcodeFilePath);
                         System.IO.File.Delete(avatorFilePath);

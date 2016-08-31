@@ -1,0 +1,54 @@
+/*head*/
+/*headLogin*/
+#header .box .headerRightNoLogin{position: absolute;right:0px;top:5px;font-size:16px;width: 180px;height: 70px;
+    border-radius: 10px;z-index: 5;background: #fff;color: #000;overflow: hidden;transition:height 0.3s;}
+#header .box .headerRightNoLogin .touxiang img{width: 36px;height: 36px;border-radius: 18px;display: inline;position: absolute;left: 20px;top:20px;background:#ccc;}
+#header .box .headerRightNoLogin .geren{position: absolute;right: 20px;top:25px;}
+#header .box .headerRightNoLogin .geren>p{color: #000;cursor: default;font-size: 16px;}
+#header .box .headerRightNoLogin .geren>p>img{width: 24px;height: 12px;}
+#header .box .headerRightNoLogin .hengxian{width:160px;height: 1px;background: #ccc;position: absolute;top:70px;left: 10px}
+#header .box .headerRightNoLogin ul{width: 180px;height:200px;position: absolute;top:71px;}
+#header .box .headerRightNoLogin ul li{width:180px;height:50px;line-height: 44px;position: relative;box-sizing:border-box;}
+#header .box .headerRightNoLogin ul  .login a{width:130px;background: #facc43;color: #fff;border-radius:30px;text-align: center;margin-left:25px;margin-bottom: 80px;}
+#header .box .headerRightNoLogin ul  .regist a {width:128px;border-radius: 30px;border: 1px solid #c8c8c8;text-align: center;margin-left:25px;color: #c8c8c8;}
+#header .box .headerRightNoLogin ul li a{color: #000;font-size: 16px;}
+#header .box .headerRightNoLogin:hover{height: 200px;box-shadow: 0 0 5px #000;}
+#header .box .headerRightNoLogin:hover p{color: #fdd000}
+
+
+/*headNoLogin*/
+#header .box .headerRightLogin{position: absolute;right:0px;top:5px;font-size:16px;width: 180px;height: 70px;
+    border-radius: 10px;z-index: 5;background: #fff;color: #000;overflow: hidden;transition:height 0.3s;}
+#header .box .headerRightLogin .touxiang img{width: 36px;height: 36px;border-radius: 18px;display: inline;position: absolute;left: 20px;top:20px;}
+#header .box .headerRightLogin .geren{position: absolute;right: 20px;top:25px;}
+#header .box .headerRightLogin .geren>p{color: #000;cursor: default;font-size: 16px;}
+#header .box .headerRightLogin .geren>p>img{width: 24px;height: 12px;}
+#header .box .headerRightLogin .hengxian{width:160px;height: 1px;background: #ccc;position: absolute;top:70px;left: 10px}
+#header .box .headerRightLogin ul{width: 180px;height:460px;position: absolute;top:71px;}
+#header .box .headerRightLogin ul li{width:180px;height: 44px;line-height: 44px;position: relative;box-sizing:border-box;padding-left: 85px}
+#header .box .headerRightLogin ul li:hover{background: #eee}
+#header .box .headerRightLogin ul li img{position: absolute;top:6px;left: 25px;}
+#header .box .headerRightLogin ul li a{color: #000;font-size: 16px;}
+#header .box .headerRightLogin:hover{height: 520px;box-shadow: 0 0 5px #000;}
+#header .box .headerRightLogin:hover p{color: #fdd000}
+/*container,tabImg*/
+#container{width:100%;background: #f5f5f5;height: 2550px}
+#container .tabImg{width: 1180px;height: 250px;margin:0 auto;position: relative;text-align: center;line-height: 380px;}
+#container .tabImg .cover{width: 1180px;height: 250px;position:absolute;left:0;top:0;background: #000;opacity:0.2;filter:alpha(opacity:20);}
+#container .tabImg .team .team1{width: 180px;height: 30px;color: #fff;font-size: 30px;position: absolute;left: 500px;top:-85px;letter-spacing: 1px}
+#container .tabImg .team .team2{width: 180px;height: 16px;color: #fff;font-size: 16px;position: absolute;left: 500px;top:-25px;letter-spacing: 1px}
+
+/*container,allPartner*/
+#container .allPartner{width: 1180px;margin: 0 auto;height: 2090px;position: relative;}
+#container .allPartner .partner{width: 358px;height:398px;border: 1px solid #dcdcdc;margin-top: 30px;margin-right: 50px;background: #fff;float: left;}
+#container .allPartner .right{margin-right: 0;}
+/*内容部分*/
+/*--头像--*/
+#container .allPartner .partner .touxiang{width:100px;height: 100px;margin:30px auto;}
+#container .allPartner .partner .touxiang img{width:100px;height: 100px;border-radius: 50px;}
+/*---姓名以及职位---*/
+#container .allPartner .partner .name{width: 358px;text-align: center;font-size: 18px;color: #333;}
+/*--介绍--*/
+#container .allPartner .partner .summary{margin:40px 30px;color: #787878;height:120px;overflow: hidden;}
+#container .allPartner .partner .summary p{line-height: 20px;letter-spacing: 1px;font-size: 13px;}
+#container .clear{clear: both}

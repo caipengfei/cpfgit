@@ -11,5 +11,7 @@ namespace qch.Models
     /// </summary>
     public class PicModel : T_Associate_Pic
     {
+        public int Height { get; set; }
+        public int Width { get; set; }
     }
 }

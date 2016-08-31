@@ -270,7 +270,7 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
                     }
                 #endregion
                 #region 积分抽奖
-                    //已改为链接跳转
+                //已改为链接跳转
                 case "integral":
                     {
                         var responseMessage = CreateResponseMessage<ResponseMessageText>();
@@ -322,7 +322,7 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
                     }
                 #endregion
                 #region 预约报名查询
-                    //已经改为链接跳转
+                //已经改为链接跳转
                 case "myserver":
                     {
                         var responseMessage = CreateResponseMessage<ResponseMessageText>();
@@ -336,6 +336,8 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
                         var responseMessage = CreateResponseMessage<ResponseMessageText>();
                         if (bindInfo != null)
                         {
+                            //log.Info("邀请好友结果bindInfo.UserGuid=" + bindInfo.UserGuid);
+                            var account = accountService.GetBalance(bindInfo.UserGuid);
                             var uservoucher = voucherService.GetVoucherByUser(bindInfo.UserGuid, "zhijietuijian");
                             int xy1 = userService.GetReferral1(bindInfo.UserGuid);
                             int xy2 = userService.GetReferral2(bindInfo.UserGuid);
@@ -347,7 +349,7 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
                                 responseMessage.Content += string.Format("优惠券: {0}张{1}元{2}\r\n", uservoucher.VoucherCount, uservoucher.VoucherMoney, uservoucher.VoucherTypeText);
                             else
                                 responseMessage.Content += string.Format("暂无优惠券奖励！ \r\n");
-                            responseMessage.Content += string.Format("创业币:{0} \r\n", 0);
+                            responseMessage.Content += string.Format("创业币:{0} \r\n", account);
                             return responseMessage;
                         }
                         else

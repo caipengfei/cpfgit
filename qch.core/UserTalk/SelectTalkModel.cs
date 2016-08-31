@@ -19,15 +19,15 @@ namespace qch.Models
         /// </summary>
         public string t_Associate_Guid { get; set; }
         /// <summary>
-        /// 回复人Guid
+        /// 评论人Guid
         /// </summary>
         public string t_Talk_FromUserGuid { get; set; }
         /// <summary>
-        /// 回复内容
+        /// 评论内容
         /// </summary>
         public string t_Talk_FromContent { get; set; }
         /// <summary>
-        /// 回复时间
+        /// 评论时间
         /// </summary>
         public DateTime t_Talk_FromDate { get; set; }
         /// <summary>

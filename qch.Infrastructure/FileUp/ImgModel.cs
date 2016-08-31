@@ -10,6 +10,7 @@ namespace qch.Infrastructure
     /// </summary>
     public class ImgModel
     {
+        public string ImageUrl { get; set; }
         /// <summary>
         /// 缩略图
         /// </summary>

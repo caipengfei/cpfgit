@@ -1,0 +1,227 @@
+﻿@{
+    ViewBag.Title = "青创汇";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+@section css{
+    <link rel="stylesheet" href="/Content/css/PersonIndex.css">
+}
+<div id="container">
+    <!--row1-->
+    <div class="row1">
+        <div class="banner">
+            <ul class="box">
+                <li class="current">
+                    <img src="/Content/image/banner_1.jpg" alt=""></li>
+                <li class="">
+                    <img src="/Content/image/banner_2.jpg" alt=""></li>
+                <li class="">
+                    <img src="/Content/image/banner_3.jpg" alt=""></li>
+            </ul>
+            <div class="control">
+                <a class="pre"></a>
+                <a class="next"></a>
+            </div>
+            <div class="control_2" id="control_2">
+                <a class="current" id="con"></a>
+                <a class=""></a>
+                <a class=""></a>
+            </div>
+        </div>
+    </div>
+    <!--row2-->
+    <div class="row2">
+        <div class="box">
+            <img src="/Content/image/logo2.png" alt="">
+            <h1>About-青创汇是致力于青年创业的一站式双创资源服务云平台</h1>
+            <p>布局全国300余家线下体验中心，拥有超过100名创业实战导师，1000家投资机构青创汇颠覆性开发国内首款创业移动软件， </p>
+            <p>将创业资源整合融入APP实现线上APP结合线下体验中心的移动创业梦想。</p>
+        </div>
+    </div>
+    <!--row3-->
+    <div class="row3">
+        <h2><span>我们为创业者铺路领航</span></h2>
+        <h4>让您的商业计划书变成拔地而起的高楼大厦</h4>
+        <div class="box">
+            <a class="item1"><span>创客空间</span></a>
+            <a class="item2"><span>落地辅导</span></a>
+            <a class="item3"><span>人才招募</span></a>
+            <a class="item4"><span>项目推广</span></a>
+            <a class="item5"><span>资金对接</span></a>
+        </div>
+    </div>
+    <!--row4-->
+    <div class="row4">
+        <h2><b class="b1"></b><b class="b2"></b><span>我们为投资人匠心臻选</span></h2>
+        <h4>让你花的每一分钱都物有所值</h4>
+        <div class="box">
+            <a>
+                <b>项目筛选</b>
+                <span>PROJECT SELECTION</span>
+            </a>
+            <a>
+                <b>投资顾问</b>
+                <span>INVESTMENT ADVISOR</span>
+            </a>
+            <a>
+                <b>风险把控</b>
+                <span>CONTROL RISK</span>
+            </a>
+            <a>
+                <b>资金管理</b>
+                <span>FUNDS MANAGEMENT</span>
+            </a>
+            <a>
+                <b>多样化投资</b>
+                <span>DIVERSIFICATION</span>
+            </a>
+        </div>
+    </div>
+    <!--row5 合伙人-->
+    @Html.Action("PartnersTop5", "qch")
+    <!--row6 合作单位-->
+    <div class="row6">
+        <h2><span>青创汇合作单位</span></h2>
+        <h4>COOPERATIVE&nbsp;UNIT</h4>
+        <div class='box'>
+            <div class="company first">
+                <img src="/Content/image/1 1.png" alt="">
+                <img src="/Content/image/1 2.png" alt="" style="display: none">
+            </div>
+            <div class="company">
+                <img src="/Content/image/2 1.png" alt="">
+                <img src="/Content/image/2 2.png" alt="" style="display: none">
+            </div>
+            <div class="company">
+                <img src="/Content/image/3 1.png" alt="">
+                <img src="/Content/image/3 2.png" alt="" style="display: none">
+            </div>
+            <div class="company">
+                <img src="/Content/image/4 1.png" alt="">
+                <img src="/Content/image/4 2.png" alt="" style="display: none">
+            </div>
+            <div class="company two">
+                <img src="/Content/image/5 1.png" alt="">
+                <img src="/Content/image/5 2.png" alt="" style="display: none">
+            </div>
+            <div class="company first">
+                <img src="/Content/image/6 1.png" alt="">
+                <img src="/Content/image/6 2.png" alt="" style="display: none">
+            </div>
+            <div class="company">
+                <img src="/Content/image/1 1.png" alt="">
+                <img src="/Content/image/1 2.png" alt="" style="display: none">
+            </div>
+            <div class="company">
+                <img src="/Content/image/2 1.png" alt="">
+                <img src="/Content/image/2 2.png" alt="" style="display: none">
+            </div>
+            <div class="company">
+                <img src="/Content/image/3 1.png" alt="">
+                <img src="/Content/image/3 2.png" alt="" style="display: none">
+            </div>
+            <div class="company two">
+                <img src="/Content/image/4 1.png" alt="">
+                <img src="/Content/image/4 2.png" alt="" style="display: none">
+            </div>
+        </div>
+    </div>
+    <!--row7 视频-->
+    <div class="row7">
+        <h2><b class="b1"></b><b class="b2"></b><span>创客电影</span></h2>
+        <h4>ROADSHOW&nbsp;VIDEO</h4>
+        <div class='box'>
+            <!--每一个div每一部电影-->
+            <a href="javascript:" class="movie first item1" target="_blank">
+                <div class="movieBg"></div>
+                <div class="topbottom">
+                    <div class="top"></div>
+                    <div class="bottom"></div>
+                </div>
+                <!--播放按钮-->
+                <img src="/Content/image/bofang.png" alt="">
+                <!--文字的透明度背景-->
+                <div class="opacityBg"></div>
+                <!--文字描述-->
+                <p>青创汇为创业者而生</p>
+            </a>
+            <a href="javascript:" class="movie item2" target="_blank">
+                <div class="movieBg"></div>
+                <div class="topbottom">
+                    <div class="top"></div>
+                    <div class="bottom"></div>
+                </div>
+                <!--播放按钮-->
+                <img src="/Content/image/bofang.png" alt="">
+                <!--文字的透明度背景-->
+                <div class="opacityBg"></div>
+                <!--文字描述-->
+                <p>青创汇为创业者而生</p>
+            </a>
+            <a href="javascript:" class="movie two item3" target="_blank">
+                <div class="movieBg"></div>
+                <div class="topbottom">
+                    <div class="top"></div>
+                    <div class="bottom"></div>
+                </div>
+                <!--播放按钮-->
+                <img src="/Content/image/bofang.png" alt="">
+                <!--文字的透明度背景-->
+                <div class="opacityBg"></div>
+                <!--文字描述-->
+                <p>青创汇为创业者而生</p>
+            </a>
+            <a href="javascript:" class="movie first item4" target="_blank">
+                <div class="movieBg"></div>
+                <div class="topbottom">
+                    <div class="top"></div>
+                    <div class="bottom"></div>
+                </div>
+                <!--播放按钮-->
+                <img src="/Content/image/bofang.png" alt="">
+                <!--文字的透明度背景-->
+                <div class="opacityBg"></div>
+                <!--文字描述-->
+                <p>青创汇为创业者而生</p>
+            </a>
+            <a href="javascript:" class="movie item5" target="_blank">
+                <div class="movieBg"></div>
+                <div class="topbottom">
+                    <div class="top"></div>
+                    <div class="bottom"></div>
+                </div>
+                <!--播放按钮-->
+                <img src="/Content/image/bofang.png" alt="">
+                <!--文字的透明度背景-->
+                <div class="opacityBg"></div>
+                <!--文字描述-->
+                <p>青创汇为创业者而生</p>
+            </a>
+            <a href="javascript:" class="movie two item6" target="_blank">
+                <div class="movieBg"></div>
+                <div class="topbottom">
+                    <div class="top"></div>
+                    <div class="bottom"></div>
+                </div>
+                <!--播放按钮-->
+                <img src="/Content/image/bofang.png" alt="">
+                <!--文字的透明度背景-->
+                <div class="opacityBg"></div>
+                <!--文字描述-->
+                <p>青创汇为创业者而生</p>
+            </a>
+        </div>
+        <!--跳往更多电影的页面-->
+        <a href="javascript:" target="_blank">更多电影
+            <img src="/Content/image/mv.png" alt="" style="position: absolute; top: 8px; left: 145px">
+        </a>
+    </div>
+    <div id="backTop">
+        <img src="/Content/image/ding.png" alt="">
+    </div>
+</div>
+
+@section js{
+    <script src="/Content/js/move.js"></script>
+    <script src="/Content/js/PersonIndex.js"></script>
+
+}

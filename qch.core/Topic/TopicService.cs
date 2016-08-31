@@ -152,6 +152,136 @@ namespace qch.core
         }
         #endregion
 
+
+        /// <summary>
+        /// 积攒列表
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<SelectTopic> GetPariseList(int page, int pagesize)
+        {
+            try
+            {
+                var model = rp.GetPariseList(page, pagesize);
+                //if (model != null && model.Items != null && model.Items.Count > 0)
+                //{
+                //    foreach (var item in model.Items)
+                //    {
+                //        if (item.UserName.Length > 4)
+                //            item.UserName = item.UserName.Substring(0, 3) + "...";
+                //    }
+                //}
+                
+                return model;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        public IEnumerable<SelectTopic> GetPariseList()
+        {
+            try
+            {
+                var model = rp.GetPariseList();
+                return model;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        public static bool GetTop999(string Guid)
+        {
+            log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+            try
+            {
+                int xy = 0;
+                string sql = "select count(1) from t_topic where t_user_guid=@0 and t_delstate=0 and t_topic_top=999";
+                using (var db = new PetaPoco.Database(DbConfig.qch))
+                {
+                    var m = db.ExecuteScalar<object>(sql, new object[] { Guid });
+                    if (m != null)
+                        xy = Convert.ToInt32(m);
+                    if (xy > 0)
+                        return false;
+                    else
+                        return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return false;
+            }
+        }
+        /// <summary>
+        /// 获取某个用户的所有动态
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <param name="UserGuid"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<TopicsModel> MyTopics(int page, int pagesize, string UserGuid)
+        {
+            try
+            {
+                return rp.MyTopics(page, pagesize, UserGuid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
+        /// 动态圈
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<TopicsModel> GetTopics(int page, int pagesize, string UserGuid, string CityName, int IsFocus)
+        {
+            try
+            {
+                if (IsFocus == 1)
+                    return rp.GetTopics(page, pagesize, CityName, UserGuid);
+                else
+                    return rp.GetTopics(page, pagesize, CityName);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        public PetaPoco.Page<TopicsModel> GetTopics(int page, int pagesize, string UserGuid)
+        {
+            try
+            {
+                return rp.GetTopics(page, pagesize, UserGuid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        public TopicsModel GetTopicsModel(string Guid)
+        {
+            try
+            {
+                return rp.GetTopicsModel(Guid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
         /// <summary>
         /// 获取某人的第一条动态（app转发的微信，获取详情用到）
         /// </summary>

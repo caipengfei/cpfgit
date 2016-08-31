@@ -1,0 +1,80 @@
+/*reset*/
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    vertical-align: baseline;
+}
+
+a {
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+span {
+    display: inline-block;
+}
+
+li {
+    list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-weight: normal;
+}
+
+body {
+    font-family: "Microsoft YaHei";
+    font-size: 13px;
+    min-width: 1180px;
+    background-color:#fff;
+}
+/*topBar*/
+.wrap{width:1180px;margin:0 auto;}
+#topBar{width: 100%;height:34px;background:#333333;}
+#topBar .box{color: #f1f1f1;font-size: 13px;box-sizing:border-box;width: 1180px;height: 30px;margin: 0 auto;}
+#topBar .box p{float: left;padding-top: 8px;cursor:default;color: #d7d3d3}
+#topBar .box span{display: inline-block;padding-bottom: 10px;}
+#topBar .box>a{margin-top: 0px;margin-left: 20px;position: relative;}
+#topBar .box>a>.topBar1{position: absolute;left: 0;top:-14px;}
+#topBar .box>a>.topBar2{width: 170px;height: 170px;position: absolute;top:17px;left: -70px;z-index: 5;display: none;box-shadow:0 0 5px #000;}
+#topBar .box>a:hover >.topBar2{display: block;}
+#topBar .box ul{float: right;}
+#topBar .box ul .active a{color:#e4e4e4}
+#topBar .box li{float: left;color: #8f8f8f;}
+#topBar .box ul li:hover a{color: #d7d3d3}
+#topBar .box li a{color: #8f8f8f;padding:7px 20px;}
+#topBar .box ul li a span{color: #fdd000}
+
+/*header*/
+#header{width: 100%;height:80px;background:#ffffff;}
+#header .box{position: relative;}
+#header .box>img{padding-top: 23px;display: inline}
+#header .box>ul{height: 20px;float: right;position: absolute;right:200px;top:30px;}
+#header .box >ul  li{float: left;padding-left:35px;}
+#header .box >ul li a{font-size:17px;color: #000;}
+#header .box >ul li a:hover{color: #fdd000}
+#header .box .headerRight{position: absolute;right:0px;top:5px;font-size:16px;width: 180px;height: 70px;
+    border-radius: 10px;z-index: 5;background: #fff;color: #000;overflow: hidden;transition:height 0.3s;}
+#header .box .headerRight .touxiang img{width: 36px;height: 36px;border-radius: 18px;display: inline;position: absolute;left: 20px;top:20px;background:#ccc;}
+#header .box .headerRight .geren{position: absolute;right: 20px;top:25px;}
+#header .box .headerRight .geren>p{color: #000;cursor: default;font-size: 16px;}
+#header .box .headerRight .geren>p>img{width: 24px;height: 12px;}
+#header .box .headerRight .hengxian{width:160px;height: 1px;background: #ccc;position: absolute;top:70px;left: 10px}
+#header .box .headerRight ul{width: 180px;height:200px;position: absolute;top:71px;}
+#header .box .headerRight ul li{width:180px;height:50px;line-height: 44px;position: relative;box-sizing:border-box;}
+#header .box .headerRight ul  .login a{width:130px;background: #facc43;color: #fff;border-radius:30px;text-align: center;margin-left:25px;margin-bottom: 80px;}
+#header .box .headerRight ul  .regist a {width:128px;border-radius: 30px;border: 1px solid #c8c8c8;text-align: center;margin-left:25px;color: #c8c8c8;}
+#header .box .headerRight ul li a{color: #000;font-size: 16px;}
+#header .box .headerRight:hover{height: 200px;box-shadow: 0 0 5px #000;}
+#header .box .headerRight:hover p{color: #fdd000}
+
+/*backTop*/
+#backTop{position: fixed;bottom: 150px;z-index: 10;right:0;display: none;}
+
+/*foot*/
+#footer{width: 100%;height:150px;background-color: #333333;background: url(../image/foot.png) no-repeat center center}

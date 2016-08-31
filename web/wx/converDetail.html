@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <link rel="dns-prefetch" href="//test.cn-qch.com/" />
+    <link rel="dns-prefetch" href="//www.cn-qch.com/" />
+    <title>兑换记录</title>
+    <link rel="stylesheet" href="/wx/css/public.css">
+    <link rel="stylesheet" href="/wx/css/converDetail.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="tipbox">
+                <p class="tip">说明：查看抽奖记录请移步转盘抽奖页面，点击我的中奖记录。实物类礼品将在兑换后的15个工作日内统一发货。</p>                
+            </div>
+        </div>
+        <ul class="subbox cjrecordbox"></ul>
+    </div>
+    <div class="loading"></div>
+    <script type="text/html" id="detailTemplate">
+        <%var imgUrl='http://www.cn-qch.com:8002/attach/images/'%>
+        <li class="clearfix">
+            <div class="image" style="background:url(<%=imgUrl+data.t_Goods_Pic%>) no-repeat 50% 50%;background-size:4rem auto;"></div>
+            <div class="right">
+                <ul>
+                    <li class="clearfix"><label class="title"><%=data.t_Goods_Name%></label><span class="btn"><%=fhStatus(data.t_Logistics_Status)%></span></li>
+                    <li class="clearfix"><label>消耗积分</label><span class="fblue"><%=data.t_List_Type==1?data.t_Need_Integral:10%></span></li>
+                    <li class="clearfix"><label><%=data.t_List_Type==1?'兑换时间':'抽奖时间'%></label><span><%=data.t_Convert_CreateDate%></span></li>
+                    <%if(data.t_Logistics_Status){%>
+                        <li class="clearfix"><label>快递单号</label><span><%=data.t_Logistics_WaybillNo%></span></li>
+                        <li class="clearfix"><label>物流公司</label><span><%=data.t_Logistics_Company%></span></li>
+                    <%}%>
+                </ul>
+            </div>
+            <h4 class="clearfix"></h4>
+            <h2 class="h2"><p>• 收货人信息</p></h2>
+            <ul class="right info">
+                <li class="clearfix"><label>姓名</label><span><%=data.t_Cnee_Name%></span></li>
+                <li class="clearfix"><label>电话</label><span><%=data.t_Cnee_Phone%></span></li>
+                <li class="clearfix"><label>收货地址</label><span><%=data.t_Cnee_Addr%></span></li>
+            </ul>
+            <%if(!data.t_Cnee_Addr){%>
+                <a class="btn-add">点击完善收货信息</a>
+            <%}%>
+        </li>
+    </script>
+    <script src="/h5/js/jquery.min.js"></script>
+    <script src="/wx/js/artTemplate.js"></script>
+    <script src="/h5/js/util.js"></script>
+    <script>
+        guid=util.getUrlParam('guid');
+        $.ajax({
+            url: 'http://120.25.106.244:9001/api/convert/GetById',
+            data: {guid:guid},
+            cache:false,
+            success: function (res) {
+                if (res) {
+                    $('.cjrecordbox').html(template('detailTemplate',{data:res}));
+                    $('.image').css({height:$('.image').width()});
+                    if(!res.t_Cnee_Addr){
+                        sessionStorage.setItem('shopname',res.t_Goods_Name);
+                        sessionStorage.setItem('shopsrc','http://www.cn-qch.com:8002/attach/images/'+res.t_Goods_Pic);
+                        sessionStorage.setItem('orderno',res.t_Convert_OrderNo);
+                        sessionStorage.setItem('typeid',res.t_List_Type);
+                        util.addTapEvent($('.btn-add')[0],function(el){
+                            location.href='/wx/confirmOrder.html';
+                        })
+                    }
+                }
+                $('.loading').remove();
+            }
+        })
+        // 状态 0 待发货 1 已发货 2 已签收
+        template.helper('fhStatus',function(value){
+            return value==0?'待发货':value==1?'已发货':'已签收';
+        })
+        
+    </script>
+</body>
+</html>

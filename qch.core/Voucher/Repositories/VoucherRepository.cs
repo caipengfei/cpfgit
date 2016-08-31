@@ -158,7 +158,7 @@ namespace qch.Repositories
         {
             try
             {
-                string sql = "select * from T_User_Voucher where t_DelState=0 and T_User_Guid=@0 and T_Voucher_Guid in(select guid from T_Voucher where T_Voucher_Type=@1 and T_Voucher_Audit=1 and t_delstate=0)";
+                string sql = "select * from T_User_Voucher where t_DelState=0 and T_User_Guid=@0 and T_Voucher_Guid in(select guid from T_Voucher where T_Voucher_Type=@1 and T_Voucher_Audit=1 and t_delstate=0) order by t_getdate desc";
                 return uvRp.GetPageData(page, pagesize, sql, new object[] { Guid, typeId });
             }
             catch (Exception ex)

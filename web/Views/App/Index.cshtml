@@ -5,13 +5,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
     <meta name="renderer" content="webkit" />
-    <title>APP下载</title>
+    <title>青创汇APP下载</title>
     <link rel="stylesheet" href="/h5/css/public.css">
-    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <style>
         .container {
             margin-bottom: 0 !important;
@@ -51,14 +51,14 @@
             <a class="btn-down" href="http://a.app.qq.com/o/simple.jsp?pkgname=com.qingchuang.app"></a>
         </div>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded',function(){
-            this.getElementsByClassName('container')[0].style.height=(window.outerHeight||window.innerHeight)+'px';
-        },false)
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            this.getElementsByClassName('container')[0].style.height = (window.outerHeight || window.innerHeight) + 'px';
+        }, false)
         wx.config({
             debug: false,
             appId: '@ViewBag.AppId',
-            timestamp: @ViewBag.Timestamp,
+            timestamp: '@ViewBag.Timestamp',
             nonceStr: '@ViewBag.Noncestr',
             signature: '@ViewBag.Signature',
             jsApiList: [
@@ -81,10 +81,10 @@
                         },
                         success: function (res) {
                             //tipInfo('已分享');
-                            
+
                         },
                         cancel: function (res) {
-                            //tipInfo('已取消');
+                            tipInfo('已取消');
                         },
                         fail: function (res) {
                             alert(JSON.stringify(res));
@@ -105,7 +105,7 @@
                         //tipInfo('已分享');
                     },
                     cancel: function (res) {
-                        //tipInfo('已取消');
+                        tipInfo('已取消');
                     },
                     fail: function (res) {
                         alert(JSON.stringify(res));
@@ -115,7 +115,7 @@
         });
 
         wx.error(function (res) {
-            //alert(res.errMsg);
+            tipInfo(res.errMsg);
         });
     </script>
 </body>

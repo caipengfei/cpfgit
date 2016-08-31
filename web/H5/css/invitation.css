@@ -48,23 +48,24 @@ table td span {
 }
 
 .seedetailsbox {
-    height: 5rem;
-    line-height: 5rem;
     text-align: center;
     background: #fff;
     border-bottom: .5rem solid rgb(242, 244, 250);
+    padding-top: 1rem;
 }
 
 .seedetailsbox a {
     height: 2rem;
     line-height: 2rem;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: rgb(143, 209, 255);
     letter-spacing: 1px;
     background: url(/h5/img/invitation/shuangjiantou@2x.png) no-repeat right 50%;
-    background-size: auto 100%;
-    padding-right: 1.8rem;
+    background-size: auto 80%;
+    padding-right: 1.6rem;
+    margin-bottom: .5rem;
 }
+
 
 .codebox {
     padding: 0 1.4rem;

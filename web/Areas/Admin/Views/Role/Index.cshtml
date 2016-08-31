@@ -1,0 +1,91 @@
+﻿@{
+    ViewBag.Title = "用户角色";
+    Layout = "~/Areas/Admin/Views/Shared/_ligerUI.cshtml";
+}
+@section css{
+    <script type="text/javascript">
+       
+        var seData = [{ IsActive: 0, text: '否' }, { IsActive: 1, text: '是' }];
+        $(f_initGrid);
+        var manager, g;
+        function f_initGrid()
+        {
+            g = manager = $("#maingrid").ligerGrid({
+                columns: [
+                { display: '主键', name: 'Id', width: 50, type: 'int', frozen: true },
+                { display: '角色名称', name: 'RoleName', editor: { type: 'text' } },
+                { display: '备注', name: 'Remark', editor: { type: 'text' } },
+                {
+                    display: '是否激活', width: 50, name: 'IsActive', 
+                    editor: { type: 'select', data: seData, valueField: 'IsActive' },
+                    render: function (item)
+                    {
+                        if (item.IsActive ==true) return '是';
+                        return '否';
+                    }
+                }                
+                ],
+                toolbar: { items: [
+                { text: '增加', click: add, icon: 'add' },
+                { line: true },
+                { text: '修改', click: update, icon: 'modify' },
+                { line: true },
+                { text: '删除', click: del, img: '/Content/admin/lib/ligerUI/skins/icons/delete.gif' }
+                ]
+                },
+                onSelectRow: function (rowdata, rowindex)
+                {
+                    $("#txtrowindex").val(rowindex);
+                },
+                enabledEdit: true,
+                clickToEdit: false,
+                isScroll: false,
+                url: "@Url.Action("index","Role")",
+                dataAction: "server",
+                pageSize: 15,
+                pageSizeOptions:[15,30],                
+                width: '100%'
+            });   
+        }
+
+        //添加按钮事件
+        function add(item) {
+            location.href = "@Url.Action("Edit")";
+        }
+        //修改按钮事件
+        function update(item)
+        {
+            var row = manager.getSelectedRow();
+            if (!row) { $.ligerDialog.warn('请点击要操作的数据'); return; }
+          
+            location.href = "@Url.Action("Edit")"+"/"+row.Id;
+        }
+        //删除按钮事件
+        function del(item)
+        {
+            var row = manager.getSelectedRow();
+            if (!row) { $.ligerDialog.warn('请点击要操作的数据'); return; }
+
+            $.ligerDialog.confirm('你确定要删除此记录吗?', function (yes) {
+                if (yes)
+                {
+                    $.post("@Url.Action("del")" + "/" + row.Id, function (msg) {
+                        if (msg.type == "success") {
+                            manager.loadData();
+                            $.ligerDialog.success(msg.Data);
+
+                        } else {
+                            $.ligerDialog.error(msg.Data);
+                        }
+
+                    });
+                }
+            });
+        }
+ 
+         
+    </script>
+    }
+ 
+ <div class="l-clear"></div>
+    <div id="maingrid" style="margin-top:20px"></div>

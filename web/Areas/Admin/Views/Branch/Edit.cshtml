@@ -1,0 +1,105 @@
+﻿@{
+    ViewBag.Title = "部门信息编辑";
+    Layout = "~/Areas/Admin/Views/Shared/_ligerUI.cshtml";
+}
+@model qch.Models.BranchModel
+
+<script type="text/javascript">
+    $(function () {
+        $("form").ligerForm();
+    });
+</script>
+<style type="text/css">
+    body {
+        font-size: 12px;
+    }
+
+    .l-table-edit {
+    }
+
+    .l-table-edit-td {
+        padding: 4px;
+    }
+
+    .l-button-submit, .l-button-reset {
+        width: 80px;
+        float: left;
+        margin-left: 150px;
+        padding-bottom: 2px;
+    }
+
+    .l-verify-tip {
+        left: 230px;
+        top: 120px;
+    }
+</style>
+
+
+@using (Ajax.BeginForm("Edit", "Branch", new AjaxOptions { HttpMethod = "post", OnSuccess = "onSuccess" }))
+{ 
+    <table cellpadding="0" cellspacing="0" class="l-table-edit">
+        <tr>
+            <td align="right" class="l-table-edit-td">Id :</td>
+            <td align="left" class="l-table-edit-td">
+
+                @Html.TextBoxFor(o => o.Guid, new { @readonly = true })
+            </td>
+            <td align="left"></td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td">部门名称 :</td>
+            <td align="left" class="l-table-edit-td">
+                @Html.TextBoxFor(o => o.t_Branch_Name, new { ltype = "text" })
+            </td>
+            <td align="left">@Html.ValidationMessageFor(o => o.t_Branch_Name)</td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td">添加人 :</td>
+            <td align="left" class="l-table-edit-td">
+                @Html.TextBoxFor(o => o.t_Editor, new { ltype = "text",@readonly="readonly" })
+            </td>
+            <td align="left">@Html.ValidationMessageFor(o => o.t_Editor)</td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td">添加时间 :</td>
+            <td align="left" class="l-table-edit-td">
+                @Html.TextBoxFor(o => o.t_CreateDate, new { ltype = "text",@readonly="readonly" })
+            </td>
+            <td align="left">@Html.ValidationMessageFor(o => o.t_CreateDate)</td>
+        </tr>
+        @*<tr>
+            <td align="right" class="l-table-edit-td">上级部门:</td>
+            <td align="left" class="l-table-edit-td">
+                @Html.TextBoxFor(o=>o.t_ParentId,new{ltype="text"})
+            </td>
+            <td align="left">@Html.ValidationMessageFor(o=>o.t_ParentId)</td>
+        </tr>*@
+
+    </table>
+    <br />
+    <input type="submit" value="提交" id="Button1" class="l-button l-button-submit" /> 
+    <input type="reset" value="重置" class="l-button l-button-reset" />
+    
+}
+<div style="display: none"></div>
+
+
+@section js{
+    <script src="/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="/Scripts/jquery.validate.min.js"></script>
+    <script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+
+        function getlist() {
+            location.href = "/admin/Branch/list";
+        }
+        function onSuccess(msg) {
+            if (msg.type == "success") {
+                $.ligerDialog.success(msg.Data);
+            } else {
+                $.ligerDialog.error(msg.Data);
+            }
+        }
+    </script>
+}
+

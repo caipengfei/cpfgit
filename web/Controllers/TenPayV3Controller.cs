@@ -104,7 +104,7 @@ namespace Senparc.Weixin.MP.Sample.Controllers
             string timeStamp = "";
             string nonceStr = "";
             string paySign = "";
-            string sp_billno = "cpf1662";
+            string sp_billno = DateTime.Now.ToString("yyyyMMddhhmmss");
             ViewData["money"] = payMoney;
             ViewData["orderno"] = sp_billno;
             ViewData["date"] = DateTime.Now;
@@ -143,7 +143,7 @@ namespace Senparc.Weixin.MP.Sample.Controllers
             packageReqHandler.SetParameter("out_trade_no", sp_billno);	//商家订单号
             packageReqHandler.SetParameter("total_fee", "1");			//商品金额,以分为单位(money * 100).ToString()
             packageReqHandler.SetParameter("spbill_create_ip", Request.UserHostAddress);   //用户的公网ip，不是商户服务器IP
-            packageReqHandler.SetParameter("notify_url", "http://test.cn-qch.com/TenPayV3/PayNotifyUrl");	//接收财付通通知的URL
+            packageReqHandler.SetParameter("notify_url", "http://www.cn-qch.com/TenPayV3/PayNotifyUrl");	//接收财付通通知的URL
             packageReqHandler.SetParameter("trade_type", "NATIVE");	//交易类型
             //packageReqHandler.SetParameter("openid", openIdResult.openid);	           //用户的openId
             packageReqHandler.SetParameter("attach", "0");  //设置交易类型:购物
@@ -272,7 +272,7 @@ namespace Senparc.Weixin.MP.Sample.Controllers
                 packageReqHandler.SetParameter("out_trade_no", sp_billno);	//商家订单号
                 packageReqHandler.SetParameter("total_fee", "1");			//商品金额,以分为单位(money * 100).ToString()
                 packageReqHandler.SetParameter("spbill_create_ip", Request.UserHostAddress);   //用户的公网ip，不是商户服务器IP
-                packageReqHandler.SetParameter("notify_url", "http://test.cn-qch.com/TenPayV3/PayNotifyUrl");	//接收财付通通知的URL
+                packageReqHandler.SetParameter("notify_url", "http://www.cn-qch.com/TenPayV3/PayNotifyUrl");	//接收财付通通知的URL
                 packageReqHandler.SetParameter("trade_type", "JSAPI");	//交易类型
                 packageReqHandler.SetParameter("openid", openIdResult.openid);	           //用户的openId
                 packageReqHandler.SetParameter("attach", "0");  //设置交易类型:购物
@@ -308,7 +308,7 @@ namespace Senparc.Weixin.MP.Sample.Controllers
                 ViewData["nonceStr"] = nonceStr;
                 ViewData["package"] = string.Format("prepay_id={0}", prepayId);
                 ViewData["paySign"] = paySign;
-                ViewBag.ReturnUrl = "http://test.cn-qch.com/xft/appleshared?OrderNo=cpf123456";
+                ViewBag.ReturnUrl = "http://www.cn-qch.com/xft/appleshared?OrderNo=cpf123456";
 
                 return View();
             }
@@ -417,7 +417,7 @@ namespace Senparc.Weixin.MP.Sample.Controllers
                 packageReqHandler.SetParameter("out_trade_no", sp_billno);	//商家订单号
                 packageReqHandler.SetParameter("total_fee", totalfee);			//商品金额,以分为单位(money * 100).ToString()
                 packageReqHandler.SetParameter("spbill_create_ip", Request.UserHostAddress);   //用户的公网ip，不是商户服务器IP
-                packageReqHandler.SetParameter("notify_url", "http://test.cn-qch.com/TenPayV3/PayNotifyUrl");	//接收财付通通知的URL
+                packageReqHandler.SetParameter("notify_url", "http://www.cn-qch.com/TenPayV3/PayNotifyUrl");	//接收财付通通知的URL
                 packageReqHandler.SetParameter("trade_type", "JSAPI");	//交易类型
                 packageReqHandler.SetParameter("openid", openIdResult.openid);	           //用户的openId
                 packageReqHandler.SetParameter("attach", "0");  //设置交易类型:购物
@@ -453,7 +453,7 @@ namespace Senparc.Weixin.MP.Sample.Controllers
                 ViewData["nonceStr"] = nonceStr;
                 ViewData["package"] = string.Format("prepay_id={0}", prepayId);
                 ViewData["paySign"] = paySign;
-                ViewBag.ReturnUrl = "http://test.cn-qch.com/wx/paySuccess.html?orderNo=" + sp_billno;
+                ViewBag.ReturnUrl = "http://www.cn-qch.com/wx/paySuccess.html?orderNo=" + sp_billno;
 
                 return View();
             }
@@ -569,7 +569,7 @@ namespace Senparc.Weixin.MP.Sample.Controllers
                 packageReqHandler.SetParameter("out_trade_no", sp_billno);	//商家订单号
                 packageReqHandler.SetParameter("total_fee", totalfee);			//商品金额,以分为单位(money * 100).ToString()
                 packageReqHandler.SetParameter("spbill_create_ip", Request.UserHostAddress);   //用户的公网ip，不是商户服务器IP
-                packageReqHandler.SetParameter("notify_url", "http://test.cn-qch.com/TenPayV3/PayNotifyUrl");	//接收财付通通知的URL
+                packageReqHandler.SetParameter("notify_url", "http://www.cn-qch.com/TenPayV3/PayNotifyUrl");	//接收财付通通知的URL
                 packageReqHandler.SetParameter("trade_type", "JSAPI");	//交易类型
                 packageReqHandler.SetParameter("openid", openIdResult.openid);	           //用户的openId
                 packageReqHandler.SetParameter("attach", "0");  //设置交易类型:购物
@@ -605,7 +605,7 @@ namespace Senparc.Weixin.MP.Sample.Controllers
                 ViewData["nonceStr"] = nonceStr;
                 ViewData["package"] = string.Format("prepay_id={0}", prepayId);
                 ViewData["paySign"] = paySign;
-                ViewBag.ReturnUrl = "http://test.cn-qch.com/wxuser/payResult?orderNo=" + sp_billno;
+                ViewBag.ReturnUrl = "http://www.cn-qch.com/wxuser/payResult?orderNo=" + sp_billno;
 
                 return View();
             }
@@ -730,7 +730,7 @@ namespace Senparc.Weixin.MP.Sample.Controllers
                 packageReqHandler.SetParameter("out_trade_no", sp_billno);	//商家订单号
                 packageReqHandler.SetParameter("total_fee", totalfee);			//商品金额,以分为单位(money * 100).ToString()
                 packageReqHandler.SetParameter("spbill_create_ip", Request.UserHostAddress);   //用户的公网ip，不是商户服务器IP
-                packageReqHandler.SetParameter("notify_url", "http://test.cn-qch.com/TenPayV3/PayNotifyUrl");	//接收财付通通知的URL
+                packageReqHandler.SetParameter("notify_url", "http://www.cn-qch.com/TenPayV3/PayNotifyUrl");	//接收财付通通知的URL
                 packageReqHandler.SetParameter("trade_type", "JSAPI");	//交易类型
                 packageReqHandler.SetParameter("openid", openIdResult.openid);	           //用户的openId
                 packageReqHandler.SetParameter("attach", "1");  //设置交易类型:购物
@@ -766,7 +766,7 @@ namespace Senparc.Weixin.MP.Sample.Controllers
                 ViewData["nonceStr"] = nonceStr;
                 ViewData["package"] = string.Format("prepay_id={0}", prepayId);
                 ViewData["paySign"] = paySign;
-                ViewBag.ReturnUrl = "http://test.cn-qch.com/order/PayRequest?orderNo=" + sp_billno;
+                ViewBag.ReturnUrl = "http://www.cn-qch.com/order/PayRequest?orderNo=" + sp_billno;
 
                 return View();
             }

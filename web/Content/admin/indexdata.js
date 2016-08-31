@@ -49,3 +49,38 @@ var indexdata4 =
         url: dir + "/news/index", isexpand: "false", text: "文章列表"
     }
 ];
+/*部门管理*/
+var indexdata5 =
+[
+    {
+        isexpand: "false", text: "部门管理", children: [
+        { url: dir + "/branch/list", text: "查询部门" },
+       { url: dir + "/branch/edit", text: "添加部门" }
+        ]
+    },
+
+    {
+        isexpand: "false", text: "部门员工管理", children: [
+         { url: dir + "/branch", text: "查询部门员工" },
+        { url: dir + "/branch/save", text: "添加部门员工" }
+        ]
+    }
+
+];
+/*业绩管理*/
+var indexdata6 =
+[
+    {
+        isexpand: "false", text: "部门业绩", children: [
+        { url: dir + "/JX/Jx2", text: "查询部门业绩" }
+        ]
+    },
+
+    {
+        isexpand: "false", text: "个人业绩", children: [
+         { url: dir + "/Jx/Jx1", text: "查询个人业绩" },
+         { url: dir + "/Jx/Jx", text: "我的推广明细" }
+        ]
+    }
+
+];

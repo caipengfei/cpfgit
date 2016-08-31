@@ -1,4 +1,7 @@
 var guid = util.getUrlParam('UserGuid') || util.getUrlParam('userGuid');
+var t_Roll_Type;
+sessionStorage.setItem('typeid',2);
+sessionStorage.setItem('userguid',guid);
 var turnplate = {
         init: function() {
             //this.restaraunts = ['沙龙厅代用券', '49积分', '加油!', '移动办公室代用券', '499积分', '空间通用券', '梦想演播厅代用券', '5积分'];
@@ -6,6 +9,7 @@ var turnplate = {
             var header = container.getElementsByClassName('header')[0];
             var lookup = container.getElementsByClassName('lookup')[0];
             var rulebox = container.getElementsByClassName('rulebox')[0];
+            var winningbox = container.getElementsByClassName('winningbox')[0];
             this.parent = document.getElementById('turnplate');
             this.canvas = this.parent.getElementsByTagName('img')[0];
             this.pointer = this.parent.getElementsByClassName('pointer')[0];
@@ -15,11 +19,12 @@ var turnplate = {
             var ruleWidth = parseFloat(getComputedStyle(rulebox).width);
             var w = parseInt(getComputedStyle(this.parent).width);
             var pd = parseInt(getComputedStyle(this.parent).paddingLeft) * 2;
-            header.style.top = bodyHeight * 0.17 + 'px';
-            this.parent.style.top = bodyHeight * 0.27 + 'px';
+            header.style.top = bodyHeight * 0.129 + 'px';
+            this.parent.style.top = bodyHeight * 0.196 + 'px';
             this.parent.style.left = (containerWidth - turnWidth) / 2 + 'px';
-            lookup.style.top = bodyHeight * 0.654 + 'px';
-            rulebox.style.top = bodyHeight * 0.75 + 'px';
+            lookup.style.top = bodyHeight * 0.482 + 'px';
+            winningbox.style.top = bodyHeight * 0.54 + 'px';
+            rulebox.style.bottom = '0px';
             rulebox.style.left = (containerWidth - ruleWidth) / 2 + 'px';
             this.parent.style.height = w + 'px';
             this.cH = this.cW = w - pd;
@@ -35,12 +40,22 @@ var turnplate = {
                     },
                     cache: false,
                     success: function(res) {
-                        if (res.type == 'error') {
-                            util.msgBox(res.data);
-                            that.bRotate = false;
-                            return;
-                        }
+                        // if (res.type == 'error') {
+                        //     util.msgBox(res.data);
+                        //     that.bRotate = false;
+                        //     return;
+                        // }
                         that.rotate(res.result.t_Roll_Reward, oTipBox.show.bind(oTipBox));
+                        stopScroll();
+                        // 实物
+                        if(res.result.t_Roll_Type==3){
+                            sessionStorage.setItem('shopsrc','http://www.cn-qch.com:8002/attach/images/'+res.result.t_Roll_Pic);
+                            sessionStorage.setItem('shopname',res.result.t_Roll_Title);
+                            sessionStorage.setItem('orderno',res.data);
+                            t_Roll_Type=true;
+                        }else{
+                            t_Roll_Type=false;
+                        }
                     }
                 })
             })
@@ -86,6 +101,7 @@ var turnplate = {
                     that.canvas.style.webkitTransform = 'rotate(' + rotateAngle + 'deg)';
                     that.bRotate = false;
                     getJiFen();
+                    scrollTable();
                     cancelAnimationFrame(that.aniFrame);
                     if (fn && (typeof fn == 'function')) fn(item, txt);
                 }
@@ -112,19 +128,13 @@ var oTipBox = {
         util.addTapEvent(this.ok, this.hide.bind(this));
     },
     show: function(index, text) {
-        var winWidth = window.innerWidth;
-        var winHeight = window.innerHeight;
+        var winWidth = window.outerWidth||window.innerWidth;
+        var winHeight = window.outerHeight||window.innerHeight;
         var b = this.tipBox.getElementsByTagName('b')[0];
         this.tipBox.style.top = (winHeight - this.height) / 2 + 'px';
         this.tipBox.style.left = (winWidth - this.width) / 2 + 'px';
         this.shade.style.top = 0;
         b.textContent = text;
-        if (index == 8) {
-            this.tipBox.classList.add('pulling');
-            b.textContent = '';
-        } else {
-            this.tipBox.classList.remove('pulling');
-        }
         this.tipBox.classList.add('fadeIn');
         this.shade.classList.add('fadeIn');
     },
@@ -135,6 +145,9 @@ var oTipBox = {
         setTimeout(function() {
             that.tipBox.style.top = that.shade.style.top = '5000px';
         }, 200)
+        if(t_Roll_Type){
+            location.href='/wx/confirmOrder.html';
+        }
     }
 }
 window.onload = function() {
@@ -175,4 +188,37 @@ function getJiFen(cb) {
             if (cb && (typeof cb == 'function')) cb();
         }
     })
+}
+
+var ajaxParam={ page:1, pagesize:10 }
+$(function(){ getData(ajaxParam);})
+function getData(param,cb){
+    $.ajax({
+        url:'http://120.25.106.244:9001/api/roll/GetAllRollRecords',
+        data:param,
+        cache:false,
+        success:function(res){
+            if ((!res)||res.totalItems == 0) {
+                $('.container').addClass('nodata');
+                return;
+            }
+            $('.winningbox table tbody').html(template('listTemplate',{data:res}));
+            scrollTable();
+        }
+    })
+}
+function scrollTable(){
+    var $tbody=$('.winningbox tbody');
+    var boxHeight = $tbody[0].scrollHeight;
+    var offHeight = $tbody[0].offsetHeight;
+    var scrTop=$tbody.scrollTop();
+    scrTop+=1;
+    $tbody.scrollTop(scrTop);
+    if (offHeight + scrTop >= boxHeight) {
+        $tbody.scrollTop(0);
+    }
+    window.aniFr=window.requestAnimationFrame(arguments.callee);
+}
+function stopScroll(){
+    window.cancelAnimationFrame(aniFr);
 }

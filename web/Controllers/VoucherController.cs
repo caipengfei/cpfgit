@@ -20,7 +20,7 @@ namespace web.Controllers
             {
                 if (phone.Length > 7)
                 {
-                    phone = phone.Substring(0, 3) + "****" + phone.Substring(5);
+                    phone = phone.Substring(0, 3) + "****" + phone.Substring(7);
                     ViewBag.RegPhone = phone;
                 }
             }

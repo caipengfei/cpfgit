@@ -195,7 +195,7 @@ namespace qch.core
                         log.Error("报名活动已结束，活动GUID=" + guid + "，报名电话：" + phone);
                         return msg;
                     }
-                    var members = db.Query<T_Activity_Apply>(" where t_Activity_Guid=@0", new object[] { guid });
+                    var members = db.Query<T_Activity_Apply>(" where t_Activity_Guid=@0 and t_DelState=0", new object[] { guid });
                     if (members != null && members.Count() > 0)
                     {
                         if (members.Count() >= activity.t_Activity_LimitPerson)

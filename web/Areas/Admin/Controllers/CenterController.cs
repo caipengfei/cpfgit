@@ -7,7 +7,7 @@ using web.filters;
 
 namespace web.Areas.Admin.Controllers
 {
-    [AdminAuthorization(Roles = "admin,financial,service")]
+    [AdminAuthorization(Roles = "admin,financial,service,tuiguang,areaMgr")]
     public class CenterController : Controller
     {
         //

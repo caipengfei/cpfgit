@@ -17,6 +17,53 @@ namespace qch.core
         UserTalkRepository rp = new UserTalkRepository();
 
 
+
+        /// <summary>
+        /// 获取某个对象的所有评论（数量）
+        /// </summary>
+        /// <param name="Guid"></param>
+        /// <returns></returns>
+        public int GetCount(string Guid)
+        {
+            try
+            {
+                return rp.GetCount(Guid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return 0;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Guid"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<TopicTalkModel> GetForTopic(int page, int pagesize, string Guid)
+        {
+            try
+            {
+                return rp.GetForTopic(page, pagesize, Guid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        public PetaPoco.Page<TopicTalkModel> GetForTopic2(int page, int pagesize, string Guid)
+        {
+            try
+            {
+                return rp.GetForTopic2(page, pagesize, Guid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
         /// <summary>
         /// 分页获取某个对象的所有评论
         /// </summary>

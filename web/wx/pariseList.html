@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <link rel="dns-prefetch" href="//test.cn-qch.com/" />
+    <link rel="dns-prefetch" href="//www.cn-qch.com/" />
+    <title>集赞列表</title>
+    <link rel="stylesheet" href="/wx/css/public.css">
+    <link rel="stylesheet" href="/wx/css/winningList.css">
+</head>
+
+<body>
+    <div class="container">
+        <table cellpadding="0" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>头像</th>
+                    <th>用户名</th>
+                    <th>集赞数</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <div class="more loading"></div>
+        <p class="hide">暂无数据</p>
+    </div>
+    <script type="text/html" id="listTemplate">
+        <%var avatorUrl='http://www.cn-qch.com:8002/attach/user/'%>
+        <%data.items.forEach(function(item,index){%>
+            <tr>
+                <td><img src="<%=avatorUrl+item.pic%>"></td>
+                <td><%=item.userName%></td>
+                <td><%=item.parises%></td>
+            </tr>
+        <%})%>
+    </script>
+    <script src="/wx/js/zepto.min.js"></script>
+    <script src="/wx/js/artTemplate.js"></script>
+    <script src="/h5/js/util.js"></script>
+    <script>
+        var ajaxParam = { page: 1, pagesize: 15 }
+        var isOk = false;
+        $(function () { getData(ajaxParam); })
+        function getData(param, cb) {
+            $.ajax({
+                url: 'http://120.25.106.244:9001/api/Topic/GetPariseList',
+                data: param,
+                cache: false,
+                success: function (res) {
+                    if ((!res) || res.totalItems == 0) {
+                        $('.container').addClass('nodata');
+                        return;
+                    }
+                    if (res.items.length < param.pagesize) {
+                        $('.container>.more').removeClass('loading').text('');
+                    }
+                    $('table tbody').append(template('listTemplate', { data: res }));
+                    isOk = true;
+                    (typeof cb == 'function') && cb(res);
+                }
+            })
+        }
+        $(window).bind('scroll', loadItem);
+        function loadItem() {
+            var winHeight = $(window).height();
+            var sTop = $(window).scrollTop();
+            var boxHeight = $('table tbody').height();
+            //util.msgBox(sTop)
+            if ((winHeight + sTop >= boxHeight) && isOk) {
+                isOk = false;
+                ajaxParam.page++;
+                getData(ajaxParam, function (res) {
+                    if (res.items.length <= 0) {
+                        $(window).unbind('scroll', loadItem);
+                        $('.container>.more').removeClass('loading').text('没有更多了');
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

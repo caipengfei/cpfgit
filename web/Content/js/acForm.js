@@ -79,7 +79,7 @@ $(function () {
             })
             $(this).addClass('active')
                 .siblings().removeClass('active')
-                .parent().siblings('.area_city').removeClass('hide');
+                .parent().siblings('.area_city').removeClass('hide').siblings('.area_qu').addClass('hide');
         })
         // 显示区县列表
         .on('click', '#hd_site .area_city li', function () {
@@ -88,7 +88,7 @@ $(function () {
             $.get('/activity/GetDis', { Id: cid }, function (msg) {
                 if (msg) {
                     //替换内容                    
-                    $(".area_qu").html(msg);
+                    $(".area_qu").html(msg).removeClass('hide');;
                     $('#cityId').val(cid);
                 }
             })
@@ -267,10 +267,10 @@ function postForm() {
         tipInfo(partyThem + "详情写得太少了");
         return;
     }
-    if (_content.length > 10000) {
-        tipInfo(partyThem + "详情写得有点多了");
-        return;
-    }
+    //if (_content.length > 10000) {
+    //    tipInfo(partyThem + "详情写得有点多了");
+    //    return;
+    //}
     // 开始和结束时间不能为空 开始时间必须大于当前时间 但不能大于结束时间
     if (!(_startymd && _starthm)) {
         tipInfo("请选择" + partyThem + "开始的具体时间");
@@ -417,7 +417,7 @@ function postForm() {
             tipInfo(res.Data);
             loadbox.hide();
             $(window).scrollTop(0);
-            location.reload()
+            //location.reload()
         }
     })
     //$.post('/activity/publish', $(param).serialize(), function (res) {

@@ -145,7 +145,7 @@ namespace qch.core
                     if (wxuser != null)
                     {
                         //存在微信用户信息
-                        var user = db.SingleOrDefault<T_Users>(" where guid=@0", new object[] { wxuser.UserGuid });
+                        var user = db.SingleOrDefault<T_Users>(" where guid=@0 and t_delstate=0", new object[] { wxuser.UserGuid });
                         if (user != null)
                         {
                             //存在关联的用户信息，直接添加活动      
@@ -155,7 +155,7 @@ namespace qch.core
                         else
                         {
                             //不存在关联的用户信息
-                            var uu = db.SingleOrDefault<T_Users>(" where t_User_LoginId=@0", new object[] { model.t_Activity_Tel });
+                            var uu = db.SingleOrDefault<T_Users>(" where t_User_LoginId=@0 and t_delstate=0", new object[] { model.t_Activity_Tel });
                             if (uu != null)
                             {
                                 //存在发布活动的手机号（发布活动时填写的咨询电话）用户

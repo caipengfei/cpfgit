@@ -1,0 +1,50 @@
+/*动画的播放*/
+#sound{width: 1180px;height: 450px;margin:0 auto;}
+#sound .soundLeft{width: 800px;height: 450px;float: left;}
+/*右侧的相关推荐,简介*/
+#sound .soundRight{width: 380px;height: 450px;float: left;background:#242424}
+#sound .soundRight>.title{width: 380px;height:49px;border-bottom: 1px solid #565656;text-align: center;line-height: 49px;}
+#sound .soundRight >.title .summary{color: #fff;width: 190px;float: left;}
+#sound .soundRight >.title .related{color: #fff;width: 190px;float: left;background: #565656}
+#sound .soundRight >.title .active{background: #242424}
+
+/*右侧的主要内容*/
+#sound .soundRight .content{width:380px;height: 400px;color: rgb(200,200,200);}
+#sound .soundRight .content .summary1{margin: 50px 40px;}
+#sound .soundRight .content .summary1 .title{font-size: 24px;margin-bottom: 30px}
+#sound .soundRight .content .summary1 .substance{font-size: 14px;line-height: 20px;letter-spacing:1px;
+	height:130px;overflow: hidden;margin-bottom:60px }
+#sound .soundRight .content .summary1 .foot{height: 28px;line-height: 28px;position: relative;}
+#sound .soundRight .content .summary1 .foot span{position: absolute;top:0;}
+/*右侧相关*/
+#sound .soundRight .content .related1{width: 372px;height: 400px;overflow-y: scroll;display: none;margin-right: 8px}
+/*--美化滚动条*/
+#sound .soundRight .content .related1::-webkit-scrollbar {width: 8px;}
+#sound .soundRight .content .related1::-webkit-scrollbar-track { background-color:#242424;-webkit-border-radius: 2em;-moz-border-radius: 2em;border-radius:2em;}
+#sound .soundRight .content .related1::-webkit-scrollbar-thumb {background-color:#c8c8c8;-webkit-border-radius: 2em;-moz-border-radius: 2em;border-radius:2em;}
+/*--滚动条美化结束*/
+#sound .soundRight .content .related1 .each{width: 320px;height: 74px;border-bottom: 1px solid #565656;margin-left: 20px}
+#sound .soundRight .content .related1 .each img{width: 70px;height: 50px;margin: 10px 10px 10px 0;display: block;float: left;}
+#sound .soundRight .content .related1 .each div{width:240px;height:36px;padding-top: 15px;float: left;overflow: hidden;letter-spacing: 1px}
+
+
+/*电影的列表*/
+#movieList{padding-top: 50px;width: 1180px;margin: 0 auto;}
+#movieList>p{font-size: 22px;}
+#movieList>.box{border-bottom: 1px solid #e4e4e4;width: 1180px;height:260px;position: relative;}
+#movieList>.box>.LeftBox{width: 365px;height: 200px;margin:30px 50px 30px 0;float: left;}
+#movieList>.box>.LeftBox>.fengmian{width: 365px;height: 200px;float: left;}
+#movieList>.box>.LeftBox>.cover{width: 365px;height: 200px;position:absolute;left:0;top:30px;background: #000;opacity: 0.2;filter:alpha(opacity:20);display:none;}
+#movieList>.box>.LeftBox>.bofang{position: absolute;left:161px;top:115px;display:none;}
+#movieList>.box>.rightBox{float: left;width: 765px;height: 200px;margin-top:50px;}
+#movieList>.box>.rightBox .title{font-size:20px;margin-bottom: 30px}
+#movieList>.box>.rightBox .substance{font-size:14px;line-height: 20px;color:#565656;margin-bottom: 40px;}
+#movieList>.box>.rightBox .foot{height: 28px;line-height: 28px;position: relative;}
+#movieList>.box>.rightBox .foot span{position: absolute;top:0;color: #565656}
+
+/*分页*/
+#page{padding-top: 70px;padding-bottom: 120px;width:1180px;height: 30px;text-align: center;margin: 0 auto}
+#page a{ margin:5px;display: inline-block;text-decoration: none;color: #bababa;height: 28px;line-height: 28px;text-align: center;font-size: 14px;border: 1px solid #bababa;}
+#page .shouwei{width:48px;border-radius: 15px;}
+#page .shangxia{width:34px;border-radius: 15px}
+#page .yeshu{width: 28px;border-radius: 14px;}

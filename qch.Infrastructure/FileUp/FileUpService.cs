@@ -183,7 +183,7 @@ namespace qch.Infrastructure
                     }
                     #endregion
 
-                    return new ImgModel { Thumbnail = path + "small_" + newfilename, OriginalImg = path + newfilename };
+                    return new ImgModel { Thumbnail = path + "small_" + newfilename, OriginalImg = path + newfilename, ImageUrl = ImageUrl };
                 }
                 else
                 {

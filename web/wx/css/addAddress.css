@@ -1,0 +1,96 @@
+.myform li{
+    height: 3.4rem;
+    line-height: 3.4rem;
+    border-bottom: rgb(235,235,235) solid 1px;
+    padding:0 1rem;
+}
+.myform label,.myform input,.myform a{
+    font-size: 1.1rem;
+    height: 100%;
+}
+.myform label{
+    float: left;
+    width: 5.5rem;
+}
+.myform a#goSelectAddress{
+    background: url(../img/icon/icon_right.png) no-repeat right 50%;
+    background-size: 1.2rem auto;
+    padding-right: 1.2rem;
+    opacity: .8;
+    color: #000;
+    overflow: hidden;
+}
+.myform input,.myform a{
+    border: none;
+    outline: none;
+    float: left;
+}
+.btn-submit,.btn-remove{
+    width: 93.75%;
+    display: block;
+    border-radius: 1.7rem;
+    height: 3.4rem;
+    line-height: 3.4rem;
+    text-align: center;
+    font-size: 1.1rem;
+    color: #fff;
+    border: 1px solid #f23030;
+    background: #f23030;
+    margin: auto;
+    margin-top: 3.4rem;
+}
+.btn-submit:active,.btn-remove:active{
+    background: #f23030;
+    border-color:#f23030;
+}
+.mrbox{
+    display: table;
+    width: 100%;
+    border-bottom: rgb(235,235,235) solid 1px;
+}
+.mrbox .row{
+    display: table-row;
+}
+.mrbox .row .cell{
+    display: table-cell;
+    padding: 1rem;
+    vertical-align: middle;
+}
+.mrbox h2{
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: .8rem;
+}
+.mrbox p{
+    font-size: .9rem;
+    color: #666;
+}
+.mrbox #setDefault{
+    width:4.6rem;
+    height: 2.6rem;
+    border-radius: 5px;
+    background: rgb(247,247,247);
+    border: 1px solid rgb(235,235,235);
+    padding: .2rem;
+    display: block;
+    float: right;
+}
+.mrbox #setDefault:before{
+    display: block;
+    width: 50%;
+    height: 100%;
+    content: '';
+    background: #fff;
+    border-radius: 4px;
+    border: 1px solid rgb(235,235,235);
+    float: left;
+    box-sizing: border-box;
+}
+.mrbox #setDefault.active{
+    background: #f23030;
+    box-shadow: #4e0000 0 0 .5rem inset;
+}
+.mrbox #setDefault.active:before{
+    float: right;
+
+}

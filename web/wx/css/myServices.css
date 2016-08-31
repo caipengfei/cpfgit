@@ -92,11 +92,11 @@
     line-height: 1.6rem;
 }
 /* 过期样式 */
-.activitybox .expire{
+.activitybox .expire, .spacebox .expire{
     background: url(../img/icon/item-bg2.png) no-repeat 0 50%;
     background-size: 100% auto;
 }
-.expire span{
+.expire span, .expire span{
     background: url(../img/icon/guoqi.png) no-repeat 0 50%;
     background-size: 100% auto;
     width: 3.96rem;

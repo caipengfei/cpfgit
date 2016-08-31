@@ -1,0 +1,88 @@
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    box-sizing:content-box;
+    vertical-align: baseline;
+}
+
+a {
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+span {
+    display: inline-block;
+}
+
+li {
+    list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-weight: normal;
+}
+
+body {
+    font-family: "Microsoft YaHei";
+    font-size: 13px;
+    min-width: 1180px;
+    background-color:#fff;
+}
+/*topBar*/
+.wrap{width:1180px;margin:0 auto;}
+#topBar{width: 100%;height:34px;background:#333333;}
+#topBar .box{color: #f1f1f1;font-size: 13px;box-sizing:border-box;width: 1180px;height: 30px;margin: 0 auto;}
+#topBar .box p{float: left;padding-top: 8px;cursor:default;color: #d7d3d3}
+#topBar .box span{display: inline-block;padding-bottom: 10px;}
+#topBar .box>a{margin-top: 0px;margin-left: 20px;position: relative;}
+#topBar .box>a>.topBar1{position: absolute;left: 0;top:-14px;}
+#topBar .box>a>.topBar2{width: 170px;height: 170px;position: absolute;top:17px;left: -70px;z-index: 5;display: none;box-shadow:0 0 5px #000;}
+#topBar .box>a:hover >.topBar2{display: block;}
+#topBar .box ul{float: right;}
+#topBar .box ul .active a{color:#e4e4e4}
+#topBar .box li{float: left;color: #8f8f8f;}
+#topBar .box ul li:hover a{color: #d7d3d3}
+#topBar .box li a{color: #8f8f8f;padding:7px 20px;}
+#topBar .box ul li a span{color: #fdd000}
+
+/*header*/
+#header{width: 100%;height:80px;background:#ffffff;}
+#header .box{position: relative;}
+#header .box>img{padding-top: 23px;display: inline}
+#header .box>ul{height: 20px;float: right;position: absolute;right:200px;top:30px;}
+#header .box >ul  li{float: left;padding-left:35px;}
+#header .box >ul li a{font-size:17px;color: #000;}
+#header .box >ul li a:hover{color: #fdd000}
+
+
+/*headNoLogin*/
+#header .box .headerRightLogin{position: absolute;right:0px;top:5px;font-size:16px;width: 180px;height: 70px;
+    border-radius: 10px;z-index: 5;background: #fff;color: #000;overflow: hidden;transition:height 0.3s;}
+#header .box .headerRightLogin .touxiang img{width: 36px;height: 36px;border-radius: 18px;display: inline;position: absolute;left: 20px;top:20px;}
+#header .box .headerRightLogin .geren{position: absolute;right: 20px;top:25px;}
+#header .box .headerRightLogin .geren>p{color: #000;cursor: default;font-size: 16px;}
+#header .box .headerRightLogin .geren>p>img{width: 24px;height: 12px;}
+#header .box .headerRightLogin .hengxian{width:160px;height: 1px;background: #ccc;position: absolute;top:70px;left: 10px}
+#header .box .headerRightLogin ul{width: 180px;height:460px;position: absolute;top:71px;}
+#header .box .headerRightLogin ul li{width:180px;height: 44px;line-height: 44px;position: relative;box-sizing:border-box;padding-left: 85px}
+#header .box .headerRightLogin ul li:hover{background: #eee}
+#header .box .headerRightLogin ul li img{position: absolute;top:6px;left: 25px;}
+#header .box .headerRightLogin ul li a{color: #000;font-size: 16px;}
+#header .box .headerRightLogin:hover{height: 520px;box-shadow: 0 0 5px #000;}
+#header .box .headerRightLogin:hover p{color: #fdd000}
+
+
+/*tabImg*/
+#tabImg{width: 100%;height: 380px;}
+#tabImg .box{position: relative;}
+#tabImg .box p{position: absolute;left: 450px;top:130px;font-size: 20px;color: #fff;letter-spacing:1px;font-family: "华文细黑"}
+#tabImg .box .shenqing{width: 150px;height: 40px;line-height: 40px;border:1px solid #dedede;border-radius: 30px;position: absolute;left:500px;top: 180px;text-align: center;}
+#tabImg .box .shenqing a{font-size: 22px;color: #fff; font-family: "华文细黑"}
+#tabImg .box .shenqing:hover a{color: #fdd000}
+#tabImg .box .shenqing:hover{border:1px solid #fdd000;}
+#tabImg .cover{width: 100%;height:380px;position: absolute;left: 0;top:0;background: #000;opacity: 0;filter:alpha(opacity:0);}

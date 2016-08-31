@@ -1,0 +1,141 @@
+/* 分类菜单 */
+body{
+    background: rgb(247,247,247);
+}
+.header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+    background: #fff;
+}
+.header .tipbox{
+    background: rgb(109,151,244);
+    padding: 1rem;
+}
+.header .tipbox .tip{
+    border: 1px solid #fff;
+    line-height: 1.6rem;
+    font-size: .8rem;
+    color: #fff;
+    padding: .5rem 1.2rem;
+    border-radius: .5rem;
+}
+.toolsbox {
+    width: 100%;
+    height: 3.4rem;
+    line-height: 3.4rem;
+    border-bottom: 1px solid rgb(228,228,228);
+}
+.toolsbox li {
+    width: 50%;
+    height: 100%;
+    float: left;
+    text-align: center;
+}
+.toolsbox li a {
+    width: 60%;
+    height: 100%;
+    border-bottom: 2px solid #fff;
+    font-size: 1.1rem;
+    color: #999;
+}
+.toolsbox li.active a {
+    border-color: #6e96f5;
+    color: #6e96f5;
+}
+/* 积分抽奖列表 */
+.listsbox a {
+    display: block !important;
+    height: 100%;
+    color: #000;
+    padding-top: 1rem;
+    padding-left: 1rem;
+}
+.listsbox a:active{
+    background: rgb(235,235,235);
+}
+.subbox>li{
+    margin-bottom: .5rem;
+    background: #fff;
+}
+.subbox .image{
+    width: 20%;
+    overflow: hidden;
+    border: 1px solid rgb(235,235,235);
+    float: left;
+}
+.subbox .right{
+    float: right;
+    width: 80%;
+    padding: 0 1rem;
+}
+.subbox .right li{
+    line-height: 3rem;
+    height: 3rem;
+    border-top:1px solid rgb(235,235,235);
+}
+.subbox .right li:nth-child(1){
+    border-top:none;
+    line-height: inherit;
+}
+.subbox .right li *{
+    color: rgb(141,141,141);
+    font-size: 1rem;
+}
+.subbox .right li label{
+    float: left;
+}
+.subbox .right li label.title{
+    color: #000;
+    font-size: 1.1rem;
+    padding-top: .5rem;
+}
+.subbox .right li span{
+    float: right;
+}
+.subbox .right li span.btn{
+    color: #6e96f5;
+    border:1px solid #6e96f5;
+    height: 2rem;
+    line-height: 2rem;
+    padding: 0 1rem;
+    border-radius: 1rem;
+}
+.subbox .right li span.fblue{
+    color: #6e96f5;
+}
+
+.container>.more{
+    text-align: center;
+    color: #666;
+    font-size: 1.1rem;
+    line-height: 2.4rem;
+    height: 2.4rem;
+}
+.container>.more.loading{
+    background: url(../img/icon/loading.gif) no-repeat 50% 50%;
+    background-size: auto 1.2rem;
+}
+.container.nodata .listsbox>p{
+    padding-top: 14.5rem;
+    background: url(../img/icon/wu@2x.png) no-repeat 50% 0;
+    background-size: auto 14rem;
+    font-size: 1.2rem;
+    color: #999;
+    display: block !important;
+    text-align: center;
+}
+.container.nodata .more{
+    display: none !important;
+}
+.container.nodata .listsbox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    bottom: 0;
+    text-align: center;
+    padding-top: 14rem !important;
+}

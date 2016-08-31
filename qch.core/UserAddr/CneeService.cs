@@ -17,6 +17,28 @@ namespace qch.core
 
 
         /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="Guid"></param>
+        /// <returns></returns>
+        public bool Del(string Guid)
+        {
+            try
+            {
+                var model = GetById(Guid);
+                if (model == null)
+                    return false;
+                //model.t_DelState = 1;
+                //return rp.Edit(model);
+                return rp.Del(model);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                throw;
+            }
+        }
+        /// <summary>
         /// 用户设置默认收货地址
         /// </summary>
         /// <param name="UserGuid"></param>
@@ -161,6 +183,7 @@ namespace qch.core
             {
                 if (model == null)
                     return msg;
+                var d = GetDefaultReceipt(model.t_User_Guid);
                 var tt = GetById(model.Guid);
                 if (tt == null)
                 {
@@ -171,18 +194,53 @@ namespace qch.core
                         return msg;
                     }
                     model.Guid = Guid.NewGuid().ToString();
+                    if (model.t_IsDefault == 1)
+                    {
+                        if (d != null)
+                        {
+                            d.t_IsDefault = 0;
+                            rp.Edit(d);
+                        }
+                    }
                     if (rp.Add(model))
                     {
                         msg.type = "success";
+                        msg.Result = model.Guid;
                         msg.Data = "添加成功";
+                    }
+                    else
+                    {
+                        msg.Data = "添加失败";
+                        if (d != null)
+                        {
+                            d.t_IsDefault = 1;
+                            rp.Edit(d);
+                        }
                     }
                 }
                 else
                 {
+                    if (model.t_IsDefault == 1)
+                    {
+                        if (d != null)
+                        {
+                            d.t_IsDefault = 0;
+                            rp.Edit(d);
+                        }
+                    }
                     if (rp.Edit(model))
                     {
                         msg.type = "success";
                         msg.Data = "修改成功";
+                    }
+                    else
+                    {
+                        msg.Data = "修改失败";
+                        if (d != null)
+                        {
+                            d.t_IsDefault = 1;
+                            rp.Edit(d);
+                        }
                     }
                 }
                 return msg;

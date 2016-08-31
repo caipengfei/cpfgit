@@ -1,0 +1,133 @@
+﻿@{
+    ViewBag.Title = "空间管理";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+@model PetaPoco.Page<qch.Models.SelectPlace>
+@section css{
+    <link rel="stylesheet" type="text/css" href="/content/css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="/content/css/spaceManage.css" />
+}
+<div class="content">
+    <div class="wrap clearfix">
+        @Html.Action("uc", "qch")
+        <div class="right">
+            <div class="spaceManage info">
+                <!--空间的头部-->
+                <div class="spaceHead" style="display: -none">
+                    <span class="havePass">已审核
+								<img src="/content/image/xiahuaxian.png" alt="">
+                    </span>
+                    <span class="noPass">待审核
+								<img src="/content/image/xiahuaxian.png" alt="">
+                    </span>
+                    <a href="javascript:" class="shenqing">申请入驻</a>
+                </div>
+                <!--空间的内容为空的时候-->
+                <div class="spaceBlank" style="display: none">
+                    <img src="/content/image/1kongjian.png" alt="">
+                    <p>暂无信息,立即<a href="javascript:">申请</a></p>
+                </div>
+                <!--已审核空间有内容的时候的时候-->
+                @if (Model != null && Model.Items != null && Model.Items.Count > 0)
+                {
+                    <div class="HavespaceContent" style="display: -none">
+                        <ul>
+
+                            @foreach (var item in Model.Items)
+                            {
+                                <li class="spaceLi">
+                                    <!--显示图片-->
+                                    <img src="@item.PlaceImage" alt="">
+                                    <!--是否通过-->
+                                    <span class="shenhe">审核通过</span>
+                                    <!--图片底部阴影-->
+                                    <div class="imgBg"></div>
+                                    <!--图片介绍-->
+                                    <span class="summary">@item.PlaceName</span>
+                                    <!---->
+                                    <p>@item.PlaceAddr</p>
+                                    @*<p>⊙@item.t_Place_CheckIn</p>*@
+                                    <p>⊙@qch.core.StyleService.GetPosition(item.t_Place_ProvideService)</p>
+                                    <p>⊙@qch.core.StyleService.GetPosition(item.t_Place_Tips)</p>
+                                    <p class="hengxian"></p>
+                                    <a href="@Url.Action("ucroom", "place", new { PlaceGuid = item.Guid })">预约空间管理</a>
+
+                                </li>
+                            }
+
+                        </ul>
+                    </div>
+                }
+                else
+                {
+                    <!--房间的内容为空的时候-->
+                    <div class="houseBlank">
+                        <img src="/content/image/2fangjian.png" alt="">
+                        <p>暂无空间信息,<a href="javascript:">去添加</a></p>
+                    </div>
+                }
+                <!--未审核空间有内容的时候-->
+                <div class="NospaceContent" style="display: none">
+                    <ul>
+                        <li class="spaceLi">
+                            <!--显示图片-->
+                            <img src="/content/image/img2.png" alt="">
+                            <!--是否通过-->
+                            <span class="shenhe">待审核</span>
+                            <!--图片底部阴影-->
+                            <div class="imgBg"></div>
+                            <!--图片介绍-->
+                            <span class="summary">青创汇郑州</span>
+                            <!---->
+                            <p>提供服务:项目路演/创业辅导/法律资讯</p>
+                            <p>⊙8090一站式创业云平台</p>
+                            <p>⊙河南郑州</p>
+                            <p>⊙地铁/公交/自驾</p>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section js{
+    <script src="~/Content/qch/js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="/Content/qch/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/Content/qch/js/bootstrap-paginator.js"></script>
+    <script src="/content/js/spaceManage.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        //function goInfo(id){
+        //    location.href='/place/Info?Guid='+id;
+        //}
+        $(".content .left li").removeClass("active active1");
+        $("#spaceManage").addClass('active1');
+        $(document).ready(function(){
+            var element = $("#page");
+            var options = {
+                bootstrapMajorVersion: 3,//版本
+                currentPage: @Convert.ToInt64(ViewData["Page"]),  //当前页数
+                numberOfPages: 5,//设置显示的页码数
+                totalPages: @Convert.ToInt64(ViewData["TotalPage"]), //总页数
+                itemTexts: function (type, page, current) {
+                    switch (type) {
+                        case "first":
+                            return "首页";
+                        case "prev":
+                            return "上一页";
+                        case "next":
+                            return "下一页";
+                        case "last":
+                            return "末页";
+                        case "page":
+                            return page;
+                    }
+                },
+                pageUrl: function (type, page, current) {                  
+                    return "/Place/ucplace?page=" + page ;
+                }
+            }
+            element.bootstrapPaginator(options);
+        }); 
+    </script>
+}

@@ -97,6 +97,55 @@ namespace qch.core
                 return null;
             }
         }
+        /// <summary>
+        /// 分页获取所有空间信息
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<SelectPlace> GetAllPlace(int page, int pagesize)
+        {
+            try
+            {
+                return rp.GetAllPlace(page, pagesize);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        public PetaPoco.Page<SelectPlace> GetAllPlace(int page, int pagesize, string UserGuid, int isAudit)
+        {
+            try
+            {
+                return rp.GetAllPlace(page, pagesize, UserGuid, isAudit);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
+        /// 分页获取某个用户上传的所有空间信息
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <param name="UserGuid"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<SelectPlace> GetAllPlace(int page, int pagesize, string UserGuid)
+        {
+            try
+            {
+                return rp.GetAllPlace(page, pagesize, UserGuid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
         #endregion
 
         #region 能预约的空间时间信息（日期）

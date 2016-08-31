@@ -28,8 +28,8 @@
                         <td>
                             <h2>@Model.T_Voucher_Price 元代金券</h2>
                             <ul>
-                                <li>购买任何产品均可使用</li>
-                                <li>@Model.T_sDate.ToShortDateString() 至 @Model.T_eDate.ToShortDateString()</li>
+                                <li>仅限空间预约支付使用</li>
+                                <li>有效期 @Model.T_Voucher_LimitDay.ToString() 天</li>
                             </ul>
                         </td>
                     </tr>
@@ -42,7 +42,7 @@
         <div class="text-box">
             <p class="p1">
                 恭喜！成功抢到了
-                <strong>￥@Model.T_Voucher_Price</strong> 优惠券
+                <strong>￥@Model.T_Voucher_Price</strong> 代金券
             </p>
             <p class="p2">
                 优惠券已放至账户<b>@ViewBag.RegPhone</b>，登陆青创汇APP即可使用<br>
@@ -64,23 +64,21 @@
                 <h2>优惠券分类</h2>
             </dt>
             <dd>
-                <p><strong>抵扣券：</strong>用于青创汇线下场地使用、课程活动报名支付时的现金抵扣。</p>
+                <p><strong>代金券：</strong>用于用户支付青创汇线下场地使用订单的现金抵扣。</p>
                 <p><strong>代用券：</strong>即单次空间使用体验券，空间包括智库厅、移动办公室、沙龙厅、资金厅、人才厅、梦想演播厅。</p>
-                <p><strong>随机折扣券：</strong>凭折扣券可享受线上支付8-8.5折优惠。</p>
             </dd>
             <dt>
                 <h2>使用规则</h2>
             </dt>
             <dd>
-                <p>同一订单仅能享受一次优惠。</p>
+                <p>已经享受一种优惠活动的订单不可再次享受其他类别的优惠活动。</p>
             </dd>
             <dt>
                 <h2>获取途径</h2>
             </dt>
             <dd>
-                <p>1、优惠券可通过参加青创汇各平台相关活动赢取，也可通过青创汇APP积分兑换获得。</p>
-                <p>2、邀请好友：邀请朋友注册青创汇APP，新用户注册成功并完善资料后，邀请人可获得20元抵扣券一张。</p>
-                <p>3、青创汇APP的新用户注册可立即获得20元抵扣券一张。</p>
+                <p>1、优惠券可通过参加平台的相关活动领取获得，也可通过积分兑换、积分抽奖获得。</p>
+                <p>2、用户行为：新用户完成账号注册获得100元代金券，完成实名认证获得200元代金券，完成银行卡绑定获得300元代金券。</p>
             </dd>
         </dl>
     </div>

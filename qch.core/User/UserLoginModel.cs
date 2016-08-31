@@ -22,5 +22,6 @@ namespace qch.Models
         /// 验证码
         /// </summary>
         public string SafeCode { get; set; }
+        public string UserName { get; set; }
     }
 }

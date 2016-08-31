@@ -51,6 +51,11 @@ namespace qch.Repositories
             get { return _guid; }
         }
         /// <summary>
+        /// 关联用户
+        /// </summary>
+        [Column]
+        public string t_User_Guid { get; set; }
+        /// <summary>
         /// 
         /// </summary>
         /// 

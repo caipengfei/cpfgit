@@ -1,0 +1,33 @@
+﻿@{
+    Layout = null;
+}
+@model PetaPoco.Page<qch.Models.UserModel>
+
+
+<div class="row5">
+    <h2><span>青创汇合伙人</span></h2>
+    <h4>PARTNER</h4>
+    <div class="box">
+        @if (Model != null && Model.Items != null)
+        {
+            foreach (var item in Model.Items)
+            {
+            <span class="position0">
+                <img src="http://www.cn-qch.com:8002/attach/user/@item.t_User_Pic" alt="">
+                <div>
+                    <p class='name'>@item.t_User_RealName</p>
+                    <p class="job">@qch.core.StyleService.GetPosition(item.t_User_Position)</p>
+                </div>
+            </span>
+            }
+        }
+    </div>
+</div>
+<div class="row55">
+    <div class="box">
+        <!--跳转到更多合伙人的页面-->
+        <a href="/qch/partners" target="_blank">更多合伙人&nbsp;
+                <img src="/Content/image/hhr.png" alt="" style="position: absolute; top: 10px; left: 150px">
+        </a>
+    </div>
+</div>

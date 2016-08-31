@@ -33,7 +33,18 @@ namespace qch.core
                 return null;
             }
         }
-
+        public SelectProject GetTop1ForPC(string Guid)
+        {
+            try
+            {
+                return rp.GetTop1ForPC(Guid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
         public SelectProject GetTop1(string Guid)
         {
             try

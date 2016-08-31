@@ -1,0 +1,158 @@
+﻿@{
+    Layout = null;
+    var username = "";
+    if (Request.IsAuthenticated)
+    {
+        HttpCookie authcookie = Request.Cookies[System.Web.Security.FormsAuthentication.FormsCookieName];
+        FormsAuthenticationTicket ticke = FormsAuthentication.Decrypt(authcookie.Value);
+        username = qch.Infrastructure.SerializeHelper.Instance.JsonDeserialize<qch.Models.UserLoginModel>(ticke.UserData).UserName;
+    }
+    var welcome = "";
+    var a = DateTime.Now.Hour;
+    if (a >= 0 && a <= 4)
+    { welcome = "夜猫子"; }
+    else if (a > 4 && a <= 8)
+    { welcome = "早上好"; }
+    else if (a > 8 && a <= 12)
+    { welcome = "上午好"; }
+    else if (a > 12 && a <= 14)
+    { welcome = "中午好"; }
+    else if (a > 14 && a <= 19)
+    { welcome = "下午好"; }
+    else if (a > 19 && a <= 23)
+    { welcome = "晚上好"; }
+}
+@if (string.IsNullOrWhiteSpace(username))
+{
+    <!--顶部-->
+    <div id="topBar">
+        <div class="box">
+            <p>客服热线&nbsp;:&nbsp;400-169-09166</p>
+            <a href="javascript:void(0)">
+                <img src="/Content/image/topBar1.png" alt="" class="topBar1">
+                <img src="/Content/image/topBar2.png" alt="" style="width: 170px; height: 170px; border-radius: 10px;" class="topBar2">
+            </a>
+            <ul>
+                <li><a href="javascript:">关于QCH</a>|</li>
+                <li><a href="javascript:">加入我们</a>|</li>
+                <li><a href="/app">app下载</a>|</li>
+                <li><a href="javascript:">免费注册</a>|</li>
+                <li><a href="/qch/login">立即登录</a></li>
+            </ul>
+        </div>
+    </div>
+}
+else
+{
+    <!--顶部-->
+    <div id="topBar">
+        <div class="box">
+            <p>客服热线&nbsp;:&nbsp;400-169-09166</p>
+            <a href="javascript:void(0)">
+                <img src="/Content/image/topBar1.png" alt="" class="topBar1">
+                <img src="/Content/image/topBar2.png" alt="" style="width: 170px; height: 170px; border-radius: 10px;" class="topBar2">
+            </a>
+            <ul>
+                <li><a href="javascript:">关于QCH</a>|</li>
+                <li><a href="javascript:">加入我们</a>|</li>
+                <li><a href="/app">app下载</a>|</li>
+                <li><a href="javascript:void(0)">@welcome,&nbsp;<span>@username</span></a>|</li>
+                <li><a id="islogin" href="/qch/logout">退出</a></li>
+            </ul>
+        </div>
+    </div>
+}
+
+
+
+<!--头部以及导航-->
+<div id="header">
+    <div class="wrap box">
+        <img src="/Content/image/logo.png" alt="">
+        <ul>
+            <li class="active"><a href="/">首页</a></li>
+            <li><a href="/content/news.html?fid=39">新闻资讯</a></li>
+            <li><a href="/activity/publish">创客活动</a></li>
+            <li><a href="javascript:">创客项目</a></li>
+            <li><a href="/place">创客空间</a></li>
+        </ul>
+        @if (string.IsNullOrWhiteSpace(username))
+        {
+            <div class="headerRightNoLogin">
+                <a href="javascript:" class="touxiang">
+                    <img src="/Content/image/touxiang.png" alt=""></a>
+                <div href="javascript:" class="geren">
+                    <p>个人中心&nbsp;<img src="/Content/image/geren1.png" alt=""></p>
+                </div>
+                <ul>
+                    <li class="login"><a href="/qch/login">登录</a></li>
+                    <li class="regist"><a href="javascript:">注册</a></li>
+                </ul>
+            </div>
+        }
+        else
+        {
+            <div class="headerRightLogin">
+                <a href="javascript:" class="touxiang">
+                    <img src="/Content/image/ceshi.png" alt=""></a>
+                <div href="javascript:" class="geren">
+                    <p>个人中心&nbsp;<img src="/Content/image/geren1.png" alt=""></p>
+                </div>
+                <div class="hengxian"></div>
+                <ul>
+                    <li>
+                        <a href="/qch/UserCenter">
+                            <img src="/Content/image/icon-font/gerenxinxi.png" alt="">个人信息
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:">
+                            <img src="/Content/image/icon-font/gerendingdan.png" alt="">个人订单
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:">
+                            <img src="/Content/image/icon-font/wodexiangmu.png" alt="">我的项目
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:">
+                            <img src="/Content/image/icon-font/huodongguanli.png" alt="">活动管理
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:">
+                            <img src="/Content/image/icon-font/kongjianguanli.png" alt="">空间管理
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:">
+                            <img src="/Content/image/icon-font/yuyue.png" alt="">我的预约
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:">
+                            <img src="/Content/image/icon-font/yaoqingyoujiang.png" alt="">邀请有奖
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:">
+                            <img src="/Content/image/icon-font/xiaoxi.png" alt="">消息通知
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:">
+                            <img src="/Content/image/icon-font/zhanghushezhi.png" alt="">账户设置
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:">
+                            <img src="/Content/image/icon-font/tuichu.png" alt="">退&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;出
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        }
+    </div>
+</div>
+

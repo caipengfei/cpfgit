@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <link rel="dns-prefetch" href="//test.cn-qch.com/" />
+    <link rel="dns-prefetch" href="//www.cn-qch.com/" />
+    <title>选择地址</title>
+    <link rel="stylesheet" href="/wx/css/public.css">
+    <style>
+        li{
+            border-bottom: 1px solid rgb(235,235,235);
+            height: 3.4rem;
+            line-height: 3.4rem;
+            color: #666;
+            font-size: 1.1rem;
+            padding: 0 1rem;
+        }
+        li:active{
+            background: rgb(235,235,235);
+        }
+        .loading {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background:#fff url(/wx/img/icon/loading.gif) no-repeat 50% 50%;
+            background-size: 2rem auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <ul class="shengbox"></ul>
+        <ul class="citybox hide"></ul>
+        <ul class="qubox hide"></ul>
+        <div class="loading"></div>
+    </div>
+    <script type="text/html" id="shengTemplate">
+        <%if(data&&data.length){%>
+            <%data.forEach(function(item,index){%>
+                <li data-id="<%=item.provinceID%>"><%=item.provinceName%></li>
+            <%})%>
+        <%}%>
+    </script>
+    <script type="text/html" id="cityTemplate">
+        <%if(data&&data.length){%>
+            <%data.forEach(function(item,index){%>
+                <li data-id="<%=item.cityID%>"><%=item.cityName%></li>
+            <%})%>
+        <%}%>
+    </script>
+    <script type="text/html" id="disTemplate">
+        <%if(data&&data.length){%>
+            <%data.forEach(function(item,index){%>
+                <li data-id="<%=item.districtID%>"><%=item.districtName%></li>
+            <%})%>
+        <%}%>
+    </script>
+    <script src="/h5/js/jquery.min.js"></script>
+    <script src="/wx/js/jquery.mobile-events.min.js"></script>
+    <script src="/wx/js/artTemplate.js"></script>
+    <script src="/h5/js/util.js"></script>
+    <script>
+        var obj={}
+        // 获取省份数据
+        $.ajax({
+            url: 'http://120.25.106.244:9001/api/area/GetCity',
+            cache:false,
+            success: function (res) {
+                $('.shengbox').html(template('shengTemplate',{data:res}))
+                .siblings('.loading').addClass('hide');
+            }
+        })
+        $('body')
+        // 获取城市数据
+        .on('tap','.shengbox li',function(){
+            var shengId=$(this).data('id');
+            obj.provinceText=$(this).text();
+            $('.shengbox').addClass('hide');
+            $('.loading').removeClass('hide');
+            $.ajax({
+                url: 'http://120.25.106.244:9001/api/area/GetCity',
+                cache:false,
+                data:{id:shengId},
+                success: function (res) {
+                    $('.citybox').html(template('cityTemplate',{data:res})).removeClass('hide')
+                    .siblings('.loading').addClass('hide');
+                }
+            })
+        })
+        // 获取区数据
+        .on('tap','.citybox li',function(){
+            var cityId=$(this).data('id');
+            obj.cityText=$(this).text();
+            $('.citybox').addClass('hide');
+            $('.loading').removeClass('hide');
+            $.ajax({
+                url: 'http://120.25.106.244:9001/api/area/GetDis',
+                cache:false,
+                data:{id:cityId},
+                success: function (res) {
+                    $('.qubox').html(template('disTemplate',{data:res})).removeClass('hide')
+                    .siblings('.loading').addClass('hide');
+                    if(res.length==0){
+                        obj.disText='';
+                        var addrType=util.getUrlParam('typeId');
+                        sessionStorage.setItem('field',JSON.stringify(obj));
+                    }
+                }
+            })
+        })
+        .on('tap','.qubox li',function(){
+            obj.disText=$(this).text();
+            var addrType=util.getUrlParam('typeId');
+            sessionStorage.setItem('field',JSON.stringify(obj));
+            // 0编辑 1新增
+            if(addrType){
+                // location.href='/wx/addAddress.html?typeId=1';
+                location.replace('/wx/addAddress.html?typeId=1');
+                history.back();
+            }else{
+                // location.href='/wx/addressEdit.html';
+                location.replace('/wx/addressEdit.html');
+                history.back();
+            }
+        })
+    </script>
+</body>
+</html>

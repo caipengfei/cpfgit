@@ -77,6 +77,7 @@
             var winHeight = $(window).height();
             var sTop = $(window).scrollTop();
             var boxHeight = $('table').height();
+            //util.msgBox(sTop)
             if ((winHeight + sTop >= boxHeight) && isOk) {
                 isOk = false;
                 ajaxParam.page++;

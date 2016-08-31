@@ -1,4 +1,5 @@
-﻿using qch.Repositories;
+﻿using qch.Models;
+using qch.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace qch.core
         readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         GoodsRepository rp = new GoodsRepository();
 
-        #region 商品资源
+        #region 商品
         /// <summary>
         /// 获取所有积分兑换商品
         /// </summary>
@@ -49,7 +50,7 @@ namespace qch.core
             }
         }
         #endregion
-        #region 商品兑换记录资源
+        #region 商品兑换记录
         /// <summary>
         /// 商品兑换
         /// </summary>
@@ -90,7 +91,7 @@ namespace qch.core
                         return msg;
                     }
                     //查询商品信息
-                    var goods = db.SingleOrDefault<T_Goods_Convert>(" where guid=@0 or goodscode=@0 and t_delstate=0", new object[] { GoodsCode });
+                    var goods = db.SingleOrDefault<T_Goods_Convert>(" where (guid=@0 or t_goods_code=@0) and t_delstate=0", new object[] { GoodsCode });
                     if (goods == null)
                     {
                         msg.Data = "未能获取到商品信息";
@@ -122,19 +123,21 @@ namespace qch.core
                     //增加商品兑换次数
                     goods.t_Convert_Count += 1;
                     db.Save(goods);
-                    //生成用户兑换记录                    
+                    //生成用户兑换记录   
+                    string orderno = DateTime.Now.ToString("yyyyMMddHHmmssffff");
                     T_Goods_Convert_List list = new T_Goods_Convert_List
                     {
                         Guid = Guid.NewGuid().ToString(),
                         t_Cnee_Guid = Cnee,
                         t_Convert_CreateDate = DateTime.Now,
-                        t_Convert_OrderNo = "",
+                        t_Convert_OrderNo = orderno,
                         t_DelState = 0,
                         t_Goods_Guid = GoodsCode,
                         t_Logistics_Company = "",
                         t_Logistics_Status = 0,
                         t_Logistics_WaybillNo = "",
-                        t_User_Guid = UserGuid
+                        t_User_Guid = UserGuid,
+                        t_List_Type = 1
                     };
                     db.Insert(list);
                     //扣积分，生成积分交易记录
@@ -166,6 +169,43 @@ namespace qch.core
             }
         }
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="CneeGuid"></param>
+        /// <param name="OrderNo"></param>
+        /// <returns></returns>
+        public bool SaveRecord(string CneeGuid, string OrderNo)
+        {
+            try
+            {
+                using (var db = new PetaPoco.Database(DbConfig.qch))
+                {
+                    db.BeginTransaction();
+                    var cnee = db.SingleOrDefault<t_User_Cnee>(" where guid=@0 and t_delstate=0", new object[] { CneeGuid });
+                    if (cnee == null)
+                    {
+                        log.Info("抽奖抽中实物的时候，更新商品兑换记录时，未能获取到收货地址信息，CneeGuid=" + CneeGuid);
+                        return false;
+                    }
+                    var order = db.SingleOrDefault<T_Goods_Convert_List>(" where t_convert_orderno=@0 and t_cnee_guid='' and t_delstate=0", new object[] { OrderNo });
+                    if (order == null)
+                    {
+                        log.Info("抽奖抽中实物的时候，更新商品兑换记录时，未能获取到兑换记录，兑换订单=" + OrderNo);
+                        return false;
+                    }
+                    order.t_Cnee_Guid = CneeGuid;
+                    db.Save(order);
+                    db.CompleteTransaction();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return false;
+            }
+        }
+        /// <summary>
         /// 获取某用户的兑换商品记录
         /// </summary>
         /// <param name="UserGuid"></param>
@@ -175,6 +215,82 @@ namespace qch.core
             try
             {
                 return rp.GetList(UserGuid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <param name="UserGuid"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<T_Goods_Convert_List> GetList(int page, int pagesize,string type, string UserGuid)
+        {
+            try
+            {
+                return rp.GetList(page, pagesize, type,UserGuid);       
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
+        /// getbyid
+        /// </summary>
+        /// <param name="Guid"></param>
+        /// <returns></returns>
+        public T_Goods_Convert_List GetById(string Guid)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(Guid))
+                    return null;
+                return rp.GetById(Guid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <param name="UserGuid"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<GsModel> GetList1(int page, int pagesize, string type, string UserGuid)
+        {
+            try
+            {
+                return rp.GetList1(page, pagesize, type, UserGuid);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
+        /// getbyid
+        /// </summary>
+        /// <param name="Guid"></param>
+        /// <returns></returns>
+        public GsModel GetById1(string Guid)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(Guid))
+                    return null;
+                return rp.GetById1(Guid);
             }
             catch (Exception ex)
             {

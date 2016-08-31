@@ -16,6 +16,37 @@ namespace qch.Repositories
         Repository<UserPraise> rp1 = new Repository<UserPraise>();
 
         /// <summary>
+        /// 查询某用户是否点赞某条动态
+        /// </summary>
+        /// <param name="UserGuid"></param>
+        /// <param name="TopicGuid"></param>
+        /// <returns></returns>
+        public bool IsPraise(string UserGuid, string TopicGuid)
+        {
+            try
+            {
+                using (var db = new PetaPoco.Database(DbConfig.qch))
+                {
+                    string sql = "select count(1) from T_Praise where t_DelState=0 and t_User_Guid=@0 and t_Associate_Guid=@1";
+                    var m = db.ExecuteScalar<object>(sql, new object[] { UserGuid, TopicGuid });
+                    if (m != null)
+                    {
+                        if (Convert.ToInt32(m) > 0)
+                            return true;
+                        else
+                            return false;
+                    }
+                    else
+                        return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return false;
+            }
+        }
+        /// <summary>
         /// 获取点赞用户信息
         /// </summary>
         /// <param name="Guid"></param>
@@ -24,7 +55,25 @@ namespace qch.Repositories
         {
             try
             {
-                string sql = "select a.guid as Guid,a.t_Date,b.t_User_Pic as UserAvator,b.t_User_RealName as UserName from T_Praise as a left join t_users as b on a.t_User_Guid=b.guid where a.t_Associate_Guid=@0 and a.t_DelState=0";
+                string sql = "select a.guid as Guid,a.t_Date,b.t_User_Pic as UserAvator,b.Guid as t_User_Guid,b.t_User_RealName as UserName,b.t_User_Style,b.t_UserStyleAudit from T_Praise as a left join t_users as b on a.t_User_Guid=b.guid where a.t_Associate_Guid=@0 and a.t_DelState=0 order by a.t_Date desc";
+                return rp1.GetAll(sql, new object[] { Guid });
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
+        /// 创业圈点赞用户信息
+        /// </summary>
+        /// <param name="Guid"></param>
+        /// <returns></returns>
+        public IEnumerable<UserPraise> GetAllByTopicGuid2(string Guid)
+        {
+            try
+            {
+                string sql = "select a.guid as Guid,a.t_Date,b.Guid as t_User_Guid,b.t_User_RealName as UserName,b.t_User_Style,b.t_UserStyleAudit from T_Praise as a left join t_users as b on a.t_User_Guid=b.guid where a.t_Associate_Guid=@0 and a.t_DelState=0 order by a.t_Date desc";
                 return rp1.GetAll(sql, new object[] { Guid });
             }
             catch (Exception ex)

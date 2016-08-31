@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <link rel="dns-prefetch" href="//test.cn-qch.com/" />
+    <link rel="dns-prefetch" href="//www.cn-qch.com/" />
+    <title>确认订单</title>
+    <link rel="stylesheet" href="/wx/css/public.css">
+    <link rel="stylesheet" href="/wx/css/confirmOrder.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="addressbox">
+            <a class="btn-add" href="/wx/addressList.html"><b>+</b> 添加收货地址</a>
+        </div>
+        <ul class="orderList">
+            <li class="clearfix">
+                <div class="image">
+                    <img>
+                </div>
+                <h3></h3>
+            </li>
+        </ul>
+        <a class="btn-submit">立即提交</a>
+    </div>
+    <div class="loading"></div>
+    <!-- 地址模板 -->
+    <script type="text/html" id="addressTemplate">
+        <div data-guid="<%=data.guid%>">
+            <h2><%=data.t_Cnee_Name%> &nbsp;&nbsp;&nbsp;&nbsp;<%=data.t_Cnee_Phone.slice(0,3)+'****'+data.t_Cnee_Phone.slice(7)%></h2>
+            <p><%=data.t_Cnee_Addr%></p>
+        </div>
+    </script>
+    <script src="/h5/js/jquery.min.js"></script>
+    <script src="/wx/js/jquery.mobile-events.min.js"></script>
+    <script src="/wx/js/artTemplate.js"></script>
+    <script src="/h5/js/util.js"></script>
+    <script>
+        // 商品名  商品图片url 用户guid
+        // api/convert/SaveRecord?CneeGuid=**&OrderNo=**
+        var userguid=sessionStorage.getItem('userguid');
+        var shopName=sessionStorage.getItem('shopname');
+        var shopImgUrl=sessionStorage.getItem('shopsrc');
+        var shopguid=sessionStorage.getItem('shopguid');
+        var OrderNo=sessionStorage.getItem('orderno');
+        var typeid=sessionStorage.getItem('typeid');
+        $(function(){
+            $('.orderList h3').text(shopName);
+            $('.orderList img').attr('src',shopImgUrl);
+            // 通过临时会话查找收货地址信息 addressinfo字段
+            var addressInfo=sessionStorage.getItem('addressinfo');
+            if(addressInfo){
+                addressInfo=JSON.parse(addressInfo);
+                $('.addressbox').html(template('addressTemplate',{data:addressInfo}));
+                $('.loading').remove();
+            }else{
+                // 如果临时会话没找到 那么请求默认收货地址信息
+                $.ajax({
+                    url: 'http://120.25.106.244:9001/api/cnee/GetDefaultReceipt',
+                    cache:false,
+                    data:{UserGuid:userguid},
+                    success: function (res) {
+                        if(res){
+                            $('.addressbox').html(template('addressTemplate',{data:res}));
+                        }
+                        $('.loading').remove();
+                    }
+                })
+            }
+            $('body')
+            // 提交订单
+            .on('tap','.btn-submit',function(){
+                if($('.addressbox>div').length==0){
+                    util.msgBox('请填写收货地址');
+                }else{
+                    if(typeid=='2'){
+                        $.ajax({
+                            type: 'get',
+                            cache: false,
+                            url: 'http://120.25.106.244:9001/api/convert/SaveRecord',
+                            data: {
+                                CneeGuid: $('.addressbox>div').data('guid'),
+                                OrderNo: OrderNo
+                            },
+                            success: function (res) {
+                                if(res){
+                                    util.msgBox('订单提交成功,我们将尽快安排为您发货！');
+                                    setTimeout(function(){
+                                        location.href='/wx/converRecord.html?Guid='+userguid;
+                                    },2000)
+                                    sessionStorage.removeItem('addressinfo');
+                                }else{
+                                    util.msgBox('订单提交失败');
+                                }
+                            }
+                        })
+                    }else{
+                        $.ajax({
+                            type: 'post',
+                            cache: false,
+                            url: 'http://120.25.106.244:9001/api/Convert/CreateRecord',
+                            data: {
+                                UserGuid: userguid, 
+                                GoodsCode: shopguid,
+                                Cnee: $('.addressbox>div').data('guid')
+                            },
+                            success: function (res) {
+                                util.msgBox(res.data);
+                                if(res.type=='success'){
+                                    sessionStorage.removeItem('shopname');
+                                    sessionStorage.removeItem('shopsrc');
+                                    sessionStorage.removeItem('shopguid');
+                                    sessionStorage.removeItem('addressinfo');
+                                    util.msgBox('订单提交成功,我们将尽快安排为您发货！');
+                                    setTimeout(function(){
+                                        location.href='/wx/converRecord.html?Guid='+userguid;
+                                    },2000)
+                                    sessionStorage.removeItem('addressinfo');
+                                }else{
+                                    util.msgBox('订单提交失败');
+                                }
+                            }
+                        })
+                    }
+                    
+                }
+            })
+            // 打开地址列表页
+            .on('tap','.addressbox>div',function(){
+                location.href='/wx/addressList.html';
+            })
+        })
+    </script>
+</body>
+
+</html>

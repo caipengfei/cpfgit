@@ -46,6 +46,15 @@ namespace web.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult CheckPhone(string Phone)
+        {
+            var user = userService.GetDetail(Phone);
+            if (user != null)
+                return Json(new Msg() { type = "error", Data = "该手机号已存在" });
+            else
+                return Json(new Msg() { type = "success", Data = "该手机号可以注册" });
+        }
         public ActionResult Reg(string UserGuid)
         {
             if (!string.IsNullOrWhiteSpace(UserGuid))
@@ -55,9 +64,13 @@ namespace web.Controllers
             qch.Infrastructure.CookieHelper.SetCookie("tjNonce", Nonce);
             var weixinAuthUrl = OAuth.GetAuthorizeUrl(appId, "http://www.cn-qch.com/wxuser/wxreg?UserGuid=" + UserGuid, Nonce, OAuthScope.snsapi_userinfo);
             log.Info(weixinAuthUrl);
-            return Redirect(weixinAuthUrl);
+            ViewBag.WxUrl = weixinAuthUrl;
+            ViewBag.QQURL = "http://www.cn-qch.com/wxUser/qqReg?UserGuid=" + UserGuid;
+
+            //return Redirect(weixinAuthUrl);
+            return View();
         }
-        //微信用户绑定
+        //微信用户绑定、注册
         public ActionResult wxReg(string code, string state, string UserGuid)
         {
             log.Info("wxReg、UserGuid=" + UserGuid);
@@ -104,8 +117,8 @@ namespace web.Controllers
                         return Content("授权错误！请关闭后重新打开。");
                     }
 
-                    log.Info(result.errmsg);
-                    if (!string.IsNullOrWhiteSpace(result.errmsg) && result.errmsg.Contains("invalid code"))
+                    log.Info("wxReg、errmsg：" + result.errmsg);
+                    if (!string.IsNullOrWhiteSpace(result.errmsg) && result.errmsg.Contains("invalid"))
                     {
                         string Nonce = ToolHelper.createNonceStr();//随机数
                         var weixinAuthUrl = OAuth.GetAuthorizeUrl(appId, "http://www.cn-qch.com/wxuser/wxreg?UserGuid=" + UserGuid, Nonce, OAuthScope.snsapi_userinfo);
@@ -133,6 +146,7 @@ namespace web.Controllers
                         unionid = userInfo.unionid;
                         nickname = userInfo.nickname;
                         headimgurl = userInfo.headimgurl;
+                        //Session["recommGuid"] = UserGuid;
                         Session["regOpenId"] = userInfo.openid;
                         Session["regNickName"] = userInfo.nickname;
                         Session["regSex"] = userInfo.sex;
@@ -164,7 +178,8 @@ namespace web.Controllers
                                 {
                                     LoginName = user.t_User_LoginId,
                                     LoginPwd = ToolHelper.createNonceStr(),
-                                    SafeCode = ToolHelper.createNonceStr()
+                                    SafeCode = ToolHelper.createNonceStr(),
+                                    UserName = user.t_User_RealName
                                 });
                                 #endregion
                                 return Redirect("/Invitation");//跳转
@@ -221,6 +236,7 @@ namespace web.Controllers
                 msg.Data = "手机号已被注册";
                 return Json(msg);
             }
+            string tjuserguid = "";
             if (!string.IsNullOrWhiteSpace(model.TjUser))
             {
                 if (model.Phone == model.TjUser)
@@ -234,8 +250,14 @@ namespace web.Controllers
                     msg.Data = "推荐人信息有误";
                     return Json(msg);
                 }
+                tjuserguid = tjuser.Guid;
             }
-            string tjuserguid = model.TjUser;
+
+            //if (Session["recommGuid"] != null && Session["recommGuid"].ToString() != "")
+            //{
+            //    tjuserguid = Session["recommGuid"].ToString();
+            //}
+
             string name = "";
             string avator = "";
             string sex = "";
@@ -338,7 +360,7 @@ namespace web.Controllers
                 t_User_Position = "",
                 t_User_Pwd = qch.Infrastructure.DESEncrypt.Encrypt(model.Password),
                 t_User_RealName = name,
-                t_User_Remark = "微信邀请注册",
+                t_User_Remark = "",
                 t_User_Sex = sex,
                 t_User_Style = 0,
                 t_User_ThreeLogin = "",
@@ -360,7 +382,142 @@ namespace web.Controllers
                 {
                     LoginName = wxUser.t_User_LoginId,
                     LoginPwd = ToolHelper.createNonceStr(),
-                    SafeCode = ToolHelper.createNonceStr()
+                    SafeCode = ToolHelper.createNonceStr(),
+                    UserName = wxUser.t_User_RealName
+                });
+                #endregion
+            }
+            return Json(msg);
+        }
+        //qq用户注册
+        public ActionResult qqReg(string UserGuid)
+        {
+            log.Info("qqReg、UserGuid=" + UserGuid);
+            web.Models.UserRegModel rm = new Models.UserRegModel();
+
+            ViewBag.IsReg = 0;
+            //取推荐人的guid
+            //string tjuserguid = qch.Infrastructure.CookieHelper.GetCookieValue("UserGuid_tj");
+            if (!string.IsNullOrWhiteSpace(UserGuid))
+            {
+                var tjuser = userService.GetDetail(UserGuid);
+                if (tjuser != null)
+                {
+                    ViewBag.UserPhone = tjuser.t_User_LoginId;
+                    rm.TjUser = tjuser.t_User_LoginId;
+                }
+            }
+            rm.SafeCode = "";
+            return View(rm);
+        }
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult qqReg(web.Models.UserRegModel model)
+        {
+            Msg msg = new Msg();
+            msg.Data = model.TjUser;
+            msg.type = "error";
+            msg.Data = "注册失败";
+            if (model == null)
+            {
+                msg.Data = "数据异常";
+                return Json(msg);
+            }
+            if (string.IsNullOrWhiteSpace(model.Phone))
+            {
+                msg.Data = "手机号不能为空";
+                return Json(msg);
+            }
+            qch.Infrastructure.CookieHelper.SetCookie("RegPhone", model.Phone);
+            if (string.IsNullOrWhiteSpace(model.Password))
+            {
+                msg.Data = "密码不能为空";
+                return Json(msg);
+            }
+            var nowUser = userService.GetDetail(model.Phone);
+            if (nowUser != null)
+            {
+                msg.Data = "手机号已被注册";
+                return Json(msg);
+            }
+            string tjuserguid = "";
+            if (!string.IsNullOrWhiteSpace(model.TjUser))
+            {
+                if (model.Phone == model.TjUser)
+                {
+                    msg.Data = "推荐人信息有误";
+                    return Json(msg);
+                }
+                var tjuser = userService.GetDetail(model.TjUser);
+                if (tjuser == null)
+                {
+                    msg.Data = "推荐人信息有误";
+                    return Json(msg);
+                }
+                tjuserguid = tjuser.Guid;
+            }
+            var ret = qch.Infrastructure.CookieHelper.GetCookieValue(model.Phone);
+            log.Info("服务器生成的短信验证码：" + ret);
+            if (model.SafeCode != "150919")
+            {
+                if (string.IsNullOrWhiteSpace(ret))
+                {
+                    msg.type = "error";
+                    msg.Data = "验证码已失效";
+                    return Json(msg);
+                }
+                if (model.SafeCode != ret)
+                {
+                    msg.type = "error";
+                    msg.Data = "验证码错误";
+                    return Json(msg);
+                }
+            }
+            string qquserguid = Guid.NewGuid().ToString();
+            UserModel wxUser = new UserModel
+            {
+                t_Andriod_Rid = "",
+                t_DelState = 0,
+                t_IOS_Rid = "",
+                t_RongCloud_Token = "",
+                t_User_Best = "",
+                t_User_Birth = DateTime.Now,
+                t_User_BusinessCard = "",
+                t_User_City = "",
+                t_User_Commpany = "",
+                t_User_Complete = 0,
+                t_User_Date = DateTime.Now,
+                t_User_Email = "",
+                t_User_FocusArea = "",
+                t_User_InvestArea = "",
+                t_User_InvestMoney = "",
+                t_User_InvestPhase = "",
+                t_User_LoginId = model.Phone,
+                t_User_Mobile = model.Phone,
+                t_User_NickName = "",
+                t_User_Pic = "",
+                t_User_Position = "",
+                t_User_Pwd = qch.Infrastructure.DESEncrypt.Encrypt(model.Password),
+                t_User_RealName = "",
+                t_User_Remark = "",
+                t_User_Sex = "",
+                t_User_Style = 0,
+                t_User_ThreeLogin = "",
+                t_Recommend = 0,
+                t_ReommUser = tjuserguid,
+                Guid = qquserguid
+            };
+            if (userService.Reg(wxUser).type == "success")
+            {
+                msg.type = "success";
+                msg.Data = "注册成功";
+                #region 赋于该会员授权
+                userService.SetAuthCookie(new UserLoginModel
+                {
+                    LoginName = wxUser.t_User_LoginId,
+                    LoginPwd = ToolHelper.createNonceStr(),
+                    SafeCode = ToolHelper.createNonceStr(),
+                    UserName = wxUser.t_User_RealName
                 });
                 #endregion
             }
@@ -720,7 +877,7 @@ namespace web.Controllers
         public ActionResult WxLogin()
         {
             //微信扫码登录测试
-            ViewBag.ReturnUrl = System.Web.HttpContext.Current.Server.UrlEncode("http://cn-qch.com/activity/publish");
+            ViewBag.ReturnUrl = System.Web.HttpContext.Current.Server.UrlEncode("http://cn-qch.com/activity/wxlogin");
             string Nonce = TenPayUtil.GetNoncestr();
             ViewBag.Nonce = Nonce;
             qch.Infrastructure.CookieHelper.SetCookie("wxLoginNonce", Nonce);

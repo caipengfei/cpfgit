@@ -11,5 +11,6 @@ namespace qch.Models
     /// </summary>
     public class PlaceModel : T_Place
     {
+        public IEnumerable<PicModel> Pics { get; set; }
     }
 }

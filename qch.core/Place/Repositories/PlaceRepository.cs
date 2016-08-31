@@ -118,6 +118,61 @@ namespace qch.Repositories
                 return null;
             }
         }
+        /// <summary>
+        /// 分页获取所有空间信息
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<SelectPlace> GetAllPlace(int page, int pagesize)
+        {
+            try
+            {
+                Repository<SelectPlace> r = new Repository<SelectPlace>();
+                string sql = "select a.Guid,a.t_Place_Name as PlaceName,a.t_Place_Street as PlaceAddr,b.t_Pic_Url as PlacePic from t_place as a left join T_Associate_Pic as b on b.t_Associate_Guid=a.Guid where a.t_delstate=0";
+                return r.GetPageData(page, pagesize, sql);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
+        /// 分页获取某个用户上传的所有空间信息
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <param name="UserGuid"></param>
+        /// <returns></returns>
+        public PetaPoco.Page<SelectPlace> GetAllPlace(int page, int pagesize, string UserGuid)
+        {
+            try
+            {
+                Repository<SelectPlace> r = new Repository<SelectPlace>();
+                string sql = "select a.Guid,a.t_Place_Name as PlaceName,a.t_Place_Street as PlaceAddr,b.t_Pic_Url as PlacePic from t_place as a left join T_Associate_Pic as b on b.t_Associate_Guid=a.Guid where a.t_delstate=0 and a.t_user_guid=@0";
+                return r.GetPageData(page, pagesize, sql, new object[] { UserGuid });
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        public PetaPoco.Page<SelectPlace> GetAllPlace(int page, int pagesize, string UserGuid,int isAudit)
+        {
+            try
+            {
+                Repository<SelectPlace> r = new Repository<SelectPlace>();
+                string sql = "select a.Guid,a.t_Place_Name as PlaceName,a.t_Place_Street as PlaceAddr,a.t_Place_ProvideService,a.t_Place_Tips,a.t_Place_CheckIn,b.t_Pic_Url as PlacePic from t_place as a left join T_Associate_Pic as b on b.t_Associate_Guid=a.Guid where a.t_delstate=0 and a.t_user_guid=@0 and a.t_Place_Audit=@1";
+                return r.GetPageData(page, pagesize, sql, new object[] { UserGuid, isAudit });
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
         #endregion
 
         #region 能预约的空间
@@ -190,7 +245,7 @@ namespace qch.Repositories
         {
             try
             {
-                string sql = "select * from [T_Place_Style] where [t_Place_Guid]=@0 and [t_DelState]=0 order by [t_SortIndex]";
+                string sql = "select * from [T_Place_Style] where [t_Place_Guid]=@0 and [t_DelState]=0 order by [t_SortIndex],t_adddate desc";
                 return psRp.GetAll(sql, new object[] { PlaceGuid });
             }
             catch (Exception ex)

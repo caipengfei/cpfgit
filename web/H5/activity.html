@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; user-scalable=no; maximum-scale=1.0; minimum-scale=1.0">
+    <title>获奖公告</title>
+    <link rel="stylesheet" href="Content/css/diaLog.css">
+    <link rel="stylesheet" href="Content/css/animate.css">
+</head>
+<body>
+    <div class="dialog animated bounceIn">
+        <div class="d_header">
+            <a href="javascript:void(0)" class="close">取消</a>请输入留言
+	  	<a href="javascript:void(0)" class="sendMe">确定</a>
+
+        </div>
+        <textarea name="" id="" cols="30" rows="10" class='d_content' placeholder="写出你想对中国创客说的话，并邀请好友点赞，有机会获大奖哦" style="resize: none; border: 0"></textarea>
+    </div>
+    <div class="cover animated bounceIn"></div>
+    <div class='bg'>
+        <img src="Content/image/appBg_01.jpg" alt="" style="width: 100%;">
+        <div class="second">
+            <img src="Content/image/appBg_02.jpg" alt="" style="width: 100%">
+            <a href="/content/pariselist.html">查看排名情况</a>
+        </div>
+        <img src="Content/image/appBg_03.jpg" alt="" style="width: 100%;">
+    </div>
+    <script src="Content/js/jquery-1.11.2.min.js"></script>
+    <script src="js/util.js"></script>
+    <script src="Content/js/diaLog.js"></script>
+    <script type="text/javascript">
+
+        //检查用户是否已经参与
+        //$.post('/activity/checktopic', { UserGuid: userguid, Sign: sign }, function (msg) {
+        //    if (msg.type == "error") {
+        //        $("#istopic").replaceWith('<a href="/content/pariselist.html">查看排名情况</a>');
+        //    }
+        //})
+    </script>
+</body>
+</html>

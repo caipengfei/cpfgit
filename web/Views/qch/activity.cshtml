@@ -1,0 +1,33 @@
+﻿@{
+    Layout = null;
+}
+@model PetaPoco.Page<qch.Models.ActivityModel>
+<div class="recent bd">
+    <div class="top">
+        <span class="fl">近期活动</span>
+        <span class="fr">详情<img src="/content/image/arrow-right.png" alt="" /></span>
+    </div>
+    <ul>
+        @if (Model != null && Model.Items != null && Model.Items.Count > 0)
+        {
+            foreach (var item in Model.Items)
+            {
+            <li class="clearfix">
+                <img src="http://www.cn-qch.com:8002/Attach/Images/@item.t_Activity_CoverPic" />
+                <div>
+                    <p>@item.t_Activity_Title</p>
+                    <p class="middle">
+                        <img src="/content/image/time.png" /><var>@item.t_Activity_sDate</var>
+                    </p>
+                    <p>
+                        <img src="/content/image/people.png" /><em>@item.Applys</em>人报名
+                    </p>
+                </div>
+                <div>
+                    <span class="on">请进app报名</span>
+                </div>
+            </li>
+            }
+        }
+    </ul>
+</div>

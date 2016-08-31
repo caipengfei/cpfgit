@@ -11,9 +11,9 @@ $(function(){
     $('.container').removeClass('hide');
     $(document)
         // 切换为扫码登陆
-        .on('click','.loginbox .btn-mode',function(){
-            $(this).parent().addClass('hide').siblings('.qrcodebox').removeClass('hide');
-        })
+        //.on('click','.loginbox .btn-mode',function(){
+        //    $(this).parent().addClass('hide').siblings('.qrcodebox').removeClass('hide');
+        //})
         // 切换为普通登陆
         .on('click','.qrcodebox .btn-mode',function(){
             $(this).parent().addClass('hide').siblings('.loginbox').removeClass('hide');
@@ -40,10 +40,24 @@ function signUpHandler() {
     if (!validField($phone, regPhone, '手机号不能为空！', '手机号格式有误')) return;
     if (!validField($password, null, '密码不能为空！')) return;
     var data = {
-        phone: $phone.val(),
-        password: $password.val()
+        LoginName: $phone.val(),
+        LoginPwd: $password.val()
     };
     console.log(data);
+    $.ajax({
+        type: 'post',
+        cache: false,
+        dataType: 'json',
+        url: '/qch/login',
+        data: data,
+        success: function (data) {
+            if (data.type == "success") {
+                location.href = data.Data;
+            } else {
+                alert(data.Data);
+            }
+        }
+    })
 }
 // 验证文本框
 function validField($input, reg, helpText1, helpText2) {

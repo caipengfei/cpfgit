@@ -1,0 +1,102 @@
+
+/*content*/
+#content{font-size: 18px;height:100%;padding-bottom: 100px;}
+#content .box{margin-top:10px;background: #ffffff;padding-top: 10px;padding-left: 120px;}
+#content .box  p span{color: #ff0000;padding-left: 5px;}
+#content .box .box1{width:498px;height: 38px;border:1px solid #dedede; border-radius: 5px; color:#bababa;padding: 16px 26px;box-sizing:border-box;margin:11px 0;clear: both;}
+#content .box .box2{width:798px;height: 178px;border:1px solid #dedede; border-radius: 5px; color:#bababa;padding: 16px 26px;box-sizing:border-box;margin:11px 0;clear: both}
+#content .box .upload{width:1180px;height:140px;margin:5px auto}
+#content .box .upload >p{margin-bottom:10px;}
+#content .box .upload .up_left{float: left;}
+#content .box .upload .up_right{float: left;margin-left: 20px;}
+#content .box .upload .up_right .r_text{font-size: 14px;margin-bottom: 40px;}
+/*group*/
+#content .box .group{clear:both;position: relative;margin-top: 20px;}
+#content .box .group .groupBg{padding:5px 0;}
+#content .box .groupInfor{font-size: 14px;position: absolute;left: 200px;top:8px;display: none;}
+/*name*/
+#content .box .name{position: relative;}
+#content .box .name .nameBg{padding:5px 0;}
+#content .box .nameInfor{font-size: 14px;position: absolute;left: 200px;top: 8px;display: none}
+/*city*/
+#content .box .city .box3{margin: 16px 26px 0px 0; }
+#content .box .city .box3 .selectBox{margin-top: 0;margin-bottom: 10px}
+/*address*/
+#content .box .address{width:748px;position: relative;clear: both;}
+#content .box .address .addressBg{padding:5px 0;width:1060px;box-sizing:border-box;}
+#content .box .address .addressInfor{font-size:14px;position:absolute;left: 200px;top:5px;display:none}
+/*summary*/
+#content .box .summary{position: relative;}
+#content .box .summary .summaryBg{padding:5px 0;}
+#content .box .summary .summaryInfor{font-size: 14px;position:absolute;left: 200px;top: 7px;display:none}
+/*service*/
+#content .box .service{position: relative;}
+#content .box .service .serviceBg{padding:5px 0;}
+#content .box .service .serviceInfor{font-size: 14px;position:absolute;left: 200px;top: 7px;display:none}
+/*introduce*/
+#content .box .introduce{position: relative;}
+#content .box .introduce .introduceBg{padding:5px 0;}
+#content .box .introduce .introduceInfor{font-size: 14px;position:absolute;left: 200px;top: 7px;display:none}
+/*label*/
+#content .box .label{position: relative;margin-bottom: 5px;}
+#content .box .label .labelBg{padding:5px 0;}
+#content .box .label .labelInfor{font-size: 14px;position:absolute;left: 200px;top: 7px;display:none}
+
+
+/*yn*/
+#content .box .yn{margin-bottom: 50px;}
+#content .box .yn p{display: inline;}
+#content .box .yn .yn1{width: 146px;height: 36px;text-align: center;border: 1px solid #dedede;border-radius: 5px;}
+/*house*/
+#content .box .house{margin-bottom: 50px}
+#content .box .house .house1{color:#fdd000;font-size: 22px;background: #fff;margin-top:0;}
+
+/*houseAdd*/
+#content .box .house .houseAdd{width: 780px;height:1050px;box-shadow: 0px 0px 10px #75796b;margin-top:20px;box-sizing:border-box;padding: 30px 25px;display: none;margin-left: 100px;}
+#content .box .house .houseAdd .houseMoney1{width: 223px;height: 38px;border:1px solid #dedede; border-radius: 5px;color:#bababa;padding: 16px 26px;box-sizing:border-box;margin:22px 0;}
+#content .box .house .houseAdd .houseMoney>span{font-size: 14px;color: #000;}
+#content .box .house .houseAdd  .houseImage{position: relative;margin-bottom: 100px;}
+#content .box .house .houseAdd  .houseImage .information{position: absolute;left: 170px;top:55px;font-size: 16px;width:500px;}
+#content .box .house .houseImage1{position: absolute;left: 170px;top:100px;width:200px;height: 38px;}
+#content .box .house .houseImage>p{margin-bottom: 25px;}
+#content .box .house .houseAdd .reset{width:143px;height: 43px;background: #eaeaea;margin-left: 190px;margin-right: 76px;border-radius: 20px}
+#content .box .house .houseAdd .submit{width:143px;height: 43px;background: #fdd000;border-radius: 20px}
+#content .box .house .box2{width: 698px;}
+/*houseType*/
+#content .box .house .houseType{position: relative;}
+#content .box .house .houseTypeBg{padding:5px 0;}
+#content .box .house .houseTypeInfor{font-size: 14px;position:absolute;left:150px;top: 7px;display:none}
+/*houseMoney*/
+#content .box .house .houseMoney{position: relative;}
+#content .box .house .houseMoneyBg{padding:5px 0;}
+#content .box .house .houseMoneyInfor{font-size: 14px;position:absolute;left:150px;top: 7px;display:none}
+/*houseDetail*/
+#content .box .house .houseDetail{position: relative;}
+#content .box .house .houseDetailBg{padding:5px 0;}
+#content .box .house .houseDetailInfor{font-size: 14px;position:absolute;left:150px;top: 7px;display:none}
+/*houseRemark*/
+#content .box .house .houseRemark{position: relative;}
+#content .box .house .houseRemarkBg{padding:5px 0;}
+#content .box .house .houseRemarkInfor{font-size: 14px;position:absolute;left:150px;top: 7px;display:none}
+
+
+
+/*houseSave*/
+#content .box .house .houseSave{width:960px;margin-top: 20px;display:none;position: relative;margin-bottom: 100px;}
+#content .box .house .houseSave .shanchu{position: absolute;top:0px;right:0px;width: 30px;height: 30px;}
+#content .box .house .houseSave ul{width: 960px;}
+#content .box .house .houseSave ul li{width: 298px;height:348px;border:1px solid #eaeaea;margin-right: 20px;float: left;margin-bottom: 20px;position: relative}
+#content .box .house .houseSave ul li img{width:298px;height: 180px;}
+#content .box .house .houseSave p{font-size: 16px;height: 30px;line-height: 30px;padding-left: 20px;}
+/*button*/
+#content  .box .button{height: 47px;width:960px;text-align: center;clear: both}
+#content  .box .button .button1{width: 255px;height: 47px;background-color: #fdd000;color: #fff9dd;border-radius: 40px;font-size: 18px;margin: 0 auto;}
+
+/*下拉菜单*/
+.selectBox{width: 120px;position: relative;font-size: 12px;float: left;margin-right: 50px;margin-top:21px}
+.selectBox input{width:100%;height:36px;line-height: 25px;cursor:pointer;border: 1px solid #dedede;
+		padding-left: 10px;padding-right:20px;background: url(../image/more.png) no-repeat 130px center;border-radius: 5px}
+.selectBox ul{width: 150px;position: absolute;left: 0;top:38px;border: 1px solid #dedede;overflow: hidden;
+		display:none;background: #fff;z-index:9999;border-radius: 5px;}
+.selectBox ul li{display: block;height: 30px;line-height: 30px;padding-left: 20px;width: 100%;cursor: pointer;}
+.hover{background: #ccc}
