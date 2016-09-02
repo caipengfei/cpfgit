@@ -122,24 +122,24 @@ function getObjectURL(file) {
      $(".cover").css("display", "none");
      $(".houseAdd").css("display", "none");
  });
- $(".houseAdd .submit").click(function () {
-     $(".cover").css("display", "none");
-     $(".houseAdd").css("display", "none");
- });
+ //$(".houseAdd .submit").click(function () {
+ //    $(".cover").css("display", "none");
+ //    $(".houseAdd").css("display", "none");
+ //});
 
  /*下拉菜单的结束*/
  /*申请入驻*/
- $(".content .spaceManage .spaceHead .shenqing").click(function(){
- 	$(this).parent().css("display","none");
- 	$(".spaceBlank,.HavespaceContent, .NospaceContent").css('display',"none");
- 	$(".spaceApply").css("display","block");
- });
+ //$(".content .spaceManage .spaceHead .shenqing").click(function(){
+ //	$(this).parent().css("display","none");
+ //	$(".spaceBlank,.HavespaceContent, .NospaceContent").css('display',"none");
+ //	$(".spaceApply").css("display","block");
+ //});
  /*申请入驻*/
- $(".spaceManage .spaceBlank .shenqing").click(function(){
- 	$(".spaceManage .spaceBlank").css("display","none");
- 	$(".spaceManage .spaceHead").css("display","none");
- 	$(".spaceApply").css("display","block");
- });
+ //$(".spaceManage .spaceBlank .shenqing").click(function(){
+ //	$(".spaceManage .spaceBlank").css("display","none");
+ //	$(".spaceManage .spaceHead").css("display","none");
+ //	$(".spaceApply").css("display","block");
+ //});
    /*查看没有审核的内容*/
   $(".houseHead .noPass:eq(0)").click(function(){
   	$(".spaceManage .HavespaceContent").css("display","none");

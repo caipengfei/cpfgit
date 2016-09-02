@@ -97,7 +97,7 @@ namespace qch.core
         /// <param name="openid"></param>
         /// <param name="model"></param>
         /// <returns></returns>
-        public Msg Publish(string openid, ActivityModel model)
+        public Msg Publish(string UserGuid, ActivityModel model)
         {
             /*
              * 微信扫码登录发布活动流程：
@@ -110,12 +110,13 @@ namespace qch.core
             msg.Data = "发布失败";
             try
             {
-                if (string.IsNullOrWhiteSpace(openid))
+                if (string.IsNullOrWhiteSpace(UserGuid))
                 {
-                    msg.Data = "openid为空";
-                    log.Info("openid为空");
+                    msg.Data = "UserGuid为空";
+                    log.Info("UserGuid为空");
                     return msg;
                 }
+                
                 if (model == null)
                 {
                     return msg;
@@ -141,76 +142,8 @@ namespace qch.core
                     model.t_AddDate = DateTime.Now;
                     model.t_ModifydDate = DateTime.Now;
                     model.t_ModifyBy = "";
-                    var wxuser = db.SingleOrDefault<T_User_Weixin>(" where openid=@0 or kfopenid=@1 or unionid=@2", new object[] { openid, openid, openid });
-                    if (wxuser != null)
-                    {
-                        //存在微信用户信息
-                        var user = db.SingleOrDefault<T_Users>(" where guid=@0 and t_delstate=0", new object[] { wxuser.UserGuid });
-                        if (user != null)
-                        {
-                            //存在关联的用户信息，直接添加活动      
-                            model.t_User_Guid = user.Guid;
-                            db.Insert(model);
-                        }
-                        else
-                        {
-                            //不存在关联的用户信息
-                            var uu = db.SingleOrDefault<T_Users>(" where t_User_LoginId=@0 and t_delstate=0", new object[] { model.t_Activity_Tel });
-                            if (uu != null)
-                            {
-                                //存在发布活动的手机号（发布活动时填写的咨询电话）用户
-                                wxuser.UserGuid = uu.Guid;
-                                //修改微信用户关联的用户guid
-                                db.Save(wxuser);
-                            }
-                            T_Users wxUser = new T_Users
-                            {
-                                Guid = wxuser.UserGuid,
-                                t_Andriod_Rid = "",
-                                t_DelState = 0,
-                                t_IOS_Rid = "",
-                                t_RongCloud_Token = "",
-                                t_User_Best = "",
-                                t_User_Birth = DateTime.Now,
-                                t_User_BusinessCard = "",
-                                t_User_City = "",
-                                t_User_Commpany = "",
-                                t_User_Complete = 0,
-                                t_User_Date = DateTime.Now,
-                                t_User_Email = "",
-                                t_User_FocusArea = "",
-                                t_User_InvestArea = "",
-                                t_User_InvestMoney = "",
-                                t_User_InvestPhase = "",
-                                t_User_LoginId = model.t_Activity_Tel,
-                                t_User_Mobile = model.t_Activity_Tel,
-                                t_User_NickName = wxuser.Name,
-                                t_User_Pic = wxuser.Avator,
-                                t_User_Position = "",
-                                t_User_Pwd = qch.Infrastructure.DESEncrypt.Encrypt("123456"),
-                                t_User_RealName = wxuser.Name,
-                                t_User_Remark = "扫码登录，发布活动生成",
-                                t_User_Sex = "",
-                                t_User_Style = 0,
-                                t_User_ThreeLogin = "",
-                                t_Recommend = 0
-                            };
-                            var userid = db.Insert(wxUser);
-                            if (userid != null)
-                            {
-                                model.t_User_Guid = userid.ToString();
-                                db.Insert(model);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        //不存在微信用户信息
-                        //DO..
-                        msg.Data = "微信用户信息不存在";
-                        log.Info("微信用户信息不存在");
-                        return msg;
-                    }
+                    model.t_User_Guid = UserGuid;
+                    db.Insert(model);
                     db.CompleteTransaction();
                 }
                 msg.type = "success";

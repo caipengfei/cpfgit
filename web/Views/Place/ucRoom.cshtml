@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "ucRoom";
+    ViewBag.Title = "房间信息";
     Layout = "~/Views/Shared/_NewLayout.cshtml";
 }
 @model IEnumerable<qch.Models.PlaceStyleModel>
@@ -17,15 +17,16 @@
                     <span class='name'>青创汇郑州</span>
                     <a href="javascript:" class="addHouse">添加房间</a>
                 </div>
-                @if (Model != null && Model.Count() > 0)
-                {
-                    foreach (var item in Model.ToList())
+                <!--房间列表-->
+                <div class="houseList">
+                    @if (Model != null && Model.Count() > 0)
                     {
-                    <!--房间列表-->
-                    <div class="houseList" style="display: none">
+                        foreach (var item in Model.ToList())
+                        {
+                    
                         <div class="houseLi">
                             <!--房间左侧图片-->
-                            <img src="http://www.cn-qch.com:8002/Attach/images/@item.t_Place_Pic" alt="">
+                            <img src="/images/placeimgs/@item.t_Place_Pic" alt="">
                             <div class="houseContent">
                                 <p>房间类型：@item.t_Place_StyleName</p>
                                 <p>收费金额：@item.t_Place_Money 元</p>
@@ -34,17 +35,18 @@
                                 <p>房间类型：提供临时办公位</p>
                             </div>
                         </div>
-                    </div>
+                    
+                        }
                     }
-                }
-                else
-                {
-                    <!--房间的内容为空的时候-->
-                    <div class="houseBlank">
-                        <img src="/content/image/2fangjian.png" alt="">
-                        <p>暂无房间信息,<a href="javascript:" class="addHouse">去添加</a></p>
-                    </div>
-                }
+                    else
+                    {
+                        <!--房间的内容为空的时候-->
+                        <div class="houseBlank">
+                            <img src="/content/image/2fangjian.png" alt="">
+                            <p>暂无房间信息,<a href="javascript:" class="addHouse">去添加</a></p>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>
@@ -52,14 +54,14 @@
 <!--添加房间-->
 <div class="cover" style="display: none"></div>
 <div class="houseAdd" style="display: none">
-    <form action="/place/uploadroom" method="post" name="house">
+    <form id="form0" method="post" action="/place/uploadroom" novalidate="novalidate" name="house">
         @Html.ValidationSummary(true)
         <div class="houseType">
             <div class="houseTypeBg" id="houseTypeBg">
                 <p><span>*</span>&nbsp;房间类型</p>
                 <p class="houseTypeInfor" id="houseTypeInfor">&nbsp;&nbsp;请填写房间类型</p>
             </div>
-            <input type="text" name="houseTypr" class="box1" id="houseTypeContent" name="t_Place_StyleName" style="outline: none;" placeholder="请填写房间类型">
+            <input type="text" class="box1" id="houseTypeContent" name="t_Place_StyleName" style="outline: none;" placeholder="请填写房间类型">
         </div>
         <div class="houseMoney">
             <div class="houseMoneyBg" id="houseMoneyBg">
@@ -68,17 +70,18 @@
             </div>
             <!--下拉菜单-->
             <div class='selectBox'>
-                <input type="text" readonly="readonly" id="mySelect" placeholder="请选择收费周期">
+                <input type="text" readonly="readonly" id="mySelect" placeholder="请选择出租类型">
                 <ul class="selectUl">
-                    <li>年</li>
-                    <li>月</li>
-                    <li>周</li>
-                    <li>日</li>
+                    <li>季度</li>
+                    <li>月租</li>
+                    <li>周租</li>
+                    <li>日租</li>
                 </ul>
             </div>
-            <input style="display:none" name="t_Place_Type" />
+            <input style="display: none" id="placeType" name="t_Place_Type" />
+            <input type="text" style="display: none" name="t_Place_Guid" value="@ViewBag.PlaceGuid" />
             <!--下拉菜单结束-->
-            <input type="text" name="houseMoney" class='houseMoney1' id="houseMoneyContent" name="t_Place_Pic" style="outline: none;" placeholder="请填写空间服务费用">
+            <input type="text" class='houseMoney1' id="houseMoneyContent" name="t_Place_Money" style="outline: none;" placeholder="请填写空间服务费用">
             <span>&nbsp;&nbsp;&nbsp;元</span>
         </div>
         <div class="houseDetail">
@@ -86,7 +89,7 @@
                 <p><span>*</span>&nbsp;详细介绍</p>
                 <p class="houseDetailInfor" id="houseDetailInfor">&nbsp;&nbsp;请填写详细介绍</p>
             </div>
-            <textarea name="houseDetail" class="box2" cols="30" rows="10" id="houseDetailContent" name="t_Place_Instruction" style="resize: none; outline: none;" placeholder="请填写优惠政策，如税收优惠，政策扶持"></textarea>
+            <textarea class="box2" cols="30" rows="10" id="houseDetailContent" name="t_Place_Instruction" style="resize: none; outline: none;" placeholder="请填写优惠政策，如税收优惠，政策扶持"></textarea>
 
         </div>
         <div class="houseRemark">
@@ -94,7 +97,7 @@
                 <p><span>*</span>&nbsp;备注</p>
                 <p class="houseRemarkInfor" id="houseRemarkInfor">&nbsp;&nbsp;请填写备注</p>
             </div>
-            <textarea name="houseRemark" class="box2" cols="30" rows="10" id="houseRemarkContent" name="t_Place_Remark" style="resize: none; outline: none;" placeholder="请填写备注"></textarea>
+            <textarea class="box2" cols="30" rows="10" id="houseRemarkContent" name="t_Place_Remark" style="resize: none; outline: none;" placeholder="请填写备注"></textarea>
         </div>
         <div class="houseImage">
             <div class="upload">
@@ -108,12 +111,12 @@
                         <img src="/content/image/logoButton.png" width="135" height="37" alt="upload">
                     </a>
                     <!--把file隐藏-->
-                    <input type="file" name="houseImg" id="file1" name="file1" style="display: none">
+                    <input type="file" name="file1" id="file1" style="display: none">
                 </div>
             </div>
         </div>
-        <input type="reset" value="取消" class='reset' id="reset" style="outline: none;">
-        <input type="button" value="保存" class='submit' id="submit" style="outline: none;">
+        <input type="reset" value="关闭" class='reset' id="reset" style="outline: none;">
+        <input type="button" value="保存" class='submit' onclick="Save()" id="submit" style="outline: none;">
     </form>
 </div>
 @section js{
@@ -121,27 +124,58 @@
     <script src="/content/js/spaceManage.js" type="text/javascript"></script>
     <script src="~/Scripts/jquery.form.js"></script>
     <script type="text/javascript">
+        $(".content .left li").removeClass("active active1");
+        $("#spaceManage").addClass('active1');
         function Save() {
+            var types = $("#mySelect").val();  //房间收费类型（出租类型）
+            if (types == "") {
+                alert("请选择出租类型");
+                return false;
+            }
+            if (types == "季度") {
+                $("#placeType").val("4");
+            } else if (types == "月租") {
+                $("#placeType").val("3");
+            } else if (types == "周租") {
+                $("#placeType").val("2");
+            } else if (types == "日租") {
+                $("#placeType").val("1");
+            }
             $("#form0").ajaxSubmit({
                 type: 'POST',
                 url: '/place/uploadroom',
                 data: $("#form0").serialize(),
                 beforeSubmit: function () {
                     //表单提交前
-                    $('input').blur();
-                    var $phone = $('.phone-1'); // 用户手机号
-
-                    // 用户手机号验证
-                    if (!validField($phone, regPhone, '手机号不能为空！', '用户手机号格式不正确！')) return false;
-                },
-                success: function (msg) {
-                    util.msgBox(msg.Data);
-                    if (msg.type == "success") {
-                        location.href = '/'
+                    var styleName = $("#houseTypeContent").val(); //房间类型名称                    
+                    var placeMoney = $("#houseMoneyContent").val();  //房间出租费用
+                    var instruction = $("#houseDetailContent").val(); //房间优惠政策
+                    var remark = $("#houseRemarkContent").val();  //备注信息
+                    if (!$("#file1").val()) {
+                        alert("请上传房间封面图片！");
+                        return false;
+                    }
+                    if (styleName == "") {
+                        alert("请填写房间名称");
+                        return false;
+                    }
+                    if (placeMoney == "") {
+                        alert("请填写出租价格");
+                        return false;
+                    }
+                    if (instruction == "") {
+                        alert("请填写详细介绍");
+                        return false;
                     }
                 },
+                success: function (msg) {
+                    alert(msg.Data);
+                    //if (msg.type == "success") {
+                    //    location.href = '/'
+                    //}
+                },
                 error: function (data, status, e) {
-                    util.msgBox('绑定出错:' + e);
+                    alert('上传出错:' + e);
                 }
 
             });

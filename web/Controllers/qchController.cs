@@ -103,7 +103,7 @@ namespace web.Controllers
             return View();
         }
         //个人中心上部、左部
-        [UserAuthorization]
+
         public ActionResult uc()
         {
             if (LoginUser != null)
@@ -111,6 +111,10 @@ namespace web.Controllers
                 ViewBag.UserPosition = LoginUser.t_User_Position;
                 ViewBag.UserName = LoginUser.t_User_RealName;
             }
+            return View();
+        }
+        public ActionResult map()
+        {
             return View();
         }
         //近期活动

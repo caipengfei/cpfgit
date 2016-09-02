@@ -1,0 +1,31 @@
+﻿@{
+    Layout = null;
+}
+@model IEnumerable<qch.Repositories.inf_province>
+<div class="box3">
+    <input type="hidden" id="provId" name="t_Place_Province" />
+    <input type="hidden" id="cityId" name="t_Place_City" />
+    <input type="hidden" id="quId" name="t_Place_District" />
+    <div class='selectBox'>
+        <input type="text" readonly="readonly" placeholder="请选择省份">
+        <ul class="selectUl" id="ulpro">
+            @if (Model != null)
+            {
+                foreach (var item in Model.ToList())
+                {
+                <li id="@item.ProvinceID">@item.ProvinceName</li>
+                }
+            }
+        </ul>
+    </div>
+    <div class='selectBox'>
+        <input type="text" readonly="readonly" id="txtCity" name="t_Place_CityName" placeholder="请选择城市">
+        <ul class="selectUl" id="ulcity">
+        </ul>
+    </div>
+    <div class='selectBox'>
+        <input type="text" readonly="readonly" id="txtDisc" name="t_Place_DistrictName" placeholder="请选择区县">
+        <ul class="selectUl" id="uldisc">
+        </ul>
+    </div>
+</div>

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using web.Filters;
 
 namespace web.Controllers
 {
@@ -180,92 +181,10 @@ namespace web.Controllers
          * 1、
          */
         //发布活动
+        [UserAuthorization]
         public ActionResult Publish(string ActivityGuid, string code, string state)
         {
-            #region 微信验证
-            string Nonce = qch.Infrastructure.CookieHelper.GetCookieValue("Nonce");
-            string wxuserguid = Guid.NewGuid().ToString();
-            qch.Infrastructure.CookieHelper.SetCookie("WxUserGuid", wxuserguid);
-            ViewBag.ActivityGuid = ActivityGuid;
-            ViewBag.OpenId = "";
-            ViewBag.UserLogo = "";
-            ViewBag.Name = "";
-
-            OAuthAccessTokenResult result = null;
-            if (Session["AccountTokenResult"] != null)
-                result = (OAuthAccessTokenResult)Session["AccountTokenResult"];
-            else
-            {
-                //通过，用code换取access_token
-                if (string.IsNullOrWhiteSpace(code))
-                {
-                    return Redirect("/wxUser/wxlogin");
-                }
-                try
-                {
-                    result = OAuth.GetAccessToken(appId, appSecret, code);
-                }
-                catch (Exception ex)
-                {
-                    log.Error(ex.Message);
-                    return Redirect("/wxUser/wxlogin");
-                }
-                if (result == null || result.access_token == null)
-                {
-                    return Redirect("/wxUser/wxlogin");
-                }
-                Session["AccountTokenResult"] = result;
-            }
-            OAuthUserInfo userInfo = null;
-            if (Session["AccountUserResult"] != null)
-                userInfo = (OAuthUserInfo)Session["AccountUserResult"];
-            else
-            {
-                userInfo = OAuth.GetUserInfo(result.access_token, result.openid);
-                if (userInfo == null || userInfo.openid == null)
-                {
-                    return Redirect("/wxUser/wxlogin");
-                }
-                Session["AccountUserResult"] = userInfo;
-            }
-
-            if (userInfo != null)
-            {
-                ViewBag.OpenId = userInfo.openid;
-                ViewBag.UserLogo = userInfo.headimgurl;
-                ViewBag.Name = userInfo.nickname;
-                qch.Infrastructure.CookieHelper.SetCookie("wxLoginName", userInfo.nickname.ToString());
-                qch.Infrastructure.CookieHelper.SetCookie("wxLoginOpenId", userInfo.openid.ToString());
-                string avatorFileName = Guid.NewGuid().ToString() + ".jpg"; ;
-                log.Info("avatorFileName=" + avatorFileName);
-                var msg = wxservice.Save(new WXUserModel
-                {
-                    Guid = "",
-                    OpenId = "",
-                    Nonce = Nonce,
-                    UserGuid = wxuserguid,
-                    WxTgUserGuid = "",
-                    MediaId = "",
-                    QrCode = "",
-                    UnionId = userInfo.unionid.ToString(),
-                    Avator = "small_" + avatorFileName,
-                    CreateDate = DateTime.Now,
-                    KFDate = DateTime.Now,
-                    KFOpenId = userInfo.openid.ToString(),
-                    MediaDate = DateTime.Now,
-                    Name = userInfo.nickname.ToString(),
-                    UserType = 2
-                });
-                if (msg.type == "success")
-                {
-                    log.Info("插入成功");
-                    //下载微信头像到指定文件夹
-                    Senparc.Weixin.MP.Sample.CommonService.ImageHelper.DownloadFile(100, 100, userInfo.headimgurl.ToString(), avatorFileName);
-                }
-                else { log.Error("插入失败"); }
-            }
-
-            #endregion
+            
             var list = areaService.GetAllProvince();
             return View(list);
         }
@@ -284,16 +203,27 @@ namespace web.Controllers
             //}
             try
             {
+                string openid = "";
+                if (LoginUser != null)
+                {
+                    var wx = wxservice.GetByUserId(LoginUser.Guid);
+                    if (wx != null)
+                        openid = wx.OpenId;
+                    else
+                        openid = qch.Infrastructure.CookieHelper.GetCookieValue("wxLoginOpenId");
+                }
+                else
+                    return RedirectToAction("/qch/login");
                 string name = qch.Infrastructure.CookieHelper.GetCookieValue("wxLoginName");
                 model.t_AddBy = name;
-                string openid = qch.Infrastructure.CookieHelper.GetCookieValue("wxLoginOpenId");
+                //string openid = qch.Infrastructure.CookieHelper.GetCookieValue("wxLoginOpenId");
                 string cname = "";
                 var city = areaService.GetCity(model.t_Activity_City);
                 if (city != null)
                     cname = city.CityName;
                 log.Info("发布活动所选城市：" + cname);
                 model.t_Activity_CityName = cname;
-                msg = service.Publish("oU0q_uOO4dSfO4m3Ekpc1GrHhHhw", model);
+                msg = service.Publish(openid, model);
             }
             catch (Exception ex)
             {

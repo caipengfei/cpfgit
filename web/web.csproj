@@ -181,6 +181,9 @@
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.1.0\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="zxing">
+      <HintPath>..\packages\cpf\zxing.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AuthConfig.cs" />
@@ -656,6 +659,36 @@
     <Content Include="Content\image\captcha.jpg" />
     <Content Include="Content\image\ceshi.png" />
     <Content Include="Content\image\check_yes.png" />
+    <Content Include="Content\image\company10a.jpg" />
+    <Content Include="Content\image\company10b.jpg" />
+    <Content Include="Content\image\company11a.jpg" />
+    <Content Include="Content\image\company11b.jpg" />
+    <Content Include="Content\image\company12a.jpg" />
+    <Content Include="Content\image\company12b.jpg" />
+    <Content Include="Content\image\company13a.jpg" />
+    <Content Include="Content\image\company13b.jpg" />
+    <Content Include="Content\image\company14a.jpg" />
+    <Content Include="Content\image\company14b.jpg" />
+    <Content Include="Content\image\company15a.jpg" />
+    <Content Include="Content\image\company15b.jpg" />
+    <Content Include="Content\image\company1a.jpg" />
+    <Content Include="Content\image\company1b.jpg" />
+    <Content Include="Content\image\company2a.jpg" />
+    <Content Include="Content\image\company2b.jpg" />
+    <Content Include="Content\image\company3a.jpg" />
+    <Content Include="Content\image\company3b.jpg" />
+    <Content Include="Content\image\company4a.jpg" />
+    <Content Include="Content\image\company4b.jpg" />
+    <Content Include="Content\image\company5a.jpg" />
+    <Content Include="Content\image\company5b.jpg" />
+    <Content Include="Content\image\company6a.jpg" />
+    <Content Include="Content\image\company6b.jpg" />
+    <Content Include="Content\image\company7a.jpg" />
+    <Content Include="Content\image\company7b.jpg" />
+    <Content Include="Content\image\company8a.jpg" />
+    <Content Include="Content\image\company8b.jpg" />
+    <Content Include="Content\image\company9a.jpg" />
+    <Content Include="Content\image\company9b.jpg" />
     <Content Include="Content\image\content.jpg" />
     <Content Include="Content\image\contentleft1.png" />
     <Content Include="Content\image\contentleft2.png" />
@@ -726,8 +759,8 @@
     <Content Include="Content\image\index\lifejia.png" />
     <Content Include="Content\image\index\line.png" />
     <Content Include="Content\image\index\logo1.png" />
-    <Content Include="Content\image\index\logo2.png" />
     <Content Include="Content\image\index\logo22.png" />
+    <Content Include="Content\image\index\qchlogo.png" />
     <Content Include="Content\image\index\shipinbg.png" />
     <Content Include="Content\image\index\touziguwen.png" />
     <Content Include="Content\image\index\zbf_scrollBtn.png" />
@@ -889,6 +922,7 @@
     <Content Include="Content\js\spaceManage.js" />
     <Content Include="Content\js\userinfo.js" />
     <Content Include="Content\js\util.js" />
+    <Content Include="Content\js\uploadPlace.js" />
     <Content Include="Content\login.html" />
     <Content Include="Content\media\qch.mp4" />
     <Content Include="Content\news.html" />
@@ -1547,6 +1581,9 @@
     <Content Include="Views\Place\ucPlace.cshtml" />
     <Content Include="Views\Place\ucRoom.cshtml" />
     <Content Include="Views\Place\UploadRoom.cshtml" />
+    <Content Include="Views\Place\Upload.cshtml" />
+    <Content Include="Views\qch\map.cshtml" />
+    <Content Include="Views\Place\Area.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AppDown\unpackage\" />
@@ -1554,6 +1591,7 @@
     <Folder Include="Content\image\index\icon\" />
     <Folder Include="Content\ueditor_mini\net\upload\" />
     <Folder Include="Images\ActivityImgs\" />
+    <Folder Include="Images\PlaceImgs\" />
     <Folder Include="Images\qrcode\" />
     <Folder Include="logs\" />
   </ItemGroup>

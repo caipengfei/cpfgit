@@ -21,13 +21,20 @@
     { welcome = "下午好"; }
     else if (a > 19 && a <= 23)
     { welcome = "晚上好"; }
+    var useravator = "";
+    if (!string.IsNullOrWhiteSpace(username))
+    {
+        var user = new qch.core.UserService().GetLoginUser();
+        if (user != null)
+        {useravator = "http://www.cn-qch.com:8002/attach/user/" + user.t_User_Pic;}
+    }
 }
 @if (string.IsNullOrWhiteSpace(username))
 {
     <!--顶部-->
     <div id="topBar">
         <div class="box">
-            <p>客服热线&nbsp;:&nbsp;400-169-09166</p>
+            <p>客服热线&nbsp;:&nbsp;400-169-0999</p>
             <a href="javascript:void(0)">
                 <img src="/Content/image/topBar1.png" alt="" class="topBar1">
                 <img src="/Content/image/topBar2.png" alt="" style="width: 170px; height: 170px; border-radius: 10px;" class="topBar2">
@@ -47,7 +54,7 @@ else
     <!--顶部-->
     <div id="topBar">
         <div class="box">
-            <p>客服热线&nbsp;:&nbsp;400-169-09166</p>
+            <p>客服热线&nbsp;:&nbsp;400-169-0999</p>
             <a href="javascript:void(0)">
                 <img src="/Content/image/topBar1.png" alt="" class="topBar1">
                 <img src="/Content/image/topBar2.png" alt="" style="width: 170px; height: 170px; border-radius: 10px;" class="topBar2">
@@ -94,7 +101,7 @@ else
         {
             <div class="headerRightLogin">
                 <a href="javascript:" class="touxiang">
-                    <img src="/Content/image/ceshi.png" alt=""></a>
+                    <img src="@useravator" alt=""></a>
                 <div href="javascript:" class="geren">
                     <p>个人中心&nbsp;<img src="/Content/image/geren1.png" alt=""></p>
                 </div>
@@ -121,7 +128,7 @@ else
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:">
+                        <a href="/place/ucplace">
                             <img src="/Content/image/icon-font/kongjianguanli.png" alt="">空间管理
                         </a>
                     </li>

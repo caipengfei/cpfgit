@@ -81,6 +81,77 @@ namespace qch.core
 
         #region 空间信息
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="UserGuid"></param>
+        /// <param name="PlaceName"></param>
+        /// <returns></returns>
+        public PlaceModel GetPlaceInfo(string UserGuid, string PlaceName)
+        {
+            try
+            {
+                return rp.GetPlaceInfo(UserGuid, PlaceName);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
+        /// 保存空间信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public bool SavePlace(PlaceModel model)
+        {
+            try
+            {
+                if (model == null)
+                    return false;
+                var mm = GetPlaceStyleByGuid(model.Guid);
+                if (mm != null)
+                {
+                    model.t_ModifydDate = DateTime.Now;
+                    return rp.EditPlace(model);
+                }
+                else
+                {
+                    model.t_AddDate = DateTime.Now;
+                    model.Guid = Guid.NewGuid().ToString();
+                    return rp.AddPlace(model);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return false;
+            }
+        }
+        /// <summary>
+        /// 修改某个空间的删除状态（删除）
+        /// </summary>
+        /// <param name="RoomGuid"></param>
+        /// <returns></returns>
+        public bool DelPlace(string PlaceGuid)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(PlaceGuid))
+                    return false;
+                var model = GetPlaceInfo(PlaceGuid);
+                if (model == null)
+                    return false;
+                model.t_DelState = 1;
+                return rp.EditPlace(model);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return false;
+            }
+        }
+        /// <summary>
         /// 获取空间详情
         /// </summary>
         /// <param name="PlaceGuid"></param>
@@ -189,6 +260,76 @@ namespace qch.core
         #endregion
 
         #region 空间类型
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="RoomName"></param>
+        /// <returns></returns>
+        public PlaceStyleModel GetPlaceStyleByName(string RoomName)
+        {
+            try
+            {
+                return rp.GetPlaceStyleByName(RoomName);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
+        /// 保存房间信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public bool SaveRoom(PlaceStyleModel model)
+        {
+            try
+            {
+                if (model == null)
+                    return false;
+                var mm = GetPlaceStyleByGuid(model.Guid);
+                if (mm != null)
+                {
+                    model.t_ModifydDate = DateTime.Now;
+                    return rp.EditPlaceRoom(model);
+                }
+                else
+                {
+                    model.t_AddDate = DateTime.Now;
+                    model.Guid = Guid.NewGuid().ToString();
+                    return rp.AddPlaceRoom(model);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return false;
+            }
+        }
+        /// <summary>
+        /// 修改某个房间的删除状态（删除）
+        /// </summary>
+        /// <param name="RoomGuid"></param>
+        /// <returns></returns>
+        public bool DelRoom(string RoomGuid)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(RoomGuid))
+                    return false;
+                var model = GetPlaceStyleByGuid(RoomGuid);
+                if (model == null)
+                    return false;
+                model.t_DelState = 1;
+                return rp.EditPlaceRoom(model);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return false;
+            }
+        }
         /// <summary>
         /// 获取某个空间的所有类型
         /// </summary>

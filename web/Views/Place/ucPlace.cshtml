@@ -20,19 +20,18 @@
                     <span class="noPass">待审核
 								<img src="/content/image/xiahuaxian.png" alt="">
                     </span>
-                    <a href="javascript:" class="shenqing">申请入驻</a>
+                    <a href="/place/upload" class="shenqing">上传空间</a>
                 </div>
                 <!--空间的内容为空的时候-->
                 <div class="spaceBlank" style="display: none">
                     <img src="/content/image/1kongjian.png" alt="">
-                    <p>暂无信息,立即<a href="javascript:">申请</a></p>
+                    <p>暂无信息,<a href="/place/upload">立即申请</a></p>
                 </div>
                 <!--已审核空间有内容的时候的时候-->
                 @if (Model != null && Model.Items != null && Model.Items.Count > 0)
                 {
                     <div class="HavespaceContent" style="display: -none">
                         <ul>
-
                             @foreach (var item in Model.Items)
                             {
                                 <li class="spaceLi">
@@ -51,10 +50,8 @@
                                     <p>⊙@qch.core.StyleService.GetPosition(item.t_Place_Tips)</p>
                                     <p class="hengxian"></p>
                                     <a href="@Url.Action("ucroom", "place", new { PlaceGuid = item.Guid })">预约空间管理</a>
-
                                 </li>
                             }
-
                         </ul>
                     </div>
                 }

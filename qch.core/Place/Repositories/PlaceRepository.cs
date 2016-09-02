@@ -101,6 +101,57 @@ namespace qch.Repositories
 
         #region 空间信息
         /// <summary>
+        /// 添加空间信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public bool AddPlace(PlaceModel model)
+        {
+            try
+            {
+                return rRp.Insert(model) == null ? false : true;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return false;
+            }
+        }
+        /// <summary>
+        /// 编辑空间信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public bool EditPlace(PlaceModel model)
+        {
+            try
+            {
+                return rRp.Update(model) == null ? false : true;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return false;
+            }
+        }
+        /// <summary>
+        /// 删除空间信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public bool DelPlace(PlaceModel model)
+        {
+            try
+            {
+                return rRp.Delete(model) == null ? false : true;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return false;
+            }
+        }
+        /// <summary>
         /// 获取空间详情
         /// </summary>
         /// <param name="PlaceGuid"></param>
@@ -111,6 +162,19 @@ namespace qch.Repositories
             {
                 string sql = "select * from T_Place where guid=@0 and t_DelState=0";
                 return rRp.Get(sql, new object[] { PlaceGuid });
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        public PlaceModel GetPlaceInfo(string UserGuid, string PlaceName)
+        {
+            try
+            {
+                string sql = "select top 1 * from T_Place where [t_User_Guid]=@0 and [t_Place_Name]=@1 and t_DelState=0";
+                return rRp.Get(sql, new object[] { UserGuid, PlaceName });
             }
             catch (Exception ex)
             {
@@ -159,7 +223,7 @@ namespace qch.Repositories
                 return null;
             }
         }
-        public PetaPoco.Page<SelectPlace> GetAllPlace(int page, int pagesize, string UserGuid,int isAudit)
+        public PetaPoco.Page<SelectPlace> GetAllPlace(int page, int pagesize, string UserGuid, int isAudit)
         {
             try
             {
@@ -237,6 +301,57 @@ namespace qch.Repositories
 
         #region 空间类型
         /// <summary>
+        /// 添加房间信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public bool AddPlaceRoom(PlaceStyleModel model)
+        {
+            try
+            {
+                return psRp.Insert(model) == null ? false : true;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return false;
+            }
+        }
+        /// <summary>
+        /// 编辑房间信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public bool EditPlaceRoom(PlaceStyleModel model)
+        {
+            try
+            {
+                return psRp.Update(model) == null ? false : true;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return false;
+            }
+        }
+        /// <summary>
+        /// 删除房间信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public bool DelPlaceRoom(PlaceStyleModel model)
+        {
+            try
+            {
+                return psRp.Delete(model) == null ? false : true;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return false;
+            }
+        }
+        /// <summary>
         /// 获取某个空间的所有类型
         /// </summary>
         /// <param name="PlaceGuid"></param>
@@ -255,7 +370,7 @@ namespace qch.Repositories
             }
         }
         /// <summary>
-        /// 
+        /// 获取某个房间的详细信息
         /// </summary>
         /// <param name="Guid"></param>
         /// <returns></returns>
@@ -265,6 +380,24 @@ namespace qch.Repositories
             {
                 string sql = "select * from [T_Place_Style] where [Guid]=@0 and [t_DelState]=0";
                 return psRp.Get(sql, new object[] { Guid });
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="RoomName"></param>
+        /// <returns></returns>
+        public PlaceStyleModel GetPlaceStyleByName(string RoomName)
+        {
+            try
+            {
+                string sql = "select top 1 * from [T_Place_Style] where [t_Place_StyleName]=@0 and [t_DelState]=0";
+                return psRp.Get(sql, new object[] { RoomName });
             }
             catch (Exception ex)
             {

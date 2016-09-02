@@ -19,11 +19,13 @@ namespace qch.core
         /// </summary>
         /// <param name="userMobile"></param>
         /// <returns></returns>
-        public Msg GetSMS(string userMobile)
+        public Msg GetSMS(string userMobile, string IpAddr)
         {
             Msg msg = new Msg();
             msg.type = "error";
             msg.Data = "短信发送失败";
+            log.Info("userMobile=" + userMobile);
+            log.Info("IpAddr=" + IpAddr);
             if (string.IsNullOrWhiteSpace(userMobile))
             {
                 msg.Data = "手机号码有误";

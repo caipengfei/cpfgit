@@ -632,7 +632,7 @@ namespace web.Controllers
                         unionid = userInfo.unionid.ToString();
                         nickname = userInfo.nickname.ToString();
                         headimgurl = userInfo.headimgurl.ToString();
-                        log.Info("Apply页面OpenId:" + openid);
+                        log.Info("Apply页面unionid:" + unionid);
                         log.Info("微信用户信息");
                         log.Info("sex:" + userInfo.sex);
                         log.Info("city:" + userInfo.city);
